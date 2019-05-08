@@ -1,4 +1,4 @@
-package com.greengiant.website.dao.user;
+package com.greengiant.website.model;
 
 public class ShiroUser {
 	

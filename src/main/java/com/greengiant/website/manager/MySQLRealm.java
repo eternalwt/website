@@ -1,7 +1,7 @@
 package com.greengiant.website.manager;
 
-import com.greengiant.website.dao.user.ShiroUser;
-import com.greengiant.website.dao.user.ShiroUserJdbcTemplate;
+import com.greengiant.website.model.ShiroUser;
+import com.greengiant.website.dao.user.ShiroUserDao;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -17,13 +17,13 @@ import java.util.List;
 
 public class MySQLRealm implements Realm {
 
-	private ShiroUserJdbcTemplate shiroUserJdbcTemplate;
+	private ShiroUserDao shiroUserDao;
 	
 	public MySQLRealm()
 	{
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("../applicationContext.xml");
-		shiroUserJdbcTemplate = (ShiroUserJdbcTemplate) context.getBean("shiroUserJdbcTemplate");
+		shiroUserDao = (ShiroUserDao) context.getBean("shiroUserDao");
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class MySQLRealm implements Realm {
         
     	boolean isUserExists = false;
     	ShiroUser currUser = null;
-    	List<ShiroUser> shiroUsers = shiroUserJdbcTemplate.getShiroUserLst();
+    	List<ShiroUser> shiroUsers = shiroUserDao.getShiroUserLst();
 		for (ShiroUser shiroUser : shiroUsers) {
 			if (shiroUser.getUsername().equals(username))
 			{

@@ -3,6 +3,7 @@ package com.greengiant.website.dao.userrole;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.greengiant.website.model.UserRole;
 import org.springframework.jdbc.core.RowMapper;
 
 public class UserRoleMapper implements RowMapper<UserRole>{

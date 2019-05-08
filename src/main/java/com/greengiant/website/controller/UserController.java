@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.greengiant.website.dao.role.Role;
-import com.greengiant.website.dao.role.RolesJdbcTemplate;
-import com.greengiant.website.dao.user.ShiroUser;
-import com.greengiant.website.dao.user.ShiroUserJdbcTemplate;
-import com.greengiant.website.dao.userrole.UserRole;
-import com.greengiant.website.dao.userrole.UserRoleJdbcTemplate;
+import com.greengiant.website.model.Role;
+import com.greengiant.website.dao.role.RoleJdbcDao;
+import com.greengiant.website.model.ShiroUser;
+import com.greengiant.website.dao.user.ShiroUserDao;
+import com.greengiant.website.model.UserRole;
+import com.greengiant.website.dao.userrole.UserRoleDao;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
@@ -26,13 +26,13 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
 	@Autowired
-	private ShiroUserJdbcTemplate shiroUserJdbcTemplate;
+	private ShiroUserDao shiroUserDao;
 	
 	@Autowired
-	private RolesJdbcTemplate rolesJdbcTemplate;
+	private RoleJdbcDao rolesJdbcTemplate;
 	
 	@Autowired
-	private UserRoleJdbcTemplate userRoleJdbcTemplate;
+	private UserRoleDao userRoleDao;
 	
 	@Autowired
 	private PlatformTransactionManager transactionManager;
@@ -65,7 +65,7 @@ public class UserController {
 		String rolename = request.getParameter("role");
 		
 		//TODO 这里也要思考返回值是否用枚举的问题
-		if (shiroUserJdbcTemplate.findUserByName(username))
+		if (shiroUserDao.findUserByName(username))
 		{
 			return "duplicatedUser";
 		}
@@ -87,8 +87,8 @@ public class UserController {
 		TransactionStatus status = transactionManager.getTransaction(def);
 		try
         {
-            shiroUserJdbcTemplate.addUser(user);
-            userRoleJdbcTemplate.addUserRole(userRole);
+            shiroUserDao.addUser(user);
+            userRoleDao.addUserRole(userRole);
             transactionManager.commit(status);//TODO 深入分析放这里有没有问题，commit抛异常了怎么办
             
             return "success";

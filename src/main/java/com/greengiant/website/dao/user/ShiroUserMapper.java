@@ -3,6 +3,7 @@ package com.greengiant.website.dao.user;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.greengiant.website.model.ShiroUser;
 import org.springframework.jdbc.core.RowMapper;
 
 public class ShiroUserMapper implements RowMapper<ShiroUser>{

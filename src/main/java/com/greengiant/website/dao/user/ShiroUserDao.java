@@ -2,13 +2,14 @@ package com.greengiant.website.dao.user;
 
 import java.util.List;
 
+import com.greengiant.website.model.ShiroUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class ShiroUserJdbcTemplate {
+public class ShiroUserDao {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 

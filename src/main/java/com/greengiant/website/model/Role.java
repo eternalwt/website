@@ -1,4 +1,4 @@
-package com.greengiant.website.dao.role;
+package com.greengiant.website.model;
 
 public class Role {
 	private Integer id;

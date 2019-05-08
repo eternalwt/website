@@ -1,4 +1,4 @@
-package com.greengiant.website.dao.userrole;
+package com.greengiant.website.model;
 
 public class UserRole {
 	

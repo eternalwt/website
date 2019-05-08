@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface RoleDao {
-	String TABLE_NAME = "shiro_roles_permissions";
+	String TABLE_NAME = "shiro_role_permission";
 	String ALL_FIELDS = "id, role_name, permission";
 
 	@Select("select " + ALL_FIELDS + " from " + TABLE_NAME)

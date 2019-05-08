@@ -8,7 +8,7 @@ import java.util.List;
 
 @Mapper
 public interface ShiroUserDao {
-    String TABLE_NAME = "shiro_users";
+    String TABLE_NAME = "shiro_user";
     String ALL_FIELDS = "id, username, password, password_salt";
 
     @Select("select " + ALL_FIELDS + " from " + TABLE_NAME)

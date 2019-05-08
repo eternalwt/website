@@ -1,7 +1,7 @@
 【下一步工作顺序】：
 0.1.日志配好（现在webSocket部分用到）；
 1.把ini的shiro调通；
-2.DAO层100%单元测试覆盖；
+2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
 3.把mybatis的shiro调通；
 4.继续调试剩下的springboot+shiro
 5.看前后端合并、分离的部署（先搞合并的），加easyUI
@@ -21,6 +21,7 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 3.找到合适的模版（知乎上问，bootstrap的，最新的）；
 4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
 2.mybatis：（再思考chime的数据库注解）；
+swagger与shiro的协同测试；
 5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；

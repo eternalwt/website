@@ -17,4 +17,6 @@ public interface UserRoleDao {
 	@Select("insert into " + TABLE_NAME +"set username= #{username}, role_name= #{rolename}")
 	int addUserRole(UserRole userRole);
 
+	@Select("select " + ALL_FIELDS + " from " + TABLE_NAME + " where username= #{username}")
+	UserRole getUserRoleByName(String username);
 }

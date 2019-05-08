@@ -15,6 +15,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.util.List;
 
+@Deprecated
 public class MySQLRealm implements Realm {
 
 	private UserDao userDao;

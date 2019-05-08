@@ -17,7 +17,7 @@ public interface ShiroUserDao {
     @Select("INSERT INTO " + TABLE_NAME + " set username= #{username}, password= #{password}, password_salt= #{passwordSalt}")
     int addUser(ShiroUser user);
 
-    @Select("select " + ALL_FIELDS + " from " + TABLE_NAME + " where username= #{name}")//todo
-    ShiroUser findUserByName(String name);
+    @Select("select " + ALL_FIELDS + " from " + TABLE_NAME + " where username= #{name}")
+    ShiroUser getUserByName(String name);
 
 }

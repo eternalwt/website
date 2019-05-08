@@ -15,6 +15,7 @@ import org.apache.shiro.realm.Realm;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+@Deprecated
 public class CustomAuthorizingRealm implements Realm {
 
 	private UserDao userDao;

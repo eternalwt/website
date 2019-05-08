@@ -10,7 +10,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -24,6 +24,7 @@ public class ShiroConfig {
 
         // 设置拦截器
         // todo 如何动态配置拦截器？
+        //todo 对比思考我在威盛电子时做的细粒度权限管理
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //游客，开发权限
         filterChainDefinitionMap.put("/guest/**", "anon");

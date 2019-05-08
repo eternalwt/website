@@ -35,11 +35,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>org.mybatis.spring.boot</groupId>-->
-<!--			<artifactId>mybatis-spring-boot-starter</artifactId>-->
-<!--			<version>2.0.1</version>-->
-<!--		</dependency>-->
+		<dependency>
+			<groupId>org.mybatis.spring.boot</groupId>
+			<artifactId>mybatis-spring-boot-starter</artifactId>
+			<version>2.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.retry</groupId>
 			<artifactId>spring-retry</artifactId>
@@ -84,6 +84,12 @@
 			<groupId>org.apache.shiro</groupId>
 			<artifactId>shiro-spring</artifactId>
 			<version>1.4.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.alibaba/druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>1.1.16</version>
 		</dependency>
 	</dependencies>
 

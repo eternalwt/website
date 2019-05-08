@@ -12,6 +12,7 @@
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084
 
+我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
 1.数据库连接加密
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
@@ -20,7 +21,7 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 2.进一步搞懂配置文件的作用，尤其是applicationcontext；
 3.找到合适的模版（知乎上问，bootstrap的，最新的）；
 4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
-5.把前后连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
+5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；
 10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术

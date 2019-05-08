@@ -10,7 +10,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {

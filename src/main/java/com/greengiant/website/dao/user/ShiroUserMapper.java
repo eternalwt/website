@@ -15,7 +15,7 @@ public class ShiroUserMapper implements RowMapper<ShiroUser>{
 		shiroUser.setId(rs.getInt("id"));
 		shiroUser.setUsername(rs.getString("username"));
 		shiroUser.setPassword(rs.getString("password"));
-		shiroUser.setPassword_salt(rs.getString("password_salt"));
+		shiroUser.setPasswordSalt(rs.getString("password_salt"));
 		
 		return shiroUser;
 	}

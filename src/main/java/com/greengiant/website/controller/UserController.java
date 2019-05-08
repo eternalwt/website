@@ -74,7 +74,7 @@ public class UserController {
 		String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
 		String md5Psw = new Md5Hash(password, salt, 2).toString();
 		user.setPassword(md5Psw);
-		user.setPassword_salt(salt);
+		user.setPasswordSalt(salt);
 		
 		UserRole userRole = new UserRole();
 		userRole.setUsername(username);

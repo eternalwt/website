@@ -14,10 +14,10 @@ public interface ShiroUserDao {
     @Select("select " + ALL_FIELDS + " from " + TABLE_NAME)
     List<ShiroUser> getShiroUserList();
 
-    @Select("INSERT INTO shiro_users(`username`,`password`,`password_salt`) VALUES(?, ?, ?)")//todo
+    @Select("INSERT INTO " + TABLE_NAME + " set username= #{username}, password= #{password}, password_salt= #{passwordSalt}")
     int addUser(ShiroUser user);
 
-    @Select("select * from shiro_users where username=?")//todo
+    @Select("select " + ALL_FIELDS + " from " + TABLE_NAME + " where username= #{name}")//todo
     ShiroUser findUserByName(String name);
 
 }

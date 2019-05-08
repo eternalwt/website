@@ -8,11 +8,13 @@ import org.apache.ibatis.annotations.Select;
 
 @Mapper
 public interface UserRoleDao {
+	String TABLE_NAME = "shiro_user_roles";
+	String ALL_FIELDS = "id, username, role_name";
 
-	@Select("select * from shiro_user_roles")//todo
+	@Select("select " + ALL_FIELDS + " from " + TABLE_NAME)
 	List<UserRole> getUserRoleLst();
 
-	@Select("insert into shiro_user_roles(`username`,`role_name`) values(?, ?)")
+	@Select("insert into " + TABLE_NAME +"set username= #{username}, role_name= #{rolename}")
 	int addUserRole(UserRole userRole);
 
 }

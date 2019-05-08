@@ -1,6 +1,7 @@
 【下一步工作顺序】：
 0.1.日志配好（现在webSocket部分用到）；
 1.把ini的shiro调通；
+2.DAO层100%单元测试覆盖；
 3.把mybatis的shiro调通；
 4.继续调试剩下的springboot+shiro
 5.看前后端合并、分离的部署（先搞合并的），加easyUI

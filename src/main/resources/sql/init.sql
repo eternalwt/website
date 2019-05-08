@@ -7,7 +7,7 @@ create table shiro_users(
   id bigint auto_increment,
   username varchar(100),
   password varchar(100),
-  password_salt varchar(100),
+  passwordSalt varchar(100),
   primary key(id)
 ) ENGINE=InnoDB;
 create unique index idx_users_username on shiro_users(username);

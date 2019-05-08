@@ -1,17 +1,17 @@
 package com.greengiant.website.model;
 
 public class Role {
-	private Integer id;
+	private long id;
 	
 	private String rolename;
 	
 	private String permissions;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -30,4 +30,5 @@ public class Role {
 	public void setPermissions(String permissions) {
 		this.permissions = permissions;
 	}
+
 }

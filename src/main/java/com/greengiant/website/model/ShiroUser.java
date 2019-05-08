@@ -1,20 +1,19 @@
 package com.greengiant.website.model;
 
 public class ShiroUser {
-	
-	private Integer id;
+	private long id;
 	
 	private String username;
 	
 	private String password;
 	
-	private String password_salt;
+	private String passwordSalt;
 
-	public Integer getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	
@@ -34,12 +33,12 @@ public class ShiroUser {
 		this.password = password;
 	}
 
-	public String getPassword_salt() {
-		return password_salt;
+	public String getPasswordSalt() {
+		return passwordSalt;
 	}
 
-	public void setPassword_salt(String password_salt) {
-		this.password_salt = password_salt;
+	public void setPasswordSalt(String passwordSalt) {
+		this.passwordSalt = passwordSalt;
 	}
 
 }

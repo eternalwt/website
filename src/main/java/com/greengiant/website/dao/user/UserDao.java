@@ -22,7 +22,7 @@ public class UserDao {
 	
 	public int addUser(ShiroUser user){
 		int rowCount = jdbcTemplate.update("INSERT INTO shiro_users(`username`,`password`,`password_salt`) VALUES(?, ?, ?)",
-				new Object[] {user.getUsername(), user.getPassword(), user.getPassword_salt()});
+				new Object[] {user.getUsername(), user.getPassword(), user.getPasswordSalt()});
 		
 		return rowCount;
 	}

@@ -6,7 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.greengiant.website.model.Role;
-import com.greengiant.website.dao.role.RoleJdbcDao;
+import com.greengiant.website.dao.role.RoleDao;
 import com.greengiant.website.model.ShiroUser;
 import com.greengiant.website.dao.user.ShiroUserDao;
 import com.greengiant.website.model.UserRole;
@@ -29,20 +29,20 @@ public class UserController {
 	private ShiroUserDao shiroUserDao;
 	
 	@Autowired
-	private RoleJdbcDao rolesJdbcTemplate;
+	private RoleDao roleDao;
 	
 	@Autowired
 	private UserRoleDao userRoleDao;
 	
-	@Autowired
-	private PlatformTransactionManager transactionManager;
+//	@Autowired
+//	private PlatformTransactionManager transactionManager;
 	
 	@RequiresRoles("role1")
 	//@RequiresPermissions("+user1+100")//TODO 改一下
 	@RequestMapping("/adduser")
 	public ModelAndView adduser()
 	{
-		List<Role> rolesLst = rolesJdbcTemplate.getRoleLst();
+		List<Role> rolesLst = roleDao.getRoleLst();
 		List<String> roleLst = new ArrayList<String>();
 		for (int i = 0; i < rolesLst.size(); i++)
 		{
@@ -81,31 +81,32 @@ public class UserController {
 		userRole.setUsername(username);
 		userRole.setRolename(rolename);
 		
-		//TODO 这里是直接用的transactionManager，后面再看看声明式和配置式事务管理，还有抽服务层的问题
-		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
-		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-		TransactionStatus status = transactionManager.getTransaction(def);
-		try
-        {
-            shiroUserDao.addUser(user);
-            userRoleDao.addUserRole(userRole);
-            transactionManager.commit(status);//TODO 深入分析放这里有没有问题，commit抛异常了怎么办
-            
-            return "success";
-            
-        } 
-		catch (DataAccessException ex)
-        {
-        	transactionManager.rollback(status);
-        	return "fail";
-        }
-		catch (TransactionException ex)
-        {
-        	transactionManager.rollback(status);
-        	return "fail";
-        }
+//		//TODO 这里是直接用的transactionManager，后面再看看声明式和配置式事务管理，还有抽服务层的问题
+//		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+//		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+//		TransactionStatus status = transactionManager.getTransaction(def);
+//		try
+//        {
+//            shiroUserDao.addUser(user);
+//            userRoleDao.addUserRole(userRole);
+//            transactionManager.commit(status);//TODO 深入分析放这里有没有问题，commit抛异常了怎么办
+//
+//            return "success";
+//
+//        }
+//		catch (DataAccessException ex)
+//        {
+//        	transactionManager.rollback(status);
+//        	return "fail";
+//        }
+//		catch (TransactionException ex)
+//        {
+//        	transactionManager.rollback(status);
+//        	return "fail";
+//        }
 
+		return null;
 		//TODO 显示用户列表（并能删、改）
 	}
-	
+
 }

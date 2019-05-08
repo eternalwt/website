@@ -1,6 +1,7 @@
 package com.greengiant.website.controller;
 
 import com.greengiant.website.dao.user.UserDao;
+import com.greengiant.website.model.ShiroUser;
 import com.greengiant.website.utils.DownUploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/hello")
@@ -23,10 +25,15 @@ public class HelloController {
         return "Hello, world!";
     }
 
+    @RequestMapping("/users")
     public String getUserList() {
         //todo
-
-        return null;
+        List<ShiroUser> list = userDao.list();
+        //todo 修改判断
+        if (list != null && list.size() > 0) {
+            return String.valueOf(list.size());
+        }
+        return "empty list";
     }
 
     @RequestMapping("/index")

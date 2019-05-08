@@ -1,19 +1,18 @@
 【下一步工作顺序】：
 0.1.日志配好（现在webSocket部分用到）；
-0.2.继续搞DTO等包划分（看阿里巴巴文档）；
 1.把ini的shiro调通；
-2.把mybatis调通（精简现有的写法）；
+2.把mybatis调通（精简现有的Mapper代码，再思考chime的数据库注解）；
 3.把mybatis的shiro调通；
 4.继续调试剩下的springboot+shiro
 5.看前后端合并、分离的部署（先搞合并的），加easyUI
-6.删除springmvc项目
-6.mybatis三剑客、flyway；
+6.整合并删除我的financial项目
+6.mybatis三剑客、flyway、druid、日志、加@Configuration注解；
 7.websocket继续学习，写几个demo（比较这个里面的session）：
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
-1.数据库连接加密
+1.数据库连接加密【mybatis配置】
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
 写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）

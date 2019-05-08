@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import com.greengiant.website.model.ShiroUser;
 import org.springframework.jdbc.core.RowMapper;
 
+@Deprecated
 public class ShiroUserMapper implements RowMapper<ShiroUser>{
+	@Override
 	public ShiroUser mapRow(ResultSet rs, int rowNum) throws SQLException
 	{
 		ShiroUser shiroUser = new ShiroUser();

@@ -6,15 +6,14 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.greengiant.website.model.Role;
-import com.greengiant.website.dao.role.RoleDao;
+import com.greengiant.website.dao.RoleDao;
 import com.greengiant.website.model.ShiroUser;
-import com.greengiant.website.dao.user.ShiroUserDao;
+import com.greengiant.website.dao.user.UserDao;
 import com.greengiant.website.model.UserRole;
-import com.greengiant.website.dao.userrole.UserRoleDao;
+import com.greengiant.website.dao.UserRoleDao;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;
 import org.apache.shiro.crypto.hash.Md5Hash;
-import org.apache.shiro.dao.DataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserController {
 
 	@Autowired
-	private ShiroUserDao shiroUserDao;
+	private UserDao shiroUserDao;
 	
 	@Autowired
 	private RoleDao roleDao;

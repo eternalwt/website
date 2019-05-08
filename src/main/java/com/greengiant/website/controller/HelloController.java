@@ -1,6 +1,6 @@
 package com.greengiant.website.controller;
 
-import com.greengiant.website.dao.user.UserDao;
+import com.greengiant.website.dao.ShiroUserDao;
 import com.greengiant.website.model.ShiroUser;
 import com.greengiant.website.utils.DownUploadFile;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class HelloController {
 
     @SuppressWarnings("all")
     @Autowired
-    private UserDao userDao;
+    private ShiroUserDao shiroUserDao;
 
     @RequestMapping("/world")
     public String sayHello() {
@@ -28,7 +28,7 @@ public class HelloController {
     @RequestMapping("/users")
     public String getUserList() {
         //todo
-        List<ShiroUser> list = userDao.list();
+        List<ShiroUser> list = shiroUserDao.getShiroUserList();
         //todo 修改判断
         if (list != null && list.size() > 0) {
             return String.valueOf(list.size());

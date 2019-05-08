@@ -3,7 +3,7 @@ package com.greengiant.website.manager;
 import java.util.List;
 
 import com.greengiant.website.model.ShiroUser;
-import com.greengiant.website.dao.user.ShiroUserDao;
+import com.greengiant.website.dao.user.UserDao;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -17,13 +17,13 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CustomAuthorizingRealm implements Realm {
 
-	private ShiroUserDao shiroUserDao;
+	private UserDao userDao;
 	
 	public CustomAuthorizingRealm()
 	{
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("../applicationContext.xml");
-		shiroUserDao = (ShiroUserDao) context.getBean("shiroUserDao");
+		userDao = (UserDao) context.getBean("userDao");
 	}
 	
 	public String getName() {
@@ -42,7 +42,7 @@ public class CustomAuthorizingRealm implements Realm {
         
     	boolean isUserExists = false;
     	ShiroUser currUser = null;
-    	List<ShiroUser> shiroUsers = shiroUserDao.getShiroUserLst();
+    	List<ShiroUser> shiroUsers = userDao.getShiroUserList();
 		for (ShiroUser shiroUser : shiroUsers) {
 			if (shiroUser.getUsername().equals(username))
 			{

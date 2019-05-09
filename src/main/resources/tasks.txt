@@ -1,6 +1,6 @@
 【下一步工作顺序】：
 0.1.日志配好（现在webSocket部分用到）；
-1.把ini的shiro调通；
+用我的batis目录的代码来建立dao层测试；
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
 3.把mybatis的shiro调通；
 4.继续调试剩下的springboot+shiro
@@ -34,3 +34,4 @@ swagger与shiro的协同测试；
 手机上传的时候怎么用消息队列？
 github能完成DevOps中的多少工作量？
 写数据库升级脚本要注意啥？怎么写？搜一下
+要有把service独立出来，maven多module打包的能力

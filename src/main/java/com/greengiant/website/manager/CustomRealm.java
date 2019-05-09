@@ -17,13 +17,14 @@ import java.util.Set;
 
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
+    //todo 思考其所在的层次
 
     private ShiroUserDao shiroUserDao;
 
     private UserRoleDao userRoleDao;
 
     @Autowired
-    private void setShiroUserDao(ShiroUserDao shiroUserDao) {
+    private void setShiroUserDao(ShiroUserDao shiroUserDao) {//todo 把提示干掉
         this.shiroUserDao = shiroUserDao;
     }
 

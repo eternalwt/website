@@ -8,6 +8,8 @@ create table shiro_user(
   username varchar(100),
   password varchar(100),
   password_salt varchar(100),
+  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key(id)
 ) ENGINE=InnoDB;
 create unique index idx_user_username on shiro_user(username); -- todo 不要这样写
@@ -17,6 +19,8 @@ create table shiro_user_role(
   id bigint auto_increment,
   username varchar(100),
   role_name varchar(100),
+  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key(id)
 ) ENGINE=InnoDB;
 create unique index idx_user_role on shiro_user_role(username, role_name);
@@ -26,11 +30,14 @@ create table shiro_role_permission(
   id bigint auto_increment,
   role_name varchar(100),
   permission varchar(100),
+  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   primary key(id)
 ) ENGINE=InnoDB;
 create unique index idx_role_permission on shiro_role_permission(role_name, permission);
 
 insert into shiro_user(username,password)values('zhang','123');
+insert into shiro_user_role(username, role_name) values('zhang', 'admin');
 
 -- 一个测试用的表，用完后删掉
 drop table if exists student;

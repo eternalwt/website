@@ -27,6 +27,7 @@ public class ShiroConfig {
         //todo 对比思考我在威盛电子时做的细粒度权限管理
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //游客，开发权限
+        filterChainDefinitionMap.put("/actuator/**", "anon");
         filterChainDefinitionMap.put("/guest/**", "anon");
         //用户，需要角色权限 “user”
         filterChainDefinitionMap.put("/user/**", "roles[user]");

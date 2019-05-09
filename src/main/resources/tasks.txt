@@ -1,4 +1,4 @@
-【下一步工作顺序】：
+【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周四：
 把pagehelper看懂，分布式ID生成；
@@ -6,8 +6,10 @@
 log再搞一次，要完全配好【好像包已经有了，再结合教程看一下，日志的xml要配好】
 1.【集成前端后会不会有影响】，springboot+easyUI今天要搞清白；
 2.写好添加角色、用户的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
-3.actuator，swagger要能自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
+3.swagger要能自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+Spring boot 2.0 Actuator 的健康检查（默认有15项，都打开看一下：http://localhost:8080/actuator/beans）：
+https://www.jianshu.com/p/1aadc4c85f51
 
 跨域的配置加上【要测试】
 0.1.日志配好（现在webSocket部分用到）；
@@ -25,8 +27,10 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 maven跑test搞清楚（为啥放开2个注释会有报错）
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
-1.数据库连接加密【mybatis配置】
-timestamp的使用还要精进
+1.MyBatis 配置文件 用户密码加密存储：
+https://blog.csdn.net/qq_24241631/article/details/80294144
+http://www.imooc.com/article/285087
+timestamp的使用还要精进，例如比较大小
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
 写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）
@@ -40,8 +44,8 @@ swagger与shiro的协同测试；
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；
 10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术
-11.玩玩github的开源代码和blog，看看新技术和有没有赚钱的机会
-12.maven构建打包
+11.玩玩github的开源代码和blog
+12.mybatis和spring的测试必须要搞的非常熟
 13.加测试例、加业务逻辑工程
 搭建环境搞半天，启动MYSQL、判断、连接可用又搞半天，这里都是可以用DevOps解决的领域
 注意代码规范
@@ -50,3 +54,5 @@ github能完成DevOps中的多少工作量？
 写数据库升级脚本要注意啥？怎么写？搜一下
 要有把service独立出来，maven多module打包的能力
 搭架子要把阿里那些最佳实践都包含进来
+OAuth2要做好
+Spring Boot Admin（与actuator关系？）

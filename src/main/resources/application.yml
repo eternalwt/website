@@ -16,3 +16,13 @@ mybatis:
 #  level:
 #    #打印SQL信息
 #    com.hehe.mapper: debug
+
+# ------------------------------------------------------------------------------------
+
+# todo active profile
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

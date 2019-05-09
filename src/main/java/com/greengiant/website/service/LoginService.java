@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LoginService {
-    void login();
+    void login(String username, String password);
 
-    String getRole();
+    String getRole(String username);
 }

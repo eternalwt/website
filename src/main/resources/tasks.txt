@@ -1,8 +1,15 @@
 【下一步工作顺序】：
+
+周四：
+1.把LoginController里面报错干掉，然后打jar包【集成前端后会不会有影响】，maven跑test搞清楚，springboot+easyUI今天要搞清白；
+easyui
+2.写好添加角色、用户的借口，权限相关的尽量往前写
+3.actuator，swagger要能自己造session测通，把单元测试完善；
+4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看
+
 0.1.日志配好（现在webSocket部分用到）；
 用我的batis目录的代码来建立dao层测试；
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
-3.把mybatis的shiro调通；
 4.继续调试剩下的springboot+shiro
 5.看前后端合并、分离的部署（先搞合并的），加easyUI
 6.整合并删除我的financial项目
@@ -10,9 +17,12 @@
 7.websocket继续学习，写几个demo（比较这个里面的session）：
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084
+要能快速验证我的哪些方法没有被权限覆盖到，必须要做到这一点
+再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
 1.数据库连接加密【mybatis配置】
+timestamp的使用还要精进
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
 写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）
@@ -35,3 +45,4 @@ swagger与shiro的协同测试；
 github能完成DevOps中的多少工作量？
 写数据库升级脚本要注意啥？怎么写？搜一下
 要有把service独立出来，maven多module打包的能力
+搭架子要把阿里那些最佳实践都包含进来

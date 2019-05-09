@@ -1,11 +1,15 @@
 package com.greengiant.website.service;
 
+import com.greengiant.website.dao.UserRoleDao;
+import com.greengiant.website.model.UserRole;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class LoginServiceImpl implements LoginService {
-
+    @Autowired
+    private UserRoleDao userRoleDao;
 
     @Override
     public void login(String username, String password) {
@@ -20,12 +24,16 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public String getRole(String username) {
         //根据权限，指定返回数据
-        String role = userMapper.getRole(username);
-        if ("user".equals(role)) {
-            return "欢迎登陆";
+        UserRole role = userRoleDao.getUserRoleByName(username);
+        if (role != null) {
+            //todo 重构
+            if ("user".equals(role.getRolename())) {
+                return "欢迎登陆";
+            }
+            if ("admin".equals(role.getRolename())) {
+                return "欢迎来到管理员页面";
+            }
         }
-        if ("admin".equals(role)) {
-            return "欢迎来到管理员页面";
-        }
+        return "获取角色信息失败";
     }
 }

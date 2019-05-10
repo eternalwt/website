@@ -1,11 +1,10 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周五：
-slf4j注解或者引入logback的Logger
 1.把前后端分离配好（spring配置、jwt配置）；
 2.mybatis继续；
-3.日志继续【怎么确定该打的都打出来了】
-分析启动日志（能否从开涛的教程分析？），分析springboot启动过程
+2.写好添加角色、添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
+4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 
 shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791
@@ -24,12 +23,24 @@ springboot+shiro+jwt：
 https://blog.csdn.net/u013615903/article/details/78781166
 https://blog.csdn.net/u012149181/article/details/79445758
 https://www.jianshu.com/p/0b1131be7ace
+session共享采用shiro-redis的方案：
+https://blog.csdn.net/haoyuyang/article/details/80036989
+https://blog.csdn.net/u013615903/article/details/78781166
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
+2.mybatisPlus需要看吗
+3.MyBatis 配置文件 用户密码加密存储：
+https://blog.csdn.net/qq_24241631/article/details/80294144
+http://www.imooc.com/article/285087
 
 logback 配置详解（还需要继续搞）：
 https://www.jianshu.com/p/1ded57f6c4e3?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+slf4j及使用@Slf4j注解写日志继续研究【怎么确定该打的都打出来了，逐个确认每个jar组件怎么打日志】：
+https://projectlombok.org/api/lombok/extern/slf4j/Slf4j.html
+http://www.importnew.com/28494.html
+https://blog.csdn.net/duguxiaobiao/article/details/78988409
+分析启动日志（能否从开涛的教程分析？），分析springboot启动过程
 
 swagger
 1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
@@ -37,13 +48,9 @@ swagger
 
 周四：
 加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置
-
 log再搞一次，要完全配好【好像包已经有了，再结合教程看一下，日志的xml要配好】
-2.写好添加角色、用户的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
-4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 
 跨域的配置加上【要测试】
-0.1.日志配好（现在webSocket部分用到）；
 用我的batis目录的代码来建立dao层测试【继续搞mybatis代码分析】；
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
 5.看前后端合并、分离的部署（先搞合并的）
@@ -59,9 +66,6 @@ maven跑test搞清楚（为啥放开2个注释会有报错）
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
-1.MyBatis 配置文件 用户密码加密存储：
-https://blog.csdn.net/qq_24241631/article/details/80294144
-http://www.imooc.com/article/285087
 timestamp的使用还要精进，例如比较大小
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html

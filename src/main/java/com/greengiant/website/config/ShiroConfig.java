@@ -10,7 +10,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -26,8 +26,11 @@ public class ShiroConfig {
         // todo 如何动态配置拦截器？
         //todo 对比思考我在威盛电子时做的细粒度权限管理
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        //游客，开发权限
+        //todo 运维，调试完后应该加上限制
+        filterChainDefinitionMap.put("/swagger**", "anon");//todo 用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/actuator/**", "anon");
+        //游客，开发权限
+
         filterChainDefinitionMap.put("/guest/**", "anon");
         //用户，需要角色权限 “user”
         filterChainDefinitionMap.put("/user/**", "roles[user]");

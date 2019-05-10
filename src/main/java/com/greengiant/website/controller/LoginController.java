@@ -1,6 +1,7 @@
 package com.greengiant.website.controller;
 
 import com.greengiant.website.service.LoginService;
+import com.greengiant.website.service.RoleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,9 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
+
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
     public String notLogin() {
@@ -38,9 +42,7 @@ public class LoginController {
         // 从SecurityUtils里边创建一个 subject
         loginService.login(username, password);
         //根据权限，指定返回数据
-
-
-        return "权限错误！";
+        return roleService.getRole(username);
     }
 
     /**

@@ -1,21 +1,49 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
+周五：
+先把mybatis和logback的默认xml文件加上，slf4j注解或者引入logback的Logger
+1.把前后端分离配好（spring配置、jwt配置）；
+2.mybatis继续；
+3.日志继续【怎么确定该打的都打出来了】
+分析启动日志，分析springboot启动过程
+
+shiroFilterFactoryBean：
+https://blog.csdn.net/u012345283/article/details/44199791
+https://blog.csdn.net/lqzkcx3/article/details/78776555
+Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
+https://blog.csdn.net/u010361786/article/details/80138201
+
+EasyUI：
+1.单独jQuery版的前端跑起来；
+2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
+3.用Angular或者vue版的前端；
+https://www.cnblogs.com/jingmoxukong/p/10239821.html
+http://www.jeasyui.cn/download.html
+
+springboot+shiro+jwt：
+https://blog.csdn.net/u013615903/article/details/78781166
+https://blog.csdn.net/u012149181/article/details/79445758
+https://www.jianshu.com/p/0b1131be7ace
+
+mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
+1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
+
+swagger
+1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
+2.把swagger-ui.html从权限里面放开
+
 周四：
-把pagehelper看懂，分布式ID生成；
-把springboot+shiro打开的文章清掉；
+加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置
+
 log再搞一次，要完全配好【好像包已经有了，再结合教程看一下，日志的xml要配好】
-1.【集成前端后会不会有影响】，springboot+easyUI今天要搞清白；
 2.写好添加角色、用户的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
-3.swagger要能自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
-Spring boot 2.0 Actuator 的健康检查（默认有15项，都打开看一下：http://localhost:8080/actuator/beans）：
-https://www.jianshu.com/p/1aadc4c85f51
 
 跨域的配置加上【要测试】
 0.1.日志配好（现在webSocket部分用到）；
 用我的batis目录的代码来建立dao层测试【继续搞mybatis代码分析】；
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
-5.看前后端合并、分离的部署（先搞合并的），加easyUI
+5.看前后端合并、分离的部署（先搞合并的）
 6.整合并删除我的financial项目
 6.mybatis三剑客、flyway、druid、日志、加@Configuration注解；
 7.websocket继续学习，写几个demo（比较这个里面的session）：
@@ -25,6 +53,7 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？
 重新封装返回值【网上看别人的规范】前后端接口规范
 maven跑test搞清楚（为啥放开2个注释会有报错）
+yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
 1.MyBatis 配置文件 用户密码加密存储：
@@ -39,7 +68,6 @@ timestamp的使用还要精进，例如比较大小
 3.找到合适的模版（知乎上问，bootstrap的，最新的）；
 4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
 2.mybatis：（再思考chime的数据库注解）；
-swagger与shiro的协同测试；
 5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；
@@ -56,3 +84,11 @@ github能完成DevOps中的多少工作量？
 搭架子要把阿里那些最佳实践都包含进来
 OAuth2要做好
 Spring Boot Admin（与actuator关系？）
+Spring boot 2.0 Actuator 的健康检查（默认有15项，都打开看一下：http://localhost:8080/actuator/beans）：
+https://blog.csdn.net/voilet_bin/article/details/83028698
+https://www.jianshu.com/p/1aadc4c85f51
+mybatis pagehelper【需要搞清楚原理】：
+https://blog.csdn.net/justry_deng/article/details/82933941
+https://pagehelper.github.io/
+https://www.cnblogs.com/kangoroo/p/7998433.html
+【分析原理】swagger是一个流行的API开发框架，这个框架以“开放式API声明”（OpenAPI Specification，OAS）为基础，对整个API的开发周期都提供了相应的解决方案，是一个非常庞大的项目（包括设计、编码和测试，几乎支持所有语言）：https://blog.csdn.net/moshowgame/article/details/80265480

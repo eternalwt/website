@@ -16,7 +16,6 @@ import java.util.List;
 @RequestMapping("/hello")
 public class HelloController {
 
-    @SuppressWarnings("all")
     @Autowired
     private ShiroUserDao shiroUserDao;
 

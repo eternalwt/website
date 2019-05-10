@@ -11,6 +11,9 @@ public interface RoleDao {
 	String TABLE_NAME = "shiro_role_permission";
 	String ALL_FIELDS = "id, role_name, permission";
 
+
+	//void addRole();//todo
+
 	@Select("select " + ALL_FIELDS + " from " + TABLE_NAME)
 	List<Role> getRoleLst();
 }

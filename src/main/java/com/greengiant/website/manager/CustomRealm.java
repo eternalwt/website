@@ -4,6 +4,7 @@ import com.greengiant.website.dao.ShiroUserDao;
 import com.greengiant.website.dao.UserRoleDao;
 import com.greengiant.website.model.ShiroUser;
 import com.greengiant.website.model.UserRole;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次
@@ -42,7 +44,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         //todo 改成logger
-        System.out.println("————身份认证方法————");
+        log.info("————身份认证方法————");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 从数据库获取对应用户名密码的用户
         ShiroUser user = shiroUserDao.getUserByName(token.getUsername());
@@ -66,8 +68,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //todo 改成logger
-        System.out.println("————权限认证————");
+        log.info("————权限认证————");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //需要将 role 封装到 Set 作为 info.setRoles() 的参数

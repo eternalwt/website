@@ -1,5 +1,6 @@
 package com.greengiant.website.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,6 +10,7 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.util.concurrent.CopyOnWriteArraySet;
 
+@Slf4j
 @ServerEndpoint("/websocket/{id}/{name}")
 @RestController
 public class WebSocketController {
@@ -26,7 +28,7 @@ public class WebSocketController {
     @OnOpen
     public void onOpen(Session session, @PathParam("id") long id, @PathParam("name") String name) throws Exception {
         this.session = session;
-        System.out.println(this.session.getId());
+        log.info(this.session.getId());
         webSocketSet.add(this);
         LOGGER.info("Open a websocket. id={}, name={}", id, name);
     }

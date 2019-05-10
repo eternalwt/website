@@ -1,11 +1,11 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周五：
-先把mybatis和logback的默认xml文件加上，slf4j注解或者引入logback的Logger
+slf4j注解或者引入logback的Logger
 1.把前后端分离配好（spring配置、jwt配置）；
 2.mybatis继续；
 3.日志继续【怎么确定该打的都打出来了】
-分析启动日志，分析springboot启动过程
+分析启动日志（能否从开涛的教程分析？），分析springboot启动过程
 
 shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791
@@ -14,7 +14,7 @@ Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变L
 https://blog.csdn.net/u010361786/article/details/80138201
 
 EasyUI：
-1.单独jQuery版的前端跑起来；
+1.单独jQuery版的前端跑起来【访问index.html或者""、"/"能成功】；
 2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
 3.用Angular或者vue版的前端；
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
@@ -28,9 +28,12 @@ https://www.jianshu.com/p/0b1131be7ace
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
 
+logback 配置详解（还需要继续搞）：
+https://www.jianshu.com/p/1ded57f6c4e3?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
 swagger
 1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
-2.把swagger-ui.html从权限里面放开
+2.把swagger-ui.html从权限里面放开（尚未成功）
 
 周四：
 加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置

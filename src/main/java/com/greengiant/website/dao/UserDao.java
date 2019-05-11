@@ -42,6 +42,22 @@ public interface UserDao {
     User selectByPrimaryKey(Long id);
 
     @Select({
+            "select",
+            "id, user_name, password, password_salt, create_time, update_time",
+            "from auth_user",
+            "where user_name = #{username}"
+    })
+    @ConstructorArgs({
+            @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
+            @Arg(column="user_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="password_salt", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+            @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+    })
+    User selectByName(String username);
+
+    @Select({
         "select",
         "id, user_name, password, password_salt, create_time, update_time",
         "from auth_user"

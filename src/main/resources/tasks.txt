@@ -1,13 +1,14 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周日：
-1.把报错解决；
-2.把resultMap写好
+1.加jwt支持（单独加2个文件，把里面的代码逐行看懂）；
+2.把resultMap写好；
+3.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？
 5.把添加用户、角色等基本功能写好（Service、Controller）
 2.密码加密：HashedCredentialsMatcher
-2.写好添加角色、添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
+2.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 
 shiroFilterFactoryBean：

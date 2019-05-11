@@ -1,7 +1,7 @@
 package com.greengiant.website.shiro;
 
+import com.greengiant.website.dao.RoleDao;
 import com.greengiant.website.dao.UserDao;
-import com.greengiant.website.dao.UserRoleDao;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +23,7 @@ public class CustomRealm extends AuthorizingRealm {
 
     private UserDao userDao;
 
-    private UserRoleDao userRoleDao;
+    private RoleDao roleDao;
 
     @Autowired
     private void setUserDao(UserDao userDao) {//todo 把提示干掉
@@ -31,8 +31,8 @@ public class CustomRealm extends AuthorizingRealm {
     }
 
     @Autowired
-    private void setUserRoleDao(UserRoleDao userRoleDao) {
-        this.userRoleDao = userRoleDao;
+    private void setRoleDao(RoleDao roleDao) {
+        this.roleDao = roleDao;
     }
 
     /**
@@ -46,7 +46,7 @@ public class CustomRealm extends AuthorizingRealm {
         log.info("————身份认证方法————");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 从数据库获取对应用户名密码的用户
-        User user = userDao.getUserByName(token.getUsername());
+        User user = userDao.selectByName(token.getUsername());
         String password = "";
         if (null == user) {
             throw new AccountException("用户名不正确");
@@ -73,7 +73,7 @@ public class CustomRealm extends AuthorizingRealm {
         //需要将 role 封装到 Set 作为 info.setRoles() 的参数
         Set<String> set = new HashSet<>();
         //获得该用户角色
-        Role role = userRoleDao.getUserRoleByName(username);
+        Role role = roleDao.selectByName(username);
         if (role != null) {
             set.add(role.getRoleName());
             //设置该用户拥有的角色

@@ -101,6 +101,8 @@ github能完成DevOps中的多少工作量？
 要有把service独立出来，maven多module打包的能力
 搭架子要把阿里那些最佳实践都包含进来
 OAuth2要做好
+DefaultFilter 枚举类原理值得仔细分析
+
 Spring Boot Admin（与actuator关系？）
 Spring boot 2.0 Actuator 的健康检查（默认有15项，都打开看一下：http://localhost:8080/actuator/beans）：
 https://blog.csdn.net/voilet_bin/article/details/83028698

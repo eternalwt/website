@@ -6,8 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.greengiant.website.utils.CaptchaUtil;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -20,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+@Slf4j
 @Controller
 @RequestMapping("/auth")
 public class AuthController {
-	private static Log logger = LogFactory.getLog(AuthController.class);
-	
+
 	@RequestMapping("/login")
 	public String login()
 	{
@@ -56,7 +55,7 @@ public class AuthController {
         }
         try {
             subject.login(token);
-            logger.info("[" + username + "]" + " login successful...");
+            log.info("[" + username + "]" + " login successful...");
         } catch (UnknownAccountException e) {
         	//TODO 是否抽到枚举类型的vo里面？
             return "UnknownAccountException";

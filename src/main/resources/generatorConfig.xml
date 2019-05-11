@@ -65,7 +65,6 @@
                 type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
                 type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
                 type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口-->
-
         <!-- targetPackage：mapper接口dao生成的位置 -->
         <javaClientGenerator type="ANNOTATEDMAPPER" targetPackage="com.greengiant.website.dao" targetProject="./src/main/java">
             <!-- enableSubPackages:是否让schema作为包的后缀 -->

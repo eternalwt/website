@@ -1,11 +1,12 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
-周六：
-再看RBAC 5个表怎么跟shiro对应起来？
-把添加用户、角色等基本功能写好（Service、Controller）
-1.把前后端分离配好（spring配置、jwt配置），前后端数据传递格式定好【看一眼chime代码】；
-2.继续；
-日志：把日期字段去掉，看看有哪些字段可以选
+周日：
+1.把报错解决；
+2.把resultMap写好
+3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
+4.再看RBAC 5个表怎么跟shiro对应起来？
+5.把添加用户、角色等基本功能写好（Service、Controller）
+2.密码加密：HashedCredentialsMatcher
 2.写好添加角色、添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 
@@ -22,13 +23,19 @@ EasyUI：
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
 http://www.jeasyui.cn/download.html
 
+最初配通springboot+shiro的文档：
+https://blog.csdn.net/weixin_38132621/article/details/80216056
 springboot+shiro+jwt：
 https://blog.csdn.net/u013615903/article/details/78781166
 https://blog.csdn.net/u012149181/article/details/79445758
 https://www.jianshu.com/p/0b1131be7ace
-session共享采用shiro-redis的方案：
+session共享采用shiro-redis的方案（修改Session获取方式）：
+https://cloud.tencent.com/developer/article/1342794
 https://blog.csdn.net/haoyuyang/article/details/80036989
 https://blog.csdn.net/u013615903/article/details/78781166
+springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
+https://blog.csdn.net/qq_32786139/article/details/82658197
+shiro和springboot流程的完全理解是我现在生产力提升最大的障碍，相比之下多线程那些反而没那么难了，当然并发也还需要相当大的精力
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
@@ -52,21 +59,24 @@ https://projectlombok.org/api/lombok/extern/slf4j/Slf4j.html
 http://www.importnew.com/28494.html
 https://blog.csdn.net/duguxiaobiao/article/details/78988409
 分析启动日志（能否从开涛的教程分析？），分析springboot启动过程
+是否有必要把error单独打印到单独的文件？可能需要借助过滤器：https://blog.csdn.net/zzzgd_666/article/details/80458444
+从控制台给logger传参数【部署】
+logger和root：https://www.cnblogs.com/muhezi/p/4503934.html
+日志：看看有哪些字段可以选（确保线程相关的一定不能掉，还有请求id等）
 
 swagger
 1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
-2.把swagger-ui.html从权限里面放开（尚未成功）
+2.把swagger-ui.html从权限里面放开【尚未成功】
 
 周四：
 加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置
-log再搞一次，要完全配好【好像包已经有了，再结合教程看一下，日志的xml要配好】
 
 跨域的配置加上【要测试】
 用我的batis目录的代码来建立dao层测试【继续搞mybatis代码分析】；
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
 5.看前后端合并、分离的部署（先搞合并的）
 6.整合并删除我的financial项目
-6.日志、加@Configuration注解；
+6.加@Configuration注解；
 7.websocket继续学习，写几个demo（比较这个里面的session）：
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084

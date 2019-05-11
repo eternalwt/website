@@ -8,7 +8,6 @@
        使用springProperty才可使用application.yml中的值 可以设置默认值
 -->
 <configuration scan="true" scanPeriod="60 seconds">
-
     <!-- log base path -->
     <springProperty scope="context" name="logPath" source="log.path" defaultValue="logs"/>
     <!-- log name -->
@@ -36,7 +35,7 @@
             <totalSizeCap>${totalSizeCap}</totalSizeCap>
         </rollingPolicy>
         <encoder>
-            <pattern>%d{yyyyMMdd HH:mm:ss.SSS} %X{LOG_ID} [%thread] %-5level %logger{100}.%method\(\):%L - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} %X{LOG_ID} [%thread] %-5level %logger{100}.%method\(\):%L - %msg%n</pattern>
         </encoder>
     </appender>
 
@@ -54,19 +53,15 @@
         <!--withJansi>true</withJansi-->
         <encoder>
             <!--%d{yyyy-MM-dd HH:mm:ss.SSS} -%5p ${PID:-} [%15.15t] %-40.40logger{39} : %m%n-->
-            <pattern>%boldCyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) - %boldRed(%5p) %blue([%10.10t]) %magenta(%-35.35logger{20}) %yellow(%2M) %green(%2L) : %msg%n</pattern>
+            <pattern>%boldCyan(%d{HH:mm:ss.SSS}) - %boldRed(%5p) %blue([%10.10t]) %magenta(%-35.35logger{20}) %yellow(%2M) %green(%2L) : %msg%n</pattern>
             <!--<pattern>%d{yyyyMMddHHmmss} [%thread] [%c %2M %2L] %-3p - %m%n</pattern>-->
         </encoder>
     </appender>
 
+    <!-- 日志级别 -->
     <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
     </root>
-
-<!--    <logger name="com.easonjim.clsapi.aspect.LogsAspect" level="debug">-->
-<!--        <appender-ref ref="api_call_file"/>-->
-<!--    </logger>-->
-    <logger name="org.springframework.web.servlet" level="info"/>
 
 </configuration>

@@ -1,7 +1,7 @@
-package com.greengiant.website.manager;
+package com.greengiant.website.shiro;
 
-import com.greengiant.website.model.ShiroUser;
-import com.greengiant.website.dao.user.UserDao;
+import com.greengiant.website.dao.UserDao;
+import com.greengiant.website.pojo.model.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,11 +16,11 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.util.List;
 
 @Deprecated
-public class MySQLRealm implements Realm {
+public class CustomAuthorizingRealm implements Realm {
 
 	private UserDao userDao;
 	
-	public MySQLRealm()
+	public CustomAuthorizingRealm()
 	{
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("../applicationContext.xml");
@@ -44,10 +44,10 @@ public class MySQLRealm implements Realm {
         String password = new String((char[])token.getCredentials());
         
     	boolean isUserExists = false;
-    	ShiroUser currUser = null;
-    	List<ShiroUser> shiroUsers = userDao.getShiroUserList();
-		for (ShiroUser shiroUser : shiroUsers) {
-			if (shiroUser.getUsername().equals(username))
+    	User currUser = null;
+    	List<User> shiroUsers = userDao.selectAll();
+		for (User shiroUser : shiroUsers) {
+			if (shiroUser.getUserName().equals(username))
 			{
 				isUserExists = true;
 				currUser = shiroUser;

@@ -2,8 +2,7 @@ package com.greengiant.website.service;
 
 import com.greengiant.website.dao.RoleDao;
 import com.greengiant.website.dao.UserRoleDao;
-import com.greengiant.website.model.Role;
-import com.greengiant.website.model.UserRole;
+import com.greengiant.website.pojo.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,19 +12,16 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleDao roleDao;
 
-    @Autowired
-    private UserRoleDao userRoleDao;
-
     @Override
     public String getRole(String username) {
         //根据权限，指定返回数据
-        UserRole role = userRoleDao.getUserRoleByName(username);
+        Role role = roleDao.getUserRoleByName(username);
         if (role != null) {
             //todo 重构
-            if ("user".equals(role.getRolename())) {
+            if ("user".equals(role.getRoleName())) {
                 return "欢迎登陆";
             }
-            if ("admin".equals(role.getRolename())) {
+            if ("admin".equals(role.getRoleName())) {
                 return "欢迎来到管理员页面";
             }
         }

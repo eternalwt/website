@@ -1,31 +1,26 @@
 package com.greengiant.website.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import com.greengiant.website.model.Role;
 import com.greengiant.website.dao.RoleDao;
-import com.greengiant.website.model.ShiroUser;
-import com.greengiant.website.dao.ShiroUserDao;
-import com.greengiant.website.model.UserRole;
+import com.greengiant.website.dao.UserDao;
 import com.greengiant.website.dao.UserRoleDao;
+import com.greengiant.website.pojo.model.Role;
 import org.apache.shiro.authz.annotation.RequiresRoles;
-import org.apache.shiro.crypto.SecureRandomNumberGenerator;
-import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
 @RequestMapping("/user")
 public class ShiroUserController {
 
 	@Autowired
-	private ShiroUserDao shiroUserDao;
+	private UserDao userDao;
 	
 	@Autowired
 	private RoleDao roleDao;
@@ -41,11 +36,11 @@ public class ShiroUserController {
 	@RequestMapping("/adduser")
 	public ModelAndView adduser()
 	{
-		List<Role> rolesLst = roleDao.getRoleLst();
+		List<Role> rolesLst = roleDao.selectAll();
 		List<String> roleLst = new ArrayList<String>();
 		for (int i = 0; i < rolesLst.size(); i++)
 		{
-			roleLst.add(rolesLst.get(i).getRolename());
+			roleLst.add(rolesLst.get(i).getRoleName());
 		}
 		
 		ModelAndView modelAndView = new ModelAndView("user/adduser");  
@@ -63,22 +58,22 @@ public class ShiroUserController {
 		String password = request.getParameter("password");
 		String rolename = request.getParameter("role");
 		
-		//TODO 这里也要思考返回值是否用枚举的问题
-		if (shiroUserDao.getUserByName(username) != null)
-		{
-			return "duplicatedUser";
-		}
-		
-		ShiroUser user = new ShiroUser();
-		user.setUsername(username);
-		String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
-		String md5Psw = new Md5Hash(password, salt, 2).toString();
-		user.setPassword(md5Psw);
-		user.setPasswordSalt(salt);
-		
-		UserRole userRole = new UserRole();
-		userRole.setUsername(username);
-		userRole.setRolename(rolename);
+//		//TODO 这里也要思考返回值是否用枚举的问题
+//		if (userDao.getUserByName(username) != null)
+//		{
+//			return "duplicatedUser";
+//		}
+//
+//		ShiroUser user = new ShiroUser();
+//		user.setUsername(username);
+//		String salt = new SecureRandomNumberGenerator().nextBytes().toHex();
+//		String md5Psw = new Md5Hash(password, salt, 2).toString();
+//		user.setPassword(md5Psw);
+//		user.setPasswordSalt(salt);
+//
+//		UserRole userRole = new UserRole();
+//		userRole.setUsername(username);
+//		userRole.setRolename(rolename);
 		
 //		//TODO 这里是直接用的transactionManager，后面再看看声明式和配置式事务管理，还有抽服务层的问题
 //		DefaultTransactionDefinition def = new DefaultTransactionDefinition();

@@ -1,7 +1,5 @@
 package com.greengiant.website.service;
 
-import com.greengiant.website.dao.UserRoleDao;
-import com.greengiant.website.model.UserRole;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;

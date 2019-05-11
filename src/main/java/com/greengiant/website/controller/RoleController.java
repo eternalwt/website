@@ -1,7 +1,6 @@
 package com.greengiant.website.controller;
 
-import com.greengiant.website.model.Role;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.greengiant.website.pojo.model.Role;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;

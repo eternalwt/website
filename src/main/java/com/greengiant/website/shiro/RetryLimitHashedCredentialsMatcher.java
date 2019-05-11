@@ -1,4 +1,4 @@
-package com.greengiant.website.manager;
+package com.greengiant.website.shiro;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

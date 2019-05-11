@@ -1,11 +1,10 @@
 package com.greengiant.website.config;
 
-import com.greengiant.website.manager.CustomRealm;
+import com.greengiant.website.shiro.CustomRealm;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.apache.shiro.mgt.SecurityManager;
 
 import java.util.LinkedHashMap;

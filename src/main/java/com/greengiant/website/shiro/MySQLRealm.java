@@ -1,9 +1,7 @@
-package com.greengiant.website.manager;
+package com.greengiant.website.shiro;
 
-import java.util.List;
-
-import com.greengiant.website.model.ShiroUser;
-import com.greengiant.website.dao.user.UserDao;
+import com.greengiant.website.dao.UserDao;
+import com.greengiant.website.pojo.model.User;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -15,22 +13,26 @@ import org.apache.shiro.realm.Realm;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.util.List;
+
 @Deprecated
-public class CustomAuthorizingRealm implements Realm {
+public class MySQLRealm implements Realm {
 
 	private UserDao userDao;
 	
-	public CustomAuthorizingRealm()
+	public MySQLRealm()
 	{
 		@SuppressWarnings("resource")
 		ApplicationContext context = new ClassPathXmlApplicationContext("../applicationContext.xml");
 		userDao = (UserDao) context.getBean("userDao");
 	}
-	
+
+	@Override
 	public String getName() {
 		return "MySQLRealm";
 	}
 
+	@Override
 	public boolean supports(AuthenticationToken token) {
 		// 仅支持UsernamePasswordToken类型的Token
 		return token instanceof UsernamePasswordToken;
@@ -42,10 +44,10 @@ public class CustomAuthorizingRealm implements Realm {
         String password = new String((char[])token.getCredentials());
         
     	boolean isUserExists = false;
-    	ShiroUser currUser = null;
-    	List<ShiroUser> shiroUsers = userDao.getShiroUserList();
-		for (ShiroUser shiroUser : shiroUsers) {
-			if (shiroUser.getUsername().equals(username))
+    	User currUser = null;
+    	List<User> shiroUsers = userDao.selectAll();
+		for (User shiroUser : shiroUsers) {
+			if (shiroUser.getUserName().equals(username))
 			{
 				isUserExists = true;
 				currUser = shiroUser;

@@ -1,12 +1,17 @@
 package com.greengiant.website.service;
 
+import com.greengiant.website.dao.RoleDao;
 import com.greengiant.website.dao.UserRoleDao;
+import com.greengiant.website.model.Role;
 import com.greengiant.website.model.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RoleServiceImpl implements RoleService {
+
+    @Autowired
+    private RoleDao roleDao;
 
     @Autowired
     private UserRoleDao userRoleDao;
@@ -26,4 +31,11 @@ public class RoleServiceImpl implements RoleService {
         }
         return "获取角色信息失败";
     }
+
+    @Override
+    public void addRole(Role role) {
+        //UserRole role = roleDao.();
+        //userRoleDao.
+    }
+
 }

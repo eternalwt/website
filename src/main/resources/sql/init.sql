@@ -1,49 +1,52 @@
-drop database if exists shiro;
-create database shiro default character set utf8mb4 collate utf8mb4_unicode_ci;
-use shiro;
+drop database if exists website;
+create database website default character set utf8mb4 collate utf8mb4_unicode_ci;
+use website;
 
-drop table if exists shiro_user;
-create table shiro_user(
-  id bigint auto_increment,
-  username varchar(100),
-  password varchar(100),
-  password_salt varchar(100),
+drop table if exists auth_user;
+create table auth_user(
+  id bigint auto_increment primary key,
+  user_name varchar(64),
+  password varchar(128),
+  password_salt varchar(128),
   create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  primary key(id)
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
-create unique index idx_user_username on shiro_user(username); -- todo 不要这样写
 
-drop table if exists shiro_user_role;
-create table shiro_user_role(
-  id bigint auto_increment,
-  username varchar(100),
-  role_name varchar(100),
+drop table if exists auth_role;
+create table auth_role(
+    id bigint auto_increment primary key,
+    role_name varchar(64),
+    description varchar(256),
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+drop table if exists auth_permission;
+create table auth_permission(
+    id bigint auto_increment primary key,
+    permission_name varchar(64),
+    description varchar(256),
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
+
+drop table if exists auth_user_role;
+create table auth_user_role(
+  id bigint auto_increment primary key,
+  user_id bigint not null,
+  role_id bigint not null,
   create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  primary key(id)
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
-create unique index idx_user_role on shiro_user_role(username, role_name);
 
-drop table if exists shiro_role_permission;
-create table shiro_role_permission(
-  id bigint auto_increment,
-  role_name varchar(100),
-  permission varchar(100),
+drop table if exists auth_role_permission;
+create table auth_role_permission(
+  id bigint auto_increment primary key,
+  role_id bigint not null,
+  permission_id bigint not null,
   create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  primary key(id)
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
-create unique index idx_role_permission on shiro_role_permission(role_name, permission);
 
-insert into shiro_user(username,password)values('zhang','123');
-insert into shiro_user_role(username, role_name) values('zhang', 'admin');
-
--- 一个测试用的表，用完后删掉
-drop table if exists student;
-create table student(
-   id int not null auto_increment,
-   name varchar(20) not null,
-   age int not null,
-   primary key(id)
-) ENGINE=InnoDB;
+insert into auth_user(user_name, password)values('zhang','123');
+-- insert into shiro_user_role(username, role_name) values('zhang', 'admin');

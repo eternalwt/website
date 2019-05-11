@@ -1,8 +1,11 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
-周五：
-1.把前后端分离配好（spring配置、jwt配置）；
-2.mybatis继续；
+周六：
+再看RBAC 5个表怎么跟shiro对应起来？
+把添加用户、角色等基本功能写好（Service、Controller）
+1.把前后端分离配好（spring配置、jwt配置），前后端数据传递格式定好【看一眼chime代码】；
+2.继续；
+日志：把日期字段去掉，看看有哪些字段可以选
 2.写好添加角色、添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 
@@ -33,6 +36,14 @@ mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
 3.MyBatis 配置文件 用户密码加密存储：
 https://blog.csdn.net/qq_24241631/article/details/80294144
 http://www.imooc.com/article/285087
+4.mybatis三剑客：
+
+MyBatis Generator：
+http://www.mybatis.org/generator/
+https://www.jianshu.com/p/e09d2370b796
+https://www.cnblogs.com/zcy_soft/p/3357980.html
+5.flyway
+6.druid
 
 logback 配置详解（还需要继续搞）：
 https://www.jianshu.com/p/1ded57f6c4e3?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
@@ -55,7 +66,7 @@ log再搞一次，要完全配好【好像包已经有了，再结合教程看�
 2.DAO层100%单元测试覆盖【先把单元测试搭起来，用mvn命令跑起来，CI、DevOps一点点往前推进】：https://www.cnblogs.com/lxnlxn/p/5996707.html
 5.看前后端合并、分离的部署（先搞合并的）
 6.整合并删除我的financial项目
-6.mybatis三剑客、flyway、druid、日志、加@Configuration注解；
+6.日志、加@Configuration注解；
 7.websocket继续学习，写几个demo（比较这个里面的session）：
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084
@@ -67,6 +78,7 @@ yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
 timestamp的使用还要精进，例如比较大小
+再思考一下上次、下载原理，springmvc需要精进
 项目启动时数据库脚本自动执行，这个再思考一下
 教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
 写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）
@@ -82,7 +94,6 @@ timestamp的使用还要精进，例如比较大小
 11.玩玩github的开源代码和blog
 12.mybatis和spring的测试必须要搞的非常熟
 13.加测试例、加业务逻辑工程
-搭建环境搞半天，启动MYSQL、判断、连接可用又搞半天，这里都是可以用DevOps解决的领域
 注意代码规范
 手机上传的时候怎么用消息队列？
 github能完成DevOps中的多少工作量？
@@ -99,3 +110,10 @@ https://blog.csdn.net/justry_deng/article/details/82933941
 https://pagehelper.github.io/
 https://www.cnblogs.com/kangoroo/p/7998433.html
 【分析原理】swagger是一个流行的API开发框架，这个框架以“开放式API声明”（OpenAPI Specification，OAS）为基础，对整个API的开发周期都提供了相应的解决方案，是一个非常庞大的项目（包括设计、编码和测试，几乎支持所有语言）：https://blog.csdn.net/moshowgame/article/details/80265480
+
+关于RBAC权限控制：
+1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；
+2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
+3.当年微软的那一套表好像很复杂？有空再找一下；
+4.复杂应用可能不止这5个表，例如还需要分用户组和角色继承关系：https://blog.csdn.net/yangxuesong5555/article/details/79417210
+这5个表怎么跟shiro对应起来？

@@ -1,7 +1,7 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周日：
-1.加jwt支持（单独加2个文件，把里面的代码逐行看懂）；
+1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂）；
 2.把resultMap写好；
 3.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；

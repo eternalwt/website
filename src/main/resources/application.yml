@@ -6,6 +6,11 @@ spring:
     password: eternal2002@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
+    # 要能够测出来有没有的区别
+    cache:
+      ehcache:
+        config: ehcache.xml
+
 #  # frontend
 #  mvc:
 #    view:

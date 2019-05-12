@@ -4,7 +4,17 @@
 1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
 https://blog.csdn.net/qq_32786139/article/details/82658197
 https://blog.csdn.net/qq_32786139/article/details/82658197
-引入ehcache
+【把jwt和前后端分离配好后，完整测一波】
+Ehcache【要能最接近生产环境测试】:
+https://www.jianshu.com/p/05f3ede0b389
+https://blog.csdn.net/qq_28988969/article/details/78210873
+https://blog.csdn.net/qq_28143647/article/details/79789368
+【这个文章有注入缓存管理器的用法】https://blog.csdn.net/qq_32786139/article/details/82658197
+使用@Cacheable把数据存进缓存：切换为redis后可以这样搞吗？了解这个注解的细节
+Spring定义了CacheManager和Cache接口统一不同的缓存技术。其中CacheManager是Spring提供的各种缓存技术的抽象接口【要理解这种设计方式，再思考一下】
+ehcache3、javax.cache API（JSR-107）需要搞清楚
+ShiroFilterFactoryBean是怎么加载和替换默认的的？
+
 2.把resultMap写好；
 3.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
@@ -13,6 +23,7 @@ https://blog.csdn.net/qq_32786139/article/details/82658197
 2.密码加密：HashedCredentialsMatcher
 2.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+【所有配置文件是怎么读取的】
 
 shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791

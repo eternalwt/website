@@ -20,7 +20,6 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次
-
     private UserDao userDao;
 
     private RoleDao roleDao;
@@ -43,8 +42,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-        log.info("————身份认证方法————");
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        log.info("authenticate for:{}", token.getUsername());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
         String password = "";
@@ -67,8 +66,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        log.info("————权限认证————");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
+        log.info("authorization for: {}" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //需要将 role 封装到 Set 作为 info.setRoles() 的参数
         Set<String> set = new HashSet<>();

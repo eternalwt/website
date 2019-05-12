@@ -1,7 +1,10 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 
 周日：
-1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂）；
+1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
+https://blog.csdn.net/qq_32786139/article/details/82658197
+https://blog.csdn.net/qq_32786139/article/details/82658197
+引入ehcache
 2.把resultMap写好；
 3.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
@@ -113,6 +116,9 @@ github能完成DevOps中的多少工作量？
 搭架子要把阿里那些最佳实践都包含进来
 OAuth2要做好
 DefaultFilter 枚举类原理值得仔细分析
+
+项目的包划分：controller、service、manager、dao、pojo(model、vo等)、config、filter、utils、shiro、websocket，
+还可以有event、handler、entity、exception、common、global等
 
 Spring Boot Admin（与actuator关系？）
 Spring boot 2.0 Actuator 的健康检查（默认有15项，都打开看一下：http://localhost:8080/actuator/beans）：

@@ -5,12 +5,14 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheManager;
 
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
+    //todo 先用ehcache，再用win10 linux子系统的redis
     private Cache<String, AtomicInteger> passwordRetryCache;
 
     public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
@@ -28,7 +30,8 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         }
         if(retryCount.incrementAndGet() > 5) {
             //if retry count > 5 throw
-            throw new ExcessiveAttemptsException();
+            //todo 加过期策略，现在没有过期策略
+            throw new ExcessiveAttemptsException("您已连续错误达" + 5 + "次！请N分钟后再试");
         }
 
         boolean matches = super.doCredentialsMatch(token, info);
@@ -36,6 +39,10 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             //clear retry count
             passwordRetryCache.remove(username);
         }
+        else {
+            throw new IncorrectCredentialsException("密码错误，已错误" + retryCount + "次，最多错误" + 5 + "次");
+        }
+
         return matches;
     }
 }

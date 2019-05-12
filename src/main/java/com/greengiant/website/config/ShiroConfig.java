@@ -6,12 +6,13 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
 import org.apache.shiro.mgt.SecurityManager;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-//@Configuration
+@Configuration
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -28,17 +29,17 @@ public class ShiroConfig {
         //todo 对比思考我在威盛电子时做的细粒度权限管理
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //todo 运维，调试完后应该加上限制
-        filterChainDefinitionMap.put("/swagger**", "anon");//todo 用2个*配置也不行，再思考一下
+        //todo 用2个*配置也不行，再思考一下
+        filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");
         //游客，开发权限
-
         filterChainDefinitionMap.put("/guest/**", "anon");
+        //开放登陆接口
+        filterChainDefinitionMap.put("/login", "anon");
         //用户，需要角色权限 “user”
         filterChainDefinitionMap.put("/user/**", "roles[user]");
         //管理员，需要角色权限 “admin”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
-        //开放登陆接口
-        filterChainDefinitionMap.put("/login", "anon");
         //其余接口一律拦截
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
         filterChainDefinitionMap.put("/**", "authc");

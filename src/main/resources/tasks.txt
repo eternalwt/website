@@ -1,19 +1,49 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
+【我的后端和脚手架没有突破，所以一直没办法接项目】
 
 周日：
 1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
 https://blog.csdn.net/qq_32786139/article/details/82658197
 https://blog.csdn.net/qq_32786139/article/details/82658197
 【把jwt和前后端分离配好后，完整测一波】
-Ehcache【要能最接近生产环境测试】:
+jwt工程里面用的token不一样，注意对比一下，并分析源代码
+registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");：https://my.oschina.net/silenceyawen/blog/1609603
+
+spring和Java Enterprise标签可以看了
+【观察】配置了数据源和activiti后，启动项目，activiti 的各个服务组件就已经被加入到spring容器中了
+run菜单里的Endpoints
+
+框架搭好后，shiro需要学习第二遍。springmvc+shiro彻底搞清楚、知道怎么调试后，会是一个大的突破
+不能够快速调试，在新工作中也会遇到困难
+Spring源码解析——如何阅读源码：
+https://www.cnblogs.com/xing901022/p/4178963.html
+https://blog.csdn.net/qq_27409289/article/details/73696207
+https://baijiahao.baidu.com/s?id=1609595005078804580&wfr=spider&for=pc
+实现IoC容器：
+https://www.cnblogs.com/dooor/p/5346333.html
+https://chenguanwei2008.iteye.com/blog/361558
+https://cloud.tencent.com/developer/article/1422428
+https://www.jianshu.com/p/d6991030d84d?jdyscene=chat
+https://www.jianshu.com/p/22863e6c1210
+https://blog.csdn.net/u010994169/article/details/71169986
+
+整个shiro里cache的使用？
+Ehcache看到这里了：https://blog.csdn.net/qq_32786139/article/details/82658197
+Ehcache【要能最接近生产环境测试】【先得搞清楚shiro自己的cache】:
 https://www.jianshu.com/p/05f3ede0b389
 https://blog.csdn.net/qq_28988969/article/details/78210873
 https://blog.csdn.net/qq_28143647/article/details/79789368
+开涛的例子中，为啥要使用单例的缓存？
 【这个文章有注入缓存管理器的用法】https://blog.csdn.net/qq_32786139/article/details/82658197
 使用@Cacheable把数据存进缓存：切换为redis后可以这样搞吗？了解这个注解的细节
 Spring定义了CacheManager和Cache接口统一不同的缓存技术。其中CacheManager是Spring提供的各种缓存技术的抽象接口【要理解这种设计方式，再思考一下】
 ehcache3、javax.cache API（JSR-107）需要搞清楚
-ShiroFilterFactoryBean是怎么加载和替换默认的的？
+ShiroFilterFactoryBean是怎么加载和替换默认的的？【如果可以看容器里面的对象，可以进去之前看看，之后再看看】
+【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
+Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
+吐血整理 20 道 Spring Boot 面试题：https://www.jianshu.com/p/63ad69c480fe/
+Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
+
 
 2.把resultMap写好；
 3.前端ajax写好；
@@ -25,11 +55,19 @@ ShiroFilterFactoryBean是怎么加载和替换默认的的？
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 【所有配置文件是怎么读取的】
 
+必备功能：分享、OAuth2
+
 shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791
 https://blog.csdn.net/lqzkcx3/article/details/78776555
 Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
 https://blog.csdn.net/u010361786/article/details/80138201
+
+FactoryBean：通过使用FactoryBean，我们可以得到不同类型的对象实例。这也就是我们在AOP中通过设置calss为ProxyFactoryBean可以返回不同类型的业务对象的原理：https://www.cnblogs.com/quanyongan/p/4133724.html
+mysql的geometry扩展：
+https://www.linuxidc.com/Linux/2018-09/154191.htm
+https://www.jianshu.com/p/d6bf587389f1
+@Bean注解与applicationContext.getBean的联系区别
 
 EasyUI：
 1.单独jQuery版的前端跑起来【访问index.html或者""、"/"能成功】；
@@ -78,6 +116,10 @@ https://blog.csdn.net/duguxiaobiao/article/details/78988409
 从控制台给logger传参数【部署】
 logger和root：https://www.cnblogs.com/muhezi/p/4503934.html
 日志：看看有哪些字段可以选（确保线程相关的一定不能掉，还有请求id等）
+logback Filter 过滤器：
+https://blog.csdn.net/ryo1060732496/article/details/84349835
+https://blog.csdn.net/dyc87112/article/details/84349299
+mySql---logback日志写入数据库(mysql)配置【appender原理】：https://www.cnblogs.com/chihirotan/p/6185547.html
 
 swagger
 1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；

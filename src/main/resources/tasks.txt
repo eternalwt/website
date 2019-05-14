@@ -2,6 +2,8 @@
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
 周日：
+权限吧静态页面的目录放开
+@RequestBody用起来
 1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
 https://blog.csdn.net/qq_32786139/article/details/82658197
 https://blog.csdn.net/qq_32786139/article/details/82658197
@@ -9,7 +11,9 @@ https://blog.csdn.net/qq_32786139/article/details/82658197
 jwt工程里面用的token不一样，注意对比一下，并分析源代码
 registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");：https://my.oschina.net/silenceyawen/blog/1609603
 
+EasyUI可以用起来了
 spring和Java Enterprise标签可以看了
+activiti从6.0上面的版本开始搞
 【观察】配置了数据源和activiti后，启动项目，activiti 的各个服务组件就已经被加入到spring容器中了
 run菜单里的Endpoints
 
@@ -44,6 +48,7 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 吐血整理 20 道 Spring Boot 面试题：https://www.jianshu.com/p/63ad69c480fe/
 Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
 
+要敏捷
 
 2.把resultMap写好；
 3.前端ajax写好；
@@ -56,6 +61,7 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 【所有配置文件是怎么读取的】
 
 必备功能：分享、OAuth2
+看看阿里云
 
 shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791
@@ -69,12 +75,18 @@ https://www.linuxidc.com/Linux/2018-09/154191.htm
 https://www.jianshu.com/p/d6bf587389f1
 @Bean注解与applicationContext.getBean的联系区别
 
+DataSource的configuration，包括DataSource和DataSourceTransactionManager两个Bean
+
 EasyUI：
 1.单独jQuery版的前端跑起来【访问index.html或者""、"/"能成功】；
 2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
 3.用Angular或者vue版的前端；
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
 http://www.jeasyui.cn/download.html
+
+简单快速的用SpringBoot访问静态资源（图片、html）【用thymeleaf的方式】：https://blog.csdn.net/qq_36481052/article/details/79075214
+Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.net/wangmx1993328/article/details/81054474
+用yml、properties文件配置静态页面（这种方式更优雅）：https://blog.csdn.net/Mr_yangzc/article/details/80805035
 
 最初配通springboot+shiro的文档：
 https://blog.csdn.net/weixin_38132621/article/details/80216056
@@ -90,7 +102,7 @@ springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache�
 https://blog.csdn.net/qq_32786139/article/details/82658197
 shiro和springboot流程的完全理解是我现在生产力提升最大的障碍，相比之下多线程那些反而没那么难了，当然并发也还需要相当大的精力
 
-mybatis配置（除了模板以外怎么知道还能加哪些标签？）：
+mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
 2.mybatisPlus需要看吗
 3.MyBatis 配置文件 用户密码加密存储：
@@ -127,6 +139,8 @@ swagger
 
 周四：
 加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置
+整理一下utils出来，例如uuid。如果appache common有就更好
+ObjectMapper也autowire，这样有没有问题？
 
 跨域的配置加上【要测试】
 用我的batis目录的代码来建立dao层测试【继续搞mybatis代码分析】；
@@ -143,7 +157,7 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 maven跑test搞清楚（为啥放开2个注释会有报错）
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
-我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；2.用的底层的HttpServletRequest、PlatformTransactionManager替换一下
+我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
 timestamp的使用还要精进，例如比较大小
 再思考一下上次、下载原理，springmvc需要精进
 项目启动时数据库脚本自动执行，这个再思考一下
@@ -182,6 +196,18 @@ https://blog.csdn.net/justry_deng/article/details/82933941
 https://pagehelper.github.io/
 https://www.cnblogs.com/kangoroo/p/7998433.html
 【分析原理】swagger是一个流行的API开发框架，这个框架以“开放式API声明”（OpenAPI Specification，OAS）为基础，对整个API的开发周期都提供了相应的解决方案，是一个非常庞大的项目（包括设计、编码和测试，几乎支持所有语言）：https://blog.csdn.net/moshowgame/article/details/80265480
+
+ConfigClusterResolver - Resolving eureka endpoints via configuration
+HttpServletrequest 与HttpServletResponse总结：https://www.cnblogs.com/liuyandeng/p/5336649.html
+SpringMVC是怎么封装HttpServletRequest的？数据是怎么封装的？controller是怎么被调用的？
+@requestbody和httpServletRequest区别：https://www.oschina.net/question/2491333_2283678
+public interface HttpServletRequest extends ServletRequest {
+    String BASIC_AUTH = "BASIC";
+    String FORM_AUTH = "FORM";
+    String CLIENT_CERT_AUTH = "CLIENT_CERT";
+    String DIGEST_AUTH = "DIGEST";
+将我的项目中HttpServletRequest都过一遍，都干掉。另外：参数中既有request又有response的怎么理解？
+
 
 关于RBAC权限控制：
 1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；

@@ -1,8 +1,37 @@
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
+
+用配置文件配DataSource，这一块还是没有搞明白（@Configuration、properties文件、xml三种配置方式的代码分析）
+能看到logback启动打的日志吗？我看公司项目有
+
+把我的activiti工程上传。我的activiti demo为啥没启动起来？先检查一下
+Error creating bean with name 'requestMappingHandlerMapping'：这种错误可能是少了包
+
+jwt token过期重发机制搞清楚
+
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+postman：form-data、x-www-form-urlencoded、raw、binary分别对应的前端传递方式？【协议层面的东西】
+https://blog.csdn.net/xybelieve1990/article/details/81111786
+postman的mock server功能了解一下
+
+CommandLineRunner（源码）：
+https://blog.csdn.net/qq_26323323/article/details/80856973
+https://www.jianshu.com/p/5d4ffe267596
+https://www.cnblogs.com/chenpi/p/9696310.html
+
+注意使用 Ctrl+空格 完成对象声明
+
+spring-boot-starter-web
+
+@Service("activityService")注解参数有帮助吗？
+
+百度云20元每年弄一个（RabbitMQ用windows完，redis用百度玩）：https://cloud.baidu.com/campaign/CreateFuture-2019/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-19kuanghuanji-rumenjianzhanyunxuji-C1-190515|pu:C1-tupian|ci:2019khj|kw:2121019#4
+29元的服务器：https://www.yisu.com/hk/huodong.html?gclid=EAIaIQobChMI_OyGjcmc4gIV1m6LCh1NxgdsEAEYASAAEgLCHfD_BwE
+
 周日：
-权限吧静态页面的目录放开
+静态页面的目录放开：http://localhost:8080/static/index.html
 @RequestBody用起来
 1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
 https://blog.csdn.net/qq_32786139/article/details/82658197
@@ -16,6 +45,38 @@ spring和Java Enterprise标签可以看了
 activiti从6.0上面的版本开始搞
 【观察】配置了数据源和activiti后，启动项目，activiti 的各个服务组件就已经被加入到spring容器中了
 run菜单里的Endpoints
+
+controller方法的执行：把抛出异常、HttpServletRequest/HttpServletResponse两个问题解决掉。看一下HttpMessageConverter在流程中的哪个位置起作用
+HttpServletResponseWrapper
+@RequestBody、@RequestParam、MultipartFile等是怎么封装的，还有@CookieValue、@ExceptionHandler等
+ContentNegotiatingViewResolver，内容协商规图解析器，它迓是规图解析器，只是它支
+持根据请求信息将同一模型数据以丌同的规图方式展示（如json、xml、html等），RESTful
+架构风格中很重要的概念（同一资源，多种表现形式）
+@RequestPart：提供对“multipart/form-data”请求的全面支持，支持Servlet 3.0文件
+上传（javax.servlet.http.Part）、支持内容的HttpMessageConverter（即根据请求头的
+Content-Type，来判断内容匙数据是什么类型，如 JSON、XML，能自劢转换为命令对象），
+比@RequestParam更强大（只能对请求参数数据绊定，key-alue格式），而@RequestPart
+支持如JSON、XML内容匙数据的绊定；详见本章的第×××节；
+
+Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当迕入另一个
+请求时作为该请求的输入，典型场景如重定向（POST-REDIRECT-GET模式，1、POST时
+将下一次需要的数据放在FlashMap；2、重定向；3、通过GET讵问重定向的地址，此时
+FlashMap会把1放到 FlashMap的数据取出放到请求中，幵从FlashMap中删除；从而
+支持在两次请求乊间保存数据幵防止了重复表单提交）。
+Spring Web MVC提供FlashMapManager用亍管理FlashMap，默讣使用
+SessionFlashMapManager，即数据默讣存储在session中
+
+DispatcherServlet主要用作职责调度工作，本身主要用亍控制流程，主要职责如下：
+1、文件上传解析，如果请求类型是multipart将通过MultipartResolver迕行文件上传解析；
+2、通过HandlerMapping，将请求映射到处理器（迒回一个HandlerExecutionChain，
+它包括一个处理器、多个HandlerInterceptor拦截器）；
+3、通过HandlerAdapter支持多种类型的处理器(HandlerExecutionChain 中的处理器)；
+4、通过ViewResolver解析逻辑规图名到具体规图实现；
+5、本地化解析；
+6、渲染具体的规图等；
+7、如果执行过程中遇到异常将交给HandlerExceptionResolver 来解析。
+
+eureka.instance.appname 与 spring.application.name 的区别：https://blog.csdn.net/ezreal_king/article/details/72930401/
 
 框架搭好后，shiro需要学习第二遍。springmvc+shiro彻底搞清楚、知道怎么调试后，会是一个大的突破
 不能够快速调试，在新工作中也会遇到困难
@@ -49,8 +110,13 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
 
 要敏捷
+有没有jwt的两套应该是可以快速切换的，做成通用的
+全局异常处理做进来
+富文本编辑器、activiti做进来
 
-2.把resultMap写好；
+这种写法没有autowire，思考为什么可以成功：https://blog.csdn.net/pingweicheng/article/details/80593258
+
+2.把resultMap写好（code、msg、data），能否用现在公司里面ResultUtils的写法？；
 3.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？
@@ -87,6 +153,8 @@ http://www.jeasyui.cn/download.html
 简单快速的用SpringBoot访问静态资源（图片、html）【用thymeleaf的方式】：https://blog.csdn.net/qq_36481052/article/details/79075214
 Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.net/wangmx1993328/article/details/81054474
 用yml、properties文件配置静态页面（这种方式更优雅）：https://blog.csdn.net/Mr_yangzc/article/details/80805035
+
+@EnableAsync
 
 最初配通springboot+shiro的文档：
 https://blog.csdn.net/weixin_38132621/article/details/80216056
@@ -215,3 +283,7 @@ public interface HttpServletRequest extends ServletRequest {
 3.当年微软的那一套表好像很复杂？有空再找一下；
 4.复杂应用可能不止这5个表，例如还需要分用户组和角色继承关系：https://blog.csdn.net/yangxuesong5555/article/details/79417210
 这5个表怎么跟shiro对应起来？
+
+SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805
+Maven的Import changes 和enable auto-import：https://my.oschina.net/u/3908739/blog/2218624
+

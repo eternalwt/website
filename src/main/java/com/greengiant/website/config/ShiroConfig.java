@@ -12,7 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-//@Configuration
+@Configuration
 public class ShiroConfig {
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -32,6 +32,7 @@ public class ShiroConfig {
         //todo 用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");
+        filterChainDefinitionMap.put("/static/**", "anon");
         //游客，开发权限
         filterChainDefinitionMap.put("/guest/**", "anon");
         //开放登陆接口

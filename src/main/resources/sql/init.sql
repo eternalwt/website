@@ -1,5 +1,6 @@
 drop database if exists website;
 create database website default character set utf8mb4 collate utf8mb4_unicode_ci;
+set global time_zone='+8:00';
 use website;
 
 drop table if exists auth_user;

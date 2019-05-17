@@ -2,6 +2,7 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.shiro.CustomRealm;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.context.annotation.Bean;
@@ -57,8 +58,11 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 设置realm.
+        // 注入自定义的realm
         securityManager.setRealm(customRealm());
+        // todo
+        // 注入缓存管理器;
+        // securityManager.setCacheManager(ehCacheManager());
         return securityManager;
     }
 
@@ -72,4 +76,17 @@ public class ShiroConfig {
     public CustomRealm customRealm() {
         return new CustomRealm();
     }
+
+    /**
+     * shiro缓存管理器;
+     * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
+     */
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        System.out.println("ShiroConfiguration.getEhCacheManager()");
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return cacheManager;
+    }
+
 }

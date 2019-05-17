@@ -30,10 +30,6 @@ mybatis:
 
 # ------------------------------------------------------------------------------------
 
-# todo active profile
-
-
-
 # actuator
 management:
   endpoints:

@@ -20,6 +20,7 @@ import java.util.Set;
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次
+
     private UserDao userDao;
 
     private RoleDao roleDao;
@@ -43,6 +44,8 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+        //boolean rememberMe = false;
+        //token.setRememberMe(rememberMe);
         log.info("authenticate for:{}", token.getUsername());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
@@ -51,11 +54,12 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AccountException("用户名不正确");
         } else {
             password = user.getPassword();
-            //todo 获取加密后的密码
             if (!password.equals(new String((char[]) token.getCredentials()))) {
                 throw new AccountException("密码不正确");
             }
         }
+
+        //todo 把盐传进来。怎么跟matcher关联的？
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, this.getName());
     }
 

@@ -49,7 +49,11 @@ public class AuthController {
         	return "WrongCaptcha";
         }
         try {
-            subject.login(token);
+			// if (subject.isRemembered())
+			//subject.releaseRunAs()
+			//subject.isRunAs()
+			//runAs、releaseRunAs、isRunAs
+			subject.login(token);
             log.info("[" + username + "]" + " login successful...");
         } catch (UnknownAccountException e) {
         	//TODO 是否抽到枚举类型的vo里面？

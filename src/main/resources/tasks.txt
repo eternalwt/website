@@ -13,6 +13,8 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 
+Subject的方法好好看一下
+
 ng s
 我们的代码是不是用了typescript？http://www.cnblogs.com/xuanmanstein/p/9866647.html
 
@@ -240,6 +242,10 @@ Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.ne
 用yml、properties文件配置静态页面（这种方式更优雅）：https://blog.csdn.net/Mr_yangzc/article/details/80805035
 
 @EnableAsync
+
+shiro需要搞清楚的流程：
+1.RememberMe；
+2.CredentialsMatcher使用流程
 
 最初配通springboot+shiro的文档：
 https://blog.csdn.net/weixin_38132621/article/details/80216056

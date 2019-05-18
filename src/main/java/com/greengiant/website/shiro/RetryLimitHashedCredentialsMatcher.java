@@ -34,6 +34,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             throw new ExcessiveAttemptsException("您已连续错误达" + 5 + "次！请N分钟后再试");
         }
 
+        //todo 这里没算加密密码，需要一个util，插入和比较都用到
         boolean matches = super.doCredentialsMatch(token, info);
         if(matches) {
             //clear retry count

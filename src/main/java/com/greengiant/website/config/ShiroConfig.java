@@ -1,7 +1,9 @@
 package com.greengiant.website.config;
 
 import com.greengiant.website.shiro.CustomRealm;
+import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -58,11 +60,15 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 注入自定义的realm
-        securityManager.setRealm(customRealm());
+
         // todo
         // 注入缓存管理器;
         // securityManager.setCacheManager(ehCacheManager());
+        // 注入自定义的realm
+        securityManager.setRealm(customRealm());
+        // todo
+        //securityManager.setRememberMeManager();
+
         return securityManager;
     }
 
@@ -74,6 +80,24 @@ public class ShiroConfig {
      */
     @Bean
     public CustomRealm customRealm() {
+        CustomRealm realm = new CustomRealm();
+        //realm.setCacheManager();
+        //realm.setCachingEnabled();
+        // todo
+        //RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher();
+        //realm.setCredentialsMatcher();
+
+        return new CustomRealm();
+    }
+
+    @Bean(name="customRealmWithMatcher")
+    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
+        CustomRealm realm = new CustomRealm();
+        //realm.setCacheManager();
+        //realm.setCachingEnabled();
+        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
+        realm.setCredentialsMatcher(matcher);
+
         return new CustomRealm();
     }
 

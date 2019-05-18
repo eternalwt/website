@@ -51,6 +51,7 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AccountException("用户名不正确");
         } else {
             password = user.getPassword();
+            //todo 获取加密后的密码
             if (!password.equals(new String((char[]) token.getCredentials()))) {
                 throw new AccountException("密码不正确");
             }

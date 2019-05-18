@@ -8,6 +8,11 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
+再看一下shiro相关的包一共有多少个【shiro-ehcache悟出的道理】
+密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy
+
+为什么有的Bean带参数有的又直接在函数内部里面弄对象？
+
 ng s
 我们的代码是不是用了typescript？http://www.cnblogs.com/xuanmanstein/p/9866647.html
 
@@ -157,12 +162,17 @@ https://www.jianshu.com/p/05f3ede0b389
 https://blog.csdn.net/qq_28988969/article/details/78210873
 https://blog.csdn.net/qq_28143647/article/details/79789368
 开涛的例子中，为啥要使用单例的缓存？
-【这个文章有注入缓存管理器的用法】https://blog.csdn.net/qq_32786139/article/details/82658197
+【这个文章有注入缓存管理器的用法】
+https://blog.csdn.net/qq_32786139/article/details/82658197
+含清楚缓存的写法：https://www.cnblogs.com/yinfengjiujian/p/9083361.html
 使用@Cacheable把数据存进缓存：切换为redis后可以这样搞吗？了解这个注解的细节
 Spring定义了CacheManager和Cache接口统一不同的缓存技术。其中CacheManager是Spring提供的各种缓存技术的抽象接口【要理解这种设计方式，再思考一下】
 ehcache3、javax.cache API（JSR-107）需要搞清楚
 Shiro缓存使用Redis、Ehcache、自带的MpCache实现的三种方式实例：https://www.cnblogs.com/zfding/p/8536480.html
 对shiro-ehcache包的理解：这个包实现了shiro里面缓存相关的接口，同时带有ehcache的功能。类似的实现还有shiro-redis。
+shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
+解决shiro-redis集成序列化的问题：https://blog.csdn.net/Nightliar/article/details/81282164
+
 
 Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
 吐血整理 20 道 Spring Boot 面试题：https://www.jianshu.com/p/63ad69c480fe/

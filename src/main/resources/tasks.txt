@@ -8,11 +8,32 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
-加密：哪怕用md5实现，后面再优化
+停一下，把现有功能充分测试
+
+1.把resultMap写好（code、msg、data），能否用现在公司里面ResultUtils的写法？；
+2.前端ajax写好；
+3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
+4.再看RBAC 5个表怎么跟shiro对应起来？
+5.把添加用户、角色等基本功能写好（Service、Controller）
+6.密码加密：HashedCredentialsMatcher。然后再用RetryLimitHashedCredentialsMatcher（网上借鉴的）
+7.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
+8.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+9.【所有配置文件是怎么读取的】
+10.必备功能：分享、OAuth2、activiti
+shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
+shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
+
+
+加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
 密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy、注解相关的
 CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
+
+流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
+接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
+Authentication说明文档：http://shiro.apache.org/authentication.html
+
 
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 各种token，分别用于什么场景？
@@ -60,6 +81,8 @@ https://uule.iteye.com/blog/2094549
 【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 mybatis-spring：
 sqlsessionfactory 注入datasource
+
+spring AOP再搞一遍
 
 sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
 在搞jwt之前，应该把会话管理那一章先看明白
@@ -114,6 +137,9 @@ jwt是否放到common里面并且便于后面抽包？
 
 泛型的问号适合放在返回值里面吗？Response<?>
 
+比较我的captcha和开涛的，搞熟
+直接注入一个passwordService来加密密码
+
 把shiro官方教程也看一遍，思考：开涛到底是根据那个写的还是自己读代码理解后写的教程
 spring transaction源码分析--事务架构：https://www.cnblogs.com/davidwang456/p/4309038.html
 
@@ -145,14 +171,18 @@ DispatcherServlet主要用作职责调度工作，本身主要用亍控制流程
 4、通过ViewResolver解析逻辑规图名到具体规图实现；
 5、本地化解析；
 6、渲染具体的规图等；
-7、如果执行过程中遇到异常将交给HandlerExceptionResolver 来解析。
+7、如果执行过程中遇到异常将交给HandlerExceptionResolver 来解析
+
+springboot使用shiro和pac4j-cas 实现cas单点登录：https://blog.csdn.net/hsp1990/article/details/83621817
 
 eureka.instance.appname 与 spring.application.name 的区别：https://blog.csdn.net/ezreal_king/article/details/72930401/
 springboot新特性
 
 动态修改日志级别
-通过org.springframework.boot.logging.LoggingSystem提供的api即可。
+通过org.springframework.boot.logging.LoggingSystem提供的api即可
 
+shiro-ehcache的代码是可以读完的，从这个入手
+不同注解的扫描顺序？是否先扫@configuration？
 loggingSystem.setLogLevel(null, LogLevel.DEBUG);
 
 如，默认时是info模式，未修改时，debug模式是不会输出的。
@@ -212,17 +242,6 @@ https://blog.csdn.net/bailinbbc/article/details/76446594
 
 这种写法没有autowire，思考为什么可以成功：https://blog.csdn.net/pingweicheng/article/details/80593258
 
-2.把resultMap写好（code、msg、data），能否用现在公司里面ResultUtils的写法？；
-3.前端ajax写好；
-3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
-4.再看RBAC 5个表怎么跟shiro对应起来？
-5.把添加用户、角色等基本功能写好（Service、Controller）
-2.密码加密：HashedCredentialsMatcher
-2.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
-4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
-【所有配置文件是怎么读取的】
-
-必备功能：分享、OAuth2、activiti
 看看阿里云
 搞点日本的文具过来卖
 

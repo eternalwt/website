@@ -2,7 +2,9 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
+import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -96,7 +98,11 @@ public class ShiroConfig {
         CustomRealm realm = new CustomRealm();
         //realm.setCacheManager();
         //realm.setCachingEnabled();
-        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
+        //RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
+        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
+        matcher.setHashIterations(PasswordUtil.hashIterationCount);
+        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
         realm.setCredentialsMatcher(matcher);
 
         return new CustomRealm();

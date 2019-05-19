@@ -12,7 +12,6 @@ import org.apache.shiro.cache.CacheManager;
 
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
-    //todo 先用ehcache，再用win10 linux子系统的redis
     private Cache<String, AtomicInteger> passwordRetryCache;
 
     public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {

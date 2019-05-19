@@ -35,19 +35,17 @@ public class AuthController {
 	@ResponseBody
 	public String loginjudge(HttpServletRequest request)
 	{
-		Subject subject = SecurityUtils.getSubject();
-		
-		String username = request.getParameter("username");
-		String password = request.getParameter("password");
 		String captchaCode = request.getParameter("code").toLowerCase();
-		boolean remember = request.getParameter("remember").equals("true");
-		
-        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-        token.setRememberMe(remember);
         if (!captchaCode.equals(request.getSession().getAttribute("code").toString().toLowerCase()))
         {
-        	return "WrongCaptcha";
+        	return "Wrong Captcha";
         }
+
+		Subject subject = SecurityUtils.getSubject();
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		boolean remember = request.getParameter("remember").equals("true");
+		UsernamePasswordToken token = new UsernamePasswordToken(username, password, remember);
         try {
 			// if (subject.isRemembered())
 			//subject.releaseRunAs()

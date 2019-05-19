@@ -11,6 +11,7 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -42,25 +43,24 @@ public class CustomRealm extends AuthorizingRealm {
      * @return 返回封装了用户信息的 AuthenticationInfo 实例
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
+            throws AuthenticationException {
+        log.info("authenticate for:{}", authenticationToken.getCredentials());
+
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        //boolean rememberMe = false;
-        //token.setRememberMe(rememberMe);
-        log.info("authenticate for:{}", token.getUsername());
+        token.setRememberMe(token.isRememberMe());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
-        String password = "";
         if (null == user) {
             throw new AccountException("用户名不正确");
-        } else {
-            password = user.getPassword();
-            if (!password.equals(new String((char[]) token.getCredentials()))) {
-                throw new AccountException("密码不正确");
-            }
         }
+        // 加一个判断账号是否被禁
+        String password = "";//todo
+        String salt = "";//todo
 
-        //todo 把盐传进来。怎么跟matcher关联的？
-        return new SimpleAuthenticationInfo(token.getPrincipal(), password, this.getName());
+        //todo 几个构造函数的区别看一下
+        return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
+                this.getName());
     }
 
     /**

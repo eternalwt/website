@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class CaptchaUtil {
-	private static int width = 80;//定义图片的width
-    private static int height = 20;//定义图片的height
-    private static int codeCount = 4;//定义图片上显示验证码的个数
+	private static int width = 80;
+    private static int height = 20;
+    private static int codeCount = 4;
     private static int xx = 15;
     private static int fontHeight = 18;
     private static int codeY = 16;

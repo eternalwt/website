@@ -10,6 +10,7 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 
 停一下，把现有功能充分测试
 
+0.把缓存放开
 1.把resultMap写好（code、msg、data），能否用现在公司里面ResultUtils的写法？；
 2.前端ajax写好；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
@@ -23,6 +24,21 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 
+细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html
+spring里面的XXXAware，shiro里面也有CacheManagerAware
+shiro-spring
+
+spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
+
+需要2轮测试用例：
+1.单个功能的测试；2.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
+
+关于缓存：
+【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
+1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
+把开涛后面有几章看一下，把有道里面的内容排查一下
+shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据说认证默认关闭，授权默认打开】【写入是在哪里进行的？】：https://blog.csdn.net/csujiangyu/article/details/49076531
+不懂的地方可以多借助调试来观察，把spring的调试配起来
 
 加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
@@ -137,8 +153,27 @@ jwt是否放到common里面并且便于后面抽包？
 
 泛型的问号适合放在返回值里面吗？Response<?>
 
-比较我的captcha和开涛的，搞熟
+比较我的captcha和开涛的，搞熟。
+网上的captcha库：
+Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 直接注入一个passwordService来加密密码
+
+shiro的下面两大功能：
+Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
+<V> V execute(Callable<V> callable) throws ExecutionException;
+void execute(Runnable runnable);
+<V> Callable<V> associateWith(Callable<V> callable);
+Runnable associateWith(Runnable runnable);
+Testing：提供测试支持；
+
+在spring中需要开启权限注解与aop:
+<!-- AOP式方法级权限检查  -->
+<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
+      depends-on="lifecycleBeanPostProcessor"/>
+<!-- 启用shrio授权注解拦截方式 -->
+<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+    <property name="securityManager" ref="securityManager"/>
+</bean>
 
 把shiro官方教程也看一遍，思考：开涛到底是根据那个写的还是自己读代码理解后写的教程
 spring transaction源码分析--事务架构：https://www.cnblogs.com/davidwang456/p/4309038.html

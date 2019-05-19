@@ -2,7 +2,7 @@ package com.greengiant.website.controller;
 
 import com.greengiant.website.dao.UserDao;
 import com.greengiant.website.pojo.model.User;
-import com.greengiant.website.utils.DownUploadFile;
+import com.greengiant.website.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -57,7 +57,7 @@ public class HelloController {
     public ResponseEntity<byte[]> down(@RequestParam String fileName)
     {
         try {
-            return DownUploadFile.download(fileName);
+            return FileUtil.download(fileName);
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

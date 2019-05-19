@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-public class DownUploadFile {
+public class FileUtil {
 	//TODO 文件下载还有2个重要问题：1.大文件下载（文件太大(例如视频)这种方式能否支持？）2.怎么被其他模块调用
 	public static ResponseEntity<byte[]> download(String fileFullName) throws IOException {
         HttpHeaders headers = new HttpHeaders();

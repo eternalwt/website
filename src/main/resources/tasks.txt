@@ -8,12 +8,26 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
-再看一下shiro相关的包一共有多少个【shiro-ehcache悟出的道理】
-密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy
+加密：哪怕用md5实现，后面再优化
+再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
+密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy、注解相关的
+CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
+基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
+各种token，分别用于什么场景？
+SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 
-Subject的方法好好看一下
+Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
+shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并不好）
+KickoutSessionControlFilter extends AccessControlFilter
+如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
+
+ApplicationContext也能autowire？https://www.cnblogs.com/trekxu/p/9094860.html
+@bean和@component：
+https://blog.csdn.net/u011263417/article/details/79781686
+https://blog.csdn.net/ztx114/article/details/82665544
+http://www.cnblogs.com/shamo89/p/8051350.html
 
 ng s
 我们的代码是不是用了typescript？http://www.cnblogs.com/xuanmanstein/p/9866647.html
@@ -208,7 +222,7 @@ https://blog.csdn.net/bailinbbc/article/details/76446594
 4.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 【所有配置文件是怎么读取的】
 
-必备功能：分享、OAuth2
+必备功能：分享、OAuth2、activiti
 看看阿里云
 搞点日本的文具过来卖
 
@@ -246,6 +260,9 @@ Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.ne
 shiro需要搞清楚的流程：
 1.RememberMe；
 2.CredentialsMatcher使用流程
+RunAs理解：如果涉及到工作流之类的，runAs在具体代码方面会不会有啥问题？代码的通用性能否保证？
+
+redirectAttributes.addFlashAttribute("msg", "操作成功");
 
 最初配通springboot+shiro的文档：
 https://blog.csdn.net/weixin_38132621/article/details/80216056

@@ -53,7 +53,7 @@ public class AuthController {
 			//subject.releaseRunAs()
 			//subject.isRunAs()
 			//runAs、releaseRunAs、isRunAs
-			subject.login(token);
+			subject.login(token);// 是不是这里会自动判断有么有remember？看看代码
             log.info("[" + username + "]" + " login successful...");
         } catch (UnknownAccountException e) {
         	//TODO 是否抽到枚举类型的vo里面？

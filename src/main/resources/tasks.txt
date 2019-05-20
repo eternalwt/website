@@ -9,10 +9,10 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
 停一下，把现有功能充分测试
+把mybatis的日志配起来
 
 0.把缓存放开
-1.把resultMap写好（code、msg、data），能否用现在公司里面ResultUtils的写法？；
-2.前端ajax写好；
+2.前端form、ajax单独写好，再考虑整合的问题；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？
 5.把添加用户、角色等基本功能写好（Service、Controller）
@@ -21,10 +21,12 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 8.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 9.【所有配置文件是怎么读取的】
 10.必备功能：分享、OAuth2、activiti
+1.把ResultUtils用起来；
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 
-细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html
+
+细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
 spring里面的XXXAware，shiro里面也有CacheManagerAware
 shiro-spring
 
@@ -157,6 +159,10 @@ jwt是否放到common里面并且便于后面抽包？
 网上的captcha库：
 Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 直接注入一个passwordService来加密密码
+
+前端开发了解：
+1.VSCode、node、angular、typescript；
+2.sublimeText、node、angular、typescript；
 
 shiro的下面两大功能：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；

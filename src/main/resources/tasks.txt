@@ -8,27 +8,38 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
-停一下，把现有功能充分测试
-把mybatis的日志配起来
+停一下，把现有功能充分测试：
+    1.所有配置文件相关功能；
+    2.所有controller及shiro相关功能
+    3.测试搭起来
+    4.缓存【注册、登录好了后测试】
+    5.然后再用RetryLimitHashedCredentialsMatcher的测试
 
-0.把缓存放开
+把mybatis的日志配起来【还是依赖于添加用户等操作】
+
+自定义Matcher：
+https://www.cnblogs.com/chyu/p/5958720.html
+https://blog.csdn.net/xcy1193068639/article/details/80549237
+https://www.jianshu.com/p/7c808ad4512e
+CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
+
+shiro-spring
+
+1.把注册、登录写通；10.把ResultUtils用起来；
 2.前端form、ajax单独写好，再考虑整合的问题；
 3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
-4.再看RBAC 5个表怎么跟shiro对应起来？
+4.再看RBAC 5个表怎么跟shiro对应起来？【自定义Real对应的表（看JdbcRealm）】
 5.把添加用户、角色等基本功能写好（Service、Controller）
-6.密码加密：HashedCredentialsMatcher。然后再用RetryLimitHashedCredentialsMatcher（网上借鉴的）
-7.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
-8.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
-9.【所有配置文件是怎么读取的】
-10.必备功能：分享、OAuth2、activiti
-1.把ResultUtils用起来；
+6.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
+7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+8.【所有配置文件是怎么读取的】
+9.必备功能：分享、OAuth2、activiti
+
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 
-
 细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
 spring里面的XXXAware，shiro里面也有CacheManagerAware
-shiro-spring
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
@@ -99,6 +110,7 @@ https://uule.iteye.com/blog/2094549
 【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 mybatis-spring：
 sqlsessionfactory 注入datasource
+以前只知道双向绑定这个名字，现在可以思考原理了
 
 spring AOP再搞一遍
 
@@ -161,7 +173,11 @@ Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 直接注入一个passwordService来加密密码
 
 前端开发了解：
-1.VSCode、node、angular、typescript；
+1.VSCode、node、angular、typescript：
+https://www.cnblogs.com/clwydjgs/p/10078065.html
+https://www.cnblogs.com/parry/p/vscode_top_ten_plugins.html
+下载：https://code.visualstudio.com/docs/?dv=win64user
+python也可以用VSCode、sublimeText来搞
 2.sublimeText、node、angular、typescript；
 
 shiro的下面两大功能：
@@ -463,7 +479,26 @@ public interface HttpServletRequest extends ServletRequest {
 这5个表怎么跟shiro对应起来？
 
 SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805
-Maven的Import changes 和enable auto-import：https://my.oschina.net/u/3908739/blog/2218624
 
 postman：form-data、x-www-form-urlencoded、raw、binary分别对应的前端传递方式？【协议层面的东西】
 https://blog.csdn.net/xybelieve1990/article/details/81111786
+
+如果不想装mysql可以用SQLite：https://www.runoob.com/sqlite/sqlite-tutorial.html
+ionic 是一个强大的 HTML5 应用程序开发框架(HTML5 Hybrid Mobile App Framework )。
+可以帮助您使用 Web 技术，比如 HTML、CSS 和 Javascript 构建接近原生体验的移动应用程序：
+https://www.runoob.com/ionic/ionic-tutorial.html
+我们为什么选择TypeScript? https://segmentfault.com/a/1190000010892897
+TypeScript是ES6的超集，因此学习typescript之前可以先看看es6的module等内容：https://www.jianshu.com/p/fe3cb09aa380
+Angular7。Angular是用TypeScript构建的
+ng代表的是angular-cli插件：npm install -g angular-cli
+angular-cli是angular自动化构建工具：
+https://cli.angular.io/
+https://www.jianshu.com/p/7676f7a246e2
+angular-cli工程搭建指南：https://www.jianshu.com/p/50064b182b73
+【angular-cli启动了一个server。剩下的问题是：angular-cli需要启动node把？因为npm不是node的包管理系统么？】
+vscode编辑、调试angular：
+https://www.cnblogs.com/savorboard/p/vscode-debugging-angular.html
+https://blog.csdn.net/u012475786/article/details/87348423
+https://www.cnblogs.com/handsomer/p/6815852.html
+https://www.e-learn.cn/content/net/1078256
+

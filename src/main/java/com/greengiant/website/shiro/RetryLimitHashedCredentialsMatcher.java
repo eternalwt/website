@@ -14,8 +14,15 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     private Cache<String, AtomicInteger> passwordRetryCache;
 
+    private int maxRetryCount = 5;
+
     public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
         passwordRetryCache = cacheManager.getCache("passwordRetryCache");
+    }
+
+    public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager, int maxRetryCount) {
+        passwordRetryCache = cacheManager.getCache("passwordRetryCache");
+        this.maxRetryCount = maxRetryCount;
     }
 
     @Override
@@ -27,13 +34,12 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             retryCount = new AtomicInteger(0);
             passwordRetryCache.put(username, retryCount);
         }
-        if(retryCount.incrementAndGet() > 5) {
-            //if retry count > 5 throw
-            //todo 加过期策略，现在没有过期策略
-            throw new ExcessiveAttemptsException("您已连续错误达" + 5 + "次！请N分钟后再试");
+        if(retryCount.incrementAndGet() > maxRetryCount) {
+            //todo 测试
+            throw new ExcessiveAttemptsException("您已连续错误达" + maxRetryCount + "次！请N分钟后再试");
         }
 
-        //todo 这里没算加密密码，需要一个util，插入和比较都用到
+        //todo 父类实现了加密，测试一下
         boolean matches = super.doCredentialsMatch(token, info);
         if(matches) {
             //clear retry count

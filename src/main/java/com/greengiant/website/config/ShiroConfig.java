@@ -26,8 +26,8 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
         //todo 和后端action对应起来。success的url是什么时候用的？
-        shiroFilterFactoryBean.setLoginUrl("/notLogin");
-        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
+        shiroFilterFactoryBean.setLoginUrl("/notLogin");//todo 配好静态页面
+        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");//todo 测试，应该是登录成功后跳转的页面吧
         // 设置无权限时跳转的 url;
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
@@ -96,13 +96,18 @@ public class ShiroConfig {
     @Bean(name="customRealmWithMatcher")
     public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
         CustomRealm realm = new CustomRealm();
-        //realm.setCacheManager();
-        //realm.setCachingEnabled();
-        //RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
-        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+        realm.setCacheManager(cacheManager);
+        //todo 代码跟踪
+        realm.setCachingEnabled(true);
+        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
         matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
         matcher.setHashIterations(PasswordUtil.hashIterationCount);
         matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
+
+//        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+//        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
+//        matcher.setHashIterations(PasswordUtil.hashIterationCount);
+//        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
         realm.setCredentialsMatcher(matcher);
 
         return new CustomRealm();

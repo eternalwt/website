@@ -36,6 +36,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         }
         if(retryCount.incrementAndGet() > maxRetryCount) {
             //todo 测试
+            // todo 重试的时候需要输入验证码
             throw new ExcessiveAttemptsException("您已连续错误达" + maxRetryCount + "次！请N分钟后再试");
         }
 
@@ -46,7 +47,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             passwordRetryCache.remove(username);
         }
         else {
-            throw new IncorrectCredentialsException("密码错误，已错误" + retryCount + "次，最多错误" + 5 + "次");
+            throw new IncorrectCredentialsException("密码错误，已错误" + retryCount + "次，最多错误" + maxRetryCount + "次");
         }
 
         return matches;

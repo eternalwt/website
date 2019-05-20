@@ -14,6 +14,7 @@ https://www.cnblogs.com/wyguo/p/3556049.html
     3.测试搭起来
     4.缓存【注册、登录好了后测试】
     5.然后再用RetryLimitHashedCredentialsMatcher的测试
+    6.测试缓存配置，测试权限缓存
 
 把mybatis的日志配起来【还是依赖于添加用户等操作】
 

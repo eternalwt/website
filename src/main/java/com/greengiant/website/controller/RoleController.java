@@ -10,12 +10,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class RoleController {
 
 
-    @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     public void addRole(Role role) {
         //todo 修改返回值类型
 
     }
 
     //todo editRole
+
+    //todo delete
 
 }

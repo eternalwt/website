@@ -8,6 +8,14 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
+咨询扣税的问题
+
+再对比阿里巴巴手册看AddUserVo定义是否有问题
+
+把youdao里面shiro的东西整理一下
+
+VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/81909392
+
 停一下，把现有功能充分测试：
     1.所有配置文件相关功能；
     2.所有controller及shiro相关功能
@@ -15,37 +23,72 @@ https://www.cnblogs.com/wyguo/p/3556049.html
     4.缓存【注册、登录好了后测试】
     5.然后再用RetryLimitHashedCredentialsMatcher的测试
     6.测试缓存配置，测试权限缓存
+    7.把下方Spring和Java Enterprise菜单用起来
+    8.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
+需要2轮测试用例：
+    1.单个功能的测试；2.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
+    shiro代码首先还是按照调试流程来学习
+
+    我的互联网项目每周要上线一个小功能
 
 把mybatis的日志配起来【还是依赖于添加用户等操作】
+【控制台输出mybatis日志】
 
-自定义Matcher：
-https://www.cnblogs.com/chyu/p/5958720.html
-https://blog.csdn.net/xcy1193068639/article/details/80549237
-https://www.jianshu.com/p/7c808ad4512e
-CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
+Spring Boot Junit单元测试【把@WebAppConfiguration注解和注解原理搞懂，尽量多理解一点】：
+https://www.cnblogs.com/jpfss/p/8422770.html
+https://www.jianshu.com/p/afb04b925db3
+Junit测试controller：
+https://blog.csdn.net/xiaolyuh123/article/details/73281522/
+https://blog.csdn.net/sinat_32481295/article/details/79764749
+
+【周二】
+1.单元测试；
+2.ajax写好（先用jQuery的）
 
 shiro-spring
 
-1.把注册、登录写通；10.把ResultUtils用起来；
+1.把注册、登录写通；10.把ResultUtils用起来【前端ajax先配好】；5.把添加用户、角色等基本功能写好（Service、Controller）
 2.前端form、ajax单独写好，再考虑整合的问题；
-3.把前后端分离配好（spring配置、jwt配置，或者用shiro-redis的方式），前后端数据传递格式定好【看一眼chime代码】；
+3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？【自定义Real对应的表（看JdbcRealm）】
-5.把添加用户、角色等基本功能写好（Service、Controller）
 6.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
 
+前后端分离的深入研究：
+https://blog.csdn.net/qq_41849709/article/details/83411137【Ajax写法】
+https://www.cnblogs.com/lvdabao/p/4204858.html
+https://www.jianshu.com/p/b76de38fbb4a
+https://www.jianshu.com/p/9e71429edbf6
+https://blog.csdn.net/li_gameover/article/details/79917473
+https://blog.csdn.net/u014445339/article/details/74301489
+
+shiro超时相关的问题：
+https://blog.csdn.net/zsg88/article/details/69488728
+https://blog.csdn.net/jrn1012/article/details/70396502
+
+//@RequiresRoles("role1")
+//@RequiresPermissions("+user1+100")
+再看ModelAndView的用法，和return "anth/login";这种比较一下
+
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
+再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
+密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy、注解相关的
 
 细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
-spring里面的XXXAware，shiro里面也有CacheManagerAware
+Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】：
+https://www.cnblogs.com/Jarris/p/10125980.html
+https://blog.csdn.net/bailinbbc/article/details/76446594
+https://blog.csdn.net/jinhaijing/article/details/83933573
+EnvironmentCapable：
+https://blog.csdn.net/weixin_39165515/article/details/76976685
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
-需要2轮测试用例：
-1.单个功能的测试；2.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
+把gitk显示乱码的问题解决
+activiti生产的图片如何做缓存？
 
 关于缓存：
 【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
@@ -55,19 +98,26 @@ shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据�
 不懂的地方可以多借助调试来观察，把spring的调试配起来
 
 加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
-再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
-密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy、注解相关的
 CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
+自定义Matcher：CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
 接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
 Authentication说明文档：http://shiro.apache.org/authentication.html
 
+各种token，分别用于什么场景？
+jwt工程里面用的token不一样，注意对比一下，并分析源代码。jwt token过期重发机制搞清楚
+看一下UsernamePasswordToken实现的2个接口里面都有什么方法
+
+看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
 
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
-各种token，分别用于什么场景？
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
+
+activiti定时任务【smartplan能否用这个搞？】：
+https://www.cnblogs.com/dengjiahai/p/6942310.html
+https://blog.csdn.net/sarck3/article/details/11781097
 
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
 shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并不好）
@@ -131,8 +181,6 @@ lucene相关的再看一下
 把我的activiti工程上传。我的activiti demo为啥没启动起来？先检查一下
 Error creating bean with name 'requestMappingHandlerMapping'：这种错误可能是少了包
 
-jwt token过期重发机制搞清楚
-
 Postman mockserver详细教程：https://blog.csdn.net/testdeveloper/article/details/80559538
 
 CommandLineRunner（源码）：
@@ -141,7 +189,9 @@ https://www.jianshu.com/p/5d4ffe267596
 https://www.cnblogs.com/chenpi/p/9696310.html
 
 spring-boot-starter-web
-要有一种引领的意识，赚钱在其后，否则永远无法成事。
+要有一种引领的意识，赚钱在其后，否则永远无法成事
+
+假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
 
 @Service("activityService")注解参数有帮助吗？
 
@@ -155,7 +205,6 @@ spring-boot-starter-web
 https://blog.csdn.net/qq_32786139/article/details/82658197
 https://blog.csdn.net/qq_32786139/article/details/82658197
 【把jwt和前后端分离配好后，完整测一波】
-jwt工程里面用的token不一样，注意对比一下，并分析源代码
 registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");：https://my.oschina.net/silenceyawen/blog/1609603
 
 spring和Java Enterprise标签可以看了
@@ -168,7 +217,8 @@ jwt是否放到common里面并且便于后面抽包？
 
 泛型的问号适合放在返回值里面吗？Response<?>
 
-比较我的captcha和开涛的，搞熟。
+ts里面的Observable<T> implements Subscribable<T>。涉及到RxJS的概念
+
 网上的captcha库：
 Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 直接注入一个passwordService来加密密码
@@ -346,7 +396,10 @@ https://blog.csdn.net/weixin_38132621/article/details/80216056
 springboot+shiro+jwt：
 https://blog.csdn.net/u013615903/article/details/78781166
 https://blog.csdn.net/u012149181/article/details/79445758
-https://www.jianshu.com/p/0b1131be7ace
+https://www.jianshu.com/p/0b1131be7ace【这个里面还用到了FilterRegistrationBean、Authenticator、SessionStorageEvaluator】
+SessionStorageEvaluator【代码其实很简单，看代码】：
+https://www.jianshu.com/p/3b48ea215990
+https://blog.csdn.net/iteye_10899/article/details/82675611
 session共享采用shiro-redis的方案（修改Session获取方式）：
 https://cloud.tencent.com/developer/article/1342794
 https://blog.csdn.net/haoyuyang/article/details/80036989
@@ -409,8 +462,17 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 要能快速验证我的哪些方法没有被权限覆盖到，必须要做到这一点【尝试用反射控制】
 再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？
 重新封装返回值【网上看别人的规范】前后端接口规范
-maven跑test搞清楚（为啥放开2个注释会有报错）
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
+
+maven跑test搞清楚（为啥放开2个注释会有报错）
+@RunWith(SpringRunner.class)
+@SpringBootTest
+
+@RunWith(SpringJUnit4ClassRunner.class) // SpringJUnit支持，由此引入Spring-Test框架支持！
+@SpringApplicationConfiguration(classes = SpringBootSampleApplication.class) // 指定我们SpringBoot工程的Application启动类
+@WebAppConfiguration // 由于是Web项目，Junit需要模拟ServletContext，因此我们需要给我们的测试类加上@WebAppConfiguration
+SpringRunner is an alias for the SpringJUnit4ClassRunner.
+
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
 timestamp的使用还要精进，例如比较大小
@@ -442,6 +504,9 @@ DefaultFilter 枚举类原理值得仔细分析
 关于TransactionAwareDataSourceProxy：https://summerhome.iteye.com/blog/2383585
 
 SpringBoot源码研究之Actuator：https://blog.csdn.net/lqzkcx3/article/details/89737579
+
+前后端分离后续：spring跨域配置、jwt配置、启动多个服务，或者用shiro-redis的方式
+以前的架构水平还是不行，现在深入搭框架后，对业务逻辑的兴趣没有以前那么大了
 
 UUID 和 GUID是有区别的：
 https://blog.csdn.net/xf_zhen/article/details/82260567
@@ -490,6 +555,10 @@ ionic 是一个强大的 HTML5 应用程序开发框架(HTML5 Hybrid Mobile App 
 https://www.runoob.com/ionic/ionic-tutorial.html
 我们为什么选择TypeScript? https://segmentfault.com/a/1190000010892897
 TypeScript是ES6的超集，因此学习typescript之前可以先看看es6的module等内容：https://www.jianshu.com/p/fe3cb09aa380
+Learn Angular Tutorial：
+https://www.codeproject.com/Articles/1207118/Learn-Angular-Tutorial
+https://www.jianshu.com/p/219fc1606ec8
+angular组件：https://www.jianshu.com/p/f03c6df14956
 Angular7。Angular是用TypeScript构建的
 ng代表的是angular-cli插件：npm install -g angular-cli
 angular-cli是angular自动化构建工具：
@@ -502,4 +571,13 @@ https://www.cnblogs.com/savorboard/p/vscode-debugging-angular.html
 https://blog.csdn.net/u012475786/article/details/87348423
 https://www.cnblogs.com/handsomer/p/6815852.html
 https://www.e-learn.cn/content/net/1078256
+angular的标签是怎么编译的？应该不难吧？和双向绑定一起作为底层知识学习
+angular代码好调试吗？
+理解angular里面的scope及$scope用法
+Angular 6 Tutorial With Example Using Angular CLI：https://appdividend.com/2018/05/05/angular-6-tutorial-with-example-using-angular-cli/
+nz-table(NG-ZORRO)【ant-design官方文档是啥？】：https://ng.ant.design/components/table/zh
+angular官网：https://www.angular.cn/
+单向绑定，用单括号（并且在nz-zorro这种组件标签里面）；双向绑定里面带()括号；一个括号表示时间；前端管理；指令(没有界面)
+Angular组件篇：https://www.jianshu.com/p/f03c6df14956
+几款流行的angular组件库：https://blog.csdn.net/dengfangfang11/article/details/80326516
 

@@ -1,7 +1,8 @@
-package com.greengiant.website.service;
+package com.greengiant.website.service.impl;
 
 import com.greengiant.website.dao.RoleDao;
 import com.greengiant.website.pojo.model.Role;
+import com.greengiant.website.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

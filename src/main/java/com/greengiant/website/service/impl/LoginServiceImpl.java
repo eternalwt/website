@@ -1,5 +1,6 @@
-package com.greengiant.website.service;
+package com.greengiant.website.service.impl;
 
+import com.greengiant.website.service.LoginService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;

@@ -3,7 +3,7 @@ package com.greengiant.website.pojo.vo;
 public class AddUserVo {
     private String userName;
     private String password;
-    private int role;
+    private Long roleId;
 
     public String getUserName() {
         return userName;
@@ -21,11 +21,11 @@ public class AddUserVo {
         this.password = password;
     }
 
-    public int getRole() {
-        return role;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRole(int role) {
-        this.role = role;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 }

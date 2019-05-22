@@ -4,8 +4,12 @@ package com.greengiant.website.pojo;
  * @author fei.gao
  */
 public enum StatusCodeEnum {
+    //成功失败
     SUCCESS("success", 1),
-    FAIL("fail", 10000);
+    FAIL("fail", -1),
+
+    USER_EXISTS("用户已存在", 10001),
+    ;
 
     // 成员变量
     private int code;

@@ -1,9 +1,9 @@
 package com.greengiant.website;
 
+import org.springframework.web.servlet.DispatcherServlet;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.web.servlet.DispatcherServlet;
 
 @Deprecated
 public class MyDispatcherServlet extends DispatcherServlet {

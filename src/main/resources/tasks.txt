@@ -29,6 +29,8 @@ VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/8
     1.单个功能的测试；2.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
     shiro代码首先还是按照调试流程来学习
 
+    基本功能测通后，把我的ShiroConfig里面的bean用@Autowired或者@Resource来初始化。不要用函数那种方法【测试对比两种方式】
+
     我的互联网项目每周要上线一个小功能
 
 把mybatis的日志配起来【还是依赖于添加用户等操作】
@@ -41,7 +43,8 @@ Junit测试controller：
 https://blog.csdn.net/xiaolyuh123/article/details/73281522/
 https://blog.csdn.net/sinat_32481295/article/details/79764749
 
-【周二】
+【本周】
+0.addUser写好；
 1.单元测试；
 2.ajax写好（先用jQuery的）
 
@@ -67,6 +70,19 @@ https://blog.csdn.net/u014445339/article/details/74301489
 shiro超时相关的问题：
 https://blog.csdn.net/zsg88/article/details/69488728
 https://blog.csdn.net/jrn1012/article/details/70396502
+
+【确认这个过程】在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，
+框架会自动默认分别注入DataSourceTransactionManager或JpaTransactionManager。
+mybati事务管理：
+https://www.cnblogs.com/geningchao/p/6628452.html
+https://www.jianshu.com/p/f3017479bd30
+https://www.jianshu.com/p/f0662c10ce4f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+https://blog.csdn.net/qq_36688143/article/details/82769423
+Spring中的@Transactional(rollbackFor = Exception.class)属性详解：https://www.cnblogs.com/clwydjgs/p/9317849.html
+我没加的时候阿里巴巴给了提示：需要在Transactional注解指定rollbackFor或者在方法中显示的rollback：
+https://blog.csdn.net/ostar_liang/article/details/80770837
+https://blog.csdn.net/qq_16605855/article/details/79653282
+
 
 //@RequiresRoles("role1")
 //@RequiresPermissions("+user1+100")
@@ -118,6 +134,13 @@ SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticatio
 activiti定时任务【smartplan能否用这个搞？】：
 https://www.cnblogs.com/dengjiahai/p/6942310.html
 https://blog.csdn.net/sarck3/article/details/11781097
+
+spring获取加载的所有bean及bean的加载过程：
+https://blog.csdn.net/long243416336/article/details/80590032
+https://blog.csdn.net/dc282614966/article/details/81480002
+https://www.cnblogs.com/leftthen/p/5440107.html
+https://www.jianshu.com/p/210115d5a4aa
+在Spring容器中，我们手工注解@Bean 将被优先加载，框架不会重新实例化其他的 PlatformTransactionManager 实现类
 
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
 shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并不好）
@@ -187,6 +210,8 @@ CommandLineRunner（源码）：
 https://blog.csdn.net/qq_26323323/article/details/80856973
 https://www.jianshu.com/p/5d4ffe267596
 https://www.cnblogs.com/chenpi/p/9696310.html
+
+看mybatis实现PlatformTransactionManager这个接口的代码在哪个包里面
 
 spring-boot-starter-web
 要有一种引领的意识，赚钱在其后，否则永远无法成事
@@ -371,7 +396,7 @@ mybatis plus里面 A extends DataEntity<A>的写法
 https://www.cnblogs.com/linma/p/7845124.html
 https://www.cnblogs.com/gexiaoshan/p/6429888.html
 
-EasyUI：
+EasyUI【比较EasyUI和bootstrap等不同的技术】：
 2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
 3.用Angular或者vue版的前端；
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
@@ -555,6 +580,7 @@ ionic 是一个强大的 HTML5 应用程序开发框架(HTML5 Hybrid Mobile App 
 https://www.runoob.com/ionic/ionic-tutorial.html
 我们为什么选择TypeScript? https://segmentfault.com/a/1190000010892897
 TypeScript是ES6的超集，因此学习typescript之前可以先看看es6的module等内容：https://www.jianshu.com/p/fe3cb09aa380
+typeScript是把类型写在后面。看any、Observable
 Learn Angular Tutorial：
 https://www.codeproject.com/Articles/1207118/Learn-Angular-Tutorial
 https://www.jianshu.com/p/219fc1606ec8
@@ -576,8 +602,29 @@ angular代码好调试吗？
 理解angular里面的scope及$scope用法
 Angular 6 Tutorial With Example Using Angular CLI：https://appdividend.com/2018/05/05/angular-6-tutorial-with-example-using-angular-cli/
 nz-table(NG-ZORRO)【ant-design官方文档是啥？】：https://ng.ant.design/components/table/zh
+Angular 6 教程：https://www.kaifaxueyuan.com/frontend/angular-6.html
 angular官网：https://www.angular.cn/
 单向绑定，用单括号（并且在nz-zorro这种组件标签里面）；双向绑定里面带()括号；一个括号表示时间；前端管理；指令(没有界面)
+路由机制
 Angular组件篇：https://www.jianshu.com/p/f03c6df14956
 几款流行的angular组件库：https://blog.csdn.net/dengfangfang11/article/details/80326516
+angular调试的几种方法【借助插件augury等和不借助插件，比较并且看是否可以推荐给大家】：
+https://blog.csdn.net/u010147288/article/details/51463486
+https://www.cnblogs.com/lsc183/p/9915285.html
+https://juejin.im/entry/5a4ce4965188252a3d38659a
+https://blog.csdn.net/homer168/article/details/79359282
+Angular学习之组件和@Component（组件从技术上来说其实是一个指令）：
+https://blog.csdn.net/ano1010/article/details/83240504
+https://blog.csdn.net/it_rod/article/details/79306364
+Angular4父子组件传递@Input和@Output【对比原生JS的模块化、对比其他语言。这里是否也体现了双向数据传递，为啥angular能方便做到其他语言不行？】：
+https://blog.csdn.net/h273979586/article/details/79853825
+Angular 进阶：从源码理解@Input绑定是如何被编译和实现的：https://segmentfault.com/a/1190000013473028
+如何快速查看函数是怎么被调用的？【每新接触一门语言，关键还是摸清楚这些工程方面的东西】
+angular4.0 创建结构指令：https://blog.csdn.net/u013816448/article/details/79245375
+angular 使用 ngTemplateOutlet 指令：https://blog.csdn.net/u013816448/article/details/79245365
+import
+r.map操作，再看map的本质
+事件：
+
+
 

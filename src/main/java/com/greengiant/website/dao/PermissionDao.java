@@ -1,11 +1,11 @@
 package com.greengiant.website.dao;
 
 import com.greengiant.website.pojo.model.Permission;
-import java.util.Date;
-import java.util.List;
-
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
+
+import java.util.Date;
+import java.util.List;
 
 @Mapper
 public interface PermissionDao {

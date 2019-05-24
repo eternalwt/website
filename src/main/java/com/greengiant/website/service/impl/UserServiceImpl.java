@@ -8,8 +8,10 @@ import com.greengiant.website.pojo.vo.AddUserVo;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired

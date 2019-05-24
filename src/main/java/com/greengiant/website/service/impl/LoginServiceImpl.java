@@ -11,7 +11,7 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void login(String username, String password) {
-// 从SecurityUtils里边创建一个 subject
+        // 从SecurityUtils里边创建一个 subject
         Subject subject = SecurityUtils.getSubject();
         // 在认证提交前准备 token（令牌）
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);

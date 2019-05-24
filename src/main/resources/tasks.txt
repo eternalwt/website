@@ -11,6 +11,7 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 咨询扣税的问题
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
+升级springboot 2.1.5后启动报错
 
 把youdao里面shiro的东西整理一下
 

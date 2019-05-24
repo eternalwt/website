@@ -8,7 +8,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.stereotype.Component;
 
-@Component
+//@Component
 public class CustomJwtRealm extends AuthorizingRealm {
 //    private final UserMapper userMapper;
 //

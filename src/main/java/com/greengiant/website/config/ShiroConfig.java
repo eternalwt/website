@@ -92,36 +92,36 @@ public class ShiroConfig {
         return new CustomRealm();
     }
 
-    @Bean(name="customRealmWithMatcher")
-    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
-        CustomRealm realm = new CustomRealm();
-        realm.setCacheManager(cacheManager);
-        //todo 代码跟踪
-        realm.setCachingEnabled(true);
-        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
-        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
-        matcher.setHashIterations(PasswordUtil.hashIterationCount);
-        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-
-//        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+//    @Bean(name="customRealmWithMatcher")
+//    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
+//        CustomRealm realm = new CustomRealm();
+//        realm.setCacheManager(cacheManager);
+//        //todo 代码跟踪
+//        realm.setCachingEnabled(true);
+//        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
 //        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
 //        matcher.setHashIterations(PasswordUtil.hashIterationCount);
 //        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-        realm.setCredentialsMatcher(matcher);
-
-        return new CustomRealm();
-    }
+//
+////        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
+////        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
+////        matcher.setHashIterations(PasswordUtil.hashIterationCount);
+////        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
+//        realm.setCredentialsMatcher(matcher);
+//
+//        return new CustomRealm();
+//    }
 
     /**
      * shiro缓存管理器;
      * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
      */
-    @Bean
-    public EhCacheManager ehCacheManager() {
-        System.out.println("ShiroConfiguration.getEhCacheManager()");
-        EhCacheManager cacheManager = new EhCacheManager();
-        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-        return cacheManager;
-    }
+//    @Bean
+//    public EhCacheManager ehCacheManager() {
+//        System.out.println("ShiroConfiguration.getEhCacheManager()");
+//        EhCacheManager cacheManager = new EhCacheManager();
+//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return cacheManager;
+//    }
 
 }

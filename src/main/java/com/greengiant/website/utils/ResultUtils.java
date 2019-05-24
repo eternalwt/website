@@ -14,6 +14,10 @@ public class ResultUtils {
         return result;
     }
 
+    public static ResultBean success() {
+        return success(null);
+    }
+
     public static ResultBean fail(int code, String msg) {
         ResultBean result = new ResultBean();
         result.setCode(code);

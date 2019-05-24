@@ -14,6 +14,8 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 
 把youdao里面shiro的东西整理一下
 
+activiti的id问题继续研究
+
 VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/81909392
 
 停一下，把现有功能充分测试：
@@ -49,6 +51,7 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 2.ajax写好（先用jQuery的）
 
 shiro-spring
+IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
 
 1.把注册、登录写通；10.把ResultUtils用起来【前端ajax先配好】；5.把添加用户、角色等基本功能写好（Service、Controller）
 2.前端form、ajax单独写好，再考虑整合的问题；
@@ -68,6 +71,10 @@ https://blog.csdn.net/li_gameover/article/details/79917473
 https://blog.csdn.net/u014445339/article/details/74301489
 
 shiro超时相关的问题：
+https://www.cnblogs.com/shihaiming/p/6042788.html
+https://www.cnblogs.com/cocoat/articles/5226733.html
+https://blog.csdn.net/ahou2468/article/details/78126607
+https://www.jianshu.com/p/2c4a27874624
 https://blog.csdn.net/zsg88/article/details/69488728
 https://blog.csdn.net/jrn1012/article/details/70396502
 
@@ -121,6 +128,12 @@ CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
 接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
 Authentication说明文档：http://shiro.apache.org/authentication.html
+
+Spring @ControllerAdvice与@RestControllerAdvice注解：
+https://blog.csdn.net/fang_qiming/article/details/79907979
+https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
+
+Spring mvc 之 AbstractHttpMessageConverter 自定义Http消息转化器：https://blog.csdn.net/fang_qiming/article/details/79927708
 
 各种token，分别用于什么场景？
 jwt工程里面用的token不一样，注意对比一下，并分析源代码。jwt token过期重发机制搞清楚
@@ -184,6 +197,7 @@ https://uule.iteye.com/blog/2094549
 【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 mybatis-spring：
 sqlsessionfactory 注入datasource
+为啥有了@Mapper注解后就不需要@Repository了
 以前只知道双向绑定这个名字，现在可以思考原理了
 
 spring AOP再搞一遍
@@ -255,6 +269,7 @@ https://www.cnblogs.com/parry/p/vscode_top_ten_plugins.html
 下载：https://code.visualstudio.com/docs/?dv=win64user
 python也可以用VSCode、sublimeText来搞
 2.sublimeText、node、angular、typescript；
+对比VSCode和sublimeText
 
 shiro的下面两大功能：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
@@ -319,6 +334,8 @@ shiro-ehcache的代码是可以读完的，从这个入手
 loggingSystem.setLogLevel(null, LogLevel.DEBUG);
 
 如，默认时是info模式，未修改时，debug模式是不会输出的。
+
+RxJava、RxJS
 
 框架搭好后，shiro需要学习第二遍。springmvc+shiro彻底搞清楚、知道怎么调试后，会是一个大的突破
 不能够快速调试，在新工作中也会遇到困难
@@ -526,6 +543,8 @@ github能完成DevOps中的多少工作量？
 OAuth2要做好
 DefaultFilter 枚举类原理值得仔细分析
 
+对比shiro的SecureRandomNumberGenerator与JDK的
+
 关于TransactionAwareDataSourceProxy：https://summerhome.iteye.com/blog/2383585
 
 SpringBoot源码研究之Actuator：https://blog.csdn.net/lqzkcx3/article/details/89737579
@@ -575,56 +594,7 @@ postman：form-data、x-www-form-urlencoded、raw、binary分别对应的前端�
 https://blog.csdn.net/xybelieve1990/article/details/81111786
 
 如果不想装mysql可以用SQLite：https://www.runoob.com/sqlite/sqlite-tutorial.html
-ionic 是一个强大的 HTML5 应用程序开发框架(HTML5 Hybrid Mobile App Framework )。
-可以帮助您使用 Web 技术，比如 HTML、CSS 和 Javascript 构建接近原生体验的移动应用程序：
-https://www.runoob.com/ionic/ionic-tutorial.html
-我们为什么选择TypeScript? https://segmentfault.com/a/1190000010892897
-TypeScript是ES6的超集，因此学习typescript之前可以先看看es6的module等内容：https://www.jianshu.com/p/fe3cb09aa380
-typeScript是把类型写在后面。看any、Observable
-Learn Angular Tutorial：
-https://www.codeproject.com/Articles/1207118/Learn-Angular-Tutorial
-https://www.jianshu.com/p/219fc1606ec8
-angular组件：https://www.jianshu.com/p/f03c6df14956
-Angular7。Angular是用TypeScript构建的
-ng代表的是angular-cli插件：npm install -g angular-cli
-angular-cli是angular自动化构建工具：
-https://cli.angular.io/
-https://www.jianshu.com/p/7676f7a246e2
-angular-cli工程搭建指南：https://www.jianshu.com/p/50064b182b73
-【angular-cli启动了一个server。剩下的问题是：angular-cli需要启动node把？因为npm不是node的包管理系统么？】
-vscode编辑、调试angular：
-https://www.cnblogs.com/savorboard/p/vscode-debugging-angular.html
-https://blog.csdn.net/u012475786/article/details/87348423
-https://www.cnblogs.com/handsomer/p/6815852.html
-https://www.e-learn.cn/content/net/1078256
-angular的标签是怎么编译的？应该不难吧？和双向绑定一起作为底层知识学习
-angular代码好调试吗？
-理解angular里面的scope及$scope用法
-Angular 6 Tutorial With Example Using Angular CLI：https://appdividend.com/2018/05/05/angular-6-tutorial-with-example-using-angular-cli/
-nz-table(NG-ZORRO)【ant-design官方文档是啥？】：https://ng.ant.design/components/table/zh
-Angular 6 教程：https://www.kaifaxueyuan.com/frontend/angular-6.html
-angular官网：https://www.angular.cn/
-单向绑定，用单括号（并且在nz-zorro这种组件标签里面）；双向绑定里面带()括号；一个括号表示时间；前端管理；指令(没有界面)
-路由机制
-Angular组件篇：https://www.jianshu.com/p/f03c6df14956
-几款流行的angular组件库：https://blog.csdn.net/dengfangfang11/article/details/80326516
-angular调试的几种方法【借助插件augury等和不借助插件，比较并且看是否可以推荐给大家】：
-https://blog.csdn.net/u010147288/article/details/51463486
-https://www.cnblogs.com/lsc183/p/9915285.html
-https://juejin.im/entry/5a4ce4965188252a3d38659a
-https://blog.csdn.net/homer168/article/details/79359282
-Angular学习之组件和@Component（组件从技术上来说其实是一个指令）：
-https://blog.csdn.net/ano1010/article/details/83240504
-https://blog.csdn.net/it_rod/article/details/79306364
-Angular4父子组件传递@Input和@Output【对比原生JS的模块化、对比其他语言。这里是否也体现了双向数据传递，为啥angular能方便做到其他语言不行？】：
-https://blog.csdn.net/h273979586/article/details/79853825
-Angular 进阶：从源码理解@Input绑定是如何被编译和实现的：https://segmentfault.com/a/1190000013473028
-如何快速查看函数是怎么被调用的？【每新接触一门语言，关键还是摸清楚这些工程方面的东西】
-angular4.0 创建结构指令：https://blog.csdn.net/u013816448/article/details/79245375
-angular 使用 ngTemplateOutlet 指令：https://blog.csdn.net/u013816448/article/details/79245365
-import
-r.map操作，再看map的本质
-事件：
+
 
 
 

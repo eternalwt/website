@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/user")
 public class UserController{
 
-    // admin路径
-
     @Autowired
     private UserService userService;
 
@@ -29,14 +27,12 @@ public class UserController{
         if (user != null) {
             return ResultUtils.fail(StatusCodeEnum.USER_EXISTS.getCode(), StatusCodeEnum.USER_EXISTS.getMsg());
         }
-        //todo
         //2.分别在user和role关联表里面写数据
+        userService.addUser(userVo);
 
-        //3.注意：加密和事务。看些这些东西能否用上：PlatformTransactionManager、DefaultTransactionDefinition、TransactionStatus
+        //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
 
-        //看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
-
-        return null;
+        return ResultUtils.success();
     }
 
   @GetMapping(value = "/getMessage")

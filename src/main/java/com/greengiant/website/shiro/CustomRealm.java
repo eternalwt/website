@@ -13,6 +13,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -26,7 +27,7 @@ public class CustomRealm extends AuthorizingRealm {
 
     private RoleDao roleDao;
 
-    @Autowired
+    @Autowired //确认这种autowired的写法，CustomRealm上面啥也没有
     private void setUserDao(UserDao userDao) {//todo 把提示干掉
         this.userDao = userDao;
     }
@@ -48,15 +49,17 @@ public class CustomRealm extends AuthorizingRealm {
         log.info("authenticate for:{}", authenticationToken.getCredentials());
 
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        token.setRememberMe(token.isRememberMe());
+        //token.setRememberMe(token.isRememberMe());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
         if (null == user) {
             throw new AccountException("用户名不正确");
         }
         // 加一个判断账号是否被禁
-        String password = "";//todo
-        String salt = "";//todo
+        //todo 确认
+        String password = token.getPassword().toString();
+        //todo 确认
+        String salt = user.getPasswordSalt();
 
         //todo 几个构造函数的区别看一下
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
@@ -71,6 +74,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        // todo 这里应该是没写好的
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: {}" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

@@ -19,5 +19,11 @@ public class ExceptionController {
         //return resultMap.fail().message(ex.getMessage());
         return ex.getMessage();
     }
+
+    @ExceptionHandler(NullPointerException.class)
+    public String handleNullPointerException(NullPointerException ex) {
+        //todo ResultUtils.fail();
+        return ex.getMessage();
+    }
 }
 

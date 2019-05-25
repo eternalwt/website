@@ -4,7 +4,7 @@
 【注册和登陆这两个功能协同写通】【md5的登录可以调试了】
 passwordservice的写法写通
 加retry应该能搞定了
-com.mysql.cj.jdbc.Driver 区别
+com.mysql.cj.jdbc.Driver 和 com.mysql.jdbc.Driver 区别
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
 {"timestamp":"XXX", "status":XXX, "error":"XXX", "message":"XXX", "trace":"XXX", "path":"XXX"}
 注解式shiro的原理

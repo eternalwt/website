@@ -17,11 +17,9 @@ public interface RoleDao {
 
     @Insert({
         "insert into auth_role (id, role_name, ",
-        "description, create_time, ",
-        "update_time)",
+        "description)",
         "values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, ",
-        "#{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{updateTime,jdbcType=TIMESTAMP})"
+        "#{description,jdbcType=VARCHAR})"
     })
     int insert(Role record);
 
@@ -72,9 +70,7 @@ public interface RoleDao {
     @Update({
         "update auth_role",
         "set role_name = #{roleName,jdbcType=VARCHAR},",
-          "description = #{description,jdbcType=VARCHAR},",
-          "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "update_time = #{updateTime,jdbcType=TIMESTAMP}",
+          "description = #{description,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Role record);

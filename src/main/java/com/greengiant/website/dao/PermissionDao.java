@@ -17,11 +17,9 @@ public interface PermissionDao {
 
     @Insert({
         "insert into auth_permission (id, permission_name, ",
-        "description, create_time, ",
-        "update_time)",
+        "description)",
         "values (#{id,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, ",
-        "#{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{updateTime,jdbcType=TIMESTAMP})"
+        "#{description,jdbcType=VARCHAR})"
     })
     int insert(Permission record);
 
@@ -57,9 +55,7 @@ public interface PermissionDao {
     @Update({
         "update auth_permission",
         "set permission_name = #{permissionName,jdbcType=VARCHAR},",
-          "description = #{description,jdbcType=VARCHAR},",
-          "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "update_time = #{updateTime,jdbcType=TIMESTAMP}",
+          "description = #{description,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Permission record);

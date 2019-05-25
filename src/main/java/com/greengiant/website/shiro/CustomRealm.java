@@ -19,6 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
+//@Component
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次
@@ -49,7 +50,7 @@ public class CustomRealm extends AuthorizingRealm {
         log.info("authenticate for:{}", authenticationToken.getCredentials());
 
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        //token.setRememberMe(token.isRememberMe());
+        token.setRememberMe(token.isRememberMe());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
         if (null == user) {
@@ -62,8 +63,9 @@ public class CustomRealm extends AuthorizingRealm {
         String salt = user.getPasswordSalt();
 
         //todo 几个构造函数的区别看一下
-        return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
-                this.getName());
+//        return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
+//                this.getName());
+        return new SimpleAuthenticationInfo(token.getPrincipal(), password, this.getName());
     }
 
     /**

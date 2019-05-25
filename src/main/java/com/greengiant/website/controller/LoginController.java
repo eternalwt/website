@@ -1,20 +1,18 @@
 package com.greengiant.website.controller;
 
-import com.greengiant.website.service.LoginService;
+import com.greengiant.website.service.AuthService;
 import com.greengiant.website.service.RoleService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/auth")
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
+    private AuthService loginService;
 
     @Autowired
     private RoleService roleService;
@@ -36,7 +34,7 @@ public class LoginController {
      * @param username 用户名
      * @param password 密码
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping(value = "/login")
     public String login(@RequestParam String username,
                         @RequestParam String password) {
         // 从SecurityUtils里边创建一个 subject

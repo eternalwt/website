@@ -1,6 +1,6 @@
 package com.greengiant.website.service;
 
-public interface LoginService {
+public interface AuthService {
     void login(String username, String password);
 
 }

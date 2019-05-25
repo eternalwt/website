@@ -17,11 +17,9 @@ public interface UserDao {
 
     @Insert({
         "insert into auth_user (id, user_name, ",
-        "password, password_salt, ",
-        "create_time, update_time)",
+        "password, password_salt)",
         "values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, ",
-        "#{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR}, ",
-        "#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})"
+        "#{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR})"
     })
     int insert(User record);
 
@@ -76,9 +74,7 @@ public interface UserDao {
         "update auth_user",
         "set user_name = #{userName,jdbcType=VARCHAR},",
           "password = #{password,jdbcType=VARCHAR},",
-          "password_salt = #{passwordSalt,jdbcType=VARCHAR},",
-          "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "update_time = #{updateTime,jdbcType=TIMESTAMP}",
+          "password_salt = #{passwordSalt,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(User record);

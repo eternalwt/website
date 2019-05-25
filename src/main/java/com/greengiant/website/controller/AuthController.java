@@ -17,7 +17,7 @@ import java.io.IOException;
 @Deprecated
 @Slf4j
 @Controller
-@RequestMapping("/auth")
+@RequestMapping("/aaa")
 public class AuthController {
 
 	@RequestMapping("/login")

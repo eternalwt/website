@@ -17,11 +17,9 @@ public interface UserRoleDao {
 
     @Insert({
         "insert into auth_user_role (id, user_id, ",
-        "role_id, create_time, ",
-        "update_time)",
+        "role_id)",
         "values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, ",
-        "#{roleId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{updateTime,jdbcType=TIMESTAMP})"
+        "#{roleId,jdbcType=BIGINT})"
     })
     int insert(UserRole record);
 
@@ -57,9 +55,7 @@ public interface UserRoleDao {
     @Update({
         "update auth_user_role",
         "set user_id = #{userId,jdbcType=BIGINT},",
-          "role_id = #{roleId,jdbcType=BIGINT},",
-          "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "update_time = #{updateTime,jdbcType=TIMESTAMP}",
+          "role_id = #{roleId,jdbcType=BIGINT} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(UserRole record);

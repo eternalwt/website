@@ -3,12 +3,22 @@ package com.greengiant.website.config;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.PasswordService;
 import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
+//import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.crypto.hash.DefaultHashService;
+import org.apache.shiro.crypto.hash.Hash;
+import org.apache.shiro.crypto.hash.HashRequest;
+import org.apache.shiro.crypto.hash.HashService;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,6 +28,13 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class ShiroConfig {
+
+//    @Autowired
+//    private EhCacheManager ehCacheManager;
+
+    @Autowired
+    private CustomRealm customRealm;
+
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -42,9 +59,10 @@ public class ShiroConfig {
         //游客，开发权限
         filterChainDefinitionMap.put("/guest/**", "anon");
         //开放登陆接口
-        filterChainDefinitionMap.put("/login", "anon");
+        filterChainDefinitionMap.put("/auth/**", "anon");
         //用户，需要角色权限 “user”
-        filterChainDefinitionMap.put("/user/**", "roles[user]");
+        filterChainDefinitionMap.put("/user/**", "anon");
+        //filterChainDefinitionMap.put("/user/**", "roles[user]");
         //管理员，需要角色权限 “admin”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
         //其余接口一律拦截
@@ -62,12 +80,14 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager() {
+        // 配置Realm、CacheManager、RememberMeManager、sessionManager
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // todo
         // 注入缓存管理器;
-        // securityManager.setCacheManager(ehCacheManager());
+        // securityManager.setCacheManager(ehCacheManager());//todo 究竟写在这一行还是下面一行？
         // 注入自定义的realm
-        securityManager.setRealm(customRealm());
+        securityManager.setRealm(customRealm);//customRealm() customRealmWithMatcher(getEhCacheManager())
+        //securityManager.setSessionManager();
         // todo
         //securityManager.setRememberMeManager();
 
@@ -82,7 +102,7 @@ public class ShiroConfig {
      */
     @Bean
     public CustomRealm customRealm() {
-        CustomRealm realm = new CustomRealm();
+        //CustomRealm realm = new CustomRealm();
         //realm.setCacheManager();
         //realm.setCachingEnabled();
         // todo
@@ -92,6 +112,33 @@ public class ShiroConfig {
         return new CustomRealm();
     }
 
+//    @Bean
+//    public PasswordService getPasswordService() {
+//        //todo 写通后考虑，是否放入util里面去
+//        DefaultPasswordService defaultPasswordService = new DefaultPasswordService();
+//        DefaultHashService defaultHashService = new DefaultHashService();
+//        defaultHashService.setHashAlgorithmName(PasswordUtil.algorithmName);
+//        defaultHashService.setHashIterations(PasswordUtil.hashIterationCount);
+//        defaultPasswordService.setHashService(defaultHashService);
+//
+//        //todo
+//        return defaultPasswordService;
+//    }
+
+    @Bean
+    public CredentialsMatcher getHashedCredentialsMatcher(){
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        //加密方式
+        hashedCredentialsMatcher.setHashAlgorithmName("md5");
+        //加密次数
+        hashedCredentialsMatcher.setHashIterations(2);
+        //存储散列后的密码是否为16进制
+        //hashedCredentialsMatcher.isStoredCredentialsHexEncoded();
+
+        return hashedCredentialsMatcher;
+    }
+
+//    //todo autowire
 //    @Bean(name="customRealmWithMatcher")
 //    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
 //        CustomRealm realm = new CustomRealm();
@@ -117,8 +164,8 @@ public class ShiroConfig {
      * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
      */
 //    @Bean
-//    public EhCacheManager ehCacheManager() {
-//        System.out.println("ShiroConfiguration.getEhCacheManager()");
+//    public EhCacheManager getEhCacheManager() {
+//        System.out.println("ShiroConfig.getEhCacheManager()");
 //        EhCacheManager cacheManager = new EhCacheManager();
 //        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 //        return cacheManager;

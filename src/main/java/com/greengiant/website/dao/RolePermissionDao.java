@@ -17,11 +17,9 @@ public interface RolePermissionDao {
 
     @Insert({
         "insert into auth_role_permission (id, role_id, ",
-        "permission_id, create_time, ",
-        "update_time)",
+        "permission_id)",
         "values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, ",
-        "#{permissionId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, ",
-        "#{updateTime,jdbcType=TIMESTAMP})"
+        "#{permissionId,jdbcType=BIGINT})"
     })
     int insert(RolePermission record);
 
@@ -57,9 +55,7 @@ public interface RolePermissionDao {
     @Update({
         "update auth_role_permission",
         "set role_id = #{roleId,jdbcType=BIGINT},",
-          "permission_id = #{permissionId,jdbcType=BIGINT},",
-          "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "update_time = #{updateTime,jdbcType=TIMESTAMP}",
+          "permission_id = #{permissionId,jdbcType=BIGINT} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(RolePermission record);

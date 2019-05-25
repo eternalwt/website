@@ -1,6 +1,14 @@
 ﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
+【注册和登陆这两个功能协同写通】【md5的登录可以调试了】
+passwordservice的写法写通
+加retry应该能搞定了
+com.mysql.cj.jdbc.Driver 区别
+【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
+{"timestamp":"XXX", "status":XXX, "error":"XXX", "message":"XXX", "trace":"XXX", "path":"XXX"}
+注解式shiro的原理
+
 周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
 其实前后端已经连的差不多了，jwt只是可选。下一步：把Configuration那一套流程搞清楚、jwt、把EasyUI与静态模板的关系搞清楚
 https://blog.csdn.net/qq_22771739/article/details/83687175
@@ -13,7 +21,14 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错
 
-把youdao里面shiro的东西整理一下
+Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
+SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
+spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
+shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
+
+
+把有道笔记里面shiro的东西整理一下
+JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 
 activiti的id问题继续研究
 
@@ -90,7 +105,7 @@ Spring中的@Transactional(rollbackFor = Exception.class)属性详解：https://
 我没加的时候阿里巴巴给了提示：需要在Transactional注解指定rollbackFor或者在方法中显示的rollback：
 https://blog.csdn.net/ostar_liang/article/details/80770837
 https://blog.csdn.net/qq_16605855/article/details/79653282
-
+@Transactional注解的实现
 
 //@RequiresRoles("role1")
 //@RequiresPermissions("+user1+100")

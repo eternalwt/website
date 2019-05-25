@@ -1,13 +1,13 @@
 package com.greengiant.website.service.impl;
 
-import com.greengiant.website.service.LoginService;
+import com.greengiant.website.service.AuthService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LoginServiceImpl implements LoginService {
+public class AuthServiceImpl implements AuthService {
 
     @Override
     public void login(String username, String password) {

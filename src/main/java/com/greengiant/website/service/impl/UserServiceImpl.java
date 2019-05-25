@@ -31,13 +31,14 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setUserName(userVo.getUserName());
-        user.setPasswordSalt(PasswordUtil.getSalt());
-        //todo 密码要加盐
-        user.setPassword(userVo.getPassword());
+        String salt = PasswordUtil.getSalt();
+        user.setPasswordSalt(salt);
+        // 密码加盐加密
+        user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));
         //todo 确认这里是不是返回id
         int userId = userDao.insert(user);
 
-        // todo 1.搞懂Transactional注解；2.测试抛异常的情况
+        // todo 1.搞懂Transactional注解；
 
         UserRole userRole = new UserRole();
         userRole.setRoleId(userVo.getRoleId());

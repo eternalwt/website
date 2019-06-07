@@ -16,7 +16,8 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     //todo 如果上多个服务需要注意全局性
 //    private Cache<String, AtomicInteger> passwordRetryCache;
 
-    //todo 后续用缓存处理
+    //todo 后续用缓存处理 1.用注解的方式写通；2.用原生CacheManager的方式写通
+    // 用注解的方式，我再维护一个map是没有意义的（对于需要操作数据库的再加方法才有意义）。尝试最终用CacheManager解决问题
     private static Map<String, Integer> cache = new HashedMap();
 
     private int maxRetryCount = 5;

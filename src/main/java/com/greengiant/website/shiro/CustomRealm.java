@@ -57,11 +57,8 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AccountException("用户名不正确");
         }
         // 加一个判断账号是否被禁
-        //todo 确认
         String password = new String(token.getPassword());
-        //todo 确认
         String salt = user.getPasswordSalt();
-
         //todo 几个构造函数的区别看一下
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
                 this.getName());

@@ -127,7 +127,8 @@ public class ShiroConfig {
 
     @Bean
     public CredentialsMatcher getHashedCredentialsMatcher(){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        HashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+        //HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //加密方式
         hashedCredentialsMatcher.setHashAlgorithmName("md5");
         //加密次数

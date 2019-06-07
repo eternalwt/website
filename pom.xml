@@ -90,11 +90,11 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.sf.ehcache/ehcache -->
-<!--		<dependency>-->
-<!--			<groupId>net.sf.ehcache</groupId>-->
-<!--			<artifactId>ehcache</artifactId>-->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
 <!--			<version>2.6.11</version>-->
-<!--		</dependency>-->
+		</dependency>
 <!--		<dependency>-->
 <!--			<groupId>org.apache.shiro</groupId>-->
 <!--			<artifactId>shiro-ehcache</artifactId>-->

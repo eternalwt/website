@@ -15,6 +15,7 @@ public interface RolePermissionDao {
     })
     int deleteByPrimaryKey(Long id);
 
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert({
         "insert into auth_role_permission (id, role_id, ",
         "permission_id)",

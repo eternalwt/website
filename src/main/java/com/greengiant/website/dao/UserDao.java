@@ -15,6 +15,7 @@ public interface UserDao {
     })
     int deleteByPrimaryKey(Long id);
 
+    @Options(useGeneratedKeys = true, keyProperty = "id")
     @Insert({
         "insert into auth_user (id, user_name, ",
         "password, password_salt)",

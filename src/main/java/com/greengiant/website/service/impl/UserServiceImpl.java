@@ -35,14 +35,11 @@ public class UserServiceImpl implements UserService {
         user.setPasswordSalt(salt);
         // 密码加盐加密
         user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));
-        //todo 确认这里是不是返回id
-        int userId = userDao.insert(user);
-
-        // todo 1.搞懂Transactional注解；
+        userDao.insert(user);
 
         UserRole userRole = new UserRole();
         userRole.setRoleId(userVo.getRoleId());
-        userRole.setUserId((long)userId);
+        userRole.setUserId(user.getId());
         userRoleDao.insert(userRole);
     }
 

@@ -7,6 +7,9 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -73,4 +76,21 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
         return matches;
     }
+
+    @Cacheable(cacheNames = "retry")
+    public Integer get(String username) {
+        return cache.get(username);
+    }
+
+    @CachePut(cacheNames = "retry", key = "#username")
+    public Integer save(String username, Integer value) {
+        cache.put(username, value);
+        return value;
+    }
+
+    @CacheEvict(cacheNames = "retry")
+    public Integer delete(String username) {
+        return cache.remove(username);
+    }
+
 }

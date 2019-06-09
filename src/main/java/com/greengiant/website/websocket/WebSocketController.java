@@ -1,8 +1,6 @@
 package com.greengiant.website.websocket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.*;
@@ -23,30 +21,28 @@ public class WebSocketController {
     // 与某个客户端的连接会话，需要通过它来与客户端进行数据收发
     private Session session;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketController.class);
-
     @OnOpen
     public void onOpen(Session session, @PathParam("id") long id, @PathParam("name") String name) throws Exception {
         this.session = session;
         log.info(this.session.getId());
         webSocketSet.add(this);
-        LOGGER.info("Open a websocket. id={}, name={}", id, name);
+        log.info("Open a websocket. id={}, name={}", id, name);
     }
 
     @OnClose
     public void onClose() {
         webSocketSet.remove(this);
-        LOGGER.info("Close a websocket. ");
+        log.info("Close a websocket. ");
     }
 
     @OnMessage
     public void onMessage(String message, Session session) {
-        LOGGER.info("Receive a message from client: " + message);
+        log.info("Receive a message from client: " + message);
     }
 
     @OnError
     public void onError(Session session, Throwable error) {
-        LOGGER.error("Error while websocket. ", error);
+        log.error("Error while websocket. ", error);
     }
 
     public void sendMessage(String message) throws Exception {

@@ -35,6 +35,9 @@ public class ShiroConfig {
     @Autowired
     private CustomRealm customRealm;
 
+//    @Autowired
+//    private CredentialsMatcher ;
+
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -133,7 +136,7 @@ public class ShiroConfig {
         //加密次数
         hashedCredentialsMatcher.setHashIterations(2);
         //存储散列后的密码是否为16进制
-        //hashedCredentialsMatcher.isStoredCredentialsHexEncoded();
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
 
         return hashedCredentialsMatcher;
     }

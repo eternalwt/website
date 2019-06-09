@@ -60,7 +60,6 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         if(cache.get(username) != null && cache.get(username) > maxRetryCount) {
             // todo 重试的时候需要输入验证码
             //todo N读配置文件
-            //todo 全局异常捕获
             throw new ExcessiveAttemptsException("您已连续输错" + maxRetryCount + "次密码！请N分钟后再试");
         }
 

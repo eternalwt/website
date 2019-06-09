@@ -39,7 +39,9 @@ public class PasswordUtil {
                     hashIterationCount).toHex();
         }
         else {
-            //todo 如果storedCredentialsHexEncoded为false怎么写？
+            //对应HashedCredentialsMatcher里面的2种判断
+            newPassword = new SimpleHash(algorithmName, originalPassword, ByteSource.Util.bytes(salt),
+                    hashIterationCount).toBase64();
         }
 
         return newPassword;

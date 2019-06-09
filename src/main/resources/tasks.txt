@@ -401,6 +401,7 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 有没有jwt的两套应该是可以快速切换的，做成通用的
 全局异常处理做进来
 富文本编辑器、activiti做进来
+websocket用起来
 
 activiti demo网站试用：
 http://www.jq22.com/yanshi4014

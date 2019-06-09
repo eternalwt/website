@@ -25,7 +25,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     private int maxRetryCount = 5;
 
-    // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易
+    // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去
     //private CacheManager cacheManager;
 
 //    public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) {
@@ -52,15 +52,16 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 //            throw new ExcessiveAttemptsException("您已连续错误达" + maxRetryCount + "次！请N分钟后再试");
 //        }
 
-        int retryCount = 0;
-        if (cache.get(username) != null) {
-            retryCount = cache.get(username);
-        }
+//        int retryCount = 0;
+//        if (cache.get(username) != null) {
+//            retryCount = cache.get(username);
+//        }
         //if (retryCount.incrementAndGet() > 5) {
-        if(retryCount++ > maxRetryCount) {
-            //todo 测试
+        if(cache.get(username) != null && cache.get(username) > maxRetryCount) {
             // todo 重试的时候需要输入验证码
-            throw new ExcessiveAttemptsException("您已连续错误达" + maxRetryCount + "次！请N分钟后再试");
+            //todo N读配置文件
+            //todo 全局异常捕获
+            throw new ExcessiveAttemptsException("您已连续输错" + maxRetryCount + "次密码！请N分钟后再试");
         }
 
         //todo 父类实现了加密，测试一下
@@ -71,13 +72,20 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             cache.remove(username);
         }
         else {
-            throw new IncorrectCredentialsException("密码错误，已错误" + retryCount + "次，最多错误" + maxRetryCount + "次");
+            if(cache.get(username) != null) {
+                cache.put(username, 0);
+                throw new IncorrectCredentialsException("密码错误");
+            }
+            else {
+                cache.put(username, cache.get(username) + 1);
+                throw new IncorrectCredentialsException("密码错误，已错误" + (cache.get(username) + 1) + "次，最多错误" + maxRetryCount + "次");
+            }
         }
 
         return matches;
     }
 
-    @Cacheable(cacheNames = "retry")
+    @Cacheable(cacheNames = "retry")//todo 为啥只能用于public方法？
     public Integer get(String username) {
         return cache.get(username);
     }

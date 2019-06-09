@@ -10,6 +10,7 @@ public enum StatusCodeEnum {
     EXCEPTION("System Exception", -2),
 
     USER_EXISTS("用户已存在", 10001),
+    PASSWORD_INCORRECT("密码错误", 10002)
     ;
 
     // 成员变量

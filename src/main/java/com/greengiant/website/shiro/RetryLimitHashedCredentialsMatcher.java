@@ -72,7 +72,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             cache.remove(username);
         }
         else {
-            if(cache.get(username) != null) {
+            if(cache.get(username) == null) {
                 cache.put(username, 0);
                 throw new IncorrectCredentialsException("密码错误");
             }

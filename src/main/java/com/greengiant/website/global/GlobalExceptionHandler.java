@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ResultBean handleIncorrectCredentialsException(IncorrectCredentialsException ex) {
         log.error(ex.getMessage(),ex);
-        return ResultUtils.fail(StatusCodeEnum.EXCEPTION.getCode(), StatusCodeEnum.EXCEPTION.getMsg());
+        return ResultUtils.fail(StatusCodeEnum.PASSWORD_INCORRECT.getCode(), ex.getMessage());
     }
 
 }

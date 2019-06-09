@@ -102,14 +102,13 @@ public class ShiroConfig {
      */
     @Bean
     public CustomRealm customRealm() {
-        //CustomRealm realm = new CustomRealm();
+        CustomRealm realm = new CustomRealm();
         //realm.setCacheManager();
         //realm.setCachingEnabled();
-        // todo
-        //RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher();
-        //realm.setCredentialsMatcher();
+        // todo 改成@autowired
+        realm.setCredentialsMatcher(getHashedCredentialsMatcher());
 
-        return new CustomRealm();
+        return realm;
     }
 
 //    @Bean

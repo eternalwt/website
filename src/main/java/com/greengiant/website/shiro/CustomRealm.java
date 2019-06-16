@@ -24,19 +24,22 @@ public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次
 
+    @Autowired
     private UserDao userDao;
 
+    @Autowired
     private RoleDao roleDao;
 
-    @Autowired //确认这种autowired的写法，CustomRealm上面啥也没有
-    private void setUserDao(UserDao userDao) {//todo 把提示干掉
-        this.userDao = userDao;
-    }
-
-    @Autowired
-    private void setRoleDao(RoleDao roleDao) {
-        this.roleDao = roleDao;
-    }
+//    @Autowired
+//    // todo 确认这种autowired的写法，CustomRealm上面啥也没有
+//    private void setUserDao(UserDao userDao) {//todo 把提示干掉
+//        this.userDao = userDao;
+//    }
+//
+//    @Autowired
+//    private void setRoleDao(RoleDao roleDao) {
+//        this.roleDao = roleDao;
+//    }
 
     /**
      * 获取身份验证信息
@@ -47,7 +50,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        log.info("authenticate for:{}", authenticationToken.getCredentials());
+        log.info("authenticate for:[{}]", authenticationToken.getCredentials());
 
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         token.setRememberMe(token.isRememberMe());
@@ -56,10 +59,10 @@ public class CustomRealm extends AuthorizingRealm {
         if (null == user) {
             throw new AccountException("用户名不正确");
         }
-        // 加一个判断账号是否被禁
-        String password = new String(token.getPassword());
+        // todo 加一个判断账号是否被禁 isLocked
+        String password = user.getPassword();
         String salt = user.getPasswordSalt();
-        //todo 几个构造函数的区别看一下
+
         return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
                 this.getName());
     }
@@ -74,7 +77,7 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         // todo 这里应该是没写好的
         String username = (String) SecurityUtils.getSubject().getPrincipal();
-        log.info("authorization for: {}" + username);
+        log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         //需要将 role 封装到 Set 作为 info.setRoles() 的参数
         Set<String> set = new HashSet<>();

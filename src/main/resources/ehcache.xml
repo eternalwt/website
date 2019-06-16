@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
-<!--         xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"-->
-<!--         updateCheck="false">-->
+
 <ehcache name="es">
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd"
+    updateCheck="false">
+
     <diskStore path="java.io.tmpdir"/>
 
     <!--defaultCache:echcache的默认缓存策略  -->
     <defaultCache
-            maxElementsInMemory="10000"
-            eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="0"
-            overflowToDisk="false"
-            diskPersistent="false"
-            diskExpiryThreadIntervalSeconds="120" />
+        maxElementsInMemory="10000"
+        eternal="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="0"
+        overflowToDisk="true"
+        maxElementsOnDisk="10000000"
+        diskPersistent="false"
+        diskExpiryThreadIntervalSeconds="120"
+        memoryStoreEvictionPolicy="LRU"
+    />
     <cache
-            name="user"
-            maxEntriesLocalHeap="2000"
-            eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="0"
-            overflowToDisk="false"
-            statistics="true"/>
-
+        name="user"
+        maxEntriesLocalHeap="2000"
+        eternal="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="0"
+        overflowToDisk="false"
+        statistics="true"
+    />
     <!-- 登录记录缓存锁定1小时 -->
     <cache
-            name="passwordRetryCache"
-            maxEntriesLocalHeap="2000"
-            eternal="false"
-            timeToIdleSeconds="3600"
-            timeToLiveSeconds="0"
-            overflowToDisk="false"
-            statistics="true" />
+        name="passwordRetryCache"
+        maxEntriesLocalHeap="2000"
+        eternal="false"
+        timeToIdleSeconds="3600"
+        timeToLiveSeconds="0"
+        overflowToDisk="false"
+        statistics="true"
+    />
 </ehcache>
 
         <!--

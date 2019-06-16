@@ -21,6 +21,7 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -34,9 +35,6 @@ public class ShiroConfig {
 
     @Autowired
     private CustomRealm customRealm;
-
-//    @Autowired
-//    private CredentialsMatcher ;
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -127,9 +125,9 @@ public class ShiroConfig {
 //        return defaultPasswordService;
 //    }
 
-    @Bean
-    public CredentialsMatcher getHashedCredentialsMatcher(){
+    private CredentialsMatcher getHashedCredentialsMatcher(){
         HashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+        //todo 再写回去一次，要能快速反复来回配
         //HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //加密方式
         hashedCredentialsMatcher.setHashAlgorithmName("md5");

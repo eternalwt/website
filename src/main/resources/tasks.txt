@@ -2,11 +2,20 @@
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
 passwordservice的写法写通
-加retry应该能搞定了
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
 {"timestamp":"XXX", "status":XXX, "error":"XXX", "message":"XXX", "trace":"XXX", "path":"XXX"}
-注解式shiro的原理
+注解式shiro的原理以及配置
 把登录那几个页面的跳转配置好
+
+mybatis开启日志：
+https://blog.csdn.net/leocolee/article/details/80398406
+https://blog.csdn.net/lpw_cn/article/details/84779387
+druid开启日志
+
+1.ehcache配好，并且把ehcache版本的封账号写好测通，并且要能快速降级成没有cache的版本；
+2.推测：我的HashedCredentialsMatcher应该能用bean，但是要和Realm指定好顺序
+3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
+4.测试
 
 周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
 其实前后端已经连的差不多了，jwt只是可选。下一步：把Configuration那一套流程搞清楚、jwt、把EasyUI与静态模板的关系搞清楚
@@ -64,6 +73,8 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 0.addUser写好；
 1.单元测试；
 2.ajax写好（先用jQuery的）
+心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
+然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
 
 shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
@@ -219,6 +230,7 @@ sqlsessionfactory 注入datasource
 以前只知道双向绑定这个名字，现在可以思考原理了
 
 spring AOP再搞一遍
+尝试使用rest接口，可以更简洁同时也能暴露更少信息
 
 sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
 在搞jwt之前，应该把会话管理那一章先看明白

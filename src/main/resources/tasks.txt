@@ -1,6 +1,7 @@
 ﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
+CacheConfiguration类实现看一下
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
 {"timestamp":"XXX", "status":XXX, "error":"XXX", "message":"XXX", "trace":"XXX", "path":"XXX"}

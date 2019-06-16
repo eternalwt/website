@@ -34,11 +34,11 @@
         name="passwordRetry"
         maxEntriesLocalHeap="2000"
         eternal="false"
-        timeToIdleSeconds="60"
-        timeToLiveSeconds="120"
+        timeToIdleSeconds="1800"
         overflowToDisk="false"
         statistics="true"
     />
+<!--        timeToLiveSeconds="120"-->
 <!--    maxEntriesLocalHeap="2000"-->
 </ehcache>
 

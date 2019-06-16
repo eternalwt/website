@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-//@Component
+@Component
 public class CustomRealm extends AuthorizingRealm {
     //todo 如何单元测试？
     //todo 思考其所在的层次

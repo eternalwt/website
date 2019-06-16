@@ -9,7 +9,6 @@ import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.authc.credential.PasswordService;
-import org.apache.shiro.cache.CacheManager;
 //import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.crypto.hash.DefaultHashService;
 import org.apache.shiro.crypto.hash.Hash;
@@ -19,8 +18,11 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 
 import java.util.LinkedHashMap;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 @Slf4j
 @Configuration
+@DependsOn("appEhCacheCacheManager")
 public class ShiroConfig {
 
 //    @Autowired
@@ -35,6 +38,12 @@ public class ShiroConfig {
 
     @Autowired
     private CustomRealm customRealm;
+
+    @Autowired
+    private EhCacheCacheManager cacheManager;
+
+    @Autowired
+    private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
 
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
@@ -87,6 +96,16 @@ public class ShiroConfig {
         // 注入缓存管理器;
         // securityManager.setCacheManager(ehCacheManager());//todo 究竟写在这一行还是下面一行？
         // 注入自定义的realm
+
+        retryLimitHashedCredentialsMatcher.setHashAlgorithmName("md5");
+        //加密次数
+        retryLimitHashedCredentialsMatcher.setHashIterations(2);
+        //存储散列后的密码是否为16进制
+        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
+        retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
+
+        customRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher);
+
         securityManager.setRealm(customRealm);//customRealm() customRealmWithMatcher(getEhCacheManager())
         //securityManager.setSessionManager();
         // todo
@@ -95,22 +114,22 @@ public class ShiroConfig {
         return securityManager;
     }
 
-    /**
-     * 自定义身份认证 realm;
-     * <p>
-     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
-     * 否则会影响 CustomRealm类 中其他类的依赖注入
-     */
-    @Bean
-    public CustomRealm customRealm() {
-        CustomRealm realm = new CustomRealm();
-        //realm.setCacheManager();
-        //realm.setCachingEnabled();
-        // todo 改成@autowired
-        realm.setCredentialsMatcher(getHashedCredentialsMatcher());
-
-        return realm;
-    }
+//    /**
+//     * 自定义身份认证 realm;
+//     * <p>
+//     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
+//     * 否则会影响 CustomRealm类 中其他类的依赖注入
+//     */
+//    @Bean
+//    public CustomRealm customRealm() {
+//        CustomRealm realm = new CustomRealm();
+//        //realm.setCacheManager();
+//        //realm.setCachingEnabled();
+//        // todo 改成@autowired
+//        realm.setCredentialsMatcher(getHashedCredentialsMatcher(cacheManager));
+//
+//        return realm;
+//    }
 
 //    @Bean
 //    public PasswordService getPasswordService() {
@@ -125,8 +144,8 @@ public class ShiroConfig {
 //        return defaultPasswordService;
 //    }
 
-    private CredentialsMatcher getHashedCredentialsMatcher(){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+    private CredentialsMatcher getHashedCredentialsMatcher(CacheManager cacheManager){
+        HashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
         //todo 再写回去一次，要能快速反复来回配
         //HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
         //加密方式

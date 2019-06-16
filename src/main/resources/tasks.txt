@@ -78,6 +78,7 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
 然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
 
+
 shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
 
@@ -153,6 +154,7 @@ shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据�
 加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
 CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
 自定义Matcher：CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
+Shiro自定义Realm时用注解的方式注入父类的credentialsMatcher：https://www.cnblogs.com/foxting/p/6790331.html
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，

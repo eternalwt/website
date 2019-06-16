@@ -84,18 +84,18 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         return matches;
     }
 
-    @Cacheable(cacheNames = "retry")//todo 为啥只能用于public方法？
+    @Cacheable(cacheNames = "passwordRetry")//todo 为啥只能用于public方法？
     public Integer get(String username) {
         return cache.get(username);
     }
 
-    @CachePut(cacheNames = "retry", key = "#username")
+    @CachePut(cacheNames = "passwordRetry", key = "#username")
     public Integer save(String username, Integer value) {
         cache.put(username, value);
         return value;
     }
 
-    @CacheEvict(cacheNames = "retry")
+    @CacheEvict(cacheNames = "passwordRetry")
     public Integer delete(String username) {
         return cache.remove(username);
     }

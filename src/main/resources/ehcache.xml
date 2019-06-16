@@ -24,17 +24,17 @@
         maxEntriesLocalHeap="2000"
         eternal="false"
         timeToIdleSeconds="3600"
-        timeToLiveSeconds="0"
+        timeToLiveSeconds="600"
         overflowToDisk="false"
         statistics="true"
     />
     <!-- 登录记录缓存锁定1小时 -->
     <cache
-        name="passwordRetryCache"
+        name="passwordRetry"
         maxEntriesLocalHeap="2000"
         eternal="false"
         timeToIdleSeconds="3600"
-        timeToLiveSeconds="0"
+        timeToLiveSeconds="1800"
         overflowToDisk="false"
         statistics="true"
     />

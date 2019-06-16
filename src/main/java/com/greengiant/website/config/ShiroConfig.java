@@ -33,9 +33,6 @@ import java.util.Map;
 @DependsOn("appEhCacheCacheManager")
 public class ShiroConfig {
 
-//    @Autowired
-//    private EhCacheManager ehCacheManager;
-
     @Autowired
     private CustomRealm customRealm;
 

@@ -1,6 +1,8 @@
 ﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
+把session和RememberMe配好
+
 CacheConfiguration类实现看一下
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
@@ -13,8 +15,7 @@ https://blog.csdn.net/leocolee/article/details/80398406
 https://blog.csdn.net/lpw_cn/article/details/84779387
 druid开启日志
 
-1.ehcache配好，并且把ehcache版本的封账号写好测通，并且要能快速降级成没有cache的版本；
-2.推测：我的HashedCredentialsMatcher应该能用bean，但是要和Realm指定好顺序
+1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 4.测试
 

@@ -1,20 +1,13 @@
 package com.greengiant.website.shiro;
 
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
-
-import java.util.Map;
 
 @Component
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
@@ -38,17 +31,6 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         String username = (String)token.getPrincipal();
-        //retry count + 1
-//        AtomicInteger retryCount = passwordRetryCache.get(username);
-//        if(retryCount == null) {
-//            retryCount = new AtomicInteger(0);
-//            passwordRetryCache.put(username, retryCount);
-//        }
-//        if(retryCount.incrementAndGet() > MAX_RETRY_COUNT) {
-//            //todo 测试
-//            // todo 重试的时候需要输入验证码
-//            throw new ExcessiveAttemptsException("您已连续错误达" + MAX_RETRY_COUNT + "次！请N分钟后再试");
-//        }
 
         if(cache.get(username) != null && Integer.valueOf(cache.get(username).get().toString()) >= MAX_RETRY_COUNT) {
             // todo 重试的时候需要输入验证码
@@ -56,7 +38,6 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             throw new ExcessiveAttemptsException("您已连续输错" + MAX_RETRY_COUNT + "次密码！请30分钟后再试");
         }
 
-        //todo 父类实现了加密，测试一下
         boolean matches = super.doCredentialsMatch(token, info);
         if(matches) {
             //clear retry count

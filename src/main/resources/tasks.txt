@@ -2,8 +2,10 @@
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
 把session和RememberMe配好
+shiro需要搞懂的2点：
+1.权限注解；2.与web集成及拦截器；
+再看一遍开涛的shiro，思考怎么用好Authorizer、Session Management
 
-CacheConfiguration类实现看一下
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
 {"timestamp":"XXX", "status":XXX, "error":"XXX", "message":"XXX", "trace":"XXX", "path":"XXX"}
@@ -15,7 +17,6 @@ https://blog.csdn.net/leocolee/article/details/80398406
 https://blog.csdn.net/lpw_cn/article/details/84779387
 druid开启日志
 
-1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 4.测试
 
@@ -33,14 +34,19 @@ Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/839
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错
 
-Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
-SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
-spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
-shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
-关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
-
 把有道笔记里面shiro的东西整理一下
 JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+shiro的登陆应该是用到了session相关的东西【要搞懂这个必须进一步分析源码了】：http://localhost:8080/notLogin;jsessionid=14E3EDE787BBAF48DE108DE1BC501F19
+看一下shiro里面SecureRandomNumberGenerator的实现
+把shiro包、类结构看一下，能写出这样的框架真是牛逼
+1.教你 Shiro 整合 SpringBoot，避开各种坑：https://www.jianshu.com/p/ef0a82d471d2【搞懂后把我的github上多的东西去掉】
+https://www.jianshu.com/p/c9e65e014db9?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+https://blog.csdn.net/u013615903/article/details/78781166/
+Shiro用starter方式优雅整合到SpringBoot中
+2.jwt：https://www.jianshu.com/p/3c51832f1051
+把JdbcRealm、JndiLdapRealm、ActiveDirectoryRealm写通
+为增加可靠性，sessionId的管理使用了shiro-redis开源插件，避免sessionId断电丢失【前后端分离，sessionId放在header里面】：https://blog.csdn.net/u013615903/article/details/78781166
+SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
 
 activiti的id问题继续研究
 
@@ -50,18 +56,33 @@ VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/8
     1.所有配置文件相关功能；
     2.所有controller及shiro相关功能
     3.测试搭起来
-    4.缓存【注册、登录好了后测试】
-    5.然后再用RetryLimitHashedCredentialsMatcher的测试
-    6.测试缓存配置，测试权限缓存
+    4.测试权限缓存
     7.把下方Spring和Java Enterprise菜单用起来
     8.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
 需要2轮测试用例：
-    1.单个功能的测试；2.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
+    1.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
     shiro代码首先还是按照调试流程来学习
 
-    基本功能测通后，把我的ShiroConfig里面的bean用@Autowired或者@Resource来初始化。不要用函数那种方法【测试对比两种方式】
-
     我的互联网项目每周要上线一个小功能
+
+shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
+目标1：在springboot里面配的可用（ini）；2.把jdbcRealm的配置抽出来，写通
+了解Shiro的SessionManager（会话管理，与spring session的关系？与token的联系？怎么结合起来，能否用3个默认实现中的一个？ServletContainerSessionManager、DefaultWebSessionManager）、CacheManager（缓存管理）
+shiro的todo：
+1.把logging再搞清楚；
+2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
+shiro里面的permission是怎么跟表、API关联起来的？（其实资源就是我理解的功能点，再多一个关联）
+资源的分类：菜单、URL、页面按钮、Java 方法等
+IniSecurityManagerFactory过时了，怎么找到没过时的替代类？
+JndiLdapRealm、AbstractLdapRealm、ActiveDirectoryRealm
+JdbcRealm、AuthorizingRealm源码阅读：1.搞清楚用的那个类实现；
+JdbcRealm里面最终连接数据库读取数据是在JdbcRealm的getPasswordForUser方法里面。看如果Reaml在读配置那一步是怎么被插入进去的
+Token的接口及实现类族、Subject的接口及实现类族
+3.Subject.login方法的全流程需要好好看几遍，里面对RememberMe、Cache、Session等都有涉及
+继续写代码、跟代码：第5章（加密怎么无缝集成的？用ini文件尝试）、第6章、第10章、第11章。直接看开涛的代码。然后再翻译成Springboot的
+基于url配置权限【另一个教程】：http://how2j.cn/k/shiro/shiro-plan/1732.html?tid=129
+Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
+ShiroFilterFactoryBean：
 
 把mybatis的日志配起来【还是依赖于添加用户等操作】
 【控制台输出mybatis日志】
@@ -79,7 +100,6 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 2.ajax写好（先用jQuery的）
 心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
 然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
-
 
 shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
@@ -146,9 +166,6 @@ spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/do
 把gitk显示乱码的问题解决
 activiti生产的图片如何做缓存？
 
-关于缓存：
-【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
-1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
 把开涛后面有几章看一下，把有道里面的内容排查一下
 shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据说认证默认关闭，授权默认打开】【写入是在哪里进行的？】：https://blog.csdn.net/csujiangyu/article/details/49076531
 不懂的地方可以多借助调试来观察，把spring的调试配起来
@@ -268,8 +285,6 @@ mybatis的 useGeneratedKeys 是怎样实现的？ https://blog.csdn.net/tt503359
 spring-boot-starter-web
 要有一种引领的意识，赚钱在其后，否则永远无法成事
 
-假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
-
 @Service("activityService")注解参数有帮助吗？
 
 百度云20元每年弄一个（RabbitMQ用windows完，用于redis、zookeeper、zuul）：https://cloud.baidu.com/campaign/CreateFuture-2019/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-19kuanghuanji-rumenjianzhanyunxuji-C1-190515|pu:C1-tupian|ci:2019khj|kw:2121019#4
@@ -372,7 +387,6 @@ springboot新特性
 动态修改日志级别
 通过org.springframework.boot.logging.LoggingSystem提供的api即可
 
-shiro-ehcache的代码是可以读完的，从这个入手
 不同注解的扫描顺序？是否先扫@configuration？
 loggingSystem.setLogLevel(null, LogLevel.DEBUG);
 
@@ -394,6 +408,18 @@ https://www.jianshu.com/p/d6991030d84d?jdyscene=chat
 https://www.jianshu.com/p/22863e6c1210
 https://blog.csdn.net/u010994169/article/details/71169986
 
+关于缓存：
+【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
+1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
+Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
+SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
+spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
+shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
+关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
+CacheConfiguration类实现看一下，然后看看怎么切换redis
+1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
+假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
+shiro-ehcache的代码是可以读完的，从这个入手
 EhCacheManager已经配好，整个shiro里cache的使用？
 Ehcache看到这里了：https://blog.csdn.net/qq_32786139/article/details/82658197
 Ehcache【要能最接近生产环境测试】【先得搞清楚shiro自己的cache】:
@@ -411,7 +437,8 @@ Shiro缓存使用Redis、Ehcache、自带的MpCache实现的三种方式实例�
 对shiro-ehcache包的理解：这个包实现了shiro里面缓存相关的接口，同时带有ehcache的功能。类似的实现还有shiro-redis。
 shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
 解决shiro-redis集成序列化的问题：https://blog.csdn.net/Nightliar/article/details/81282164
-
+springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
+https://blog.csdn.net/qq_32786139/article/details/82658197
 
 Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
 吐血整理 20 道 Spring Boot 面试题：https://www.jianshu.com/p/63ad69c480fe/
@@ -491,8 +518,6 @@ session共享采用shiro-redis的方案（修改Session获取方式）：
 https://cloud.tencent.com/developer/article/1342794
 https://blog.csdn.net/haoyuyang/article/details/80036989
 https://blog.csdn.net/u013615903/article/details/78781166
-springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
-https://blog.csdn.net/qq_32786139/article/details/82658197
 shiro和springboot流程的完全理解是我现在生产力提升最大的障碍，相比之下多线程那些反而没那么难了，当然并发也还需要相当大的精力
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：

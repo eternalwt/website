@@ -1,6 +1,5 @@
 package com.greengiant.website.shiro;
 
-import net.sf.ehcache.CacheManager;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -12,7 +11,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
@@ -23,7 +21,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     // 用注解的方式，我再维护一个map是没有意义的（对于需要操作数据库的再加方法才有意义）。尝试最终用CacheManager解决问题
     private static Map<String, Integer> cache = new HashedMap();
 
-    private int maxRetryCount = 5;
+    private int MAX_RETRY_COUNT = 5;
 
     // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去
     //private CacheManager cacheManager;
@@ -32,9 +30,9 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 //        passwordRetryCache = cacheManager.getCache("passwordRetryCache");
 //    }
 //
-//    public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager, int maxRetryCount) {
+//    public RetryLimitHashedCredentialsMatcher(CacheManager cacheManager, int MAX_RETRY_COUNT) {
 //        passwordRetryCache = cacheManager.getCache("passwordRetryCache");
-//        this.maxRetryCount = maxRetryCount;
+//        this.MAX_RETRY_COUNT = MAX_RETRY_COUNT;
 //    }
 
     @Override
@@ -46,10 +44,10 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 //            retryCount = new AtomicInteger(0);
 //            passwordRetryCache.put(username, retryCount);
 //        }
-//        if(retryCount.incrementAndGet() > maxRetryCount) {
+//        if(retryCount.incrementAndGet() > MAX_RETRY_COUNT) {
 //            //todo 测试
 //            // todo 重试的时候需要输入验证码
-//            throw new ExcessiveAttemptsException("您已连续错误达" + maxRetryCount + "次！请N分钟后再试");
+//            throw new ExcessiveAttemptsException("您已连续错误达" + MAX_RETRY_COUNT + "次！请N分钟后再试");
 //        }
 
 //        int retryCount = 0;
@@ -57,10 +55,10 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 //            retryCount = cache.get(username);
 //        }
         //if (retryCount.incrementAndGet() > 5) {
-        if(cache.get(username) != null && cache.get(username) >= maxRetryCount) {
+        if(cache.get(username) != null && cache.get(username) >= MAX_RETRY_COUNT) {
             // todo 重试的时候需要输入验证码
-            //todo N读配置文件
-            throw new ExcessiveAttemptsException("您已连续输错" + maxRetryCount + "次密码！请N分钟后再试");
+            //todo 30读配置文件
+            throw new ExcessiveAttemptsException("您已连续输错" + MAX_RETRY_COUNT + "次密码！请30分钟后再试");
         }
 
         //todo 父类实现了加密，测试一下
@@ -77,14 +75,17 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             }
             else {
                 cache.put(username, cache.get(username) + 1);
-                throw new IncorrectCredentialsException("密码错误，已错误" + (cache.get(username) + 1) + "次，最多错误" + maxRetryCount + "次");
+                throw new IncorrectCredentialsException("密码错误，已错误" + (cache.get(username) + 1) + "次，最多错误" + MAX_RETRY_COUNT + "次");
             }
         }
 
         return matches;
     }
 
-    @Cacheable(cacheNames = "passwordRetry")//todo 为啥只能用于public方法？
+    /**
+     * todo 为啥只能用于public方法？
+     * */
+    @Cacheable(cacheNames = "passwordRetry", key="#username")
     public Integer get(String username) {
         return cache.get(username);
     }
@@ -95,7 +96,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         return value;
     }
 
-    @CacheEvict(cacheNames = "passwordRetry")
+    @CacheEvict(cacheNames = "passwordRetry", key = "#username")
     public Integer delete(String username) {
         return cache.remove(username);
     }

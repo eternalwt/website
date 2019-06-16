@@ -24,6 +24,8 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
+Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/8391274.html
+
 咨询扣税的问题
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
@@ -33,7 +35,7 @@ Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.
 SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
 spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
 shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
-
+关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
 
 把有道笔记里面shiro的东西整理一下
 JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
@@ -228,6 +230,7 @@ mybatis-spring：
 sqlsessionfactory 注入datasource
 为啥有了@Mapper注解后就不需要@Repository了
 以前只知道双向绑定这个名字，现在可以思考原理了
+Spring与Mybatis三种整合方法：https://www.cnblogs.com/onlymate/p/7865463.html
 
 spring AOP再搞一遍
 尝试使用rest接口，可以更简洁同时也能暴露更少信息
@@ -323,6 +326,7 @@ Testing：提供测试支持；
 
 把shiro官方教程也看一遍，思考：开涛到底是根据那个写的还是自己读代码理解后写的教程
 spring transaction源码分析--事务架构：https://www.cnblogs.com/davidwang456/p/4309038.html
+Spring事务配置的五种方式：https://www.cnblogs.com/onlymate/p/7805369.html
 
 controller方法的执行：把抛出异常、HttpServletRequest/HttpServletResponse两个问题解决掉。看一下HttpMessageConverter在流程中的哪个位置起作用
 HttpServletResponseWrapper

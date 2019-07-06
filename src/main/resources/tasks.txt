@@ -9,12 +9,13 @@
 把redis版的缓存也写好，并且能随时切换备用。
 把redisson配好，把事务和分布式锁用起来
 
-修改代码，把我的catch里面都打上log。看一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
-把session和RememberMe配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
+把session和RememberMe【给一个default的值】配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
 “如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
-sessionFactory、LogFactory等
+
+    【三种工厂模式已看，可以继续看了】sessionFactory、LogFactory等
 
 测试搭起来，然后停一下，把现有功能充分测试：
+    0.测一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
     1.所有配置文件相关功能【mybatis都还没配好】；
     2.所有controller及shiro相关功能
     3.测试权限缓存

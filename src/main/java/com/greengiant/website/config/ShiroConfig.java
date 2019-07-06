@@ -30,7 +30,6 @@ import java.util.Map;
 
 @Slf4j
 @Configuration
-@DependsOn("appEhCacheCacheManager")
 public class ShiroConfig {
 
     @Autowired

@@ -1,10 +1,34 @@
 ﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 
-把session和RememberMe配好
+由索引进化到 ElasticSearch ，这也是我们的项目需要的
+
+十一之前把项目搞好，然后开始学习脚本语言和机器学习
+战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
+
+把redis版的缓存也写好，并且能随时切换备用。
+把redisson配好，把事务和分布式锁用起来
+
+修改代码，把我的catch里面都打上log。看一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
+把session和RememberMe配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
+“如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
+sessionFactory、LogFactory等
+
+测试搭起来，然后停一下，把现有功能充分测试：
+    1.所有配置文件相关功能【mybatis都还没配好】；
+    2.所有controller及shiro相关功能
+    3.测试权限缓存
+    4.把下方Spring和Java Enterprise菜单用起来
+    5.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
+
 shiro需要搞懂的2点：
 1.权限注解；2.与web集成及拦截器；
 再看一遍开涛的shiro，思考怎么用好Authorizer、Session Management
+easyui发ajax写通（再看RxJS的优势）
+Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
+Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
+
+跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
 
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
@@ -44,6 +68,7 @@ https://www.jianshu.com/p/c9e65e014db9?utm_campaign=maleskine&utm_content=note&u
 https://blog.csdn.net/u013615903/article/details/78781166/
 Shiro用starter方式优雅整合到SpringBoot中
 2.jwt：https://www.jianshu.com/p/3c51832f1051
+你在用 JWT 代替 Session? https://blog.csdn.net/weixin_41153791/article/details/82291144
 把JdbcRealm、JndiLdapRealm、ActiveDirectoryRealm写通
 为增加可靠性，sessionId的管理使用了shiro-redis开源插件，避免sessionId断电丢失【前后端分离，sessionId放在header里面】：https://blog.csdn.net/u013615903/article/details/78781166
 SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
@@ -52,17 +77,9 @@ activiti的id问题继续研究
 
 VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/81909392
 
-停一下，把现有功能充分测试：
-    1.所有配置文件相关功能；
-    2.所有controller及shiro相关功能
-    3.测试搭起来
-    4.测试权限缓存
-    7.把下方Spring和Java Enterprise菜单用起来
-    8.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
 需要2轮测试用例：
     1.随着理解的深入和逐渐使用的功能的复杂，需要保证原有的用例可以用，并且能测试复杂功能。
     shiro代码首先还是按照调试流程来学习
-
     我的互联网项目每周要上线一个小功能
 
 shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
@@ -84,8 +101,7 @@ Token的接口及实现类族、Subject的接口及实现类族
 Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
 ShiroFilterFactoryBean：
 
-把mybatis的日志配起来【还是依赖于添加用户等操作】
-【控制台输出mybatis日志】
+mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打】：https://www.cnblogs.com/blacksonny/p/6956949.html
 
 Spring Boot Junit单元测试【把@WebAppConfiguration注解和注解原理搞懂，尽量多理解一点】：
 https://www.cnblogs.com/jpfss/p/8422770.html
@@ -100,18 +116,19 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 2.ajax写好（先用jQuery的）
 心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
 然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
-
-shiro-spring
-IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
-
-1.把注册、登录写通；10.把ResultUtils用起来【前端ajax先配好】；5.把添加用户、角色等基本功能写好（Service、Controller）
-2.前端form、ajax单独写好，再考虑整合的问题；
+1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
+2.前端form、ajax单独写好，再考虑整合的问题【前端ajax先配好】；
 3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？【自定义Real对应的表（看JdbcRealm）】
 6.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
 7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
+
+shiro-spring
+IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
+
+
 
 前后端分离的深入研究：
 https://blog.csdn.net/qq_41849709/article/details/83411137【Ajax写法】
@@ -216,6 +233,11 @@ ApplicationContext也能autowire？https://www.cnblogs.com/trekxu/p/9094860.html
 https://blog.csdn.net/u011263417/article/details/79781686
 https://blog.csdn.net/ztx114/article/details/82665544
 http://www.cnblogs.com/shamo89/p/8051350.html
+
+shiro的重复登录问题：
+https://blog.csdn.net/sunsgne_ac/article/details/79289770
+https://blog.csdn.net/wdsafmy468619/article/details/47041467
+https://www.cnblogs.com/zhanying999666/p/8392592.html
 
 ng s
 我们的代码是不是用了typescript？http://www.cnblogs.com/xuanmanstein/p/9866647.html

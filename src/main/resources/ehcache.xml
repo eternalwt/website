@@ -19,17 +19,7 @@
         diskExpiryThreadIntervalSeconds="120"
         memoryStoreEvictionPolicy="LRU"
     />
-    <cache
-        name="user"
-        maxEntriesLocalHeap="2000"
-        eternal="false"
-        timeToIdleSeconds="3600"
-        timeToLiveSeconds="600"
-        overflowToDisk="false"
-        statistics="true"
-    />
-<!--    maxEntriesLocalHeap="2000"-->
-    <!-- 登录记录缓存锁定1小时 -->
+    <!-- 登录记录缓存锁定半小时 -->
     <cache
         name="passwordRetry"
         maxEntriesLocalHeap="2000"
@@ -38,8 +28,6 @@
         overflowToDisk="false"
         statistics="true"
     />
-<!--        timeToLiveSeconds="120"-->
-<!--    maxEntriesLocalHeap="2000"-->
 </ehcache>
 
         <!--

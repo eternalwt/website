@@ -48,20 +48,20 @@ public class AuthController {
 		boolean remember = request.getParameter("remember").equals("true");
 		UsernamePasswordToken token = new UsernamePasswordToken(username, password, remember);
         try {
-			// if (subject.isRemembered())
 			//subject.releaseRunAs()
 			//subject.isRunAs()
-			//runAs、releaseRunAs、isRunAs
-			subject.login(token);// 是不是这里会自动判断有么有remember？看看代码
+			// todo runAs、releaseRunAs、isRunAs
+			// todo 是不是这里会自动判断有么有remember？看看代码
+			subject.login(token);
             log.info("[" + username + "]" + " login successful...");
-        } catch (UnknownAccountException e) {
+        } catch (UnknownAccountException ex) {
         	//TODO 是否抽到枚举类型的vo里面？
             return "UnknownAccountException";
-        } catch (IncorrectCredentialsException e) {
+        } catch (IncorrectCredentialsException ex) {
         	return "IncorrectCredentialsException";
-        } catch (ExcessiveAttemptsException e) {
+        } catch (ExcessiveAttemptsException ex) {
         	return "ExcessiveAttemptsException"; 
-        } catch (AuthenticationException e) {
+        } catch (AuthenticationException ex) {
         	return "AuthenticationException"; 
         }
         //TODO 如果登陆后把一小块搞成ajax怎么做(改变一小块区域的显示内容)？写成组件化的呢？

@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Date;
 
@@ -16,6 +17,7 @@ import java.util.Date;
  * @Date 2018-04-07
  * @Time 22:48
  */
+@Slf4j
 public class JWTUtil {
     // 过期时间 24 小时
     private static final long EXPIRE_TIME = 60 * 24 * 60 * 1000;
@@ -39,9 +41,6 @@ public class JWTUtil {
                     .withExpiresAt(date)
                     //创建一个新的JWT，并使用给定的算法进行标记
                     .sign(algorithm);
-//        } catch (UnsupportedEncodingException e) {
-//            return null;
-//        }
     }
 
     /**
@@ -61,7 +60,8 @@ public class JWTUtil {
             //验证 token
             verifier.verify(token);
             return true;
-        } catch (Exception exception) {
+        } catch (Exception ex) {
+            log.error("verify failed, token:[{}]", token, ex);
             return false;
         }
     }
@@ -75,7 +75,8 @@ public class JWTUtil {
         try {
             DecodedJWT jwt = JWT.decode(token);
             return jwt.getClaim("username").asString();
-        } catch (JWTDecodeException e) {
+        } catch (JWTDecodeException ex) {
+            log.error("decode failed, token:[{}]", token, ex);
             return null;
         }
     }

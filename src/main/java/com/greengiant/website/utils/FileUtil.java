@@ -40,9 +40,9 @@ public class FileUtil {
                 bos.write(buffer, 0, len);  
             }  
             return bos.toByteArray();  
-        } catch (IOException e) {  
-            e.printStackTrace();  
-            throw e;  
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            throw ex;
         } finally {  
             try {  
                 in.close();  

@@ -3,6 +3,7 @@ package com.greengiant.website.controller;
 import com.greengiant.website.dao.UserDao;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.utils.FileUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 
+@Slf4j
 @Deprecated
 @RestController
 @RequestMapping("/hello")
@@ -59,9 +61,8 @@ public class HelloController {
     {
         try {
             return FileUtil.download(fileName);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (IOException ex) {
+            log.error("download failed, filename: [{}]", fileName, ex);
         }
 
         return null;

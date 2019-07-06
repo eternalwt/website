@@ -28,7 +28,8 @@
         <file>${LOG_HOME}/${SRVNAME}.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
             <!-- daily rollover -->
-            <fileNamePattern>${LOG_BACK_HOME}/%d{yyyy-MM-dd}/${SRVNAME}.%d{HH}.%i.log.gz</fileNamePattern>
+            <fileNamePattern>${LOG_BACK_HOME}/${SRVNAME}.%d{yyyy-MM-dd}.log</fileNamePattern>
+<!--            <fileNamePattern>${LOG_BACK_HOME}/%d{yyyy-MM-dd}/${SRVNAME}.%d{HH}.%i.log.gz</fileNamePattern>-->
             <!-- 单个日志文件最多 100MB, 60天的日志周期，最大不能超过10GB -->
             <maxFileSize>${maxFileSize}</maxFileSize>
             <maxHistory>${maxHistory}</maxHistory>
@@ -57,6 +58,10 @@
             <!--<pattern>%d{yyyyMMddHHmmss} [%thread] [%c %2M %2L] %-3p - %m%n</pattern>-->
         </encoder>
     </appender>
+
+    <!-- todo 如何只在开发环境打印？ -->
+    <logger name="com.greengiant.website.dao" level="DEBUG" />
+
 
     <!-- 日志级别 -->
     <root level="info">

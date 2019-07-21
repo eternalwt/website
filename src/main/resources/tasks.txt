@@ -6,17 +6,52 @@
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
 
+把session和RememberMe【给一个default的值】配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
+“如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
+基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+【单独击破1】
+realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
+0.复习一下现有代码
+1.找一个前端的管理后台代码模板把ajax写通；
+2.把EasyUI看掉；
+3.再决定怎么整合
+【单独击破2】
+1.spring框架源码分析；【究竟应该直接读代码，还是先看熟教程，还是两者结合？】
+2.logback源码（官网那个教程）
+3.mybatis源码
+4.shiro源码
+缓存用户名密码
+
+特别想把ribbon和feign搞清楚
+
 把redis版的缓存也写好，并且能随时切换备用。
 把redisson配好，把事务和分布式锁用起来
 
-把session和RememberMe【给一个default的值】配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
-“如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
+Mybatis-config.xml 详细配置：https://blog.csdn.net/weixin_41910059/article/details/82659238
 
-    【三种工厂模式已看，可以继续看了】sessionFactory、LogFactory等
+BlockJUnit4ClassRunner源码分析：https://blog.csdn.net/hello_worldee/article/details/76110828
+SpringJUnit4ClassRunner
+看懂springboot的启动流程，再对比下面的说明：
+    @RunWith(SpringRunner.class) //底层用junit SpringJUnit4ClassRunner
+    @SpringBootTest(classes={DemoApplication.class})// 指定启动类，启动整个springboot工程
+有的文章说有@ExtendWith就可以运行了：https://blog.csdn.net/qq_19671173/article/details/79423951
+Junit 5: https://junit.org/junit5/
+Mockito 2 : https://github.com/mockito/mockito/wiki/What%27s-new-in-Mockito-2
+
+【三种工厂模式已看，框架中的一些Factory（跟代码）】
+sessionFactory
+LogFactory
+LoggerFactory：
+    https://www.cnblogs.com/zhaoleigege/p/5692697.html
+SqlSessionFactory：
+    https://www.jianshu.com/p/908b9e6e5bb7
+Spring的ProxyFactory：https://blog.csdn.net/sunnycoco05/article/details/78901449
 
 测试搭起来，然后停一下，把现有功能充分测试：
     0.测一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
-    1.所有配置文件相关功能【mybatis都还没配好】；
+    1.所有配置文件相关功能测试：【mybatis都还没配好】、ehcache的测试等；
     2.所有controller及shiro相关功能
     3.测试权限缓存
     4.把下方Spring和Java Enterprise菜单用起来
@@ -24,12 +59,14 @@
 
 shiro需要搞懂的2点：
 1.权限注解；2.与web集成及拦截器；
-再看一遍开涛的shiro，思考怎么用好Authorizer、Session Management
+再看一遍开涛的shiro，思考怎么用好Authorizer、Session Management（DefaultSessionManager、ServletContainerSessionManager、DefaultWebSessionManager）
 easyui发ajax写通（再看RxJS的优势）
 Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
 
 跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
+
+后端拆成2个模块，最简单的分布式无论如何要搭起来
 
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
@@ -74,8 +111,6 @@ Shiro用starter方式优雅整合到SpringBoot中
 为增加可靠性，sessionId的管理使用了shiro-redis开源插件，避免sessionId断电丢失【前后端分离，sessionId放在header里面】：https://blog.csdn.net/u013615903/article/details/78781166
 SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
 
-activiti的id问题继续研究
-
 VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/81909392
 
 需要2轮测试用例：
@@ -100,9 +135,9 @@ Token的接口及实现类族、Subject的接口及实现类族
 继续写代码、跟代码：第5章（加密怎么无缝集成的？用ini文件尝试）、第6章、第10章、第11章。直接看开涛的代码。然后再翻译成Springboot的
 基于url配置权限【另一个教程】：http://how2j.cn/k/shiro/shiro-plan/1732.html?tid=129
 Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
-ShiroFilterFactoryBean：
 
-mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打】：https://www.cnblogs.com/blacksonny/p/6956949.html
+mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打。能否不同的环境加载不同的配置文件？】：https://www.cnblogs.com/blacksonny/p/6956949.html
+logback 配置详解：https://www.cnblogs.com/cb0327/p/5759441.html
 
 Spring Boot Junit单元测试【把@WebAppConfiguration注解和注解原理搞懂，尽量多理解一点】：
 https://www.cnblogs.com/jpfss/p/8422770.html
@@ -129,7 +164,12 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
 
+针对某一个包修改日志级别
 
+功能写好后，再搭建eureka server和spring cloud gateway
+搭建Eureka注册中心：
+https://www.jianshu.com/p/bde8e442ba0b
+https://baijiahao.baidu.com/s?id=1630885642520150785&wfr=spider&for=pc
 
 前后端分离的深入研究：
 https://blog.csdn.net/qq_41849709/article/details/83411137【Ajax写法】
@@ -179,6 +219,25 @@ https://blog.csdn.net/jinhaijing/article/details/83933573
 EnvironmentCapable：
 https://blog.csdn.net/weixin_39165515/article/details/76976685
 
+FactoryBean：通过使用FactoryBean，我们可以得到不同类型的对象实例。这也就是我们在AOP中通过设置calss为ProxyFactoryBean可以返回不同类型的业务对象的原理：https://www.cnblogs.com/quanyongan/p/4133724.html
+ShiroFilterFactoryBean implements FactoryBean, BeanPostProcessor
+如果大家有看过Mybatis的SessionFactoryBean和Activiti初始化引擎的ProcessEngineFactoryBean两个类就应该了解FactoryBean的具体使用：
+https://www.cnblogs.com/quanyongan/p/4133724.html
+ShiroFilterFactoryBean是怎么加载和替换默认的的？【看一下这个bean怎么被使用的】【如果可以看容器里面的对象，可以进去之前看看，之后再看看】
+shiroFilterFactoryBean：
+https://blog.csdn.net/u012345283/article/details/44199791
+https://blog.csdn.net/lqzkcx3/article/details/78776555
+FactoryBean：
+http://www.cnblogs.com/aspirant/p/9082858.html
+https://blog.csdn.net/baidu_19473529/article/details/80558996
+https://blog.51cto.com/4247649/2118353
+https://www.jianshu.com/p/6f0a59623090
+Spring的后置处理器BeanPostProcessor：
+https://www.cnblogs.com/libra0920/p/6118157.html
+https://www.cnblogs.com/sishang/p/6576665.html
+https://segmentfault.com/a/1190000015830477
+https://uule.iteye.com/blog/2094549
+
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
 把gitk显示乱码的问题解决
@@ -192,7 +251,6 @@ shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据�
 CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
 自定义Matcher：CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
 Shiro自定义Realm时用注解的方式注入父类的credentialsMatcher：https://www.cnblogs.com/foxting/p/6790331.html
-基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
 接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
@@ -252,23 +310,6 @@ result：先写通，再优
 把@Configuration和@Bean注入DataSource、shiro-spring搞懂，基本就能穿透这个项目了
 
 .DelegatingFilterProxy是怎么初始化的？
-ShiroFilterFactoryBean implements FactoryBean, BeanPostProcessor
-如果大家有看过Mybatis的SessionFactoryBean和Activiti初始化引擎的ProcessEngineFactoryBean两个类就应该了解FactoryBean的具体使用：
-https://www.cnblogs.com/quanyongan/p/4133724.html
-ShiroFilterFactoryBean是怎么加载和替换默认的的？【看一下这个bean怎么被使用的】【如果可以看容器里面的对象，可以进去之前看看，之后再看看】
-shiroFilterFactoryBean：
-https://blog.csdn.net/u012345283/article/details/44199791
-https://blog.csdn.net/lqzkcx3/article/details/78776555
-FactoryBean：
-http://www.cnblogs.com/aspirant/p/9082858.html
-https://blog.csdn.net/baidu_19473529/article/details/80558996
-https://blog.51cto.com/4247649/2118353
-https://www.jianshu.com/p/6f0a59623090
-Spring的后置处理器BeanPostProcessor：
-https://www.cnblogs.com/libra0920/p/6118157.html
-https://www.cnblogs.com/sishang/p/6576665.html
-https://segmentfault.com/a/1190000015830477
-https://uule.iteye.com/blog/2094549
 
 mybatis-spring：
 sqlsessionfactory 注入datasource
@@ -284,8 +325,6 @@ sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
 boolean isServletContainerSessions();//是否使用 Servlet 容器的会话。如果使用，是怎么样的？
 ServletContainerSessionManager：DefaultWebSecurityManager 使用的默认实现，用于 Web 环境，其直接使用 Servlet 容器的会话
 在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
-
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
 
 用配置文件配DataSource【还有参数问题，怎么传入】，这一块还是没有搞明白（@Configuration、properties文件、xml三种配置方式的代码分析）
 能看到logback启动打的日志吗？我看公司项目有
@@ -494,7 +533,6 @@ https://blog.csdn.net/bailinbbc/article/details/76446594
 Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
 https://blog.csdn.net/u010361786/article/details/80138201
 
-FactoryBean：通过使用FactoryBean，我们可以得到不同类型的对象实例。这也就是我们在AOP中通过设置calss为ProxyFactoryBean可以返回不同类型的业务对象的原理：https://www.cnblogs.com/quanyongan/p/4133724.html
 mysql的geometry扩展：
 https://www.linuxidc.com/Linux/2018-09/154191.htm
 https://www.jianshu.com/p/d6bf587389f1
@@ -522,7 +560,6 @@ Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.ne
 @EnableAsync
 
 shiro需要搞清楚的流程：
-1.RememberMe；
 2.CredentialsMatcher使用流程
 RunAs理解：如果涉及到工作流之类的，runAs在具体代码方面会不会有啥问题？代码的通用性能否保证？
 
@@ -688,6 +725,8 @@ https://blog.csdn.net/xybelieve1990/article/details/81111786
 
 如果不想装mysql可以用SQLite：https://www.runoob.com/sqlite/sqlite-tutorial.html
 
-
+idea创建含有多个module的project：
+https://blog.csdn.net/ssllkkyyaa/article/details/80855133
+https://blog.csdn.net/wnf2018/article/details/80655153
 
 

@@ -36,9 +36,10 @@ public class LoginController {
      */
     @PostMapping(value = "/login")
     public String login(@RequestParam String username,
-                        @RequestParam String password) {
+                        @RequestParam String password,
+                        @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // 从SecurityUtils里边创建一个 subject
-        loginService.login(username, password);
+        loginService.login(username, password, isRememberMe);
         //根据权限，指定返回数据
         return roleService.getRole(username);
     }

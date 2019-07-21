@@ -54,11 +54,10 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
         // 设置拦截器
-        // todo 如何动态配置拦截器？
-        //todo 对比思考我在威盛电子时做的细粒度权限管理
+        // todo 如何动态配置拦截器？对比思考我在威盛电子时做的细粒度权限管理
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //todo 运维，调试完后应该加上限制
-        //todo 用2个*配置也不行，再思考一下
+        //todo swagger路径用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");

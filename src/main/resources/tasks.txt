@@ -6,10 +6,48 @@
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
 
+【可以看filter对cookie的解析以及JWT了】
+可以搞session的缓存了
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+1.看看我在ShiroConfig里面加载的bean都是怎么被加载连起来使用的；
+2.把cookie那个文章里面的request和response的调用链搞清楚
+3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
+
+spring 配置 shiro rememberMe：
+https://www.cnblogs.com/blogxiao/p/8759053.html
+https://blog.csdn.net/vae1314chuanchen/article/details/83475717
+Cookie是怎么写到浏览器的：https://www.cnblogs.com/blogxiao/p/8759053.html
+cookie的过期时间？【cookie是每次都会发给服务器吗？】
+rememberMe与单点登录的关系？
+isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
+ 点击登陆之后，当登陆成功之后会调用DefaultSecurityManager的rememberMeSuccessfulLogin方法将记住我写入到cookie中：https://www.cnblogs.com/blogxiao/p/8759053.html
 把session和RememberMe【给一个default的值】配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
 “如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
+Shiro中Session和Cookie的一些思考：https://www.jianshu.com/p/4972c4d70853
+https://bbs.csdn.net/topics/392084645
+Session失效问题：https://www.cnblogs.com/OnlyCT/p/9151010.html
+
+如果没有logout，session的过期策略是什么？【和cookie的过期问题对比考虑】
+
+cookie和session的关系：
+https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客户端再发送请求给服务器的时候，就会在请求request中携带cookie”。
+如果不携带呢？cookie机制的根基就被动摇了？携带后，shiro的filter是怎么解析和检查cookie的？】
+https://www.jianshu.com/p/2bb0f368f631
+https://www.cnblogs.com/jing99/p/7826550.html
+
+setSessionManager注入一下
+
+shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
+Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
+
+现在系统里面用到了anon、authc、roles这几种拦截器，还有user
+看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
+表单拦截器FormAuthenticationFilter：
+https://blog.csdn.net/u014203449/article/details/80689268
+https://blog.csdn.net/u014695188/article/details/52357379
+shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 
 【单独击破1】
 realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
@@ -65,6 +103,9 @@ Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
 
 跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
+Shiro 登录后跳转到最后一个访问的页面：
+https://www.sojson.com/shiro
+
 
 后端拆成2个模块，最简单的分布式无论如何要搭起来
 

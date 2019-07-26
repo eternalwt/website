@@ -15,8 +15,11 @@ import org.apache.shiro.crypto.hash.Hash;
 import org.apache.shiro.crypto.hash.HashRequest;
 import org.apache.shiro.crypto.hash.HashService;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.ehcache.EhCacheCacheManager;
@@ -41,6 +44,9 @@ public class ShiroConfig {
     @Autowired
     private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
 
+    @Autowired
+    //private SecurityManager securityManager;//todo 这是加过滤的时候加的，还是没明白用法
+
     @Bean
     public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -54,7 +60,8 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
         // 设置拦截器
-        // todo 如何动态配置拦截器？对比思考我在威盛电子时做的细粒度权限管理
+        // todo 从数据库读取目录和权限对应关系【需要结合自己有多少个filter】。那么问题就变成：如何把功能和url对应起来（一个完善的路由机制）
+        // todo 用一个表保存role和有权限的页面之间的对应关系，既用于加载页面，又用于鉴权。但是这样好像没用到permission表？再考虑一下
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //todo 运维，调试完后应该加上限制
         //todo swagger路径用2个*配置也不行，再思考一下
@@ -184,6 +191,34 @@ public class ShiroConfig {
 //        EhCacheManager cacheManager = new EhCacheManager();
 //        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 //        return cacheManager;
+//    }
+
+
+//    /**
+//     * Shiro生命周期处理器
+//     * @return
+//     */
+//    @Bean
+//    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
+//        return new LifecycleBeanPostProcessor();
+//    }
+//    /**
+//     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
+//     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
+//     * @return
+//     */
+//    @Bean
+//    @DependsOn({"lifecycleBeanPostProcessor"})
+//    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
+//        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+//        advisorAutoProxyCreator.setProxyTargetClass(true);
+//        return advisorAutoProxyCreator;
+//    }
+//    @Bean
+//    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
+//        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
+//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+//        return authorizationAttributeSourceAdvisor;
 //    }
 
 }

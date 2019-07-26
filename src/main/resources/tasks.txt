@@ -6,12 +6,70 @@
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
 
+从我们代码里面spring整合activiti我对bean又有了更多理解，再次确认我在shiro里面的用法有没有问题：
+1.保持返回值和@Bean注解的函数名一致（函数名第一字母小写）；
+2.参数是怎么加载的？
+3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
+https://www.cnblogs.com/demodashi/p/8509895.html
+
+如果没有声明bean，默认的是怎么加载的？
+
+【再把菜单、权限这事儿自己思考一下】
+1.通过注解来完成权限控制（5个权限注解）【这种方式肯定是灵活性很差的】；
+https://www.cnblogs.com/limingxian537423/p/7928234.html
+https://blog.csdn.net/u014203449/article/details/79415755
+https://www.jianshu.com/p/c6b9a557d18d
+2.动态权限【还差2步：1是bean的重写；2是放入数据库】：
+https://wenku.baidu.com/view/5a8f9e15974bcf84b9d528ea81c758f5f61f299e.html
+http://how2j.cn/k/shiro/shiro-url/1729.html
+https://blog.csdn.net/haoyuyang/article/details/80036989
+https://www.jianshu.com/p/5de287239061
+https://www.cnblogs.com/007sx/p/7381475.html
+Shiro四种权限控制方式：
+https://blog.csdn.net/qq_39659876/article/details/81838651
+https://blog.csdn.net/it_boy_elite/article/details/78555356
+https://blog.csdn.net/qq_29524437/article/details/84620877
+用一个表保存role和有权限的页面之间的对应关系，既用于加载页面，又用于鉴权。但是这样好像没用到permission表？再考虑一下
+是不是permission表就可以保存页面地址信息？permission相关的再看一下：
+https://www.cnblogs.com/strinkbug/p/6834927.html
+https://www.ibm.com/developerworks/cn/opensource/os-cn-shiro/
+https://blog.51cto.com/zero01/2171397?source=dra
+（从数据库读取目录和权限对应关系【需要结合自己有多少个filter】。那么问题就变成：如何把功能和url对应起来（一个完善的路由机制））
+【再考虑一下菜单策略】
+基于 RBAC 简单实现动态菜单及权限管理：https://blog.csdn.net/zhou6343178/article/details/79498093
+https://blog.csdn.net/qq_39187822/article/details/83374049
+https://blog.csdn.net/lz527657138/article/details/85689234
+https://blog.csdn.net/niki_yeun/article/details/81335833
+https://blog.csdn.net/zhuyu19911016520/article/details/52573072
+https://blog.csdn.net/dabai_cai/article/details/78154993
+https://blog.csdn.net/lpy1239064101/article/details/79185170
+动态菜单/权限管理的实现：https://blog.csdn.net/qq_25652949/article/details/81067004
+
+思考各种前端技术及ng-zorro等各能提升多大生产力
+
+mybatis 理解 1、2级缓存，，懒加载：https://blog.csdn.net/lu1171901273/article/details/82695993
+Mybatis #和$区别以及原理：
+https://blog.csdn.net/zhangyong01245/article/details/90768156
+https://www.jianshu.com/p/0a70f957c750
+https://www.cnblogs.com/skyislimit/articles/10469873.html
+【预编译，这是个非常重要的概念】
+https://blog.csdn.net/hanchao_h/article/details/53640720
+https://www.cnblogs.com/haojun/p/10682407.html
+https://www.jianshu.com/p/59155963d790
+https://blog.csdn.net/LoveInWar/article/details/89646085
+
 【可以看filter对cookie的解析以及JWT了】
 可以搞session的缓存了
 Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
 1.看看我在ShiroConfig里面加载的bean都是怎么被加载连起来使用的；
 2.把cookie那个文章里面的request和response的调用链搞清楚
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
+4.缓存用户名密码、缓存权限
+cacheConfig用上了吗？
+
+CustomRealm里面有问题的代码和注释代码先搞一下
+该搞前端了，cookie彻底搞好后，转jwt
+model里面字段含义及自动生成
 
 spring 配置 shiro rememberMe：
 https://www.cnblogs.com/blogxiao/p/8759053.html
@@ -28,8 +86,16 @@ jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在
 Shiro中Session和Cookie的一些思考：https://www.jianshu.com/p/4972c4d70853
 https://bbs.csdn.net/topics/392084645
 Session失效问题：https://www.cnblogs.com/OnlyCT/p/9151010.html
-
+Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/8391274.html
 如果没有logout，session的过期策略是什么？【和cookie的过期问题对比考虑】
+修改成jwt后，锁定会出问题吗？
+
+JWT登录的几个要点：
+    1.将登录成功的信息包括Token信息返回给前端，前端在请求后台时，将Token信息存入请求头中。
+    2.配置自定义拦截器，拦截所有URL请求，取出请求头信息中的Token信息，对Token信息进行验证
+    3.关闭原有的session功能
+https://blog.csdn.net/qq_36838191/article/details/82893149
+看看shiro默认是怎么拦截的
 
 cookie和session的关系：
 https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客户端再发送请求给服务器的时候，就会在请求request中携带cookie”。
@@ -51,7 +117,7 @@ shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 
 【单独击破1】
 realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
-0.复习一下现有代码
+0.复习一下现有代码【同时，再回过头来看，添加的权限相关的代码确实没多少，很简单，验证一下】
 1.找一个前端的管理后台代码模板把ajax写通；
 2.把EasyUI看掉；
 3.再决定怎么整合
@@ -60,7 +126,9 @@ realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
 2.logback源码（官网那个教程）
 3.mybatis源码
 4.shiro源码
-缓存用户名密码
+5.ehcache 源码
+6.activiti的源码好学吗？
+7.消息队列源码
 
 特别想把ribbon和feign搞清楚
 
@@ -108,6 +176,7 @@ https://www.sojson.com/shiro
 
 
 后端拆成2个模块，最简单的分布式无论如何要搭起来
+注册中心和网关这2样可以独立搭建起来
 
 passwordservice的写法写通
 【结合这个处理空指针】service层抛异常，异常会被直接透传给前端，格式是（看看用浏览器是什么样的表现，测一下）：
@@ -124,15 +193,14 @@ druid开启日志
 4.测试
 
 周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
+Layui elementUI
 其实前后端已经连的差不多了，jwt只是可选。下一步：把Configuration那一套流程搞清楚、jwt、把EasyUI与静态模板的关系搞清楚
 https://blog.csdn.net/qq_22771739/article/details/83687175
 http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
-Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/8391274.html
-
-咨询扣税的问题
+如果对shiro不能完全理解的话，自己写权限控制的代码似乎被用shiro更简单。无论是ASP时代还是mvc时代
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错

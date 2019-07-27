@@ -3,17 +3,16 @@
 
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
-【周六剩余事项】
-1.测试cookie，再整理文档（cookie过期时间？）；
-2.mybatis的预编译；
-3.缓存及JWT（postman也是可以测试的）
-4.继续看shiro文档，反复看和整理
+【周末剩余事项】
+1.mybatis的预编译；
+2.缓存及session、JWT（postman也是可以测试的）。session的过期策略？
+3.继续看shiro文档，反复看和整理
+4.easyui继续
 
 前端路径：http://localhost:8080/static/index.html
 jQuery发送请求：http://www.w3school.com.cn/jquery/ajax_post.asp
 POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
 如何在Postman中使用cookie：https://blog.csdn.net/niedewang/article/details/80481652
-JSESSIONID搞清楚
 
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
@@ -89,8 +88,8 @@ cacheConfig用上了吗？
 shiro-spring怎么加载的shiro还是没整明白
 DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
 
-CustomRealm里面有问题的代码和注释代码先搞一下
-该搞前端了，cookie彻底搞好后，转jwt
+CustomRealm：再学一遍。1.如何单元测试？2.思考其所在的层次
+cookie彻底搞好后，转jwt
 model里面字段含义及自动生成
 
 spring 配置 shiro rememberMe：
@@ -101,7 +100,7 @@ cookie的过期时间？【cookie是每次都会发给服务器吗？】
 rememberMe与单点登录的关系？
 isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
  点击登陆之后，当登陆成功之后会调用DefaultSecurityManager的rememberMeSuccessfulLogin方法将记住我写入到cookie中：https://www.cnblogs.com/blogxiao/p/8759053.html
-把session和RememberMe【给一个default的值】配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
+把session配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话。JSESSIONID是当前登录后没有关闭浏览器之前维持会话的，rememberMe是关闭浏览器后再次登录维持会话的
 “如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
@@ -345,7 +344,7 @@ shiro源码分析，搞透
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
-密码加密、RememberMe、授予身份、单点登陆、DelegatingFilterProxy、注解相关的
+密码加密、授予身份、单点登陆、DelegatingFilterProxy
 
 细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
 Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】：

@@ -21,25 +21,13 @@ import java.util.Set;
 @Slf4j
 @Component
 public class CustomRealm extends AuthorizingRealm {
-    //todo 如何单元测试？
-    //todo 思考其所在的层次
+    //todo
 
     @Autowired
     private UserDao userDao;
 
     @Autowired
     private RoleDao roleDao;
-
-//    @Autowired
-//    // todo 确认这种autowired的写法，CustomRealm上面啥也没有
-//    private void setUserDao(UserDao userDao) {//todo 把提示干掉
-//        this.userDao = userDao;
-//    }
-//
-//    @Autowired
-//    private void setRoleDao(RoleDao roleDao) {
-//        this.roleDao = roleDao;
-//    }
 
     /**
      * 获取身份验证信息

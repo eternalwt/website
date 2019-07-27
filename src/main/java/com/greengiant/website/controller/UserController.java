@@ -35,7 +35,7 @@ public class UserController{
         return ResultUtils.success();
     }
 
-  @GetMapping(value = "/getMessage")
+    @GetMapping(value = "/getMessage")
     public String getMessage() {
         return "您拥有用户权限，可以获得该接口的信息！";
     }

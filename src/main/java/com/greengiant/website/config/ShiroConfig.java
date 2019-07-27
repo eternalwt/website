@@ -44,15 +44,15 @@ public class ShiroConfig {
     @Autowired
     private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
 
-    @Autowired
+    //@Autowired
     //private SecurityManager securityManager;//todo 这是加过滤的时候加的，还是没明白用法
 
     @Bean
-    public ShiroFilterFactoryBean shirFilter(SecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {//shirFilter
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射
+        // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
         //todo 和后端action对应起来。success的url是什么时候用的？
         shiroFilterFactoryBean.setLoginUrl("/notLogin");//todo 配好静态页面
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");//todo 测试，应该是登录成功后跳转的页面吧
@@ -92,7 +92,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager() {
-        // 配置Realm、CacheManager、RememberMeManager、sessionManager
+        // todo 配置Realm、CacheManager、RememberMeManager、sessionManager
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // todo
         // 注入缓存管理器;
@@ -146,22 +146,7 @@ public class ShiroConfig {
 //        return defaultPasswordService;
 //    }
 
-    private CredentialsMatcher getHashedCredentialsMatcher(CacheManager cacheManager){
-        HashedCredentialsMatcher hashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
-        //todo 再写回去一次，要能快速反复来回配
-        //HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
-        //加密方式
-        hashedCredentialsMatcher.setHashAlgorithmName("md5");
-        //加密次数
-        hashedCredentialsMatcher.setHashIterations(2);
-        //存储散列后的密码是否为16进制
-        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-
-        return hashedCredentialsMatcher;
-    }
-
-//    //todo autowire
-//    @Bean(name="customRealmWithMatcher")
+    //    @Bean(name="customRealmWithMatcher")
 //    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
 //        CustomRealm realm = new CustomRealm();
 //        realm.setCacheManager(cacheManager);
@@ -217,7 +202,7 @@ public class ShiroConfig {
 //    @Bean
 //    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
 //        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
-//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
+//        authorizationAttributeSourceAdvisor.setSecurityManager(securityManager());
 //        return authorizationAttributeSourceAdvisor;
 //    }
 

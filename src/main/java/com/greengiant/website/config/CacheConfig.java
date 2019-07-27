@@ -10,15 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 
 @Configuration
 @EnableCaching
-public class CacheConfiguration {
-    /**
-     * ehcache 主要的管理器
-     */
-    @Bean(name = "appEhCacheCacheManager")
-    public EhCacheCacheManager ehCacheCacheManager(EhCacheManagerFactoryBean bean){
-        return new EhCacheCacheManager(bean.getObject ());
-    }
-
+public class CacheConfig {
     /**
      * 据shared与否的设置,Spring分别通过CacheManager.create()或new CacheManager()方式来创建一个ehcache基地.
      */
@@ -28,6 +20,14 @@ public class CacheConfiguration {
         cacheManagerFactoryBean.setConfigLocation (new ClassPathResource("ehcache.xml"));
         cacheManagerFactoryBean.setShared (true);
         return cacheManagerFactoryBean;
+    }
+
+    /**
+     * ehcache 主要的管理器
+     */
+    @Bean(name = "appEhCacheCacheManager")
+    public EhCacheCacheManager ehCacheCacheManager(EhCacheManagerFactoryBean bean){
+        return new EhCacheCacheManager(bean.getObject ());
     }
 
 }

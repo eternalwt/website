@@ -3,6 +3,18 @@
 
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
+【周六剩余事项】
+1.测试cookie，再整理文档（cookie过期时间？）；
+2.mybatis的预编译；
+3.缓存及JWT（postman也是可以测试的）
+4.继续看shiro文档，反复看和整理
+
+前端路径：http://localhost:8080/static/index.html
+jQuery发送请求：http://www.w3school.com.cn/jquery/ajax_post.asp
+POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
+如何在Postman中使用cookie：https://blog.csdn.net/niedewang/article/details/80481652
+JSESSIONID搞清楚
+
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
 
@@ -13,6 +25,7 @@
 https://www.cnblogs.com/demodashi/p/8509895.html
 @Bean用于已经定义好的类，配置选项，@Component用于定义类，并搞成bean
 RetryLimitHashedCredentialsMatcher用bean的方式怎么配？缓存怎么配？
+【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，得继续看
 
 如果没有声明bean，默认的对象是怎么加载的？找到并看看初始化代码，把config相关的初始化代码都看一下
 如果把bean定义成component会怎么样？有参数的定义bean没参数的定义component？还是根据复杂性？
@@ -674,6 +687,11 @@ EasyUI【比较EasyUI和bootstrap等不同的技术】：
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
 http://www.jeasyui.cn/download.html
 美的让人窒息的后台模板：http://www.jq22.com/jquery-info1583
+整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
+给大家推荐8个SpringBoot精选项目：https://cloud.tencent.com/developer/article/1197203
+最值得拥有的免费Bootstrap后台管理模板：https://zhuanlan.zhihu.com/p/39945434
+web-flash: https://github.com/enilu/web-flash
+10个你值得收藏的牛逼开源后台控制面板：https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247487067&idx=1&sn=83241fa91f95b54c59468c9fecc4ed72&chksm=9bd0a3c3aca72ad56d7c39708d4b068d900bd7b3a64d066dad54b39c65e2db9ad7b4cfab6b22&scene=21#wechat_redirect
 有springboot+vue+shiro的，那angular的呢？自己实现一下
 
 简单快速的用SpringBoot访问静态资源（图片、html）【用thymeleaf的方式】：https://blog.csdn.net/qq_36481052/article/details/79075214
@@ -852,4 +870,6 @@ idea创建含有多个module的project：
 https://blog.csdn.net/ssllkkyyaa/article/details/80855133
 https://blog.csdn.net/wnf2018/article/details/80655153
 
-
+springboot项目解决 No beans of 'UserDao' type found 问题：
+https://blog.csdn.net/baichilele/article/details/82115918
+https://blog.csdn.net/u012453843/article/details/54906905

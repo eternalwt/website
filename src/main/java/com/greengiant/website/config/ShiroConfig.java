@@ -54,7 +54,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
         //todo 和后端action对应起来。success的url是什么时候用的？
-        shiroFilterFactoryBean.setLoginUrl("/notLogin");//todo 配好静态页面
+        shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");//todo 测试，应该是登录成功后跳转的页面吧
         // 设置无权限时跳转的 url;
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
@@ -79,7 +79,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
         //其余接口一律拦截
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
-        filterChainDefinitionMap.put("/**", "authc");//todo 这里是不是应该用user？用于一般网页、特殊网页的鉴权
+        filterChainDefinitionMap.put("/**", "user");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         log.info("Shiro拦截器工厂类注入成功");
@@ -104,11 +104,11 @@ public class ShiroConfig {
         retryLimitHashedCredentialsMatcher.setHashIterations(2);
         //存储散列后的密码是否为16进制
         retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-        retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
+        //retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
 
         customRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher);
 
-        securityManager.setRealm(customRealm);//customRealm() customRealmWithMatcher(getEhCacheManager())
+        securityManager.setRealm(customRealm);
         //securityManager.setSessionManager();
         // todo
         //securityManager.setRememberMeManager();
@@ -187,6 +187,7 @@ public class ShiroConfig {
 //    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
 //        return new LifecycleBeanPostProcessor();
 //    }
+
 //    /**
 //     * 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证
 //     * 配置以下两个bean(DefaultAdvisorAutoProxyCreator(可选)和AuthorizationAttributeSourceAdvisor)即可实现此功能
@@ -196,9 +197,11 @@ public class ShiroConfig {
 //    @DependsOn({"lifecycleBeanPostProcessor"})
 //    public DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator(){
 //        DefaultAdvisorAutoProxyCreator advisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+//        // 强制使用cglib
 //        advisorAutoProxyCreator.setProxyTargetClass(true);
 //        return advisorAutoProxyCreator;
 //    }
+
 //    @Bean
 //    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(){
 //        AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();

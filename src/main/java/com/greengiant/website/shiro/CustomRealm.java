@@ -63,7 +63,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // todo 这里应该是没写好的
+        // todo 这里应该是没写好的。应该可以用带role的filter来测试把？跟动态配置权限有没有关系
+        // todo 如何提示用户权限不足？
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

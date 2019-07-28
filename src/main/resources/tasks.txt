@@ -4,11 +4,21 @@
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 【周末剩余事项】
-1.mybatis的预编译；
 2.缓存及session、JWT（postman也是可以测试的）。session的过期策略？
 3.继续看shiro文档，反复看和整理
 4.easyui继续
+得看spring-shiro的源码
 
+Shiro整合JWT+Token过期刷新，全都帮你整好了：
+https://www.sundayfine.com/shiro-jwt/
+https://www.sundayfine.com/jwt-refresh-token/
+使用更多debug
+
+cacheManager专题分析一下
+RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) 为啥这个有参构造函数能走进来？搞懂这一点至关重要
+
+jQuery EasyUI 教程：https://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html
+前端UI框架选择区别对比推荐
 前端路径：http://localhost:8080/static/index.html
 jQuery发送请求：http://www.w3school.com.cn/jquery/ajax_post.asp
 POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
@@ -30,6 +40,7 @@ RetryLimitHashedCredentialsMatcher用bean的方式怎么配？缓存怎么配？
 如果把bean定义成component会怎么样？有参数的定义bean没参数的定义component？还是根据复杂性？
 验证：1.如果不定义bean，自己new进去也是可以的（有些调函数的就是这种用法）；2.我有些bean没有autowired，用的直接调函数的方法
 ShirFilter传参的问题。ShiroFilterFactoryBean这个单独看
+Shiro ShiroFilterFactoryBean的设计概念：https://www.cnblogs.com/BINGJJFLY/p/9336636.html
 Realm是用bean配置好还是用component配置好？我的CredentialsMatcher既没用bean配置也没用，可以看开涛的教程配置
 
 【再把菜单、权限这事儿自己思考一下】
@@ -70,11 +81,6 @@ Mybatis #和$区别以及原理：
 https://blog.csdn.net/zhangyong01245/article/details/90768156
 https://www.jianshu.com/p/0a70f957c750
 https://www.cnblogs.com/skyislimit/articles/10469873.html
-【预编译，这是个非常重要的概念】
-https://blog.csdn.net/hanchao_h/article/details/53640720
-https://www.cnblogs.com/haojun/p/10682407.html
-https://www.jianshu.com/p/59155963d790
-https://blog.csdn.net/LoveInWar/article/details/89646085
 
 【可以看filter对cookie的解析以及JWT了】
 可以搞session的缓存了
@@ -86,7 +92,7 @@ Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可�
 cacheConfig用上了吗？
 后续练习：写下现有功能，再快速重新配一次
 shiro-spring怎么加载的shiro还是没整明白
-DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
+
 
 CustomRealm：再学一遍。1.如何单元测试？2.思考其所在的层次
 cookie彻底搞好后，转jwt
@@ -258,7 +264,10 @@ shiro可以再来一次了：https://shiro.apache.org/【真正的文档在refer
 了解Shiro的SessionManager（会话管理，与spring session的关系？与token的联系？怎么结合起来，能否用3个默认实现中的一个？ServletContainerSessionManager、DefaultWebSessionManager）、CacheManager（缓存管理）
 shiro的todo：
 1.把logging再搞清楚；
-2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
+2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：
+https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
+https://blog.csdn.net/youni808/article/details/25612271
+
 shiro里面的permission是怎么跟表、API关联起来的？（其实资源就是我理解的功能点，再多一个关联）
 资源的分类：菜单、URL、页面按钮、Java 方法等
 IniSecurityManagerFactory过时了，怎么找到没过时的替代类？
@@ -839,6 +848,15 @@ https://pagehelper.github.io/
 https://www.cnblogs.com/kangoroo/p/7998433.html
 【分析原理】swagger是一个流行的API开发框架，这个框架以“开放式API声明”（OpenAPI Specification，OAS）为基础，对整个API的开发周期都提供了相应的解决方案，是一个非常庞大的项目（包括设计、编码和测试，几乎支持所有语言）：https://blog.csdn.net/moshowgame/article/details/80265480
 
+【mybatis：数据库驱动的预编译，这是个非常重要的概念】
+https://segmentfault.com/a/1190000004617028
+https://blog.csdn.net/weixin_34452850/article/details/88991943（这个里面的概念不准确，但是给了源码）
+https://blog.csdn.net/hanchao_h/article/details/53640720
+https://www.cnblogs.com/haojun/p/10682407.html
+https://www.jianshu.com/p/59155963d790
+https://blog.csdn.net/LoveInWar/article/details/89646085
+Mybatis解析动态sql原理分析：https://www.cnblogs.com/fangjian0423/p/mybaits-dynamic-sql-analysis.html
+
 ConfigClusterResolver - Resolving eureka endpoints via configuration
 HttpServletrequest 与HttpServletResponse总结：https://www.cnblogs.com/liuyandeng/p/5336649.html
 SpringMVC是怎么封装HttpServletRequest的？数据是怎么封装的？controller是怎么被调用的？
@@ -850,6 +868,8 @@ public interface HttpServletRequest extends ServletRequest {
     String DIGEST_AUTH = "DIGEST";
 将我的项目中HttpServletRequest都过一遍，都干掉。另外：参数中既有request又有response的怎么理解？
 
+DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
+Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
 
 关于RBAC权限控制：
 1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；

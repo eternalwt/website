@@ -24,7 +24,7 @@
         name="passwordRetry"
         maxEntriesLocalHeap="2000"
         eternal="false"
-        timeToIdleSeconds="1800"
+        timeToIdleSeconds="60"
         overflowToDisk="false"
         statistics="true"
     />

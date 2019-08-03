@@ -20,6 +20,9 @@ public class GlobalExceptionHandler {
         return ResultUtils.fail(StatusCodeEnum.EXCEPTION.getCode(), StatusCodeEnum.EXCEPTION.getMsg());
     }
 
+    // todo login方法会抛出AuthenticationException，再确认一下
+
+    // todo 这里抛出的位置是否有问题？需要把realm再看一下
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ResultBean handleIncorrectCredentialsException(IncorrectCredentialsException ex) {
         log.error(ex.getMessage(),ex);

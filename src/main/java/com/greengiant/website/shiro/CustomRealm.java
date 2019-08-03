@@ -21,8 +21,6 @@ import java.util.Set;
 @Slf4j
 @Component
 public class CustomRealm extends AuthorizingRealm {
-    //todo
-
     @Autowired
     private UserDao userDao;
 
@@ -40,19 +38,21 @@ public class CustomRealm extends AuthorizingRealm {
             throws AuthenticationException {
         log.info("authenticate for:[{}]", authenticationToken.getCredentials());
 
+        // 这里是自定义登录验证用户名密码的规则
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        token.setRememberMe(token.isRememberMe());
+        // 获取用户输入的用户名
+        String username = (String) token.getPrincipal();
+        //token.setRememberMe(token.isRememberMe());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
         if (null == user) {
             throw new AccountException("用户名不正确");
         }
-        // todo 加一个判断账号是否被禁 isLocked
-        String password = user.getPassword();
+
+        String password = user.getPassword();// todo 为啥用的是数据库里面取出来的password？
         String salt = user.getPasswordSalt();
 
-        return new SimpleAuthenticationInfo(token.getPrincipal(), password, ByteSource.Util.bytes(salt),
-                this.getName());
+        return new SimpleAuthenticationInfo(username, password, ByteSource.Util.bytes(salt), this.getName());
     }
 
     /**
@@ -65,10 +65,11 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         // todo 这里应该是没写好的。应该可以用带role的filter来测试把？跟动态配置权限有没有关系
         // todo 如何提示用户权限不足？
+        // 这里是自定义如何返回角色信息，默认的是啥？
+        log.info("进入角色授权");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        //需要将 role 封装到 Set 作为 info.setRoles() 的参数
         Set<String> set = new HashSet<>();
         //获得该用户角色
         Role role = roleDao.selectByName(username);
@@ -77,6 +78,8 @@ public class CustomRealm extends AuthorizingRealm {
             //设置该用户拥有的角色
             info.setRoles(set);
         }
+
+        // todo info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
 
         return info;
     }

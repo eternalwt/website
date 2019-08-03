@@ -5,17 +5,19 @@ spring:
     username: admin
     password: eternal2002@
     driver-class-name: com.mysql.cj.jdbc.Driver
+
     # 要能够测出来有没有的区别
     cache:
       ehcache:
         config: ehcache.xml
+
+  #  # frontend
+  #  mvc:
+  #    view:
+  #      prefix: /views/
+  #      suffix: .html
   resources:
     static-locations: classpath:/META-INF/resources/, classpath:/resources/,classpath:/static/, classpath:/public/,classpath:/templates/
-#  # frontend
-#  mvc:
-#    view:
-#      prefix: /views/
-#      suffix: .html
 
 mybatis:
   configuration:
@@ -23,6 +25,7 @@ mybatis:
     map-underscore-to-camel-case: true
 
 # todo 配置druid
+
 #logging:
 #  level:
 #    #打印SQL信息

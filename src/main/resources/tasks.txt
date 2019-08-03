@@ -3,11 +3,39 @@
 
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
+下一问题：下载angular版的easyUI界面如何跑起来？（ng serve）
+把前端计划变更为前端技术选型【这是非常关键的战略步骤。少即是多，如何能找到正确的选型？】。模板与组件之间的关系搞清楚【看代码对比就OK了，先把我下载的那个看了】。
+真的弄明白，才有可能性
+https://www.imooc.com/article/37896
+网上大部分选型的文章思考深度不够，没有解决快速灵活使用模板开发的问题
+比较easyui各个版本的异同，可以提升理解
+前端框架与bootstrap等模板的整合
+【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
+【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
+
+自定义realm（realm有修改）看了后再看一次rememberMe。FactoryBean如果实在看不懂就看源码分析
+
+springboot整合ehcache：彻底搞明白
+https://www.jianshu.com/p/9e4eb5e5bc1b
+https://blog.csdn.net/qq_28988969/article/details/78210873
+springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
+@EnableCaching背后的动作（“这样的话，启动类启动时会去启动缓存启动器”）。由于CacheConfig会被扫描，所以@EnableCaching放这里也是可以的
+ehCache使用注解和不使用注解的2种使用方式【搜一下】
+springboot使用cache缓存：https://www.jianshu.com/p/e9b40acb2993
+
+doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一下】：https://www.cnblogs.com/tusheng/articles/7453587.html
+
+对比各cacheManager
+
+前端路由非常重要，是一个枢纽，并且涉及到权限控制，需要好好研究组件的实现及使用
+
 【周末剩余事项】
 2.缓存及session、JWT（postman也是可以测试的）。session的过期策略？
 3.继续看shiro文档，反复看和整理
 4.easyui继续
-得看spring-shiro的源码
+得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
+
+@Controller注解的类也是被IoC容器管理的，从这个角度思考一下
 
 Shiro整合JWT+Token过期刷新，全都帮你整好了：
 https://www.sundayfine.com/shiro-jwt/
@@ -42,6 +70,7 @@ RetryLimitHashedCredentialsMatcher用bean的方式怎么配？缓存怎么配？
 ShirFilter传参的问题。ShiroFilterFactoryBean这个单独看
 Shiro ShiroFilterFactoryBean的设计概念：https://www.cnblogs.com/BINGJJFLY/p/9336636.html
 Realm是用bean配置好还是用component配置好？我的CredentialsMatcher既没用bean配置也没用，可以看开涛的教程配置
+EhCacheManagerFactoryBean
 
 【再把菜单、权限这事儿自己思考一下】
 1.通过注解来完成权限控制（5个权限注解）【新问题：我配了后启动失败了】；
@@ -76,7 +105,7 @@ https://blog.csdn.net/lpy1239064101/article/details/79185170
 
 思考各种前端技术及ng-zorro等各能提升多大生产力
 
-mybatis 理解 1、2级缓存，，懒加载：https://blog.csdn.net/lu1171901273/article/details/82695993
+mybatis 理解 1、2级缓存，，懒加载【如何测试？】：https://blog.csdn.net/lu1171901273/article/details/82695993
 Mybatis #和$区别以及原理：
 https://blog.csdn.net/zhangyong01245/article/details/90768156
 https://www.jianshu.com/p/0a70f957c750
@@ -92,11 +121,11 @@ Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可�
 cacheConfig用上了吗？
 后续练习：写下现有功能，再快速重新配一次
 shiro-spring怎么加载的shiro还是没整明白
-
+应该是在securityManager.rememberMeManager里面设置cookie过期时间
 
 CustomRealm：再学一遍。1.如何单元测试？2.思考其所在的层次
 cookie彻底搞好后，转jwt
-model里面字段含义及自动生成
+model里面字段注释/含义及自动生成
 
 spring 配置 shiro rememberMe：
 https://www.cnblogs.com/blogxiao/p/8759053.html
@@ -135,7 +164,6 @@ setSessionManager注入一下
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
 Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
 
-现在系统里面用到了anon、authc、roles这几种拦截器，还有user
 看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
 表单拦截器FormAuthenticationFilter：
 https://blog.csdn.net/u014203449/article/details/80689268
@@ -196,11 +224,16 @@ shiro需要搞懂的2点：
 easyui发ajax写通（再看RxJS的优势）
 Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
+通常自定义Realm需要继承AuthorizingRealm，这样既可以提供身份认证的自定义方法，也可以实现授权的自定义方法。
 
 跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
 Shiro 登录后跳转到最后一个访问的页面：
 https://www.sojson.com/shiro
 
+spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
+Shiro 还提供了 CacheManagerAware 用于注入 CacheManager：
+Shiro 内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如 Realm）是否 实现了 CacheManagerAware 并自动注入相应的 CacheManager。
+Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
 
 后端拆成2个模块，最简单的分布式无论如何要搭起来
 注册中心和网关这2样可以独立搭建起来
@@ -220,7 +253,9 @@ druid开启日志
 4.测试
 
 周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
-Layui elementUI
+Layui elementUI iView
+https://adminlte.io/
+
 其实前后端已经连的差不多了，jwt只是可选。下一步：把Configuration那一套流程搞清楚、jwt、把EasyUI与静态模板的关系搞清楚
 https://blog.csdn.net/qq_22771739/article/details/83687175
 http://www.17sucai.com/pins/tag/14624.html
@@ -372,9 +407,10 @@ shiroFilterFactoryBean：
 https://blog.csdn.net/u012345283/article/details/44199791
 https://blog.csdn.net/lqzkcx3/article/details/78776555
 FactoryBean：
+https://blog.51cto.com/4247649/2118353（这个需要反复看）
 http://www.cnblogs.com/aspirant/p/9082858.html
 https://blog.csdn.net/baidu_19473529/article/details/80558996
-https://blog.51cto.com/4247649/2118353
+
 https://www.jianshu.com/p/6f0a59623090
 Spring的后置处理器BeanPostProcessor：
 https://www.cnblogs.com/libra0920/p/6118157.html
@@ -892,3 +928,16 @@ https://blog.csdn.net/wnf2018/article/details/80655153
 springboot项目解决 No beans of 'UserDao' type found 问题：
 https://blog.csdn.net/baichilele/article/details/82115918
 https://blog.csdn.net/u012453843/article/details/54906905
+
+ComponentScan注解用法介绍和注意事项：https://blog.csdn.net/neulily2005/article/details/83750027
+
+@Import 注解：
+https://www.jianshu.com/p/afd2c49394c2
+https://blog.csdn.net/pange1991/article/details/81356594
+https://mp.weixin.qq.com/s?__biz=MzAxMjY1NTIxNA==&mid=2454441963&idx=1&sn=6a59fe88c1107765c77820c0e9b8b4ef&chksm=8c11e0eabb6669fcb28553237b8b841a981cb0ce3cb0e4e9d0f752ce1a0b49cd4071f69cd1a6&scene=21#wechat_redirect
+Import 注解与 ImportSelector 和 ImportBeanDefinitionRegistrar：https://www.jianshu.com/p/f74bc90b918e
+深入理解Spring的ImportSelector接口：https://www.cnblogs.com/niechen/p/9262452.html
+
+
+
+

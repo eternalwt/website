@@ -41,14 +41,15 @@ public class ShiroConfig {
     @Autowired
     private EhCacheCacheManager cacheManager;
 
-    @Autowired
-    private RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
+    //@Autowired
+    //private HashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
 
     //@Autowired
     //private SecurityManager securityManager;//todo 这是加过滤的时候加的，还是没明白用法
 
+
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {//shirFilter
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {// todo securityManager是怎么传入的？
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -96,42 +97,47 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // todo
         // 注入缓存管理器;
-        // securityManager.setCacheManager(ehCacheManager());//todo 究竟写在这一行还是下面一行？
-        // 注入自定义的realm
-
-        retryLimitHashedCredentialsMatcher.setHashAlgorithmName("md5");
-        //加密次数
-        retryLimitHashedCredentialsMatcher.setHashIterations(2);
-        //存储散列后的密码是否为16进制
-        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-        //retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
-
-        customRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher);
-
-        securityManager.setRealm(customRealm);
-        //securityManager.setSessionManager();
-        // todo
+        // securityManager.setCacheManager(ehCacheManager());
         //securityManager.setRememberMeManager();
+
+        //retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
+        //customRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher);// todo 放在bean里面
+
+        // 注入自定义的realm
+        securityManager.setRealm(customRealm);
 
         return securityManager;
     }
 
-//    /**
-//     * 自定义身份认证 realm;
-//     * <p>
-//     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
-//     * 否则会影响 CustomRealm类 中其他类的依赖注入
-//     */
-//    @Bean
-//    public CustomRealm customRealm() {
-//        CustomRealm realm = new CustomRealm();
-//        //realm.setCacheManager();
-//        //realm.setCachingEnabled();
-//        // todo 改成@autowired
-//        realm.setCredentialsMatcher(getHashedCredentialsMatcher(cacheManager));
-//
-//        return realm;
-//    }
+    @Bean
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+
+        //hash算法
+        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.algorithmName);
+        //加密次数
+        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.hashIterationCount);
+        //存储散列后的密码是否为16进制
+        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
+
+        return retryLimitHashedCredentialsMatcher;
+    }
+
+    /**
+     * 自定义身份认证 realm;
+     * <p>
+     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
+     * 否则会影响 CustomRealm类 中其他类的依赖注入
+     */
+    @Bean
+    public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
+        CustomRealm realm = new CustomRealm();
+        //realm.setCacheManager();
+        //realm.setCachingEnabled();
+       realm.setCredentialsMatcher(hashedCredentialsMatcher);
+
+        return realm;
+    }
 
 //    @Bean
 //    public PasswordService getPasswordService() {
@@ -146,26 +152,6 @@ public class ShiroConfig {
 //        return defaultPasswordService;
 //    }
 
-    //    @Bean(name="customRealmWithMatcher")
-//    public CustomRealm customRealmWithMatcher(CacheManager cacheManager) {
-//        CustomRealm realm = new CustomRealm();
-//        realm.setCacheManager(cacheManager);
-//        //todo 代码跟踪
-//        realm.setCachingEnabled(true);
-//        RetryLimitHashedCredentialsMatcher matcher = new RetryLimitHashedCredentialsMatcher(cacheManager);
-//        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
-//        matcher.setHashIterations(PasswordUtil.hashIterationCount);
-//        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-//
-////        HashedCredentialsMatcher matcher = new HashedCredentialsMatcher();
-////        matcher.setHashAlgorithmName(PasswordUtil.algorithmName);
-////        matcher.setHashIterations(PasswordUtil.hashIterationCount);
-////        matcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
-//        realm.setCredentialsMatcher(matcher);
-//
-//        return new CustomRealm();
-//    }
-
     /**
      * shiro缓存管理器;
      * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
@@ -178,11 +164,10 @@ public class ShiroConfig {
 //        return cacheManager;
 //    }
 
-
-//    /**
-//     * Shiro生命周期处理器
-//     * @return
-//     */
+    /**
+     * Shiro生命周期处理器
+     * @return
+     */
 //    @Bean
 //    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor(){
 //        return new LifecycleBeanPostProcessor();

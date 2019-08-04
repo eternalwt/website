@@ -19,7 +19,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-@Component
+//@Component
 public class CustomRealm extends AuthorizingRealm {
     @Autowired
     private UserDao userDao;
@@ -42,7 +42,6 @@ public class CustomRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 获取用户输入的用户名
         String username = (String) token.getPrincipal();
-        //token.setRememberMe(token.isRememberMe());
         // 从数据库获取对应用户名密码的用户
         User user = userDao.selectByName(token.getUsername());
         if (null == user) {

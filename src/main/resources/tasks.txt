@@ -15,11 +15,41 @@ https://www.imooc.com/article/37896
 
 下一步搞懂3个问题：
 1.是否使用RememberMeAuthenticationToken
-2.LifecycleBeanPostProcessor为啥没调通
+2.LifecycleBeanPostProcessor为啥没调通（LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调）
 3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+【前2个问题就关系到ShiroConfig的配置】
+mybatis-spring这种包是桥梁
+为啥不需要写MybatisConfig这种类？
+springboot的包扫描顺序再研究一下
+shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
+
+@Bean注解修饰带参数方法时的参数取值：
+https://blog.csdn.net/ncuzengxiebo/article/details/80805786
+https://www.cnblogs.com/eoooxy/p/6438109.html
+
+ImportBeanDefinitionRegistrar：
+https://www.jianshu.com/p/caef887b78b5
+https://www.cnblogs.com/zhangjianbing/p/10114196.html
+
+Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
+我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
+
+mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
 
 FactoryBean如果实在看不懂就看源码分析（shiro、cache、mybatis、activiti）：https://www.cnblogs.com/xwy6/p/11279518.html
+为什么要用FactoryBean，非用不可吗？
 Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+我的加密为啥没用PasswordService？
+
+<!-- 缓存管理器 使用Ehcache实现 -->
+<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+    <property name="cacheManagerConfigFile" value="classpath:conf/ehcache.xml" />
+</bean>
+
+动态权限控制：
+https://www.xttblog.com/?p=1270
+https://blog.csdn.net/jinnianshilongnian/article/details/84545363
+
 
 lifecycleBeanPostProcessor：
 https://blog.csdn.net/hxm_code/article/details/78697305
@@ -63,6 +93,7 @@ https://www.sundayfine.com/jwt-refresh-token/
 
 cacheManager专题分析一下
 RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) 为啥这个有参构造函数能走进来？搞懂这一点至关重要
+把CacheManager搞成static的：https://www.cnblogs.com/imsoft/p/5895905.html
 
 jQuery EasyUI 教程：https://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html
 前端UI框架选择区别对比推荐

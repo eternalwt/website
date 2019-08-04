@@ -13,7 +13,17 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-自定义realm（realm有修改）看了后再看一次rememberMe。FactoryBean如果实在看不懂就看源码分析
+下一步搞懂3个问题：
+1.是否使用RememberMeAuthenticationToken
+2.LifecycleBeanPostProcessor为啥没调通
+3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+
+FactoryBean如果实在看不懂就看源码分析（shiro、cache、mybatis、activiti）：https://www.cnblogs.com/xwy6/p/11279518.html
+Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+
+lifecycleBeanPostProcessor：
+https://blog.csdn.net/hxm_code/article/details/78697305
+https://blog.csdn.net/peterwanghao/article/details/8824981
 
 springboot整合ehcache：彻底搞明白
 https://www.jianshu.com/p/9e4eb5e5bc1b
@@ -34,6 +44,15 @@ doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一�
 3.继续看shiro文档，反复看和整理
 4.easyui继续
 得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
+禁止账号多点登录或者重复登录：
+https://blog.csdn.net/sunsgne_ac/article/details/79289770
+https://blog.csdn.net/qq_35113996/article/details/84256271
+踢出用户：
+https://www.xuebuyuan.com/2116235.html
+禁用：
+https://www.jianshu.com/p/44ee5b1c1e77
+
+shiro的权限控制应用，集成spring项目，密码错误次数过多短时间锁定：http://www.mamicode.com/info-detail-1449798.html
 
 @Controller注解的类也是被IoC容器管理的，从这个角度思考一下
 

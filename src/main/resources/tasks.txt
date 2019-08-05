@@ -14,8 +14,40 @@ https://www.imooc.com/article/37896
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 ShiroConfig前面已经一马平川：
-3.搞RememberMeManager、SessionManager、JWT
-4.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
+1.搞RememberMeManager、SessionManager、JWT
+2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
+3.查看切换redis的难度。对比各cacheManager
+4.是否使用RememberMeAuthenticationToken（自己先分析）
+0.看看还有没有todo，过掉
+5.LifecycleBeanPostProcessor为啥没调通（LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调）
+6.Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
+7.mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
+8.消灭5个shiro文档
+9.动态权限做好，继续看permission【还差2步：1是bean的重写；2是放入数据库】
+10.看源码（从spring、mybatis开始）及集成activiti
+11.webSocket
+12.继续看开涛的教程
+13.继续流式计算和人工智能
+可以搞session的缓存了
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
+
+动态权限控制：
+https://www.xttblog.com/?p=1270
+https://blog.csdn.net/jinnianshilongnian/article/details/84545363
+
+lifecycleBeanPostProcessor：
+https://blog.csdn.net/hxm_code/article/details/78697305
+https://blog.csdn.net/peterwanghao/article/details/8824981
+
+springboot整合ehcache：彻底搞明白
+https://www.jianshu.com/p/9e4eb5e5bc1b
+https://blog.csdn.net/qq_28988969/article/details/78210873
+springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
+@EnableCaching背后的动作（“这样的话，启动类启动时会去启动缓存启动器”）。由于CacheConfig会被扫描，所以@EnableCaching放这里也是可以的
+ehCache使用注解和不使用注解的2种使用方式【搜一下】
+springboot使用cache缓存：https://www.jianshu.com/p/e9b40acb2993
 
 CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
 搞Realm和CacheManager的关系【可以通过分析代码、观察数据库日志的方式，判断缓存是否起效】（authorizationCache、authenticationCache）：
@@ -24,19 +56,18 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 再看Retry的cache能否整合使用CacheManager
 
 下一步搞懂3个问题：
-1.是否使用RememberMeAuthenticationToken
-2.LifecycleBeanPostProcessor为啥没调通（LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调）
 3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
-【前2个问题就关系到ShiroConfig的配置】
 mybatis-spring这种包是桥梁
 为啥不需要写MybatisConfig这种类？
 springboot的包扫描顺序再研究一下
 shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看。shiro源码分析的几个方面：1.跟别人的文档；2.建立主题意识，按主题分析；3.建立问题意识
 
 细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
+细说Shiro系列文章
+我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
 
 @Bean的加载时机，@Autowired的加载时机
-细说Shiro系列文章。
+
 该清这个文档里面的内容了【花一个周末清理】
 
 SessionDAO与Session共享：
@@ -55,47 +86,18 @@ ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5
 https://www.cnblogs.com/zhangjianbing/p/10114196.html
 
-Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
-我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
-
-mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
-
 FactoryBean如果实在看不懂就看源码分析（shiro、cache、mybatis、activiti）：https://www.cnblogs.com/xwy6/p/11279518.html
 为什么要用FactoryBean，非用不可吗？
 Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
 我的加密为啥没用PasswordService？
 
-<!-- 缓存管理器 使用Ehcache实现 -->
-<bean id="cacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
-    <property name="cacheManagerConfigFile" value="classpath:conf/ehcache.xml" />
-</bean>
-
-动态权限控制：
-https://www.xttblog.com/?p=1270
-https://blog.csdn.net/jinnianshilongnian/article/details/84545363
-
-
-lifecycleBeanPostProcessor：
-https://blog.csdn.net/hxm_code/article/details/78697305
-https://blog.csdn.net/peterwanghao/article/details/8824981
-
-springboot整合ehcache：彻底搞明白
-https://www.jianshu.com/p/9e4eb5e5bc1b
-https://blog.csdn.net/qq_28988969/article/details/78210873
-springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
-@EnableCaching背后的动作（“这样的话，启动类启动时会去启动缓存启动器”）。由于CacheConfig会被扫描，所以@EnableCaching放这里也是可以的
-ehCache使用注解和不使用注解的2种使用方式【搜一下】
-springboot使用cache缓存：https://www.jianshu.com/p/e9b40acb2993
-
 doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一下】：https://www.cnblogs.com/tusheng/articles/7453587.html
-
-对比各cacheManager
 
 前端路由非常重要，是一个枢纽，并且涉及到权限控制，需要好好研究组件的实现及使用
 
 【周末剩余事项】
-2.缓存及session、JWT（postman也是可以测试的）。session的过期策略？
-3.继续看shiro文档，反复看和整理
+2.session、JWT（postman也是可以测试的）。session的过期策略？
+3.继续看shiro文档，反复看和整理（一个专题一个专题彻底灭掉）
 4.easyui继续
 得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
 禁止账号多点登录或者重复登录：
@@ -135,23 +137,16 @@ POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
 3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
 https://www.cnblogs.com/demodashi/p/8509895.html
 @Bean用于已经定义好的类，配置选项，@Component用于定义类，并搞成bean
-RetryLimitHashedCredentialsMatcher用bean的方式怎么配？缓存怎么配？
-【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，得继续看
-
+用@Bean的方式才能动态设置选项
 如果没有声明bean，默认的对象是怎么加载的？找到并看看初始化代码，把config相关的初始化代码都看一下
-如果把bean定义成component会怎么样？有参数的定义bean没参数的定义component？还是根据复杂性？
-验证：1.如果不定义bean，自己new进去也是可以的（有些调函数的就是这种用法）；2.我有些bean没有autowired，用的直接调函数的方法
-ShirFilter传参的问题。ShiroFilterFactoryBean这个单独看
-Shiro ShiroFilterFactoryBean的设计概念：https://www.cnblogs.com/BINGJJFLY/p/9336636.html
-Realm是用bean配置好还是用component配置好？我的CredentialsMatcher既没用bean配置也没用，可以看开涛的教程配置
-EhCacheManagerFactoryBean
+【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，得继续看
 
 【再把菜单、权限这事儿自己思考一下】
 1.通过注解来完成权限控制（5个权限注解）【新问题：我配了后启动失败了】；
 https://www.cnblogs.com/limingxian537423/p/7928234.html
 https://blog.csdn.net/u014203449/article/details/79415755
 https://www.jianshu.com/p/c6b9a557d18d
-2.动态权限【还差2步：1是bean的重写；2是放入数据库】：
+2.动态权限：
 https://wenku.baidu.com/view/5a8f9e15974bcf84b9d528ea81c758f5f61f299e.html
 http://how2j.cn/k/shiro/shiro-url/1729.html
 https://blog.csdn.net/haoyuyang/article/details/80036989
@@ -186,19 +181,13 @@ https://www.jianshu.com/p/0a70f957c750
 https://www.cnblogs.com/skyislimit/articles/10469873.html
 
 【可以看filter对cookie的解析以及JWT了】
-可以搞session的缓存了
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
-1.看看我在ShiroConfig里面加载的bean都是怎么被加载连起来使用的；
 2.把cookie那个文章里面的request和response的调用链搞清楚
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
-4.缓存用户名密码、缓存权限
-cacheConfig用上了吗？
 后续练习：写下现有功能，再快速重新配一次
 shiro-spring怎么加载的shiro还是没整明白
 应该是在securityManager.rememberMeManager里面设置cookie过期时间
 
-CustomRealm：再学一遍。1.如何单元测试？2.思考其所在的层次
-cookie彻底搞好后，转jwt
+CustomRealm：再学一遍。1.如何单元测试？（好多文章里面直接main测试，学一下）
 model里面字段注释/含义及自动生成
 
 spring 配置 shiro rememberMe：
@@ -233,8 +222,6 @@ https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客
 https://www.jianshu.com/p/2bb0f368f631
 https://www.cnblogs.com/jing99/p/7826550.html
 
-setSessionManager注入一下
-
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
 Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
 
@@ -247,7 +234,6 @@ shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 【单独击破1】
 realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
 0.复习一下现有代码【同时，再回过头来看，添加的权限相关的代码确实没多少，很简单，验证一下】
-1.找一个前端的管理后台代码模板把ajax写通；
 2.把EasyUI看掉；
 3.再决定怎么整合
 【单独击破2】

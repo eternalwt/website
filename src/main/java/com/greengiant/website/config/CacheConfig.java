@@ -23,9 +23,11 @@ public class CacheConfig {
     /**
      * ehcache 主要的管理器
      */
-    @Bean(name = "appEhCacheCacheManager")
+    @Bean // (name = "appEhCacheCacheManager")
     public EhCacheCacheManager ehCacheCacheManager(EhCacheManagerFactoryBean bean){
         return new EhCacheCacheManager(bean.getObject());
     }
+
+    // todo 这个应该是全局缓存，和shiro的统一起来或者区分开
 
 }

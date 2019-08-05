@@ -13,12 +13,15 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
 ShiroConfig前面一马平川：
-1.把ShiroConfig里面无用的Autowired去掉；
-2.还有其他一些manager要配置；
-3.RetryLimitHashedCredentialsMatcher与Cache的关系搞清楚后，再搞Realm和CacheManager的关系，及更多
+3.搞RememberMeManager、SessionManager
 4.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆
+
+CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
+搞Realm和CacheManager的关系【可以通过分析代码、观察数据库日志的方式，判断缓存是否起效】（authorizationCache、authenticationCache）：
+https://blog.csdn.net/csujiangyu/article/details/49076531
+https://blog.csdn.net/AlbertFly/article/details/52193813
+再看Retry的cache能否整合使用CacheManager
 
 下一步搞懂3个问题：
 1.是否使用RememberMeAuthenticationToken
@@ -28,9 +31,21 @@ ShiroConfig前面一马平川：
 mybatis-spring这种包是桥梁
 为啥不需要写MybatisConfig这种类？
 springboot的包扫描顺序再研究一下
-shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
+shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看。shiro源码分析的几个方面：1.跟别人的文档；2.建立主题意识，按主题分析；3.建立问题意识
+
+细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
 
 @Bean的加载时机，@Autowired的加载时机
+细说Shiro系列文章。
+该清这个文档里面的内容了【花一个周末清理】
+
+SessionDAO与Session共享：
+https://blog.csdn.net/changudeng1992/article/details/81914628
+https://blog.csdn.net/acmman/article/details/78955730
+https://www.jianshu.com/p/f7d5a9ecfd3a
+https://www.jianshu.com/p/f85e50f41100
+https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
+https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
 
 @Bean注解修饰带参数方法时的参数取值：
 https://blog.csdn.net/ncuzengxiebo/article/details/80805786

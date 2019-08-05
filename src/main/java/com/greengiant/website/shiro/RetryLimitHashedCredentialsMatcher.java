@@ -1,5 +1,6 @@
 package com.greengiant.website.shiro;
 
+import com.greengiant.website.utils.EhcacheUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;

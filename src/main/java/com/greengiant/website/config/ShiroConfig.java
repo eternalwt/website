@@ -5,6 +5,8 @@ import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -63,12 +65,11 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm) {
-        // todo 配置Realm、CacheManager、RememberMeManager、sessionManager
+    public SecurityManager securityManager(CustomRealm customRealm, CacheManager ehCacheCacheManager) {
+        // todo CacheManager、RememberMeManager、sessionManager
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // todo
-        // 注入缓存管理器;
-        // securityManager.setCacheManager(ehCacheManager());
+        // 注入缓存管理器
+        securityManager.setCacheManager(ehCacheCacheManager);
         // todo 把RememberMe的cookie改名
         //securityManager.setRememberMeManager();
 
@@ -76,6 +77,26 @@ public class ShiroConfig {
         securityManager.setRealm(customRealm);
 
         return securityManager;
+    }
+
+    /**
+     * 自定义身份认证 realm;
+     * <p>
+     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
+     * 否则会影响 CustomRealm类 中其他类的依赖注入
+     */
+    @Bean
+    public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
+        CustomRealm realm = new CustomRealm();
+        //realm.setCacheManager();
+        realm.setAuthenticationCacheName("authenticationCache");
+        realm.setAuthorizationCacheName("authorizationCache");
+        realm.setCachingEnabled(true);
+        realm.setAuthenticationCachingEnabled(true);
+        realm.setAuthorizationCachingEnabled(true);
+       realm.setCredentialsMatcher(hashedCredentialsMatcher);
+
+        return realm;
     }
 
     @Bean
@@ -93,20 +114,23 @@ public class ShiroConfig {
     }
 
     /**
-     * 自定义身份认证 realm;
-     * <p>
-     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
-     * 否则会影响 CustomRealm类 中其他类的依赖注入
+     * shiro缓存管理器
+     *
      */
-    @Bean
-    public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
-        CustomRealm realm = new CustomRealm();
-        //realm.setCacheManager();
-        //realm.setCachingEnabled();
-       realm.setCredentialsMatcher(hashedCredentialsMatcher);
+    @Bean(name = "shiroEhCacheCacheManager")
+    public CacheManager getEhCacheManager() {
+        CacheManager cacheManager = new EhCacheManager();
+        //cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 
-        return realm;
+        return cacheManager;
     }
+//    @Bean(name = "shiroEhCacheCacheManager")
+//    public EhCacheManager getEhCacheManager() {
+//        System.out.println("ShiroConfig.getEhCacheManager()");
+//        EhCacheManager cacheManager = new EhCacheManager();
+//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return cacheManager;
+//    }
 
 //    @Bean
 //    public PasswordService getPasswordService() {
@@ -117,20 +141,7 @@ public class ShiroConfig {
 //        defaultHashService.setHashIterations(PasswordUtil.hashIterationCount);
 //        defaultPasswordService.setHashService(defaultHashService);
 //
-//        //todo
 //        return defaultPasswordService;
-//    }
-
-    /**
-     * shiro缓存管理器;
-     * 需要注入对应的其它的实体类中-->安全管理器：securityManager可见securityManager是整个shiro的核心；
-     */
-//    @Bean
-//    public EhCacheManager getEhCacheManager() {
-//        System.out.println("ShiroConfig.getEhCacheManager()");
-//        EhCacheManager cacheManager = new EhCacheManager();
-//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-//        return cacheManager;
 //    }
 
     /**

@@ -1,4 +1,4 @@
-package com.greengiant.website.shiro;
+package com.greengiant.website.utils;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;

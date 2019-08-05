@@ -8,21 +8,15 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//import org.apache.shiro.cache.ehcache.EhCacheManager;
-
 @Slf4j
 @Configuration
 public class ShiroConfig {
-
-    @Autowired
-    private CustomRealm customRealm;
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {// todo securityManager是怎么传入的？
@@ -32,7 +26,8 @@ public class ShiroConfig {
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
         //todo 和后端action对应起来。success的url是什么时候用的？
         shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
-        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");//todo 测试，应该是登录成功后跳转的页面吧
+        //todo 测试，应该是登录成功后跳转的页面吧
+        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
         // 设置无权限时跳转的 url;
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
@@ -68,12 +63,13 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager() {
+    public SecurityManager securityManager(CustomRealm customRealm) {
         // todo 配置Realm、CacheManager、RememberMeManager、sessionManager
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // todo
         // 注入缓存管理器;
         // securityManager.setCacheManager(ehCacheManager());
+        // todo 把RememberMe的cookie改名
         //securityManager.setRememberMeManager();
 
         // 注入自定义的realm

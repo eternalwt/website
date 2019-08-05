@@ -13,12 +13,12 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
+CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
 ShiroConfig前面一马平川：
-1.CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
-2.把无用的Autowired去掉；
-3.还有其他一些manager要配置；
-4.干掉多余的import（用organize import）
-5.RetryLimitHashedCredentialsMatcher与Cache的关系搞清楚后，再搞Realm和CacheManager的关系，及更多
+1.把ShiroConfig里面无用的Autowired去掉；
+2.还有其他一些manager要配置；
+3.RetryLimitHashedCredentialsMatcher与Cache的关系搞清楚后，再搞Realm和CacheManager的关系，及更多
+4.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆
 
 下一步搞懂3个问题：
 1.是否使用RememberMeAuthenticationToken
@@ -29,6 +29,8 @@ mybatis-spring这种包是桥梁
 为啥不需要写MybatisConfig这种类？
 springboot的包扫描顺序再研究一下
 shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
+
+@Bean的加载时机，@Autowired的加载时机
 
 @Bean注解修饰带参数方法时的参数取值：
 https://blog.csdn.net/ncuzengxiebo/article/details/80805786

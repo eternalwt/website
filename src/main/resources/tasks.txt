@@ -14,10 +14,11 @@ https://www.imooc.com/article/37896
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 ShiroConfig前面一马平川：
-1.CacheManager及EhcacheUtil；
+1.CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
 2.把无用的Autowired去掉；
 3.还有其他一些manager要配置；
-4.干掉注释
+4.干掉多余的import（用organize import）
+5.RetryLimitHashedCredentialsMatcher与Cache的关系搞清楚后，再搞Realm和CacheManager的关系，及更多
 
 下一步搞懂3个问题：
 1.是否使用RememberMeAuthenticationToken
@@ -994,6 +995,6 @@ https://mp.weixin.qq.com/s?__biz=MzAxMjY1NTIxNA==&mid=2454441963&idx=1&sn=6a59fe
 Import 注解与 ImportSelector 和 ImportBeanDefinitionRegistrar：https://www.jianshu.com/p/f74bc90b918e
 深入理解Spring的ImportSelector接口：https://www.cnblogs.com/niechen/p/9262452.html
 
-
+RetryLimitHashedCredentialsMatcher与cache已成功解耦
 
 

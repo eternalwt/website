@@ -3,33 +3,19 @@ package com.greengiant.website.config;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
-import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.authc.credential.PasswordService;
-//import org.apache.shiro.cache.ehcache.EhCacheManager;
-import org.apache.shiro.crypto.hash.DefaultHashService;
-import org.apache.shiro.crypto.hash.Hash;
-import org.apache.shiro.crypto.hash.HashRequest;
-import org.apache.shiro.crypto.hash.HashService;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.spring.LifecycleBeanPostProcessor;
-import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
-import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
-import org.springframework.cache.ehcache.EhCacheCacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
-import org.springframework.context.annotation.Primary;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+//import org.apache.shiro.cache.ehcache.EhCacheManager;
 
 @Slf4j
 @Configuration
@@ -37,16 +23,6 @@ public class ShiroConfig {
 
     @Autowired
     private CustomRealm customRealm;
-
-    @Autowired
-    private EhCacheCacheManager cacheManager;
-
-    //@Autowired
-    //private HashedCredentialsMatcher retryLimitHashedCredentialsMatcher;
-
-    //@Autowired
-    //private SecurityManager securityManager;//todo 这是加过滤的时候加的，还是没明白用法
-
 
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {// todo securityManager是怎么传入的？
@@ -99,9 +75,6 @@ public class ShiroConfig {
         // 注入缓存管理器;
         // securityManager.setCacheManager(ehCacheManager());
         //securityManager.setRememberMeManager();
-
-        //retryLimitHashedCredentialsMatcher.cacheManager = cacheManager;
-        //customRealm.setCredentialsMatcher(retryLimitHashedCredentialsMatcher);// todo 放在bean里面
 
         // 注入自定义的realm
         securityManager.setRealm(customRealm);

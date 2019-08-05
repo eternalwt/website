@@ -4,7 +4,6 @@ import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.AccountException;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;

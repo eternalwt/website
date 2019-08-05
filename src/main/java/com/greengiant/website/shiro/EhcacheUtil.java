@@ -8,29 +8,39 @@ import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
 public class EhcacheUtil {
     private static final CacheManager cacheManager = CacheManager.getInstance();
+    //public static Cache passwordRetryCache;
 
     /**
      * 创建ehcache缓存，创建之后的有效期是1小时
      */
-    private static Cache cache = new Cache(new CacheConfiguration("systemCache", 5000)
-                                    .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
-                                    .timeoutMillis(300)
-                                    .timeToLiveSeconds( 60 * 60));
+
+    // todo 用ehcache始终要思考全局性的问题（多个服务的话）
+    // todo 先尝试写通，然后再思考和xml配置文件的关系（可以先把配置拷过来）
+    private static Cache passwordRetryCache = new Cache(new CacheConfiguration("systemCache", 5000)
+            .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
+            .timeoutMillis(300)
+            .timeToLiveSeconds(60 * 60));
+//    private static Cache passwordRetryCache = new Cache(new CacheConfiguration("systemCache", 5000)
+//                                    .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
+//                                    .timeoutMillis(300)
+//                                    .timeToLiveSeconds( 60 * 60));
 
     static {
-        cacheManager.addCache(cache);
+        cacheManager.addCache(passwordRetryCache);
+
+        //passwordRetryCache = cacheManager.getCache("passwordRetry");
     }
 
     public static void putItem(String key, Object item) {
-        if (cache.get(key) != null) {
-            cache.remove(key);
+        if (passwordRetryCache.get(key) != null) {
+            passwordRetryCache.remove(key);
         }
         Element element = new Element(key, item);
-        cache.put(element);
+        passwordRetryCache.put(element);
     }
 
     public static void removeItem(String key) {
-        cache.remove(key);
+        passwordRetryCache.remove(key);
     }
 
     public static void updateItem(String key, Object value) {
@@ -38,7 +48,7 @@ public class EhcacheUtil {
     }
 
     public static Object getItem(String key) {
-        Element element=  cache.get(key);
+        Element element=  passwordRetryCache.get(key);
         if(null!=element)
         {
             return element.getObjectValue();

@@ -80,21 +80,18 @@ public class ShiroConfig {
     }
 
     /**
-     * 自定义身份认证 realm;
-     * <p>
-     * 必须写这个类，并加上 @Bean 注解，目的是注入 CustomRealm，
-     * 否则会影响 CustomRealm类 中其他类的依赖注入
+     * 自定义身份认证 realm
+     *
      */
     @Bean
     public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
         CustomRealm realm = new CustomRealm();
-        //realm.setCacheManager();
         realm.setAuthenticationCacheName("authenticationCache");
         realm.setAuthorizationCacheName("authorizationCache");
         realm.setCachingEnabled(true);
         realm.setAuthenticationCachingEnabled(true);
         realm.setAuthorizationCachingEnabled(true);
-       realm.setCredentialsMatcher(hashedCredentialsMatcher);
+        realm.setCredentialsMatcher(hashedCredentialsMatcher);
 
         return realm;
     }

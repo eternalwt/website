@@ -7,9 +7,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -66,13 +69,14 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm, CacheManager ehCacheCacheManager) {
-        // todo CacheManager、RememberMeManager、sessionManager
+    public SecurityManager securityManager(CustomRealm customRealm,
+                                           CacheManager ehCacheCacheManager,
+                                           CookieRememberMeManager rememberMeManager) {
+        // todo sessionManager
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);
-        // todo 把RememberMe的cookie改名
-        //securityManager.setRememberMeManager();
+        securityManager.setRememberMeManager(rememberMeManager);
 
         // 注入自定义的realm
         securityManager.setRealm(customRealm);
@@ -120,6 +124,37 @@ public class ShiroConfig {
         CacheManager cacheManager = new EhCacheManager();
 
         return cacheManager;
+    }
+
+    /**
+     *Cookie
+     */
+    @Bean
+    public SimpleCookie rememberMeCookie() {
+        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        SimpleCookie simpleCookie = new SimpleCookie("REMEMBERCOOKIE");
+        //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
+        simpleCookie.setHttpOnly(true);
+        // 生效时间,单位是秒
+        simpleCookie.setMaxAge(60 * 60 * 24 * 30);
+        return simpleCookie;
+    }
+
+    /**
+     * cookie管理器;
+     */
+    @Bean
+    public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
+        CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
+        //rememberme cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位），通过以下代码可以获取
+        //KeyGenerator keygen = KeyGenerator.getInstance("AES");
+        //SecretKey deskey = keygen.generateKey();
+        //System.out.println(Base64.encodeToString(deskey.getEncoded()));
+        byte[] cipherKey = Base64.decode("wGiHplamyXlVB11UXWol8g==");
+        cookieRememberMeManager.setCipherKey(cipherKey);
+        cookieRememberMeManager.setCookie(rememberMeCookie);
+
+        return cookieRememberMeManager;
     }
 
 //    @Bean

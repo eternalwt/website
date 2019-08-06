@@ -14,11 +14,12 @@ https://www.imooc.com/article/37896
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 ShiroConfig前面已经一马平川：
-1.搞RememberMeManager、SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）
+0.是否使用RememberMeAuthenticationToken（自己先分析）
+1.SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
+最终的替换目标要验证登录次数限制、权限等没有问题
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
 3.查看切换redis的难度。对比各cacheManager
-4.是否使用RememberMeAuthenticationToken（自己先分析）
-0.看看还有没有todo，过掉
+4.看看还有没有todo，过掉
 5.LifecycleBeanPostProcessor为啥没调通（LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调）
 6.Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
 7.mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
@@ -30,6 +31,10 @@ ShiroConfig前面已经一马平川：
 13.继续流式计算和人工智能
 可以搞session的缓存了
 Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
+isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
+jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
 
 沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
 
@@ -185,8 +190,6 @@ https://www.cnblogs.com/skyislimit/articles/10469873.html
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
 后续练习：写下现有功能，再快速重新配一次
 shiro-spring怎么加载的shiro还是没整明白
-应该是在securityManager.rememberMeManager里面设置cookie过期时间
-
 CustomRealm：再学一遍。1.如何单元测试？（好多文章里面直接main测试，学一下）
 model里面字段注释/含义及自动生成
 
@@ -196,12 +199,9 @@ https://blog.csdn.net/vae1314chuanchen/article/details/83475717
 Cookie是怎么写到浏览器的：https://www.cnblogs.com/blogxiao/p/8759053.html
 cookie的过期时间？【cookie是每次都会发给服务器吗？】
 rememberMe与单点登录的关系？
-isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
  点击登陆之后，当登陆成功之后会调用DefaultSecurityManager的rememberMeSuccessfulLogin方法将记住我写入到cookie中：https://www.cnblogs.com/blogxiao/p/8759053.html
 把session配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话。JSESSIONID是当前登录后没有关闭浏览器之前维持会话的，rememberMe是关闭浏览器后再次登录维持会话的
 “如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
-基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
-jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
 Shiro中Session和Cookie的一些思考：https://www.jianshu.com/p/4972c4d70853
 https://bbs.csdn.net/topics/392084645
 Session失效问题：https://www.cnblogs.com/OnlyCT/p/9151010.html

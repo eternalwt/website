@@ -14,7 +14,7 @@ https://www.imooc.com/article/37896
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 ShiroConfig前面已经一马平川：
-1.搞RememberMeManager、SessionManager、JWT
+1.搞RememberMeManager、SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
 3.查看切换redis的难度。对比各cacheManager
 4.是否使用RememberMeAuthenticationToken（自己先分析）

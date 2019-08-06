@@ -34,6 +34,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
 
         // 设置拦截器
+        // todo 把下面这一块抽一下，更有利于JWT的配置
         // todo 从数据库读取目录和权限对应关系【需要结合自己有多少个filter】。那么问题就变成：如何把功能和url对应起来（一个完善的路由机制）
         // todo 用一个表保存role和有权限的页面之间的对应关系，既用于加载页面，又用于鉴权。但是这样好像没用到permission表？再考虑一下
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
@@ -117,17 +118,9 @@ public class ShiroConfig {
     @Bean(name = "shiroEhCacheCacheManager")
     public CacheManager getEhCacheManager() {
         CacheManager cacheManager = new EhCacheManager();
-        //cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
 
         return cacheManager;
     }
-//    @Bean(name = "shiroEhCacheCacheManager")
-//    public EhCacheManager getEhCacheManager() {
-//        System.out.println("ShiroConfig.getEhCacheManager()");
-//        EhCacheManager cacheManager = new EhCacheManager();
-//        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-//        return cacheManager;
-//    }
 
 //    @Bean
 //    public PasswordService getPasswordService() {

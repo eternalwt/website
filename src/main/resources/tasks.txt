@@ -13,8 +13,12 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-ShiroConfig前面已经一马平川：
-0.是否使用RememberMeAuthenticationToken（自己先分析）
+动态权限控制【写出来】：
+https://www.xttblog.com/?p=1270
+https://blog.csdn.net/jinnianshilongnian/article/details/84545363
+
+ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
+0.是否使用RememberMeAuthenticationToken（自己先读代码分析）
 1.SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
 最终的替换目标要验证登录次数限制、权限等没有问题
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
@@ -37,10 +41,6 @@ isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还
 jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
 
 沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
-
-动态权限控制：
-https://www.xttblog.com/?p=1270
-https://blog.csdn.net/jinnianshilongnian/article/details/84545363
 
 lifecycleBeanPostProcessor：
 https://blog.csdn.net/hxm_code/article/details/78697305
@@ -151,12 +151,13 @@ https://www.cnblogs.com/demodashi/p/8509895.html
 https://www.cnblogs.com/limingxian537423/p/7928234.html
 https://blog.csdn.net/u014203449/article/details/79415755
 https://www.jianshu.com/p/c6b9a557d18d
+
 2.动态权限：
 https://wenku.baidu.com/view/5a8f9e15974bcf84b9d528ea81c758f5f61f299e.html
-http://how2j.cn/k/shiro/shiro-url/1729.html
 https://blog.csdn.net/haoyuyang/article/details/80036989
 https://www.jianshu.com/p/5de287239061
 https://www.cnblogs.com/007sx/p/7381475.html
+http://how2j.cn/k/shiro/shiro-url/1729.html
 Shiro四种权限控制方式：
 https://blog.csdn.net/qq_39659876/article/details/81838651
 https://blog.csdn.net/it_boy_elite/article/details/78555356

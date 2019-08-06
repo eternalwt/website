@@ -24,7 +24,7 @@ import java.util.Map;
 public class ShiroConfig {
 
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {// todo securityManager是怎么传入的？
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
@@ -35,12 +35,17 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
         // 设置无权限时跳转的 url;
         shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
-
         // 设置拦截器
-        // todo 把下面这一块抽一下，更有利于JWT的配置
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
+        log.info("Shiro拦截器工厂类注入成功");
+
+        return shiroFilterFactoryBean;
+    }
+
+    private Map<String, String> getfilterChainDefinitionMap() {
+        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // todo 从数据库读取目录和权限对应关系【需要结合自己有多少个filter】。那么问题就变成：如何把功能和url对应起来（一个完善的路由机制）
         // todo 用一个表保存role和有权限的页面之间的对应关系，既用于加载页面，又用于鉴权。但是这样好像没用到permission表？再考虑一下
-        Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         //todo 运维，调试完后应该加上限制
         //todo swagger路径用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/swagger**", "anon");
@@ -59,10 +64,7 @@ public class ShiroConfig {
         //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
         filterChainDefinitionMap.put("/**", "user");
 
-        shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
-        log.info("Shiro拦截器工厂类注入成功");
-
-        return shiroFilterFactoryBean;
+        return filterChainDefinitionMap;
     }
 
     /**
@@ -77,7 +79,6 @@ public class ShiroConfig {
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
-
         // 注入自定义的realm
         securityManager.setRealm(customRealm);
 

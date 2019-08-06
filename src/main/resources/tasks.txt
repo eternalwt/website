@@ -13,12 +13,7 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-动态权限控制【写出来】：
-https://www.xttblog.com/?p=1270
-https://blog.csdn.net/jinnianshilongnian/article/details/84545363
-
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
-0.是否使用RememberMeAuthenticationToken（自己先读代码分析）
 1.SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
 最终的替换目标要验证登录次数限制、权限等没有问题
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
@@ -75,7 +70,7 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 该清这个文档里面的内容了【花一个周末清理】
 
-SessionDAO与Session共享：
+SessionDAO【默认是怎么保存的？】与Session共享：
 https://blog.csdn.net/changudeng1992/article/details/81914628
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.jianshu.com/p/f7d5a9ecfd3a
@@ -153,11 +148,14 @@ https://blog.csdn.net/u014203449/article/details/79415755
 https://www.jianshu.com/p/c6b9a557d18d
 
 2.动态权限：
-https://wenku.baidu.com/view/5a8f9e15974bcf84b9d528ea81c758f5f61f299e.html
-https://blog.csdn.net/haoyuyang/article/details/80036989
 https://www.jianshu.com/p/5de287239061
+https://blog.csdn.net/haoyuyang/article/details/80036989
+https://wenku.baidu.com/view/5a8f9e15974bcf84b9d528ea81c758f5f61f299e.html
 https://www.cnblogs.com/007sx/p/7381475.html
 http://how2j.cn/k/shiro/shiro-url/1729.html
+https://www.xttblog.com/?p=1270
+https://blog.csdn.net/jinnianshilongnian/article/details/84545363
+shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 Shiro四种权限控制方式：
 https://blog.csdn.net/qq_39659876/article/details/81838651
 https://blog.csdn.net/it_boy_elite/article/details/78555356
@@ -225,7 +223,10 @@ https://www.cnblogs.com/jing99/p/7826550.html
 
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
 Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
+跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
+shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
 
+Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
 看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
 表单拦截器FormAuthenticationFilter：
 https://blog.csdn.net/u014203449/article/details/80689268
@@ -275,7 +276,6 @@ Spring的ProxyFactory：https://blog.csdn.net/sunnycoco05/article/details/789014
     0.测一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
     1.所有配置文件相关功能测试：【mybatis都还没配好】、ehcache的测试等；
     2.所有controller及shiro相关功能
-    3.测试权限缓存
     4.把下方Spring和Java Enterprise菜单用起来
     5.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
 
@@ -287,9 +287,7 @@ Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
 通常自定义Realm需要继承AuthorizingRealm，这样既可以提供身份认证的自定义方法，也可以实现授权的自定义方法。
 
-跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
-Shiro 登录后跳转到最后一个访问的页面：
-https://www.sojson.com/shiro
+Shiro 登录后跳转到最后一个访问的页面：https://www.sojson.com/shiro
 
 spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
 Shiro 还提供了 CacheManagerAware 用于注入 CacheManager：
@@ -317,7 +315,7 @@ druid开启日志
 Layui elementUI iView
 https://adminlte.io/
 
-其实前后端已经连的差不多了，jwt只是可选。下一步：把Configuration那一套流程搞清楚、jwt、把EasyUI与静态模板的关系搞清楚
+其实前后端已经连的差不多了，jwt只是可选。下一步：把jwt、把EasyUI与静态模板的关系搞清楚
 https://blog.csdn.net/qq_22771739/article/details/83687175
 http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
@@ -326,12 +324,13 @@ https://www.cnblogs.com/wyguo/p/3556049.html
 ShiroFilterFactoryBean源码及拦截原理深入分析：
 https://blog.csdn.net/u012345283/article/details/44199791
 https://blog.csdn.net/lqzkcx3/article/details/78776555
-搜ShiroFilter
 
-如果对shiro不能完全理解的话，自己写权限控制的代码似乎被用shiro更简单。无论是ASP时代还是mvc时代
+如果对shiro不能完全理解的话，自己写权限控制的代码似乎比用shiro更简单。无论是ASP时代还是mvc时代
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错
+
+搜shiro与SSO
 
 把有道笔记里面shiro的东西整理一下
 JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
@@ -355,7 +354,6 @@ VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/8
     shiro代码首先还是按照调试流程来学习
     我的互联网项目每周要上线一个小功能
 
-shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
 目标1：在springboot里面配的可用（ini）；2.把jdbcRealm的配置抽出来，写通
 了解Shiro的SessionManager（会话管理，与spring session的关系？与token的联系？怎么结合起来，能否用3个默认实现中的一个？ServletContainerSessionManager、DefaultWebSessionManager）、CacheManager（缓存管理）
 shiro的todo：
@@ -374,7 +372,6 @@ Token的接口及实现类族、Subject的接口及实现类族
 3.Subject.login方法的全流程需要好好看几遍，里面对RememberMe、Cache、Session等都有涉及
 继续写代码、跟代码：第5章（加密怎么无缝集成的？用ini文件尝试）、第6章、第10章、第11章。直接看开涛的代码。然后再翻译成Springboot的
 基于url配置权限【另一个教程】：http://how2j.cn/k/shiro/shiro-plan/1732.html?tid=129
-Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
 
 mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打。能否不同的环境加载不同的配置文件？】：https://www.cnblogs.com/blacksonny/p/6956949.html
 logback 配置详解：https://www.cnblogs.com/cb0327/p/5759441.html
@@ -387,7 +384,6 @@ https://blog.csdn.net/xiaolyuh123/article/details/73281522/
 https://blog.csdn.net/sinat_32481295/article/details/79764749
 
 【本周】
-0.addUser写好；
 1.单元测试；
 2.ajax写好（先用jQuery的）
 心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
@@ -396,15 +392,13 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 2.前端form、ajax单独写好，再考虑整合的问题【前端ajax先配好】；
 3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
 4.再看RBAC 5个表怎么跟shiro对应起来？【自定义Real对应的表（看JdbcRealm）】
-6.写好添加用户、登陆的接口，权限相关的尽量往前写【把2017年写的几个controller整合掉，把现有功能都测一下】
+6.【把2017年写的几个controller整合掉，把现有功能都测一下】
 7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
 
 shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
-
-针对某一个包修改日志级别
 
 功能写好后，再搭建eureka server和spring cloud gateway
 搭建Eureka注册中心：
@@ -446,7 +440,6 @@ https://blog.csdn.net/qq_16605855/article/details/79653282
 
 shiro源码分析，搞透
 
-shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
@@ -689,6 +682,7 @@ springboot新特性
 
 动态修改日志级别
 通过org.springframework.boot.logging.LoggingSystem提供的api即可
+针对某一个包修改日志级别
 
 不同注解的扫描顺序？是否先扫@configuration？
 loggingSystem.setLogLevel(null, LogLevel.DEBUG);
@@ -967,6 +961,7 @@ public interface HttpServletRequest extends ServletRequest {
 
 DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
 Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
+UsernamePasswordToken实现了RememberMeAuthenticationToken接口
 
 关于RBAC权限控制：
 1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；

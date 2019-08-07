@@ -13,8 +13,15 @@ https://www.imooc.com/article/37896
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
+先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
+https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
+https://blog.csdn.net/u011456867/article/details/80484559
+Jwt与sessionIdGenerator的关系？
+验证：cookie设置为即时过期（和不过期2种情况）、session设置超时的测试【session和cookie关系还是没完全搞明白】
+sessionValidationScheduler。sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
+
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
-1.SessionManager（用JWT才会修改把）、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
+1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
 最终的替换目标要验证登录次数限制、权限等没有问题
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
 3.查看切换redis的难度。对比各cacheManager
@@ -30,6 +37,8 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 13.继续流式计算和人工智能
 可以搞session的缓存了
 Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+再思考cookie传过来后是怎么验证的。通过SessionManager设置session过期时间后，时间到了怎么办？https://www.cnblogs.com/yinfengjiujian/p/9083593.html
 
 基于shiro框架实现自动登录(rememberMe)：https://www.jianshu.com/p/5b99c0ef6fb7
 isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
@@ -70,8 +79,8 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 该清这个文档里面的内容了【花一个周末清理】
 
-SessionDAO【默认是怎么保存的？】与Session共享：
-https://blog.csdn.net/changudeng1992/article/details/81914628
+SessionDAO【默认是怎么保存的？思考session共享】与Session共享：
+https://blog.csdn.net/changudeng1992/article/details/81914628（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.jianshu.com/p/f7d5a9ecfd3a
 https://www.jianshu.com/p/f85e50f41100
@@ -92,6 +101,8 @@ Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/112795
 我的加密为啥没用PasswordService？
 
 doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一下】：https://www.cnblogs.com/tusheng/articles/7453587.html
+注意思考一类问题：当类有多级继承时，每一层分别加什么内容，怎么合理组织？（找token或者SessionManager等分析一下）：https://blog.csdn.net/weixin_34289744/article/details/88164013
+springboot + shiro之登录人数限制、登录判断重定向、session时间设置：https://blog.51cto.com/wyait/2107423
 
 前端路由非常重要，是一个枢纽，并且涉及到权限控制，需要好好研究组件的实现及使用
 

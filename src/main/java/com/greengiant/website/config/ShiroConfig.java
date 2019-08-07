@@ -13,6 +13,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -73,14 +74,15 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
                                            CacheManager ehCacheCacheManager,
-                                           CookieRememberMeManager rememberMeManager) {
-        // todo sessionManager
+                                           CookieRememberMeManager rememberMeManager,
+                                           DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+        // 注入自定义的realm
+        securityManager.setRealm(customRealm);
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
-        // 注入自定义的realm
-        securityManager.setRealm(customRealm);
+        securityManager.setSessionManager(sessionManager);
 
         return securityManager;
     }
@@ -156,6 +158,16 @@ public class ShiroConfig {
         cookieRememberMeManager.setCookie(rememberMeCookie);
 
         return cookieRememberMeManager;
+    }
+
+    @Bean
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        sessionManager.setGlobalSessionTimeout(180000);//单位毫秒
+        //sessionManager.setSessionIdCookie();
+        //sessionManager.setSessionIdCookieEnabled(true);
+
+        return sessionManager;
     }
 
 //    @Bean

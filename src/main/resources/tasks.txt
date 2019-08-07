@@ -10,6 +10,7 @@ https://www.imooc.com/article/37896
 网上大部分选型的文章思考深度不够，没有解决快速灵活使用模板开发的问题
 比较easyui各个版本的异同，可以提升理解
 前端框架与bootstrap等模板的整合
+ng-zorro也是前端可视化技术，跟EasyUI等对比一下
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
@@ -18,7 +19,10 @@ https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean�
 https://blog.csdn.net/u011456867/article/details/80484559
 Jwt与sessionIdGenerator的关系？
 验证：cookie设置为即时过期（和不过期2种情况）、session设置超时的测试【session和cookie关系还是没完全搞明白】
-sessionValidationScheduler。sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
+sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
+sessionValidationScheduler（会话验证调度器、QuartzSessionValidationScheduler、ExecutorServiceSessionValidationScheduler）：https://blog.csdn.net/yifansj/article/details/78007231
+shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
+Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
 
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
@@ -37,6 +41,54 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 13.继续流式计算和人工智能
 可以搞session的缓存了
 Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
+timestamp的使用还要精进，例如比较大小
+再思考一下上次、下载原理，springmvc需要精进
+项目启动时数据库脚本自动执行，这个再思考一下
+教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
+写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）
+0.比较并思考为啥有些文件最初没有传上github，被过滤了？；http://www.cnblogs.com/leesf456/p/4733958.html
+2.进一步搞懂配置文件的作用，尤其是applicationcontext；
+3.找到合适的模版（知乎上问，bootstrap的，最新的）；
+4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
+2.mybatis：（再思考chime的数据库注解）；
+5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
+6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
+7.读spring源码，写demo；
+10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术
+11.玩玩github的开源代码和blog
+12.mybatis和spring的测试必须要搞的非常熟
+13.加测试例、加业务逻辑工程
+注意代码规范
+手机上传的时候怎么用消息队列？
+github能完成DevOps中的多少工作量？
+写数据库升级脚本要注意啥？怎么写？搜一下
+要有把service独立出来，maven多module打包的能力
+搭架子要把阿里那些最佳实践都包含进来
+OAuth2要做好
+DefaultFilter 枚举类原理值得仔细分析
+
+【本周】
+1.单元测试；
+2.ajax写好（先用jQuery的）
+心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
+然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
+1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
+2.前端form、ajax单独写好，再考虑整合的问题【前端ajax先配好】；
+3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
+6.【把2017年写的几个controller整合掉，把现有功能都测一下】
+7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+8.【所有配置文件是怎么读取的】
+9.必备功能：分享、OAuth2、activiti
+
+mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
+1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
+2.mybatisPlus需要看吗
+3.MyBatis 配置文件 用户密码加密存储：
+https://blog.csdn.net/qq_24241631/article/details/80294144
+http://www.imooc.com/article/285087
+4.mybatis三剑客：
 
 再思考cookie传过来后是怎么验证的。通过SessionManager设置session过期时间后，时间到了怎么办？https://www.cnblogs.com/yinfengjiujian/p/9083593.html
 
@@ -71,6 +123,12 @@ mybatis-spring这种包是桥梁
 springboot的包扫描顺序再研究一下
 shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看。shiro源码分析的几个方面：1.跟别人的文档；2.建立主题意识，按主题分析；3.建立问题意识
 
+如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
+
+shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
+Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
+跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
+shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
 细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
 细说Shiro系列文章
 我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
@@ -102,12 +160,17 @@ Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/112795
 
 doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一下】：https://www.cnblogs.com/tusheng/articles/7453587.html
 注意思考一类问题：当类有多级继承时，每一层分别加什么内容，怎么合理组织？（找token或者SessionManager等分析一下）：https://blog.csdn.net/weixin_34289744/article/details/88164013
+https://www.cnblogs.com/BINGJJFLY/p/9139348.html
+https://www.cnblogs.com/BINGJJFLY/p/9267352.html
+https://www.cnblogs.com/BINGJJFLY/p/9071235.html
+https://www.cnblogs.com/BINGJJFLY/p/9301352.html
+https://www.cnblogs.com/BINGJJFLY/p/9078020.html
 springboot + shiro之登录人数限制、登录判断重定向、session时间设置：https://blog.51cto.com/wyait/2107423
 
 前端路由非常重要，是一个枢纽，并且涉及到权限控制，需要好好研究组件的实现及使用
 
 【周末剩余事项】
-2.session、JWT（postman也是可以测试的）。session的过期策略？
+2.JWT（postman也是可以测试的）
 3.继续看shiro文档，反复看和整理（一个专题一个专题彻底灭掉）
 4.easyui继续
 得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
@@ -167,6 +230,10 @@ http://how2j.cn/k/shiro/shiro-url/1729.html
 https://www.xttblog.com/?p=1270
 https://blog.csdn.net/jinnianshilongnian/article/details/84545363
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
+动态菜单/权限管理的实现：https://blog.csdn.net/qq_25652949/article/details/81067004
+Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
+https://blog.csdn.net/u010361786/article/details/80138201
+
 Shiro四种权限控制方式：
 https://blog.csdn.net/qq_39659876/article/details/81838651
 https://blog.csdn.net/it_boy_elite/article/details/78555356
@@ -185,7 +252,16 @@ https://blog.csdn.net/niki_yeun/article/details/81335833
 https://blog.csdn.net/zhuyu19911016520/article/details/52573072
 https://blog.csdn.net/dabai_cai/article/details/78154993
 https://blog.csdn.net/lpy1239064101/article/details/79185170
-动态菜单/权限管理的实现：https://blog.csdn.net/qq_25652949/article/details/81067004
+2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：
+https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
+https://blog.csdn.net/youni808/article/details/25612271
+4.再看RBAC 5个表怎么跟shiro对应起来？
+关于RBAC权限控制：
+1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；
+2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
+3.当年微软的那一套表好像很复杂？有空再找一下；
+4.复杂应用可能不止这5个表，例如还需要分用户组和角色继承关系：https://blog.csdn.net/yangxuesong5555/article/details/79417210
+这5个表怎么跟shiro对应起来？
 
 思考各种前端技术及ng-zorro等各能提升多大生产力
 
@@ -199,7 +275,7 @@ https://www.cnblogs.com/skyislimit/articles/10469873.html
 2.把cookie那个文章里面的request和response的调用链搞清楚
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
 后续练习：写下现有功能，再快速重新配一次
-shiro-spring怎么加载的shiro还是没整明白
+shiro-spring怎么加载的shiro还是没整明白。shiro-spring 及 spring-context【从源码分析】
 CustomRealm：再学一遍。1.如何单元测试？（好多文章里面直接main测试，学一下）
 model里面字段注释/含义及自动生成
 
@@ -210,8 +286,8 @@ Cookie是怎么写到浏览器的：https://www.cnblogs.com/blogxiao/p/8759053.h
 cookie的过期时间？【cookie是每次都会发给服务器吗？】
 rememberMe与单点登录的关系？
  点击登陆之后，当登陆成功之后会调用DefaultSecurityManager的rememberMeSuccessfulLogin方法将记住我写入到cookie中：https://www.cnblogs.com/blogxiao/p/8759053.html
-把session配好。把session搞懂后再搞jwt。shiro session的实现值得一看。继续看jwt。在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话。JSESSIONID是当前登录后没有关闭浏览器之前维持会话的，rememberMe是关闭浏览器后再次登录维持会话的
-“如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。SessionDAO
+在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话。JSESSIONID是当前登录后没有关闭浏览器之前维持会话的，rememberMe是关闭浏览器后再次登录维持会话的
+“如果只想监听某一个事件，可以继承 SessionListenerAdapter 实现”，看看是怎么玩的。
 Shiro中Session和Cookie的一些思考：https://www.jianshu.com/p/4972c4d70853
 https://bbs.csdn.net/topics/392084645
 Session失效问题：https://www.cnblogs.com/OnlyCT/p/9151010.html
@@ -231,11 +307,6 @@ https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客
 如果不携带呢？cookie机制的根基就被动摇了？携带后，shiro的filter是怎么解析和检查cookie的？】
 https://www.jianshu.com/p/2bb0f368f631
 https://www.cnblogs.com/jing99/p/7826550.html
-
-shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
-Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
-跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
-shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
 
 Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
 看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
@@ -274,15 +345,6 @@ SpringJUnit4ClassRunner
 Junit 5: https://junit.org/junit5/
 Mockito 2 : https://github.com/mockito/mockito/wiki/What%27s-new-in-Mockito-2
 
-【三种工厂模式已看，框架中的一些Factory（跟代码）】
-sessionFactory
-LogFactory
-LoggerFactory：
-    https://www.cnblogs.com/zhaoleigege/p/5692697.html
-SqlSessionFactory：
-    https://www.jianshu.com/p/908b9e6e5bb7
-Spring的ProxyFactory：https://blog.csdn.net/sunnycoco05/article/details/78901449
-
 测试搭起来，然后停一下，把现有功能充分测试：
     0.测一下这句的语法是不是对的：log.error("download failed, filename: [{}]", fileName, ex);
     1.所有配置文件相关功能测试：【mybatis都还没配好】、ehcache的测试等；
@@ -292,7 +354,6 @@ Spring的ProxyFactory：https://blog.csdn.net/sunnycoco05/article/details/789014
 
 shiro需要搞懂的2点：
 1.权限注解；2.与web集成及拦截器；
-再看一遍开涛的shiro，思考怎么用好Authorizer、Session Management（DefaultSessionManager、ServletContainerSessionManager、DefaultWebSessionManager）
 easyui发ajax写通（再看RxJS的优势）
 Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
@@ -366,12 +427,8 @@ VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/8
     我的互联网项目每周要上线一个小功能
 
 目标1：在springboot里面配的可用（ini）；2.把jdbcRealm的配置抽出来，写通
-了解Shiro的SessionManager（会话管理，与spring session的关系？与token的联系？怎么结合起来，能否用3个默认实现中的一个？ServletContainerSessionManager、DefaultWebSessionManager）、CacheManager（缓存管理）
 shiro的todo：
 1.把logging再搞清楚；
-2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：
-https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
-https://blog.csdn.net/youni808/article/details/25612271
 
 shiro里面的permission是怎么跟表、API关联起来的？（其实资源就是我理解的功能点，再多一个关联）
 资源的分类：菜单、URL、页面按钮、Java 方法等
@@ -394,21 +451,6 @@ Junit测试controller：
 https://blog.csdn.net/xiaolyuh123/article/details/73281522/
 https://blog.csdn.net/sinat_32481295/article/details/79764749
 
-【本周】
-1.单元测试；
-2.ajax写好（先用jQuery的）
-心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
-然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
-1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
-2.前端form、ajax单独写好，再考虑整合的问题【前端ajax先配好】；
-3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
-4.再看RBAC 5个表怎么跟shiro对应起来？【自定义Real对应的表（看JdbcRealm）】
-6.【把2017年写的几个controller整合掉，把现有功能都测一下】
-7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
-8.【所有配置文件是怎么读取的】
-9.必备功能：分享、OAuth2、activiti
-
-shiro-spring
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
 
 功能写好后，再搭建eureka server和spring cloud gateway
@@ -516,10 +558,6 @@ jwt工程里面用的token不一样，注意对比一下，并分析源代码。
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 
-activiti定时任务【smartplan能否用这个搞？】：
-https://www.cnblogs.com/dengjiahai/p/6942310.html
-https://blog.csdn.net/sarck3/article/details/11781097
-
 spring获取加载的所有bean及bean的加载过程：
 https://blog.csdn.net/long243416336/article/details/80590032
 https://blog.csdn.net/dc282614966/article/details/81480002
@@ -543,16 +581,11 @@ https://blog.csdn.net/sunsgne_ac/article/details/79289770
 https://blog.csdn.net/wdsafmy468619/article/details/47041467
 https://www.cnblogs.com/zhanying999666/p/8392592.html
 
-ng s
-我们的代码是不是用了typescript？http://www.cnblogs.com/xuanmanstein/p/9866647.html
 
-ng-zorro也是前端可视化技术，跟EasyUI等对比一下
 
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
 @Bean的参数bean都已经生成了，再用我的demo工程再确认一下
 result：先写通，再优
-
-把@Configuration和@Bean注入DataSource、shiro-spring搞懂，基本就能穿透这个项目了
 
 .DelegatingFilterProxy是怎么初始化的？
 
@@ -566,7 +599,6 @@ spring AOP再搞一遍
 尝试使用rest接口，可以更简洁同时也能暴露更少信息
 
 sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
-在搞jwt之前，应该把会话管理那一章先看明白
 boolean isServletContainerSessions();//是否使用 Servlet 容器的会话。如果使用，是怎么样的？
 ServletContainerSessionManager：DefaultWebSecurityManager 使用的默认实现，用于 Web 环境，其直接使用 Servlet 容器的会话
 在 Servlet 容器中，默认使用 JSESSIONID Cookie 维护会话
@@ -774,11 +806,6 @@ https://blog.csdn.net/bailinbbc/article/details/76446594
 看看阿里云
 搞点日本的文具过来卖
 
-·shiro-spring 及 spring-context【从源码分析】
-
-Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
-https://blog.csdn.net/u010361786/article/details/80138201
-
 mysql的geometry扩展：
 https://www.linuxidc.com/Linux/2018-09/154191.htm
 https://www.jianshu.com/p/d6bf587389f1
@@ -831,14 +858,6 @@ https://blog.csdn.net/haoyuyang/article/details/80036989
 https://blog.csdn.net/u013615903/article/details/78781166
 shiro和springboot流程的完全理解是我现在生产力提升最大的障碍，相比之下多线程那些反而没那么难了，当然并发也还需要相当大的精力
 
-mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
-1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
-2.mybatisPlus需要看吗
-3.MyBatis 配置文件 用户密码加密存储：
-https://blog.csdn.net/qq_24241631/article/details/80294144
-http://www.imooc.com/article/285087
-4.mybatis三剑客：
-
 MyBatis Generator：
 http://www.mybatis.org/generator/
 https://www.jianshu.com/p/e09d2370b796
@@ -864,9 +883,7 @@ mySql---logback日志写入数据库(mysql)配置【appender原理】：https://
 
 在activiti这种抽象程度比较高的中间件里面，调试分析代码逻辑的时候数据库日志的作用就体现出来了。控制台调试最好配置打印出来
 
-swagger
-1.自己造session测通，把单元测试完善【我现在不确认dao层有些参数是否能跑通】；
-2.把swagger-ui.html从权限里面放开【尚未成功】
+swagger2.把swagger-ui.html从权限里面放开【尚未成功】
 
 周四：
 加mybatis配置（要确认加载了，跟踪加载流程）、logback配置、druid配置
@@ -895,34 +912,6 @@ maven跑test搞清楚（为啥放开2个注释会有报错）
 @SpringApplicationConfiguration(classes = SpringBootSampleApplication.class) // 指定我们SpringBoot工程的Application启动类
 @WebAppConfiguration // 由于是Web项目，Junit需要模拟ServletContext，因此我们需要给我们的测试类加上@WebAppConfiguration
 SpringRunner is an alias for the SpringJUnit4ClassRunner.
-
-
-我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
-timestamp的使用还要精进，例如比较大小
-再思考一下上次、下载原理，springmvc需要精进
-项目启动时数据库脚本自动执行，这个再思考一下
-教程看到：http://wiki.jikexueyuan.com/project/shiro/authentication.html
-写好数据库读取及登录模块【先写登录，再写权限控制，权限控制写通一个就先放开，最后再补】（包括QQ、微信登录）
-0.比较并思考为啥有些文件最初没有传上github，被过滤了？；http://www.cnblogs.com/leesf456/p/4733958.html
-2.进一步搞懂配置文件的作用，尤其是applicationcontext；
-3.找到合适的模版（知乎上问，bootstrap的，最新的）；
-4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
-2.mybatis：（再思考chime的数据库注解）；
-5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
-6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
-7.读spring源码，写demo；
-10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术
-11.玩玩github的开源代码和blog
-12.mybatis和spring的测试必须要搞的非常熟
-13.加测试例、加业务逻辑工程
-注意代码规范
-手机上传的时候怎么用消息队列？
-github能完成DevOps中的多少工作量？
-写数据库升级脚本要注意啥？怎么写？搜一下
-要有把service独立出来，maven多module打包的能力
-搭架子要把阿里那些最佳实践都包含进来
-OAuth2要做好
-DefaultFilter 枚举类原理值得仔细分析
 
 对比shiro的SecureRandomNumberGenerator与JDK的
 
@@ -973,13 +962,6 @@ public interface HttpServletRequest extends ServletRequest {
 DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
 Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
 UsernamePasswordToken实现了RememberMeAuthenticationToken接口
-
-关于RBAC权限控制：
-1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；
-2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
-3.当年微软的那一套表好像很复杂？有空再找一下；
-4.复杂应用可能不止这5个表，例如还需要分用户组和角色继承关系：https://blog.csdn.net/yangxuesong5555/article/details/79417210
-这5个表怎么跟shiro对应起来？
 
 SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805
 

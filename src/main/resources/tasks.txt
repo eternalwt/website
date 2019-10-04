@@ -3,6 +3,37 @@
 
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
+【周末】开涛的书和JWT不能停
+
+JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
+设置多个realm认证策略，一个成功即跳过其它的：https://www.jianshu.com/p/0b1131be7ace
+【上面这个应该是可以配置成功jwt的，配置试一下。理论上来说：应该先debug登录后每一次请求的cookie验证，然后再搞jwt的。这一步补上】
+到了JWT感觉不得不做源码分析了
+
+0.把我的CustomRealm里面的todo再搞一次
+1.自己在前端封装jwt并与公司的做法相比较
+2.还是要能直接调试spring的IoC容器，这样才能进一步分析shiro的加载（带着这些问题再精进一轮）
+
+refreshtoken
+
+ResultBean搞成泛型的ResuleBean<T>，我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
+
+通过面试题及调试技巧的资料学习webSocket
+
+Webpack、Less、Sass、Gulp、Bower以及这些工具的插件都是Node上开发的---@知乎陈龙
+前端现在有npm （包管理）。而npm是随同Node.js一起安装的。所以前端(vue/angular/react)在开发环境下都是离不开Node.js的(编译、打包等等)
+有了npm，你怎么得到要用的包/模块信息呢？
+初识npm：https://www.cnblogs.com/john-sr/p/6036652.html
+谈一谈NPM：https://cloud.tencent.com/developer/news/216362
+npm完整的教程：http://caibaojian.com/npm/getting-started/what-is-npm.html
+Node.js + Express + Springboot实现前后端分离架构：https://my.oschina.net/u/1185936/blog/1523088
+基于 Node.js 平台，快速、开放、极简的 Web 开发框架：http://www.expressjs.com.cn/
+要能搞清楚前端框架对生产力的提升：1.可以避免写很多类似（重复）的代码，例如双向绑定就可以避免很多取值的代码。搞懂框架就可以少写好多代码
+
+最近学到的前后端分离知识：https://www.cnblogs.com/Java3y/p/11320606.html
+找一个合适的模板，把分配权限的demo彻底写好
+【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
+练习：找一个模板用angular的方式跑起来（只要解决了这个问题，就没啥难度了）
 下一问题：下载angular版的easyUI界面如何跑起来？（ng serve）
 把前端计划变更为前端技术选型【这是非常关键的战略步骤。少即是多，如何能找到正确的选型？】。模板与组件之间的关系搞清楚【看代码对比就OK了，先把我下载的那个看了】。
 真的弄明白，才有可能性
@@ -14,6 +45,8 @@ ng-zorro也是前端可视化技术，跟EasyUI等对比一下
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
+涉及到替换原有token、修改session状态的JWT方向才是对的：https://yq.aliyun.com/articles/646440
+JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
 先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
 https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
 https://blog.csdn.net/u011456867/article/details/80484559
@@ -27,10 +60,10 @@ Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhapp
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
 最终的替换目标要验证登录次数限制、权限等没有问题
+挤掉其他用户或者能同时登陆（现在的逻辑应该是会挤掉把？用2个浏览器测一下）
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
 3.查看切换redis的难度。对比各cacheManager
 4.看看还有没有todo，过掉
-5.LifecycleBeanPostProcessor为啥没调通（LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调）
 6.Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
 7.mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
 8.消灭5个shiro文档
@@ -40,7 +73,6 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 12.继续看开涛的教程
 13.继续流式计算和人工智能
 可以搞session的缓存了
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
 
 我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
 timestamp的使用还要精进，例如比较大小
@@ -69,6 +101,15 @@ github能完成DevOps中的多少工作量？
 OAuth2要做好
 DefaultFilter 枚举类原理值得仔细分析
 
+密码前端传给后端之前就应该加密
+基础设施：
+文件上传下载、富文本，这些也是
+按钮、图标、菜单管理
+图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
+怎么使用好图标
+
+对比一下easyui和ng-zorro
+
 【本周】
 1.单元测试；
 2.ajax写好（先用jQuery的）
@@ -89,6 +130,10 @@ mybatis配置（除了模板以外怎么知道还能加哪些标签？）【gene
 https://blog.csdn.net/qq_24241631/article/details/80294144
 http://www.imooc.com/article/285087
 4.mybatis三剑客：
+mybatis一级缓存二级缓存：https://www.cnblogs.com/happyflyingpig/p/7739749.html
+
+看源码的时候，要试着自己动手实现同样的功能。可以先尝试实现一下IoC容器、mybatis核心功能
+自己实现spring核心功能：https://www.cnblogs.com/jingch/p/11368982.html
 
 再思考cookie传过来后是怎么验证的。通过SessionManager设置session过期时间后，时间到了怎么办？https://www.cnblogs.com/yinfengjiujian/p/9083593.html
 
@@ -99,8 +144,12 @@ jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在
 沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
 
 lifecycleBeanPostProcessor：
+LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调
 https://blog.csdn.net/hxm_code/article/details/78697305
 https://blog.csdn.net/peterwanghao/article/details/8824981
+shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
+使用DefaultAdvisorAutoProxyCreator实现spring的自动代理
+【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 
 springboot整合ehcache：彻底搞明白
 https://www.jianshu.com/p/9e4eb5e5bc1b
@@ -115,6 +164,16 @@ CacheManager及EhcacheUtil；https://www.cnblogs.com/imsoft/p/5895905.html
 https://blog.csdn.net/csujiangyu/article/details/49076531
 https://blog.csdn.net/AlbertFly/article/details/52193813
 再看Retry的cache能否整合使用CacheManager
+
+跟媳妇聊天意识到的2个问题：
+1.我的熟练程度还不够，还要更多building blocks，还要多写；
+2.要看钉钉等有什么创新功能
+
+springboot-plus：
+https://gitee.com/xiandafu/springboot-plus
+https://www.cnblogs.com/xinweiyun/p/9943784.html
+
+分页到底是用mybatis分页插件PageHelper，还是用mybatisplus的IPage/Page？
 
 下一步搞懂3个问题：
 3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
@@ -132,6 +191,7 @@ shiro可以再来一次了：https://shiro.apache.org/【真正的文档在refer
 细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
 细说Shiro系列文章
 我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
 
 @Bean的加载时机，@Autowired的加载时机
 
@@ -201,6 +261,7 @@ jQuery EasyUI 教程：https://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html
 jQuery发送请求：http://www.w3school.com.cn/jquery/ajax_post.asp
 POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
 如何在Postman中使用cookie：https://blog.csdn.net/niedewang/article/details/80481652
+Postman是可以测试文件参数的，在Body form-data里面
 
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
@@ -278,6 +339,8 @@ https://www.cnblogs.com/skyislimit/articles/10469873.html
 shiro-spring怎么加载的shiro还是没整明白。shiro-spring 及 spring-context【从源码分析】
 CustomRealm：再学一遍。1.如何单元测试？（好多文章里面直接main测试，学一下）
 model里面字段注释/含义及自动生成
+
+数据可视化库 D3.js、echarts这些也是基础设施
 
 spring 配置 shiro rememberMe：
 https://www.cnblogs.com/blogxiao/p/8759053.html
@@ -493,7 +556,6 @@ https://blog.csdn.net/qq_16605855/article/details/79653282
 
 shiro源码分析，搞透
 
-shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 
@@ -670,17 +732,6 @@ void execute(Runnable runnable);
 <V> Callable<V> associateWith(Callable<V> callable);
 Runnable associateWith(Runnable runnable);
 Testing：提供测试支持；
-
-在spring中需要开启权限注解与aop:
-<!-- AOP式方法级权限检查  -->
-<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"
-      depends-on="lifecycleBeanPostProcessor"/>
-<!-- 启用shrio授权注解拦截方式 -->
-<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
-    <property name="securityManager" ref="securityManager"/>
-</bean>
-使用DefaultAdvisorAutoProxyCreator实现spring的自动代理
-【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 
 把shiro官方教程也看一遍，思考：开涛到底是根据那个写的还是自己读代码理解后写的教程
 spring transaction源码分析--事务架构：https://www.cnblogs.com/davidwang456/p/4309038.html

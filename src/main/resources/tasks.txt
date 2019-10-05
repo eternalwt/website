@@ -7,11 +7,11 @@
 
 买香皂、洗洁精？
 
-确认：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
 // todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
-
+【下一步重中之重：把代码比对搞清楚，然后就能把jwt里面封入密码，彻底把jwt搞定了】
 1.把密码封进去；
 2.token的超时替换
+确认：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
 
 jwt的关键点：
 1.realm：初次/登录验证？【应该是可以复用的，确认】（再看realm和config等的关系）
@@ -19,7 +19,9 @@ jwt的关键点：
 3.config；
 4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去
 jwtUtil的完善
-
+CustomJwtRealm里面的doGetAuthorizationInfo方法还没有实现
+0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
+SubjectDAO那些代码还是要看
 
 【又想了一下，把记录的问题精进一下再继续】有jwt和没有jwt的版本还要再搭一到二次，把框架的有效使用再精进一步
 
@@ -67,6 +69,8 @@ Shiro关闭session管理：https://blog.csdn.net/wysnxzm/article/details/5223037
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
 refreshtoken
+
+shiro中OAuth2 集成：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
 
 ResultBean搞成泛型的ResuleBean<T>，我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 

@@ -1,27 +1,25 @@
 package com.greengiant.website.shiro;
 
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
+import com.greengiant.website.dao.UserDao;
+import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.utils.JWTUtil;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
 
-//@Component
 public class CustomJwtRealm extends AuthorizingRealm {
-//    private final UserMapper userMapper;
-//
-//    @Autowired
-//    public CustomRealm(UserMapper userMapper) {
-//        this.userMapper = userMapper;
-//    }
+
+    @Autowired
+    private UserDao userDao;
 
     /**
      * 必须重写此方法，不然会报错
      */
     @Override
     public boolean supports(AuthenticationToken token) {
-        return token instanceof JWTToken;
+        return null != token && token instanceof JWTToken;
     }
 
     /**
@@ -29,24 +27,21 @@ public class CustomJwtRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-//        System.out.println("————身份认证方法————");
-//        String token = (String) authenticationToken.getCredentials();
-//        // 解密获得username，用于和数据库进行对比
-//        String username = JWTUtil.getUsername(token);
-//        if (username == null || !JWTUtil.verify(token, username)) {
-//            throw new AuthenticationException("token认证失败！");
-//        }
-//        String password = userMapper.getPassword(username);
-//        if (password == null) {
-//            throw new AuthenticationException("该用户不存在！");
-//        }
-//        int ban = userMapper.checkUserBanStatus(username);
-//        if (ban == 1) {
-//            throw new AuthenticationException("该用户已被封号！");
-//        }
-//        return new SimpleAuthenticationInfo(token, token, "MyRealm");
+        String token = (String) authenticationToken.getCredentials();
+        // 解密获得username，用于和数据库进行对比
+        String username = JWTUtil.getUsername(token);
+        if (username == null || !JWTUtil.verify(token, username)) {
+            throw new AuthenticationException("token认证失败！");
+        }
 
-        return null;
+        User user = userDao.selectByName(username);
+
+////        if (!JWTUtil.verify(username, user.getPassword(), token)) {
+//        if (!JWTUtil.verify(token, username)) {
+//            throw new UnknownAccountException("Username or password error");
+//        }
+
+        return new SimpleAuthenticationInfo(token, token, getName());
     }
 
     /**

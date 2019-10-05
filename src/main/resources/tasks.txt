@@ -5,14 +5,66 @@
 
 【周末】开涛的书和JWT不能停
 
+买香皂、洗洁精？
+
+确认：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
+// todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
+
+1.把密码封进去；
+2.token的超时替换
+
+jwt的关键点：
+1.realm：初次/登录验证？【应该是可以复用的，确认】（再看realm和config等的关系）
+2.filter：后续每次验证？
+3.config；
+4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去
+jwtUtil的完善
+
+
+【又想了一下，把记录的问题精进一下再继续】有jwt和没有jwt的版本还要再搭一到二次，把框架的有效使用再精进一步
+
+jwt的修改：
+1.securityManager.setRealms(Arrays.asList(customRealm));
+2.response.setHeader("x-auth-token", JWTUtil.createToken(username));
+3.关闭session【可以先不处理把？】；
+4.Filter的注册，是否使用FilterRegistrationBean？
+5.先把认证写通，再写授权
+JWT的几个类怎么写整一点
+
 JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
 设置多个realm认证策略，一个成功即跳过其它的：https://www.jianshu.com/p/0b1131be7ace
+shiro 多realm 实现 后端 和 前端分离验证：
+https://blog.csdn.net/qq_33842795/article/details/80895594
+https://blog.csdn.net/liiuijkiuu/article/details/53945062
 【上面这个应该是可以配置成功jwt的，配置试一下。理论上来说：应该先debug登录后每一次请求的cookie验证，然后再搞jwt的。这一步补上】
 到了JWT感觉不得不做源码分析了
+
+SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
 0.把我的CustomRealm里面的todo再搞一次
 1.自己在前端封装jwt并与公司的做法相比较
 2.还是要能直接调试spring的IoC容器，这样才能进一步分析shiro的加载（带着这些问题再精进一轮）
+多调试，通过调试来提升自己的框架能力还有很长的路要走。这是个能拉开差距的非常关键的能力。
+怎么能看出默认的策略，例如：this.authenticationStrategy = new AtLeastOneSuccessfulStrategy();
+读代码的关注点：
+1.类之间的继承各完成的任务；
+2.类之间的组合关系
+
+Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
+Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
+
+DefaultWebSecurityManager
+
+ModularRealmAuthenticator：
+https://blog.csdn.net/iteye_10899/article/details/82675363
+
+SubjectFactory，factory要看懂，同时把subject搞清楚
+
+Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
+Shiro关闭session管理：https://blog.csdn.net/wysnxzm/article/details/52230371
+根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf
+
+AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
 refreshtoken
 
@@ -142,6 +194,10 @@ isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还
 jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
 
 沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
+
+Servlet Tutorial【当今servlet的场景？】：
+https://www.javatpoint.com/servlet-tutorial
+DispatcherType
 
 lifecycleBeanPostProcessor：
 LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调
@@ -376,6 +432,9 @@ Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关�
 表单拦截器FormAuthenticationFilter：
 https://blog.csdn.net/u014203449/article/details/80689268
 https://blog.csdn.net/u014695188/article/details/52357379
+DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
+Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
+
 shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 
 【单独击破1】
@@ -515,6 +574,9 @@ https://blog.csdn.net/xiaolyuh123/article/details/73281522/
 https://blog.csdn.net/sinat_32481295/article/details/79764749
 
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
+
+shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
+
 
 功能写好后，再搭建eureka server和spring cloud gateway
 搭建Eureka注册中心：
@@ -1010,8 +1072,6 @@ public interface HttpServletRequest extends ServletRequest {
     String DIGEST_AUTH = "DIGEST";
 将我的项目中HttpServletRequest都过一遍，都干掉。另外：参数中既有request又有response的怎么理解？
 
-DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
-Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
 UsernamePasswordToken实现了RememberMeAuthenticationToken接口
 
 SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805

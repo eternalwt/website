@@ -21,13 +21,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
+    /**
+     * 设置过滤器，将自定义的Filter加入
+     */
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(SecurityManager securityManager) {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
@@ -47,6 +51,7 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
+    // 下面这个函数也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
     private Map<String, String> getfilterChainDefinitionMap() {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // todo 从数据库读取目录和权限对应关系【需要结合自己有多少个filter】。那么问题就变成：如何把功能和url对应起来（一个完善的路由机制）
@@ -81,8 +86,12 @@ public class ShiroConfig {
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+
         // 注入自定义的realm
-        securityManager.setRealm(customRealm);
+//        securityManager.setRealm(customRealm);
+        securityManager.setRealms(Arrays.asList(customRealm));
+        //securityManager.setAuthenticator();
+
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);

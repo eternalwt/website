@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-//@Component
 public class CustomRealm extends AuthorizingRealm {
     @Autowired
     private UserDao userDao;
@@ -47,9 +46,10 @@ public class CustomRealm extends AuthorizingRealm {
             throw new AccountException("用户名不正确");
         }
 
-        String password = user.getPassword();// todo 为啥用的是数据库里面取出来的password？
+        String password = user.getPassword();
         String salt = user.getPasswordSalt();
 
+        // todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
         return new SimpleAuthenticationInfo(username, password, ByteSource.Util.bytes(salt), this.getName());
     }
 

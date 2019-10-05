@@ -2,88 +2,105 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.filter.JWTFilter;
 import com.greengiant.website.shiro.CustomJwtRealm;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
-import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class ShiroJwtConfig {
+    private static final String JWT_FILTER_NAME = "jwt";
+
     /**
-     * 先走 filter ，然后 filter 如果检测到请求头存在 token，则用 token 去 login，走 Realm 去验证
+     * 自定义realm，实现登录授权流程
      */
     @Bean
-    public ShiroFilterFactoryBean factory(SecurityManager securityManager) {
-        ShiroFilterFactoryBean factoryBean = new ShiroFilterFactoryBean();
-
-        // 添加自己的过滤器并且取名为jwt
-        Map<String, Filter> filterMap = new HashMap<>();
-        //设置我们自定义的JWT过滤器
-        filterMap.put("jwt", new JWTFilter());
-        factoryBean.setFilters(filterMap);
-        factoryBean.setSecurityManager(securityManager);
-        // 设置无权限时跳转的 url;
-        factoryBean.setUnauthorizedUrl("/unauthorized/无权限");
-        Map<String, String> filterRuleMap = new HashMap<>();
-        // 所有请求通过我们自己的JWT Filter
-        filterRuleMap.put("/**", "jwt");
-        // 访问 /unauthorized/** 不通过JWTFilter
-        filterRuleMap.put("/unauthorized/**", "anon");
-        factoryBean.setFilterChainDefinitionMap(filterRuleMap);
-        return factoryBean;
+    public Realm authRealm() {
+        return new CustomJwtRealm();
     }
 
     /**
-     * 注入 securityManager
+     * 配置securityManager 管理subject（默认）,并把自定义realm交由manager
      */
     @Bean
-    public SecurityManager securityManager(CustomJwtRealm customRealm) {
+    public DefaultSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 设置自定义 realm.
-        securityManager.setRealm(customRealm);
+        securityManager.setRealm(authRealm());
+        //非web关闭sessionManager(官网有介绍)
+        DefaultSubjectDAO defaultSubjectDAO = new DefaultSubjectDAO();
+        DefaultSessionStorageEvaluator storageEvaluator = new DefaultSessionStorageEvaluator();
+        storageEvaluator.setSessionStorageEnabled(false);
+        defaultSubjectDAO.setSessionStorageEvaluator(storageEvaluator);
+        securityManager.setSubjectDAO(defaultSubjectDAO);
 
-        /*
-         * 关闭shiro自带的session，详情见文档
-         * http://shiro.apache.org/session-management.html#SessionManagement-StatelessApplications%28Sessionless%29
-         */
-        DefaultSubjectDAO subjectDAO = new DefaultSubjectDAO();
-        DefaultSessionStorageEvaluator defaultSessionStorageEvaluator = new DefaultSessionStorageEvaluator();
-        defaultSessionStorageEvaluator.setSessionStorageEnabled(false);
-        subjectDAO.setSessionStorageEvaluator(defaultSessionStorageEvaluator);
-        securityManager.setSubjectDAO(subjectDAO);
         return securityManager;
     }
 
     /**
-     * 添加注解支持
+     * 拦截链
      */
     @Bean
+    public ShiroFilterFactoryBean shiroFilterFactoryBean(DefaultSecurityManager securityManager) {
+        ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
+        shiroFilterFactoryBean.setSecurityManager(securityManager);
+        shiroFilterFactoryBean.setFilters(filterMap());
+        shiroFilterFactoryBean.setFilterChainDefinitionMap(definitionMap());
+
+        return shiroFilterFactoryBean;
+    }
+
+    /**
+     * 自定义拦截器，处理所有请求
+     */
+    private Map<String, Filter> filterMap() {
+        Map<String, Filter> filterMap = new HashMap<>();
+        filterMap.put(JWT_FILTER_NAME, new JWTFilter());
+        return filterMap;
+    }
+
+    /**
+     * url拦截规则
+     */
+    private Map<String, String> definitionMap() {
+        Map<String, String> definitionMap = new HashMap<>();
+        definitionMap.put("/auth/**", "anon");
+        definitionMap.put("/**", JWT_FILTER_NAME);
+        return definitionMap;
+    }
+
+    /**
+     * 开启注解
+     */
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
     public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
         DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
-        // 强制使用cglib，防止重复代理和可能引起代理出错的问题
-        // https://zhuanlan.zhihu.com/p/29161098
+        // 强制使用cglib代理，防止和aop冲突
         defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
         return defaultAdvisorAutoProxyCreator;
     }
 
     @Bean
-    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
+    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    @Bean("authorizationAttributeSourceAdvisor")
+    public AuthorizationAttributeSourceAdvisor advisor(DefaultSecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
         advisor.setSecurityManager(securityManager);
         return advisor;
-    }
-
-    @Bean
-    public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
-        return new LifecycleBeanPostProcessor();
     }
 }

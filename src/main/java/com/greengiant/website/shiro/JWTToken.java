@@ -1,29 +1,33 @@
 package com.greengiant.website.shiro;
 
-import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.HostAuthenticationToken;
 
-/**
- * Created with IntelliJ IDEA
- *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description token
- * @Date 2018-04-09
- * @Time 16:54
- */
-public class JWTToken implements AuthenticationToken {
+public class JWTToken implements HostAuthenticationToken {
     private String token;
-
+    private String host;
     public JWTToken(String token) {
-        this.token = token;
+        this(token, null);
     }
-
+    public JWTToken(String token, String host) {
+        this.token = token;
+        this.host = host;
+    }
+    public String getToken(){
+        return this.token;
+    }
+    public String getHost() {
+        return host;
+    }
     @Override
     public Object getPrincipal() {
         return token;
     }
-
     @Override
     public Object getCredentials() {
         return token;
+    }
+    @Override
+    public String toString(){
+        return token + ':' + host;
     }
 }

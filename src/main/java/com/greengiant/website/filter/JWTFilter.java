@@ -1,9 +1,11 @@
 package com.greengiant.website.filter;
 
 import com.greengiant.website.shiro.JWTToken;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
+import org.apache.shiro.web.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -12,92 +14,102 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URLEncoder;
+import java.io.PrintWriter;
 
-/**
- * Created with IntelliJ IDEA
- *
- * @Author yuanhaoyue swithaoy@gmail.com
- * @Description preHandle->isAccessAllowed->isLoginAttempt->executeLogin
- * @Date 2018-04-08
- * @Time 12:36
- */
-@Slf4j
 public class JWTFilter extends BasicHttpAuthenticationFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);
+
+    private static final String AUTHZ_HEADER = "x-auth-token";
+    private static final String CHARSET = "UTF-8";
+
     /**
-     * 如果带有 token，则对 token 进行检查，否则直接通过
+     * 处理未经验证的请求
      */
     @Override
-    protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws UnauthorizedException {
-        //判断请求的请求头是否带上 "Token"
-        if (isLoginAttempt(request, response)) {
-            //如果存在，则进入 executeLogin 方法执行登入，检查 token 是否正确
-            try {
-                executeLogin(request, response);
-                return true;
-            } catch (Exception e) {
-                //token 错误
-                responseError(response, e.getMessage());
-            }
+    protected boolean onAccessDenied(ServletRequest request, ServletResponse response) throws Exception {
+        boolean loggedIn = false;
+        if (this.isLoginAttempt(request, response)) {
+            loggedIn = this.executeLogin(request, response);
         }
-        //如果请求头不存在 Token，则可能是执行登陆操作或者是游客状态访问，无需检查 token，直接返回 true
-        return true;
+
+        if (!loggedIn) {
+            this.sendChallenge(request, response);
+        }
+
+        return loggedIn;
     }
 
     /**
-     * 判断用户是否想要登入。
-     * 检测 header 里面是否包含 Token 字段
+     * 请求是否已经登录（携带token）
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        HttpServletRequest req = (HttpServletRequest) request;
-        String token = req.getHeader("x-auth-token");
-        return token != null;
+        String authzHeader = WebUtils.toHttp(request).getHeader(AUTHZ_HEADER);
+        return authzHeader != null;
     }
 
     /**
-     * 执行登陆操作
+     * 执行登录方法(由自定义realm判断,吃掉异常返回false)
      */
     @Override
     protected boolean executeLogin(ServletRequest request, ServletResponse response) throws Exception {
-        HttpServletRequest httpServletRequest = (HttpServletRequest) request;
-        String token = httpServletRequest.getHeader("x-auth-token");
+        String token = WebUtils.toHttp(request).getHeader(AUTHZ_HEADER);
+        if (null == token) {
+            String msg = "executeLogin method token must not be null";
+            throw new IllegalStateException(msg);
+        }
+        //交给realm判断是否有权限,没权限返回false交给onAccessDenied
         JWTToken jwtToken = new JWTToken(token);
-        // 提交给realm进行登入，如果错误他会抛出异常并被捕获
-        getSubject(request, response).login(jwtToken);
-        // 如果没有抛出异常则代表登入成功，返回true
-        return true;
+        try {
+            this.getSubject(request, response).login(jwtToken);
+            return true;
+        } catch (AuthenticationException e) {
+            return false;
+        }
     }
 
     /**
-     * 对跨域提供支持
+     * 构建未授权的请求返回,filter层的异常不受exceptionAdvice控制,这里返回401,把返回的json丢到response中
+     */
+    @Override
+    protected boolean sendChallenge(ServletRequest request, ServletResponse response) {
+        HttpServletResponse httpResponse = WebUtils.toHttp(response);
+        String contentType = "application/json;charset=" + CHARSET;
+//        httpResponse.setStatus(Code.UNAUTHENTICATED);
+        httpResponse.setStatus(401);
+        httpResponse.setContentType(contentType);
+        try {
+            String msg = "对不起,您无权限进行操作!";
+//            RestResponse unauthentication = RestResponse.newBuilder()
+//                    .setCode(401)
+//                    .setMsg(msg).build();
+            PrintWriter printWriter = httpResponse.getWriter();
+//            printWriter.append(JSON.toJSONString(unauthentication));
+            printWriter.append("unauthenticated");
+        } catch (IOException e) {
+            LOGGER.error("sendChallenge error,can not resolve httpServletResponse");
+        }
+
+        return false;
+    }
+
+    /**
+     * 请求前处理,处理跨域
      */
     @Override
     protected boolean preHandle(ServletRequest request, ServletResponse response) throws Exception {
         HttpServletRequest httpServletRequest = (HttpServletRequest) request;
         HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-        httpServletResponse.setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
+        httpServletResponse
+                .setHeader("Access-control-Allow-Origin", httpServletRequest.getHeader("Origin"));
         httpServletResponse.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,PUT,DELETE");
-        httpServletResponse.setHeader("Access-Control-Allow-Headers", httpServletRequest.getHeader("Access-Control-Request-Headers"));
-        // 跨域时会首先发送一个option请求，这里我们给option请求直接返回正常状态
+        httpServletResponse.setHeader("Access-Control-Allow-Headers",
+                httpServletRequest.getHeader("Access-Control-Request-Headers"));
+        // 跨域时,option请求直接返回正常状态
         if (httpServletRequest.getMethod().equals(RequestMethod.OPTIONS.name())) {
             httpServletResponse.setStatus(HttpStatus.OK.value());
             return false;
         }
         return super.preHandle(request, response);
-    }
-
-    /**
-     * 将非法请求跳转到 /unauthorized/**
-     */
-    private void responseError(ServletResponse response, String message) {
-        try {
-            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
-            //设置编码，否则中文字符在重定向时会变为空字符串
-            message = URLEncoder.encode(message, "UTF-8");
-            httpServletResponse.sendRedirect("/unauthorized/" + message);
-        } catch (IOException ex) {
-            log.error(ex.getMessage());
-        }
     }
 }

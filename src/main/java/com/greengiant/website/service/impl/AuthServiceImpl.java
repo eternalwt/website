@@ -1,6 +1,7 @@
 package com.greengiant.website.service.impl;
 
 import com.greengiant.website.service.AuthService;
+import com.greengiant.website.shiro.JWTToken;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
@@ -19,6 +20,13 @@ public class AuthServiceImpl implements AuthService {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, isRememberMe);
         // 执行认证登陆
         subject.login(token);
+    }
+
+    @Override
+    public void jwtLogin(String token) {
+        Subject subject = SecurityUtils.getSubject();
+        JWTToken jwtToken = new JWTToken(token);
+        subject.login(jwtToken);
     }
 
 }

@@ -48,6 +48,7 @@ public class UserController{
         userService.addUser(userVo);
 
         //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
+        //todo 修改密码后，对登录/JWT的影响？
 
         return ResultUtils.success();
     }

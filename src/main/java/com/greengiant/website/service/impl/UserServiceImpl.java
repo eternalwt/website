@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
         User user = new User();
         user.setUserName(userVo.getUserName());
-        String salt = PasswordUtil.getSalt();
+        String salt = PasswordUtil.getSalt();// todo 这里加密相关的代码怎么写的更加模块化？
         user.setPasswordSalt(salt);
         // 密码加盐加密
         user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));

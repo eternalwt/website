@@ -62,7 +62,7 @@ public class LoginController {
         // todo jwt怎么做rememberMe功能？
         // 从SecurityUtils里边创建一个 subject
         // todo 要把密码封进去
-        String token = JWTUtil.createToken(username);
+        String token = JWTUtil.createToken(username, password);
         loginService.jwtLogin(token);
         response.setHeader("x-auth-token", token);
         //根据权限，指定返回数据

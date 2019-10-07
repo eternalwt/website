@@ -61,9 +61,8 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // todo 这里应该是没写好的。应该可以用带role的filter来测试把？跟动态配置权限有没有关系
-        // todo 如何提示用户权限不足？
-        // 这里是自定义如何返回角色信息，默认的是啥？
+        // todo 带role的filter来测试
+        // todo 默认的是啥？跟踪默认代码
         log.info("进入角色授权");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
@@ -75,9 +74,8 @@ public class CustomRealm extends AuthorizingRealm {
             set.add(role.getRoleName());
             //设置该用户拥有的角色
             info.setRoles(set);
+            // 添加permission的用法是info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
         }
-
-        // todo info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
 
         return info;
     }

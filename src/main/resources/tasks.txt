@@ -7,11 +7,23 @@
 
 买香皂、洗洁精？
 
+后端框架搭好后，下一步工作方向：
+1.前端框架及组件（依托工作）；
+2.scheme及解释器、数值符号计算继续；
+3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
+
+把前端提交到github，把scheme提交到github
+
+jwt token验证的两种方式：
+1.封装成UserPasswordToken（这种方式比较间接）：https://www.jianshu.com/p/0b1131be7ace；
+2.直接使用JWTToken（已写通，还需要更深入的理解。matcher与realm的关系。下一步是重构代码了）；
+
 // todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
 【下一步重中之重：把代码比对搞清楚，然后就能把jwt里面封入密码，彻底把jwt搞定了】
-1.把密码封进去；
-2.token的超时替换
-确认：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
+1.无效token的处理；
+2.token的刷新【写完和别人的代码对比（研究别人的代码）：1.JWTFilter里面要能检测超时；2.生成新token，并且前端框架要预置接受到token后替换保存】
+确认【先跟一次代码】：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
+刷新我是照这个写的：https://www.jianshu.com/p/48b39f6b1f86
 
 jwt的关键点：
 1.realm：初次/登录验证？【应该是可以复用的，确认】（再看realm和config等的关系）
@@ -22,6 +34,10 @@ jwtUtil的完善
 CustomJwtRealm里面的doGetAuthorizationInfo方法还没有实现
 0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
 SubjectDAO那些代码还是要看
+token可以放在缓存中，这是个很典型的场景
+jwt的rememberMe超时？
+
+Shiro之CredentialsMatcher详解：https://blog.csdn.net/dh554112075/article/details/90760318
 
 【又想了一下，把记录的问题精进一下再继续】有jwt和没有jwt的版本还要再搭一到二次，把框架的有效使用再精进一步
 
@@ -32,6 +48,7 @@ jwt的修改：
 4.Filter的注册，是否使用FilterRegistrationBean？
 5.先把认证写通，再写授权
 JWT的几个类怎么写整一点
+学习框架彻底体会了组装的感觉
 
 JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
 设置多个realm认证策略，一个成功即跳过其它的：https://www.jianshu.com/p/0b1131be7ace

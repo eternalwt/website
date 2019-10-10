@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
-import java.util.Objects;
 
 public class JWTFilter extends BasicHttpAuthenticationFilter {
     private static final Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);

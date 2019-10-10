@@ -21,6 +21,9 @@ public class GlobalExceptionHandler {
 
     // todo login方法会抛出AuthenticationException，再确认一下
 
+    //UnknownAccountException
+    //AuthenticationException
+
     // todo 这里抛出的位置是否有问题？需要把realm再看一下
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ResultBean handleIncorrectCredentialsException(IncorrectCredentialsException ex) {

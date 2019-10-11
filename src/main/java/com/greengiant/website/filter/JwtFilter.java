@@ -20,8 +20,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-public class JWTFilter extends BasicHttpAuthenticationFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JWTFilter.class);
+public class JwtFilter extends BasicHttpAuthenticationFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtFilter.class);
 
     private static final String AUTHZ_HEADER = "x-auth-token";
     private static final String CHARSET = "UTF-8";

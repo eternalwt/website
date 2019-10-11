@@ -107,11 +107,13 @@ public class ShiroConfig {
     @Bean
     public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
         CustomRealm realm = new CustomRealm();
+
         realm.setAuthenticationCacheName("authenticationCache");
         realm.setAuthorizationCacheName("authorizationCache");
         realm.setCachingEnabled(true);
         realm.setAuthenticationCachingEnabled(true);
         realm.setAuthorizationCachingEnabled(true);
+
         realm.setCredentialsMatcher(hashedCredentialsMatcher);
 
         return realm;

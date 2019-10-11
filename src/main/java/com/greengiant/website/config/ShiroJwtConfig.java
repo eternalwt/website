@@ -1,6 +1,6 @@
 package com.greengiant.website.config;
 
-import com.greengiant.website.filter.JWTFilter;
+import com.greengiant.website.filter.JwtFilter;
 import com.greengiant.website.shiro.CustomJwtRealm;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
@@ -27,7 +27,7 @@ public class ShiroJwtConfig {
      * 自定义realm，实现登录授权流程
      */
     @Bean
-    public Realm authRealm() {
+    public Realm customJwtRealm() {
         return new CustomJwtRealm();
     }
 
@@ -35,9 +35,9 @@ public class ShiroJwtConfig {
      * 配置securityManager 管理subject（默认）,并把自定义realm交由manager
      */
     @Bean
-    public DefaultSecurityManager securityManager() {
+    public DefaultSecurityManager securityManager(Realm customJwtRealm) { //CustomJwt
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(authRealm());
+        securityManager.setRealm(customJwtRealm);
         //非web关闭sessionManager(官网有介绍)
         DefaultSubjectDAO defaultSubjectDAO = new DefaultSubjectDAO();
         DefaultSessionStorageEvaluator storageEvaluator = new DefaultSessionStorageEvaluator();
@@ -66,7 +66,7 @@ public class ShiroJwtConfig {
      */
     private Map<String, Filter> filterMap() {
         Map<String, Filter> filterMap = new HashMap<>();
-        filterMap.put(JWT_FILTER_NAME, new JWTFilter());
+        filterMap.put(JWT_FILTER_NAME, new JwtFilter());
         return filterMap;
     }
 

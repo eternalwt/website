@@ -26,10 +26,22 @@ jwt token验证的两种方式：
 2.直接使用JWTToken（已写通，还需要更深入的理解。matcher与realm的关系。下一步是重构代码了）；
 
 // todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
+【把jwt的文档搞定】
 【下一步重中之重：把代码比对搞清楚，然后就能把jwt里面封入密码，彻底把jwt搞定了】
 2.token的刷新【写完和别人的代码对比（研究别人的代码）：1.前端框架接受到刷新的token后替换保存（interceptor）
 确认【先跟一次代码】：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
 刷新我是照这个写的：https://www.jianshu.com/p/48b39f6b1f86
+涉及到替换原有token、修改session状态的JWT方向才是对的：https://yq.aliyun.com/articles/646440
+JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
+先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
+https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
+https://blog.csdn.net/u011456867/article/details/80484559
+Jwt与sessionIdGenerator的关系？
+验证：cookie设置为即时过期（和不过期2种情况）、session设置超时的测试【session和cookie关系还是没完全搞明白】
+sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
+sessionValidationScheduler（会话验证调度器、QuartzSessionValidationScheduler、ExecutorServiceSessionValidationScheduler）：https://blog.csdn.net/yifansj/article/details/78007231
+shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
+Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
 
 jwt的关键点：
 1.（再看realm和config等的关系）
@@ -38,6 +50,10 @@ jwt的关键点：
 4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去（token放在缓存中是个很典型的场景）
 0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
 SubjectDAO那些代码还是要看
+
+上传、下载、word、pdf，这些都是基础设施
+
+从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
 
 jwt的RememberMe：
 1.先从实现接口的角度来理解框架：RememberMeManager - AbstractRememberMeManager - CookieRememberMeManager【最好不要绕过subject.isRemembered()】；
@@ -58,8 +74,7 @@ jwt的修改：
 2.response.setHeader("x-auth-token", JWTUtil.createToken(username));
 3.关闭session【可以先不处理把？】；
 4.Filter的注册，是否使用FilterRegistrationBean？
-5.先把认证写通，再写授权
-JWT的几个类怎么写整一点
+5.JWT的几个类怎么写整一点
 学习框架彻底体会了组装的感觉
 
 JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
@@ -73,7 +88,7 @@ https://blog.csdn.net/liiuijkiuu/article/details/53945062
 SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
 0.把我的CustomRealm里面的todo再搞一次
-1.自己在前端封装jwt并与公司的做法相比较
+1.前端封装jwt【用interceptor接收刷新的token。怎么发请求时带token？】
 2.还是要能直接调试spring的IoC容器，这样才能进一步分析shiro的加载（带着这些问题再精进一轮）
 多调试，通过调试来提升自己的框架能力还有很长的路要走。这是个能拉开差距的非常关键的能力。
 怎么能看出默认的策略，例如：this.authenticationStrategy = new AtLeastOneSuccessfulStrategy();
@@ -130,17 +145,7 @@ ng-zorro也是前端可视化技术，跟EasyUI等对比一下
 【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-涉及到替换原有token、修改session状态的JWT方向才是对的：https://yq.aliyun.com/articles/646440
-JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
-先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
-https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
-https://blog.csdn.net/u011456867/article/details/80484559
-Jwt与sessionIdGenerator的关系？
-验证：cookie设置为即时过期（和不过期2种情况）、session设置超时的测试【session和cookie关系还是没完全搞明白】
-sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
-sessionValidationScheduler（会话验证调度器、QuartzSessionValidationScheduler、ExecutorServiceSessionValidationScheduler）：https://blog.csdn.net/yifansj/article/details/78007231
-shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
-Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
+@Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）

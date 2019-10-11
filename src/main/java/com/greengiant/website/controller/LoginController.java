@@ -32,22 +32,6 @@ public class LoginController {
         return "您没有权限！";
     }
 
-//    /**
-//     * 登陆
-//     *
-//     * @param username 用户名
-//     * @param password 密码
-//     */
-//    @PostMapping(value = "/login")
-//    public String login(@RequestParam String username,
-//                        @RequestParam String password,
-//                        @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
-//        // 从SecurityUtils里边创建一个 subject
-//        loginService.login(username, password, isRememberMe);
-//        //根据权限，指定返回数据
-//        return roleService.getRole(username);
-//    }
-
     /**
      * 登陆
      *
@@ -56,6 +40,22 @@ public class LoginController {
      */
     @PostMapping(value = "/login")
     public String login(@RequestParam String username,
+                        @RequestParam String password,
+                        @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
+        // 从SecurityUtils里边创建一个 subject
+        loginService.login(username, password, isRememberMe);
+        //根据权限，指定返回数据
+        return roleService.getRole(username);
+    }
+
+    /**
+     * 登陆
+     *
+     * @param username 用户名
+     * @param password 密码
+     */
+    @PostMapping(value = "/jwtlogin")
+    public String jwtLogin(@RequestParam String username,
                         @RequestParam String password,
                         @RequestParam(required = false, defaultValue = "false") boolean isRememberMe,
                         HttpServletResponse response) {

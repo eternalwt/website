@@ -5,11 +5,13 @@ import com.greengiant.website.shiro.CustomJwtRealm;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
+import org.apache.shiro.mgt.SubjectFactory;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,12 +33,19 @@ public class ShiroJwtConfig {
         return new CustomJwtRealm();
     }
 
+    @Bean
+    public DefaultWebSubjectFactory defaultWebSubjectFactory() {
+        return new DefaultWebSubjectFactory();
+    }
+
     /**
      * 配置securityManager 管理subject（默认）,并把自定义realm交由manager
      */
     @Bean
-    public DefaultSecurityManager securityManager(Realm customJwtRealm) { //CustomJwt
+    public DefaultSecurityManager securityManager(Realm customJwtRealm, SubjectFactory subjectFactory) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
+
+        securityManager.setSubjectFactory(subjectFactory);
         securityManager.setRealm(customJwtRealm);
         //非web关闭sessionManager(官网有介绍)
         DefaultSubjectDAO defaultSubjectDAO = new DefaultSubjectDAO();

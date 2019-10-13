@@ -12,12 +12,16 @@
 2.scheme及解释器、数值符号计算继续；
 3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
 
-//todo runas写通（看一下代码实现）
+怎么确认我的禁session成功了？
 
-token多久更新一次比较好？
-shiro代码还在更新吗？
-是否区分access_token和refresh_token？
-后续验证应该只需要看一下缓存里面有没有就OK了
+//todo runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
+// todo runAs、releaseRunAs、is
+RunAs理解：
+1.授权人要能授权和收回；
+2.被授权人登陆后选择用自己还是授权人权限，但一次只能用一个
+
+张开涛的shiro再看一遍，然后源码分析一次
+StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
 
 把前端提交到github，把scheme提交到github
 
@@ -42,16 +46,15 @@ sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/x
 sessionValidationScheduler（会话验证调度器、QuartzSessionValidationScheduler、ExecutorServiceSessionValidationScheduler）：https://blog.csdn.net/yifansj/article/details/78007231
 shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
 Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
+是否区分access_token和refresh_token？
+后续验证应该只需要看一下缓存里面有没有就OK了
 
 jwt的关键点：
-1.（再看realm和config等的关系）
-2.filter：后续每次验证？
-3.config；
 4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去（token放在缓存中是个很典型的场景）
 0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
 SubjectDAO那些代码还是要看
 
-上传、下载、word、pdf，这些都是基础设施
+上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
 
 从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
 
@@ -95,6 +98,8 @@ SecurityManager可以setRealms，也可以通过setAuthenticator来设置多real
 读代码的关注点：
 1.类之间的继承各完成的任务；
 2.类之间的组合关系
+
+BasicHttpAuthenticationFilter 与 FormAuthenticationFilter 等的区别
 
 Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
 Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
@@ -426,9 +431,6 @@ https://blog.csdn.net/zhangyong01245/article/details/90768156
 https://www.jianshu.com/p/0a70f957c750
 https://www.cnblogs.com/skyislimit/articles/10469873.html
 
-// todo runAs、releaseRunAs、isRunAs
-
-【可以看filter对cookie的解析以及JWT了】
 2.把cookie那个文章里面的request和response的调用链搞清楚
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
 后续练习：写下现有功能，再快速重新配一次
@@ -467,6 +469,7 @@ https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客
 https://www.jianshu.com/p/2bb0f368f631
 https://www.cnblogs.com/jing99/p/7826550.html
 
+Filter从这个入口看：DefaultFilter
 Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
 看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
 表单拦截器FormAuthenticationFilter：
@@ -996,7 +999,6 @@ Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.ne
 
 shiro需要搞清楚的流程：
 2.CredentialsMatcher使用流程
-RunAs理解：如果涉及到工作流之类的，runAs在具体代码方面会不会有啥问题？代码的通用性能否保证？
 
 redirectAttributes.addFlashAttribute("msg", "操作成功");
 
@@ -1116,7 +1118,8 @@ public interface HttpServletRequest extends ServletRequest {
     String DIGEST_AUTH = "DIGEST";
 将我的项目中HttpServletRequest都过一遍，都干掉。另外：参数中既有request又有response的怎么理解？
 
-UsernamePasswordToken实现了RememberMeAuthenticationToken接口
+UsernamePasswordToken实现了RememberMeAuthenticationToken接口。
+jwt的rememberMe是不是也要有查看和支付的不同级别的区分？https://blog.csdn.net/vae1314chuanchen/article/details/83475717
 
 SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805
 

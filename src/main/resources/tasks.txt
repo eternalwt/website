@@ -9,6 +9,19 @@ https://github.com/eternalwt/angular_front.git
 
 webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/article/details/80320762
 
+1.前端mock；
+2.login后转到用户list；
+3.后端role的API加上；
+4.mybatis-plus（源码学习）：https://mp.baomidou.com/#/
+5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
+6.编辑文章
+7.重新组织前端文件夹和菜单
+8.加样式和前端模板（是否分成2个工程以增强灵活性？）
+9.搞2周技术债务，后端再搞2周
+10.前端文档再看一周，包括service等
+11.写更多基础设施
+12.单元测试
+
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 模板与angular的整合：模板的每个页面都对应angular的一个component（这个心里没底，单独找一下午开一个工程试一下）
 指导思想：用angular/material把后端和前端基础设施逻辑写好，美化界面是最后一步
@@ -17,6 +30,8 @@ webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/
 1.写登录、权限控制代码；
 2.能够动态配置页面、用户权限；
 2.富文本编辑器编辑文章（前后端）、文章列表
+
+自定义异常能否加到我的项目中
 
 【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
 可配置的菜单、权限
@@ -287,6 +302,8 @@ jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在
 Servlet Tutorial【当今servlet的场景？】：
 https://www.javatpoint.com/servlet-tutorial
 DispatcherType
+
+SpringBoot----跨域配置：https://www.cnblogs.com/csguo/p/9597791.html
 
 lifecycleBeanPostProcessor：
 LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调

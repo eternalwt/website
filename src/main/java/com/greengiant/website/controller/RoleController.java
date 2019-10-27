@@ -4,6 +4,9 @@ import com.greengiant.website.pojo.model.Role;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+import sun.misc.Request;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/role")
@@ -14,6 +17,12 @@ public class RoleController {
     public void addRole(Role role) {
         //todo 修改返回值类型
 
+    }
+
+    @RequestMapping(value="/list", method = RequestMethod.GET)
+    public List<Role> getRoleList() {
+        // todo
+        return null;
     }
 
     //todo editRole

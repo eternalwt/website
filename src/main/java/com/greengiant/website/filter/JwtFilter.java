@@ -48,8 +48,8 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isLoginAttempt(ServletRequest request, ServletResponse response) {
-        String authzHeader = WebUtils.toHttp(request).getHeader(AUTHZ_HEADER);
-        return authzHeader != null;
+        String token = WebUtils.toHttp(request).getHeader(AUTHZ_HEADER);
+        return token != null;
     }
 
     /**
@@ -76,7 +76,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
                 //String newToken = JWTUtil.sign(user.getUserInfo().getId());
 
                 String newToken = JWTUtil.createToken(JWTUtil.getUsername(token), JWTUtil.getUsername(token));
-                HttpServletResponse httpResponse = WebUtils.toHttp(response);//todo 搞清楚为啥能起效
+                HttpServletResponse httpResponse = WebUtils.toHttp(response);
                 httpResponse.setHeader("x-auth-token", newToken);
             }
 

@@ -26,7 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-//@Configuration
+@Configuration
 public class ShiroConfig {
 
     /**

@@ -5,7 +5,51 @@
 
 【周末】开涛的书和JWT不能停
 
-买香皂、洗洁精？
+https://github.com/eternalwt/angular_front.git
+
+webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/article/details/80320762
+
+【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
+模板与angular的整合：模板的每个页面都对应angular的一个component（这个心里没底，单独找一下午开一个工程试一下）
+指导思想：用angular/material把后端和前端基础设施逻辑写好，美化界面是最后一步
+做login功能
+0.快速在真实和mock之间切换，拆分任务；
+1.写登录、权限控制代码；
+2.能够动态配置页面、用户权限；
+2.富文本编辑器编辑文章（前后端）、文章列表
+
+【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
+可配置的菜单、权限
+webSocket是基础设施
+上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
+图片、文件上传是基础设施
+好用的前端控件是基础设施
+数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
+activiti、规则引擎是基础设施
+kafka和springbatch等是基础设施
+netty是基础设施
+
+把三门峡、管理后台一起灌通
+HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
+
+shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
+Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
+跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
+shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
+细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
+细说Shiro系列文章
+我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
+
+对着shiro源码再搞一轮。看源码搞清楚：
+1.为啥集成spring很方便；
+2.如果能为shiro贡献sso的代码，将会很好
+
+读代码：
+SecurityUtils.getSubject();
+AdviceFilter：https://www.jianshu.com/p/054c925cd45d
+
+java-jwt是com.auth0下面的，关系注意一下
 
 后端框架搭好后，下一步工作方向：
 1.前端框架及组件（依托工作）；
@@ -14,11 +58,16 @@
 
 怎么确认我的禁session成功了？
 
-//todo runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
-// todo runAs、releaseRunAs、is
-RunAs理解：
-1.授权人要能授权和收回；
-2.被授权人登陆后选择用自己还是授权人权限，但一次只能用一个
+接私活必备的 10 个开源项目！https://blog.csdn.net/sinat_33224091/article/details/100980160
+
+SpringBoot系列 - 集成JWT实现接口权限认证：http://ju.outofmemory.cn/entry/341269
+Filter过滤器：
+https://www.jianshu.com/p/054c925cd45d
+https://cloud.tencent.com/developer/article/1376558
+http://www.360doc.com/content/17/1227/15/16915_716741886.shtml
+https://www.cnblogs.com/ljdblog/p/6237683.html
+
+看一下JwtFilter及BasicHttpAuthenticationFilter，各个方法的场景
 
 张开涛的shiro再看一遍，然后源码分析一次
 StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
@@ -53,8 +102,6 @@ jwt的关键点：
 4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去（token放在缓存中是个很典型的场景）
 0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
 SubjectDAO那些代码还是要看
-
-上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
 
 从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
 
@@ -112,18 +159,18 @@ https://blog.csdn.net/iteye_10899/article/details/82675363
 SubjectFactory，factory要看懂，同时把subject搞清楚
 
 Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
-Shiro关闭session管理：https://blog.csdn.net/wysnxzm/article/details/52230371
 根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf
 
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
-refreshtoken
-
-shiro中OAuth2 集成：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
+shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
 
 ResultBean搞成泛型的ResuleBean<T>，我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 
-通过面试题及调试技巧的资料学习webSocket
+webSocket：
+1.session的应用；
+2.服务器如何保存客户端IP并找到客户端；
+3.如果出现异常情况，两端怎么判如何时需要关闭；
 
 Webpack、Less、Sass、Gulp、Bower以及这些工具的插件都是Node上开发的---@知乎陈龙
 前端现在有npm （包管理）。而npm是随同Node.js一起安装的。所以前端(vue/angular/react)在开发环境下都是离不开Node.js的(编译、打包等等)
@@ -135,10 +182,10 @@ Node.js + Express + Springboot实现前后端分离架构：https://my.oschina.n
 基于 Node.js 平台，快速、开放、极简的 Web 开发框架：http://www.expressjs.com.cn/
 要能搞清楚前端框架对生产力的提升：1.可以避免写很多类似（重复）的代码，例如双向绑定就可以避免很多取值的代码。搞懂框架就可以少写好多代码
 
+程序员直播还是要继续
+
 最近学到的前后端分离知识：https://www.cnblogs.com/Java3y/p/11320606.html
-找一个合适的模板，把分配权限的demo彻底写好
 【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
-练习：找一个模板用angular的方式跑起来（只要解决了这个问题，就没啥难度了）
 下一问题：下载angular版的easyUI界面如何跑起来？（ng serve）
 把前端计划变更为前端技术选型【这是非常关键的战略步骤。少即是多，如何能找到正确的选型？】。模板与组件之间的关系搞清楚【看代码对比就OK了，先把我下载的那个看了】。
 真的弄明白，才有可能性
@@ -198,7 +245,6 @@ DefaultFilter 枚举类原理值得仔细分析
 
 密码前端传给后端之前就应该加密
 基础设施：
-文件上传下载、富文本，这些也是
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
@@ -283,15 +329,6 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
 
-shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
-Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
-跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
-shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
-细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
-细说Shiro系列文章
-我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
-
 @Bean的加载时机，@Autowired的加载时机
 
 该清这个文档里面的内容了【花一个周末清理】
@@ -307,6 +344,13 @@ https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
 @Bean注解修饰带参数方法时的参数取值：
 https://blog.csdn.net/ncuzengxiebo/article/details/80805786
 https://www.cnblogs.com/eoooxy/p/6438109.html
+
+runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
+RunAs理解：
+1.授权人要能授权和收回；
+2.被授权人登陆后选择用自己还是授权人权限(账号)，但一次只能用一个
+看runas代码
+把runas写出来：https://www.xlongwei.com/detail/17080116
 
 ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5
@@ -438,8 +482,6 @@ shiro-spring怎么加载的shiro还是没整明白。shiro-spring 及 spring-con
 CustomRealm：再学一遍。1.如何单元测试？（好多文章里面直接main测试，学一下）
 model里面字段注释/含义及自动生成
 
-数据可视化库 D3.js、echarts这些也是基础设施
-
 spring 配置 shiro rememberMe：
 https://www.cnblogs.com/blogxiao/p/8759053.html
 https://blog.csdn.net/vae1314chuanchen/article/details/83475717
@@ -477,6 +519,7 @@ https://blog.csdn.net/u014203449/article/details/80689268
 https://blog.csdn.net/u014695188/article/details/52357379
 DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
 Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
+https://www.cnblogs.com/nick-huang/p/9509004.html
 
 shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 
@@ -519,7 +562,6 @@ Mockito 2 : https://github.com/mockito/mockito/wiki/What%27s-new-in-Mockito-2
     1.所有配置文件相关功能测试：【mybatis都还没配好】、ehcache的测试等；
     2.所有controller及shiro相关功能
     4.把下方Spring和Java Enterprise菜单用起来
-    5.再次分析这种写法能跳转页面的原理：return "auth/login";，还有HttpServletRequest作为参数的原理
 
 shiro需要搞懂的2点：
 1.权限注解；2.与web集成及拦截器；
@@ -667,6 +709,7 @@ shiro源码分析，搞透
 
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
+.DelegatingFilterProxy是怎么初始化的？
 
 细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
 Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】：
@@ -757,8 +800,6 @@ https://www.cnblogs.com/zhanying999666/p/8392592.html
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
 @Bean的参数bean都已经生成了，再用我的demo工程再确认一下
 result：先写通，再优
-
-.DelegatingFilterProxy是怎么初始化的？
 
 mybatis-spring：
 sqlsessionfactory 注入datasource
@@ -892,7 +933,7 @@ loggingSystem.setLogLevel(null, LogLevel.DEBUG);
 
 如，默认时是info模式，未修改时，debug模式是不会输出的。
 
-RxJava、RxJS
+BeanFactory 和FactoryBean的区别（亲手使用一下FactoryBean）：https://www.cnblogs.com/wangzhongqiu/p/6608103.html
 
 框架搭好后，shiro需要学习第二遍。springmvc+shiro彻底搞清楚、知道怎么调试后，会是一个大的突破
 不能够快速调试，在新工作中也会遇到困难
@@ -983,7 +1024,6 @@ EasyUI【比较EasyUI和bootstrap等不同的技术】：
 3.用Angular或者vue版的前端；
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
 http://www.jeasyui.cn/download.html
-美的让人窒息的后台模板：http://www.jq22.com/jquery-info1583
 整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
 给大家推荐8个SpringBoot精选项目：https://cloud.tencent.com/developer/article/1197203
 最值得拥有的免费Bootstrap后台管理模板：https://zhuanlan.zhihu.com/p/39945434
@@ -1108,6 +1148,7 @@ https://blog.csdn.net/LoveInWar/article/details/89646085
 Mybatis解析动态sql原理分析：https://www.cnblogs.com/fangjian0423/p/mybaits-dynamic-sql-analysis.html
 
 ConfigClusterResolver - Resolving eureka endpoints via configuration
+ServletRequest与HttpServletRequest：接口之间强转的规则与限制？https://blog.csdn.net/m0_38039437/article/details/75271692
 HttpServletrequest 与HttpServletResponse总结：https://www.cnblogs.com/liuyandeng/p/5336649.html
 SpringMVC是怎么封装HttpServletRequest的？数据是怎么封装的？controller是怎么被调用的？
 @requestbody和httpServletRequest区别：https://www.oschina.net/question/2491333_2283678

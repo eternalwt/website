@@ -21,7 +21,7 @@ import javax.servlet.Filter;
 import java.util.HashMap;
 import java.util.Map;
 
-@Configuration
+//@Configuration
 public class ShiroJwtConfig {
     private static final String JWT_FILTER_NAME = "jwt";
 

@@ -9,12 +9,12 @@ webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/
 
 mybatis-plus率先配好
 
-把BaseException写好
 用IDEA的功能重构成泛型。ResultBean搞成泛型的ResuleBean<T>【关键是要看有没有效率、编程方面的提升，除了返回值还有哪里能用到。】，
 我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
-再整一下包的划分
+再整一下包的划分，还可以建的包名：enums、constant、bean
+把BaseException用起来
 
-还可以建的包名：enums、exception、constant、bean
+
 
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：

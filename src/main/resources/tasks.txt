@@ -7,7 +7,7 @@
 
 webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/article/details/80320762
 
-周二：mybatis-plus功能全部过一遍
+周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
 用IDEA的功能重构成泛型。ResultBean搞成泛型的ResuleBean<T>【关键是要看有没有效率、编程方面的提升，除了返回值还有哪里能用到。】，
 我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 再整一下包的划分，还可以建的包名：enums、constant、bean

@@ -1,5 +1,6 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Role;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +21,8 @@ public class RoleController {
     }
 
     @RequestMapping(value="/list", method = RequestMethod.GET)
-    public List<Role> getRoleList() {
-        // todo
+    public ResultBean getRoleList() {
+        // todo return List<Role>;
         return null;
     }
 

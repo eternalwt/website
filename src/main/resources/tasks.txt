@@ -5,14 +5,30 @@
 
 【周末】开涛的书和JWT不能停
 
-https://github.com/eternalwt/angular_front.git
-
 webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/article/details/80320762
+
+mybatis-plus率先配好
+
+把BaseException写好
+用IDEA的功能重构成泛型。ResultBean搞成泛型的ResuleBean<T>【关键是要看有没有效率、编程方面的提升，除了返回值还有哪里能用到。】，
+我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
+再整一下包的划分
+
+还可以建的包名：enums、exception、constant、bean
+
+批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
+1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
+https://www.jianshu.com/p/a749abbdb08d
+https://www.cnblogs.com/shuaifing/p/9327465.html
+https://blog.csdn.net/zeal9s/article/details/86003225
+https://www.jianshu.com/p/041bec8ae6d3
+http://www.imooc.com/article/details/id/284701
 
 1.前端mock；
 2.login后转到用户list；
 3.后端role的API加上；
-4.mybatis-plus（源码学习）：https://mp.baomidou.com/#/
+3.shiro的permission的API看一下；
+4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
 6.编辑文章
 7.重新组织前端文件夹和菜单
@@ -44,7 +60,7 @@ activiti、规则引擎是基础设施
 kafka和springbatch等是基础设施
 netty是基础设施
 
-把三门峡、管理后台一起灌通
+把三门峡、管理后台一起灌通：https://github.com/eternalwt/angular_front.git
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
@@ -179,8 +195,6 @@ Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
 shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
-
-ResultBean搞成泛型的ResuleBean<T>，我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 
 webSocket：
 1.session的应用；

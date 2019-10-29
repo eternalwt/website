@@ -22,23 +22,9 @@ import java.util.List;
 @RequestMapping("/hello")
 public class UtilController {
 
-    @Autowired
-    private UserDao userDao;
-
     @RequestMapping("/world")
     public String sayHello() {
         return "Hello, world!";
-    }
-
-    @RequestMapping("/users")
-    public String getUserList() {
-        //todo
-        List<User> list = userDao.selectAll();
-        //todo 修改判断
-        if (list != null && list.size() > 0) {
-            return String.valueOf(list.size());
-        }
-        return "empty list";
     }
 
     @RequestMapping("/index")

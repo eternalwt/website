@@ -9,6 +9,8 @@ import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/user")
@@ -53,9 +55,17 @@ public class UserController{
         return ResultUtils.success();
     }
 
-    @GetMapping(value = "/getMessage")
-    public String getMessage() {
-        return "您拥有用户权限，可以获得该接口的信息！";
+    // todo 分页
+    @RequestMapping("/users")
+    public String getUserList() {
+//        //todo
+//        List<User> list = userDao.selectAll();
+//        //todo 修改判断
+//        if (list != null && list.size() > 0) {
+//            return String.valueOf(list.size());
+//        }
+        return "empty list";
     }
+
 }
 

@@ -5,8 +5,8 @@ package com.greengiant.website.pojo;
  */
 public enum StatusCodeEnum {
     //成功失败
-    SUCCESS("success", 1),
-    FAIL("fail", -1),
+    SUCCESS("operation success", 1),
+    FAIL("operation failed", -1),
     EXCEPTION("System Exception", -2),
 
     USER_EXISTS("用户已存在", 10001),

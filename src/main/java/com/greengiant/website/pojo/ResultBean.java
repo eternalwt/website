@@ -7,6 +7,15 @@ public class ResultBean {
 
     private Object data;
 
+    public ResultBean() {
+    }
+
+    public ResultBean(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public Integer getCode() {
         return code;
     }

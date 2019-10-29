@@ -25,7 +25,7 @@ public class RoleServiceImpl implements RoleService {
                 return "欢迎来到管理员页面";
             }
         }
-        return "获取角色信息失败";
+        return "尚未分配角色";
     }
 
     @Override

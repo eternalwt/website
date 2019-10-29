@@ -1,8 +1,10 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.service.AuthService;
 import com.greengiant.website.service.RoleService;
 import com.greengiant.website.utils.JWTUtil;
+import com.greengiant.website.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +41,13 @@ public class LoginController {
      * @param password 密码
      */
     @PostMapping(value = "/login")
-    public String login(@RequestParam String username,
-                        @RequestParam String password,
-                        @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
+    public ResultBean login(@RequestParam String username,
+                            @RequestParam String password,
+                            @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // 从SecurityUtils里边创建一个 subject
         loginService.login(username, password, isRememberMe);
         //根据权限，指定返回数据
-        return roleService.getRole(username);
+        return ResultUtils.success(roleService.getRole(username));
     }
 
     /**
@@ -55,7 +57,7 @@ public class LoginController {
      * @param password 密码
      */
     @PostMapping(value = "/jwtlogin")
-    public String jwtLogin(@RequestParam String username,
+    public ResultBean jwtLogin(@RequestParam String username,
                         @RequestParam String password,
                         @RequestParam(required = false, defaultValue = "false") boolean isRememberMe,
                         HttpServletResponse response) {
@@ -66,7 +68,7 @@ public class LoginController {
         loginService.jwtLogin(token);
         response.setHeader("x-auth-token", token);
         //根据权限，指定返回数据
-        return roleService.getRole(username);
+        return ResultUtils.success(roleService.getRole(username));
     }
 
     /**
@@ -74,11 +76,11 @@ public class LoginController {
      * @return
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
+    public ResultBean logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
 
-        return "成功注销！";
+        return ResultUtils.success("登出成功！");
     }
 
 

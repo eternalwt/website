@@ -5,24 +5,22 @@ import com.greengiant.website.pojo.StatusCodeEnum;
 
 public class ResultUtils {
 
-    public static ResultBean success(Object data) {
-        ResultBean result = new ResultBean();
-        result.setCode(StatusCodeEnum.SUCCESS.getCode());
-        result.setMsg(StatusCodeEnum.SUCCESS.getMsg());
-        result.setData(data);
-
-        return result;
-    }
-
     public static ResultBean success() {
         return success(null);
     }
 
-    public static ResultBean fail(int code, String msg) {
-        ResultBean result = new ResultBean();
-        result.setCode(code);
-        result.setMsg(msg);
+    public static ResultBean success(Object data) {
+        ResultBean result = new ResultBean(StatusCodeEnum.SUCCESS.getCode(), StatusCodeEnum.SUCCESS.getMsg(), data);
+        return result;
+    }
 
+    public static ResultBean fail() {
+        ResultBean result = new ResultBean(StatusCodeEnum.FAIL.getCode(), StatusCodeEnum.FAIL.getMsg(), null);
+        return result;
+    }
+
+    public static ResultBean fail(int code, String msg) {
+        ResultBean result = new ResultBean(code, msg, null);
         return result;
     }
 }

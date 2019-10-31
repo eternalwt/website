@@ -55,17 +55,16 @@ insert into auth_user(user_name, password)values('zhang','123');
 drop table if exists menu;
 create table menu(
      id bigint auto_increment primary key,
-     menu_name varchar(64),
-     number varchar(64), -- 编号
-     url varchar(128),
-     icon varchar(256),
-     parent_id bigint,
-     sort int,
-     in_use tinyint,
-     open_way tinyint,
-     role varchar(256),
-     permission varchar(512),
-     permission_id bigint not null,
+     menu_name varchar(64) COMMENT '菜单名称',
+     number varchar(64) COMMENT '菜单编号',
+     url varchar(128) COMMENT '菜单路径',
+     icon varchar(256) COMMENT '菜单图标',
+     parent_id bigint COMMENT '父菜单id',
+     sort int COMMENT '排序',
+     in_use tinyint COMMENT '是否启用',
+     open_way tinyint COMMENT '打开方式',
+     role varchar(256) COMMENT '有权限的角色',
+     user varchar(512) COMMENT '有权限的用户',
      create_time timestamp DEFAULT CURRENT_TIMESTAMP,
      update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';

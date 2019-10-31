@@ -5,14 +5,16 @@
 
 【周末】开涛的书和JWT不能停
 
-webSocket的掉线重连以及session超时？https://blog.csdn.net/qq_33594101/article/details/80320762
+webSocket的掉线重连以及session超时？
+https://blog.csdn.net/qq_33594101/article/details/80320762
 
+mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper的用法；
 周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
 用IDEA的功能重构成泛型。ResultBean搞成泛型的ResuleBean<T>【关键是要看有没有效率、编程方面的提升，除了返回值还有哪里能用到。】，
 我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 再整一下包的划分，还可以建的包名：enums、constant、bean
 把BaseException用起来，和全局异常处理结合
-把批量插入、取样获取的逻辑移植过来（先把plus分页写好）
+把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
 看一下有没有必要找一个SpringUtil
 
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
@@ -22,6 +24,8 @@ https://www.cnblogs.com/shuaifing/p/9327465.html
 https://blog.csdn.net/zeal9s/article/details/86003225
 https://www.jianshu.com/p/041bec8ae6d3
 http://www.imooc.com/article/details/id/284701
+foreach (在实现 mybatis in 语句查询时特别有用)：
+https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 1.前端mock；
 2.login后转到用户list；
@@ -36,6 +40,7 @@ http://www.imooc.com/article/details/id/284701
 10.前端文档再看一周，包括service等
 11.写更多基础设施
 12.单元测试
+dashboard：完成热力图、中国地图
 
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 模板与angular的整合：模板的每个页面都对应angular的一个component（这个心里没底，单独找一下午开一个工程试一下）
@@ -211,6 +216,7 @@ Node.js + Express + Springboot实现前后端分离架构：https://my.oschina.n
 要能搞清楚前端框架对生产力的提升：1.可以避免写很多类似（重复）的代码，例如双向绑定就可以避免很多取值的代码。搞懂框架就可以少写好多代码
 
 程序员直播还是要继续
+基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
 
 最近学到的前后端分离知识：https://www.cnblogs.com/Java3y/p/11320606.html
 【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】

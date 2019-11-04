@@ -5,9 +5,6 @@ import com.greengiant.website.pojo.model.Role;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import sun.misc.Request;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/role")
@@ -23,6 +20,7 @@ public class RoleController {
     @RequestMapping(value="/list", method = RequestMethod.GET)
     public ResultBean getRoleList() {
         // todo return List<Role>;
+
         return null;
     }
 

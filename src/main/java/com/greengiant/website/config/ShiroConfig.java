@@ -61,6 +61,8 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
+        filterChainDefinitionMap.put("/website-websocket/**", "anon");
+
         //游客，开发权限
         filterChainDefinitionMap.put("/guest/**", "anon");
         //开放登陆接口

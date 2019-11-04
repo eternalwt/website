@@ -1,65 +1,42 @@
 package com.greengiant.website.websocket;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestController;
-
-import javax.websocket.*;
-import javax.websocket.server.PathParam;
-import javax.websocket.server.ServerEndpoint;
-import java.util.concurrent.CopyOnWriteArraySet;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.util.HtmlUtils;
 
 @Slf4j
-@ServerEndpoint("/websocket/{id}/{name}")
-@RestController
+@Controller
 public class WebSocketController {
-    // 用来记录当前连接数的变量
-    private static volatile int onlineCount = 0;
 
-    // concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象
-    private static CopyOnWriteArraySet<WebSocketController> webSocketSet = new CopyOnWriteArraySet<WebSocketController>();
-
-    // 与某个客户端的连接会话，需要通过它来与客户端进行数据收发
-    private Session session;
-
-    @OnOpen
-    public void onOpen(Session session, @PathParam("id") long id, @PathParam("name") String name) throws Exception {
-        this.session = session;
-        log.info(this.session.getId());
-        webSocketSet.add(this);
-        log.info("Open a websocket. id={}, name={}", id, name);
+    @MessageMapping("/ws/hello")
+    @SendTo("/topic/greetings")
+    public String greeting(String message) throws Exception {
+        Thread.sleep(1000);
+        return "Hello, " + HtmlUtils.htmlEscape(message) + "!";
     }
 
-    @OnClose
-    public void onClose() {
-        webSocketSet.remove(this);
-        log.info("Close a websocket. ");
-    }
+    // ----------------------------------------------------------------------------
 
-    @OnMessage
-    public void onMessage(String message, Session session) {
-        log.info("Receive a message from client: " + message);
-    }
+    @Autowired
+    private SimpMessagingTemplate template;// todo  SimpMessagingTemplate 是啥？
 
-    @OnError
-    public void onError(Session session, Throwable error) {
-        log.error("Error while websocket. ", error);
-    }
+    // Initialize Notifications
+    private Notifications notifications = new Notifications(0);
 
-    public void sendMessage(String message) throws Exception {
-        if (this.session.isOpen()) {
-            this.session.getBasicRemote().sendText("Send a message from server. ");
-        }
-    }
+    @GetMapping("/notify")
+    public String getNotification() {
 
-    public static synchronized int getOnlineCount() {
-        return onlineCount;
-    }
+        // Increment Notification by one
+        notifications.increment();
 
-    public static synchronized void addOnlineCount() {
-        WebSocketController.onlineCount++;
-    }
+        // Push notifications to front-end
+        template.convertAndSend("/topic/notification", notifications);
 
-    public static synchronized void subOnlineCount() {
-        WebSocketController.onlineCount--;
+        return "Notifications successfully sent to Angular !";
     }
 }

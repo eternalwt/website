@@ -17,6 +17,8 @@ mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper�
 把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
 看一下有没有必要找一个SpringUtil
 
+angular-cli 引入ui组件库【admin-lte】：https://www.cnblogs.com/rancho-blog/p/6580185.html
+
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
 https://www.jianshu.com/p/a749abbdb08d
@@ -41,6 +43,8 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 11.写更多基础设施
 12.单元测试
 dashboard：完成热力图、中国地图
+
+GitHub开源的10个超棒后台管理面板【含angular的】：https://blog.csdn.net/m0_38106923/article/details/101050788
 
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 模板与angular的整合：模板的每个页面都对应angular的一个component（这个心里没底，单独找一下午开一个工程试一下）

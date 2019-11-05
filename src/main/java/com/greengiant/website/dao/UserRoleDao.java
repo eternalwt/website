@@ -40,6 +40,21 @@ public interface UserRoleDao {
     UserRole selectByPrimaryKey(Long id);
 
     @Select({
+            "select",
+            "id, user_id, role_id, create_time, update_time",
+            "from auth_user_role",
+            "where user_id = #{userId,jdbcType=BIGINT}"
+    })
+    @ConstructorArgs({
+            @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
+            @Arg(column="user_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+            @Arg(column="role_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+            @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+            @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+    })
+    List<UserRole> selectByUserId(Long userId);
+
+    @Select({
         "select",
         "id, user_id, role_id, create_time, update_time",
         "from auth_user_role"

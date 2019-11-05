@@ -5,6 +5,16 @@
 
 【周末】开涛的书和JWT不能停
 
+1.把后端MenuController->selectByUserId调通；
+2.把mock建立起来；
+3.把角色列表、勾选一级菜单权限弄起来；
+4.把websocket弄好；
+5.把mybatis-plus建立起来
+
+把list样式错乱的问题解决
+把material design做一遍
+把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
+
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
 

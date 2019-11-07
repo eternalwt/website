@@ -35,6 +35,8 @@ public class MenuServiceImpl implements MenuService {
             }
         }
 
+        // todo menuList的去重和排序
+
         return menuList;
     }
 }

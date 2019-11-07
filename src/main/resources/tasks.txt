@@ -5,15 +5,24 @@
 
 【周末】开涛的书和JWT不能停
 
-1.把后端MenuController->selectByUserId调通；
+建立雏形：把登出写好（如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
+两次登录失败则显示验证码，发文章，爬虫
 2.把mock建立起来；
-3.把角色列表、勾选一级菜单权限弄起来；
+3.把角色列表、勾选一级菜单权限弄起来（后端home）；
 4.把websocket弄好；
+https://blog.csdn.net/zwt_guiji/article/details/80352507
+https://www.cnblogs.com/richard1015/p/7269905.html
 5.把mybatis-plus建立起来
+把angular的test建立起来
+加index页面，加页面标签（及静态？）
+有一个错误需要前后端协同捕捉到【如果设计上有问题要解决设计的问题】：org.apache.shiro.authc.AccountException: 用户名不正确
+                	at com.greengiant.website.shiro.CustomRealm.doGetAuthenticationInfo(CustomRealm.java:46)
+前端返回值是否根据后端做一个枚举抽象？
+加menu的前端和API弄出来
+这些基本功能有了，开始搞：1.样式；2.组件
 
 把list样式错乱的问题解决
-把material design做一遍
-把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
+把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
 
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
@@ -77,6 +86,8 @@ webSocket是基础设施
 activiti、规则引擎是基础设施
 kafka和springbatch等是基础设施
 netty是基础设施
+定时任务是基础设施
+测一下CustomSchedulingConfigurer，并思考更多
 
 把三门峡、管理后台一起灌通：https://github.com/eternalwt/angular_front.git
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】

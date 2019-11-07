@@ -22,21 +22,21 @@ public class CustomSchedulingConfigurer implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         scheduledTaskRegistrar.addTriggerTask(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        // 定时如无
-                    }
-                },
-                new Trigger() {
-                    @Override
-                    public Date nextExecutionTime(TriggerContext triggerContext) {
-                        // 任务触发，可修改任务的执行周期
-                        CronTrigger trigger = new CronTrigger(cron);
-                        Date nextExec = trigger.nextExecutionTime(triggerContext);
-                        return nextExec;
-                    }
+            new Runnable() {
+                @Override
+                public void run() {
+                    // 定时如无
                 }
+            },
+            new Trigger() {
+                @Override
+                public Date nextExecutionTime(TriggerContext triggerContext) {
+                    // 任务触发，可修改任务的执行周期
+                    CronTrigger trigger = new CronTrigger(cron);
+                    Date nextExec = trigger.nextExecutionTime(triggerContext);
+                    return nextExec;
+                }
+            }
         );
     }
 }

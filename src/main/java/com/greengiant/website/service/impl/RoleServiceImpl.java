@@ -1,6 +1,6 @@
 package com.greengiant.website.service.impl;
 
-import com.greengiant.website.dao.RoleDao;
+import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleMapper roleMapper;
 
     @Override
     public String getRole(String username) {
         //根据权限，指定返回数据
-        Role role = roleDao.selectByName(username);
+        Role role = roleMapper.selectByName(username);
         if (role != null) {
             //todo 重构
             if ("user".equals(role.getRoleName())) {
@@ -30,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void addRole(Role role) {
-        roleDao.insert(role);
+        roleMapper.insert(role);
     }
 
 }

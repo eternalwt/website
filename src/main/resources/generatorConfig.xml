@@ -78,6 +78,7 @@
 <!--        <table tableName="auth_permission" domainObjectName="Permission"></table>-->
 <!--        <table tableName="auth_user_role" domainObjectName="UserRole"></table>-->
 <!--        <table tableName="auth_role_permission" domainObjectName="RolePermission"></table>-->
-        <table tableName="menu" domainObjectName="menu"></table>
+<!--        <table tableName="menu" domainObjectName="menu"></table>-->
+        <table tableName="article" domainObjectName="Article"></table>
     </context>
 </generatorConfiguration>

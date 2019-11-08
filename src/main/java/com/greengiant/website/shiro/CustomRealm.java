@@ -1,7 +1,7 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.dao.RoleDao;
-import com.greengiant.website.dao.UserDao;
+import com.greengiant.website.dao.RoleMapper;
+import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +20,10 @@ import java.util.Set;
 @Slf4j
 public class CustomRealm extends AuthorizingRealm {
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleMapper roleMapper;
 
     /**
      * 获取身份验证信息
@@ -41,7 +41,7 @@ public class CustomRealm extends AuthorizingRealm {
         // 获取用户输入的用户名
         String username = (String) token.getPrincipal();
         // 从数据库获取对应用户名密码的用户
-        User user = userDao.selectByName(token.getUsername());
+        User user = userMapper.selectByName(token.getUsername());
         if (null == user) {
             throw new AccountException("用户名不正确");
         }
@@ -69,7 +69,7 @@ public class CustomRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> set = new HashSet<>();
         //获得该用户角色
-        Role role = roleDao.selectByName(username);
+        Role role = roleMapper.selectByName(username);
         if (role != null) {
             set.add(role.getRoleName());
             //设置该用户拥有的角色

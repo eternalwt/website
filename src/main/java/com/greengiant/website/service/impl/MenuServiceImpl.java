@@ -1,7 +1,7 @@
 package com.greengiant.website.service.impl;
 
 import com.greengiant.website.dao.MenuMapper;
-import com.greengiant.website.dao.UserRoleDao;
+import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.UserRole;
 import com.greengiant.website.service.MenuService;
@@ -18,7 +18,7 @@ public class MenuServiceImpl implements MenuService {
     private MenuMapper menuDao;
 
     @Autowired
-    private UserRoleDao userRoleDao;
+    private UserRoleMapper userRoleMapper;
 
     @Override
     public List<Menu> selectByRole(String roleStr) {
@@ -28,7 +28,7 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public List<Menu> selectByUserId(long userId) {
         List<Menu> menuList = new ArrayList<>();
-        List<UserRole> userRoleList = userRoleDao.selectByUserId(userId);
+        List<UserRole> userRoleList = userRoleMapper.selectByUserId(userId);
         if (userRoleList != null && !userRoleList.isEmpty()) {
             for (int i = 0; i < userRoleList.size(); i++) {
                 menuList.addAll(this.selectByRole(String.valueOf(userRoleList.get(0).getRoleId())));

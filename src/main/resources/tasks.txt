@@ -5,8 +5,25 @@
 
 【周末】开涛的书和JWT不能停
 
+周末：
+1.把第三方取数据调通；
+2.把环境监测多个按钮的时序再思考一下
+看postgresql资料及简牍数据库设计
+测试用timestamp进行时间比较的效率
+
+【用mybatis-plus建新表，并逐渐改造旧表】【先用起来再地毯式学习，否则项目迟迟没有进展】
+Mybatis-Plus的使用（三）——注解与配置文件：https://blog.csdn.net/ck457897564/article/details/100173959
+然后搞AutoGenerator
+mybatis-plus-boot-starter代码分析
+支持 ActiveRecord 模式
+分页插件、性能分析配置
+PaginationInterceptor
+配置文件的各项开关
+@KeySequence注解
+自定义模板的实现机制值得学习： AbstractTemplateEngine 类中方法 getObjectMap 返回 objectMap 的所有值都可用
+
 发文章、文章列表（重要）
-建立雏形：把登出写好（如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
+建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
 两次登录失败则显示验证码
 2.把mock建立起来；
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；
@@ -23,9 +40,18 @@ https://www.cnblogs.com/richard1015/p/7269905.html
 这些基本功能有了，开始搞：1.样式；2.组件
 移植公司里面的http，增大代码健壮性
 继续搞基础设施，继续推敲每一段代码，提升自己
+logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
+解决搭框架之后的第二个问题，怎么加速，能否到github上搜一些代码
 
 把list样式错乱的问题解决
 把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
+ng-bootstrap：
+https://github.com/ng-bootstrap/ng-bootstrap
+https://ng-bootstrap.github.io/#/home
+别人在github上的angular项目（特性教学）：
+https://github.com/PatrickJS/angular-starter
+https://github.com/Ismaestro/angular8-example-app
+https://github.com/ui-router/angular
 
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
@@ -90,6 +116,7 @@ activiti、规则引擎是基础设施
 kafka和springbatch等是基础设施
 netty是基础设施
 定时任务是基础设施
+站内搜索是基础设施
 测一下CustomSchedulingConfigurer，并思考更多
 
 把三门峡、管理后台一起灌通：https://github.com/eternalwt/angular_front.git
@@ -169,6 +196,14 @@ jwt的关键点：
 SubjectDAO那些代码还是要看
 
 从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
+
+多租户架构：
+https://www.jianshu.com/p/fd798c84ff4b
+https://www.cnblogs.com/pingfan21/p/7478242.html
+https://blog.csdn.net/leon_wzm/article/details/80181623
+@SqlParser、TenantSqlParser：https://www.jb51.net/article/151723.htm
+【通过数据库的schema来实现多租户，再思考一下】
+Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394.html
 
 jwt的RememberMe：
 1.先从实现接口的角度来理解框架：RememberMeManager - AbstractRememberMeManager - CookieRememberMeManager【最好不要绕过subject.isRemembered()】；
@@ -263,6 +298,8 @@ ng-zorro也是前端可视化技术，跟EasyUI等对比一下
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
+springboot基于spring task实现动态定时任务(@Scheduled)：https://blog.csdn.net/shan165310175/article/details/98478970
+
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
 最终的替换目标要验证登录次数限制、权限等没有问题
@@ -336,6 +373,7 @@ https://blog.csdn.net/qq_24241631/article/details/80294144
 http://www.imooc.com/article/285087
 4.mybatis三剑客：
 mybatis一级缓存二级缓存：https://www.cnblogs.com/happyflyingpig/p/7739749.html
+在springboot和mybatis下，如何：1.不同的租户动态生成不同的数据库？2.不同的库房动态生成不同的表？
 
 看源码的时候，要试着自己动手实现同样的功能。可以先尝试实现一下IoC容器、mybatis核心功能
 自己实现spring核心功能：https://www.cnblogs.com/jingch/p/11368982.html
@@ -1145,6 +1183,8 @@ logback Filter 过滤器：
 https://blog.csdn.net/ryo1060732496/article/details/84349835
 https://blog.csdn.net/dyc87112/article/details/84349299
 mySql---logback日志写入数据库(mysql)配置【appender原理】：https://www.cnblogs.com/chihirotan/p/6185547.html
+TINYINT后面之所以要用(1)，是因为M默认是4：https://blog.csdn.net/liuchaoxuan/article/details/88142471
+括号后面的数字只和ZEROFILL有关：https://blog.csdn.net/iteye_17023/article/details/82172114
 
 在activiti这种抽象程度比较高的中间件里面，调试分析代码逻辑的时候数据库日志的作用就体现出来了。控制台调试最好配置打印出来
 
@@ -1234,6 +1274,7 @@ postman：form-data、x-www-form-urlencoded、raw、binary分别对应的前端�
 https://blog.csdn.net/xybelieve1990/article/details/81111786
 
 如果不想装mysql可以用SQLite：https://www.runoob.com/sqlite/sqlite-tutorial.html
+用h2也可以
 
 idea创建含有多个module的project：
 https://blog.csdn.net/ssllkkyyaa/article/details/80855133

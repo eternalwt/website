@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Mapper
-public interface UserRoleDao {
+public interface UserRoleMapper {
     @Delete({
         "delete from auth_user_role",
         "where id = #{id,jdbcType=BIGINT}"

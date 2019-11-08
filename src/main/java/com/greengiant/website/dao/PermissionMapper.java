@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 @Mapper
-public interface PermissionDao {
+public interface PermissionMapper {
     @Delete({
         "delete from auth_permission",
         "where id = #{id,jdbcType=BIGINT}"

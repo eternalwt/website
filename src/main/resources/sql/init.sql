@@ -68,3 +68,20 @@ create table menu(
      create_time timestamp DEFAULT CURRENT_TIMESTAMP,
      update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
+
+drop table if exists article;
+create table article(
+     id bigint auto_increment primary key,
+     title varchar(128) COMMENT '标题',
+     content text COMMENT '内容',
+     column_id bigint(64) COMMENT '栏目id',
+     published tinyint(1) COMMENT '发布/编辑状态',
+     audited tinyint(1) COMMENT '审核状态',
+     read_count int COMMENT '查看次数',
+     creator_id varchar(256) COMMENT '创建者id',
+     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+     updator_id varchar(256) COMMENT '更新者id',
+     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
+
+-- 栏目表

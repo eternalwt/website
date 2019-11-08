@@ -11,11 +11,21 @@ spring:
       ehcache:
         config: ehcache.xml
 
-  #  # frontend
-  #  mvc:
-  #    view:
-  #      prefix: /views/
-  #      suffix: .html
+#mybatis-plus:
+#  mapper-location: classpath*:/mapper/*Mapper.xml
+#  type-aliases-package: com.greengiant.*.pojo.model
+#  global-config:
+#    db-config:
+#      id-type: AUTO
+#      field-strategy: NOT_NULL
+#      logic-delete-value: 1
+#      logic-not-delete-value: 0
+#    #refresh: true
+#  configuration:
+#    cahe-enabled: true
+#    map-underscore-to-camel-case: true
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
   resources:
     static-locations: classpath:/META-INF/resources/, classpath:/resources/,classpath:/static/, classpath:/public/,classpath:/templates/
 

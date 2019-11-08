@@ -1,7 +1,7 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.dao.RoleDao;
-import com.greengiant.website.dao.UserDao;
+import com.greengiant.website.dao.RoleMapper;
+import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.utils.JWTUtil;
@@ -18,10 +18,10 @@ import java.util.Set;
 public class CustomJwtRealm extends AuthorizingRealm {
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userMapper;
 
     @Autowired
-    private RoleDao roleDao;
+    private RoleMapper roleMapper;
 
     /**
      * 必须重写此方法，不然会报错
@@ -39,7 +39,7 @@ public class CustomJwtRealm extends AuthorizingRealm {
         String token = (String) authenticationToken.getCredentials();
         // 解密获得username，用于和数据库进行对比
         String username = JWTUtil.getUsername(token);
-        User user = userDao.selectByName(username);
+        User user = userMapper.selectByName(username);
         if (username == null || user == null || !JWTUtil.verify(token, username, user.getPassword(), user.getPasswordSalt())) {
             throw new AuthenticationException("token认证失败！");
             //throw new UnknownAccountException("Username or password error");
@@ -60,7 +60,7 @@ public class CustomJwtRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> set = new HashSet<>();
         //获得该用户角色
-        Role role = roleDao.selectByName(username);
+        Role role = roleMapper.selectByName(username);
         if (role != null) {
             set.add(role.getRoleName());
             //设置该用户拥有的角色

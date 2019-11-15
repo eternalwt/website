@@ -5,24 +5,48 @@
 
 【周末】开涛的书和JWT不能停
 
+=======================================================
+
+1.把mybatis-plus调通、看完；
+2.material design那个文章看完
+3.发表文章、文章列表写通
+
+Ng-Matero：基于 Angular Material 搭建的中后台管理框架：
+https://www.cnblogs.com/nzbin/p/11150811.html
+https://www.cnblogs.com/nzbin/p/11392311.html
+
+鉴权搞成动态的
+
+=======================================================
+
 周末：
 1.把第三方取数据调通；
 2.把环境监测多个按钮的时序再思考一下
 看postgresql资料及简牍数据库设计
 测试用timestamp进行时间比较的效率
 
+自增主键用好
+在自增的策略之下，怎么使用saveOrUpdateBatch
 【用mybatis-plus建新表，并逐渐改造旧表】【先用起来再地毯式学习，否则项目迟迟没有进展】
 Mybatis-Plus的使用（三）——注解与配置文件：https://blog.csdn.net/ck457897564/article/details/100173959
 然后搞AutoGenerator
 mybatis-plus-boot-starter代码分析
 支持 ActiveRecord 模式
 分页插件、性能分析配置
-PaginationInterceptor
+PaginationInterceptor与两种分页方式：https://spldeolin.com/posts/mybatis-plus-page/
 配置文件的各项开关
 @KeySequence注解
+lambdaQuery的用法：https://blog.csdn.net/weixin_38111957/article/details/92415413
 自定义模板的实现机制值得学习： AbstractTemplateEngine 类中方法 getObjectMap 返回 objectMap 的所有值都可用
+int deleteByMap(@Param(Constants.COLUMN_MAP) Map<String, Object> columnMap);
+selectMaps好像作用不大？
+这个里面的entityWrapper写的很详细【和LambdaQueryWrapper进行比较。貌似LambdaQueryWrapper就可以实现condition功能？】：
+https://blog.csdn.net/BADAO_LIUMANG_QIZHI/article/details/89482201
+mybatis-plus源码及doc：https://gitee.com/baomidou
+MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/9462582.html
 
-发文章、文章列表（重要）
+
+【发文章、文章列表（重要）【富文本编辑器】】
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
 两次登录失败则显示验证码
 2.把mock建立起来；
@@ -55,6 +79,8 @@ https://github.com/ui-router/angular
 
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
+
+DAO和POJO包的命名有问题
 
 mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper的用法；
 周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
@@ -626,6 +652,7 @@ Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/7711
 https://www.cnblogs.com/nick-huang/p/9509004.html
 
 shirFilter，注意这个filter与SpringMVC Filter的关联和区别
+Tkmybatis是在mybatis框架的基础上提供了很多工具，让开发更加高效：https://blog.csdn.net/wang_snake/article/details/80705583https://blog.csdn.net/wang_snake/article/details/80705583
 
 【单独击破1】
 realm继承关系彻底搞清楚（看看用不同的realm会怎么用）

@@ -1,17 +1,15 @@
 package com.greengiant.website.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.greengiant.website.pojo.model.Article;
-import java.util.Date;
-import java.util.List;
-import org.apache.ibatis.annotations.Arg;
-import org.apache.ibatis.annotations.ConstructorArgs;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
-public interface ArticleMapper {
+import java.util.Date;
+import java.util.List;
+
+@Mapper
+public interface ArticleMapper extends BaseMapper<Article> {
     @Delete({
         "delete from article",
         "where id = #{id,jdbcType=BIGINT}"

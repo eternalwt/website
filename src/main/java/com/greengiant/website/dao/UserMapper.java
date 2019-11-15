@@ -79,4 +79,6 @@ public interface UserMapper {
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(User record);
+
+//    int deleteByMap(@Param(Constants.COLUMN_MAP) Map<String, Object> columnMap);
 }

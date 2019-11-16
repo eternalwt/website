@@ -10,6 +10,7 @@
 1.把mybatis-plus调通、看完；
 2.material design那个文章看完
 3.发表文章、文章列表写通
+4.注册写通
 
 Ng-Matero：基于 Angular Material 搭建的中后台管理框架：
 https://www.cnblogs.com/nzbin/p/11150811.html
@@ -56,9 +57,11 @@ https://blog.csdn.net/zwt_guiji/article/details/80352507
 https://www.cnblogs.com/richard1015/p/7269905.html
 5.把mybatis-plus建立起来
 把angular的test建立起来
-加index页面，加页面标签（及静态？）
+加页面标签（及静态？）
 有一个错误需要前后端协同捕捉到【如果设计上有问题要解决设计的问题】：org.apache.shiro.authc.AccountException: 用户名不正确
                 	at com.greengiant.website.shiro.CustomRealm.doGetAuthenticationInfo(CustomRealm.java:46)
+自定义异常能否加到我的项目中
+
 前端返回值是否根据后端做一个枚举抽象？
 加menu的前端和API弄出来
 这些基本功能有了，开始搞：1.样式；2.组件
@@ -128,8 +131,6 @@ GitHub开源的10个超棒后台管理面板【含angular的】：https://blog.c
 1.写登录、权限控制代码；
 2.能够动态配置页面、用户权限；
 2.富文本编辑器编辑文章（前后端）、文章列表
-
-自定义异常能否加到我的项目中
 
 【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
 可配置的菜单、权限

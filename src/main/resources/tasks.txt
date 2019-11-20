@@ -18,6 +18,9 @@ https://www.cnblogs.com/nzbin/p/11392311.html
 
 鉴权搞成动态的
 
+两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
+把我以前没印象的WebSocketController干掉
+
 =======================================================
 
 周末：
@@ -146,6 +149,10 @@ netty是基础设施
 站内搜索是基础设施
 测一下CustomSchedulingConfigurer，并思考更多
 
+javascript Date format(js日期格式化)(转)【0.自己先根据调用方法试写一下，没那么容易；1.对比自己写的以及学习；2.作为我的基础设施；
+3.这段代码是不是正则的一个绝好的应用？5.注意观察补0是怎么完成的】：
+https://www.cnblogs.com/xianfengzhike/p/9656382.html
+
 把三门峡、管理后台一起灌通：https://github.com/eternalwt/angular_front.git
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
@@ -161,6 +168,8 @@ Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可�
 对着shiro源码再搞一轮。看源码搞清楚：
 1.为啥集成spring很方便；
 2.如果能为shiro贡献sso的代码，将会很好
+
+springboot整合微软的ad域，采用ldap的api来整合，实现用户登录验证：https://www.cnblogs.com/anlegou/p/10511683.html
 
 读代码：
 SecurityUtils.getSubject();

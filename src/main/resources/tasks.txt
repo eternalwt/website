@@ -7,9 +7,33 @@
 
 =======================================================
 
+鉴权搞成动态的
+3.把角色列表、勾选一级菜单权限弄起来（后端home）；
+4.把websocket弄好（权限）；
+https://blog.csdn.net/zwt_guiji/article/details/80352507
+https://www.cnblogs.com/richard1015/p/7269905.html
 解决富文本的height问题
 把excel的调通一版
 把websocket继续调试
+2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
+建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
+加menu的前端和API弄出来
+logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
+把list样式错乱的问题解决
+把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
+2.login后转到用户list；
+3.后端role的API加上；
+3.shiro的permission的API看一下；
+4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
+5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
+6.编辑文章
+7.重新组织前端文件夹和菜单
+8.加样式和前端模板（是否分成2个工程以增强灵活性？）
+9.搞2周技术债务，后端再搞2周
+10.前端文档再看一周，包括service等
+11.写更多基础设施
+12.单元测试
+dashboard：完成热力图、中国地图
 
 测试AuthServiceTest的2个问题：
 1.为啥有shiro相关的报错；
@@ -19,16 +43,13 @@
 
 周日：
 0.把打开的文档消灭一点；
-2.继续搞mybatis-plus；
 3.websocket；
 4.解决那个疑问；
-5.思考工作上面的问题：6个按钮的切换、tooltip
 
 JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
-1.把mybatis-plus调通、看完；
 2.material design那个文章看完
 3.文章列表写通
 4.注册写通
@@ -38,7 +59,6 @@ https://www.cnblogs.com/nzbin/p/11150811.html
 https://www.cnblogs.com/nzbin/p/11392311.html
 基于ng-bootstrap的框架？
 
-鉴权搞成动态的
 
 两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
 把我以前没印象的WebSocketController干掉
@@ -49,9 +69,6 @@ https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
 
 =======================================================
-
-周末：
-2.把环境监测多个按钮的时序再思考一下
 
 预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？
 flink计算能配hbase这样的数据库吗？示例场景？流式计算存储和hbase这样的存储怎么配合，是不是只用一种就可以了
@@ -76,33 +93,20 @@ https://blog.csdn.net/BADAO_LIUMANG_QIZHI/article/details/89482201
 mybatis-plus源码及doc：https://gitee.com/baomidou
 MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/9462582.html
 
-
-【发文章、文章列表（重要）【富文本编辑器】】
-建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
 两次登录失败则显示验证码
 2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
-3.把角色列表、勾选一级菜单权限弄起来（后端home）；
-4.把websocket弄好（权限）；
-https://blog.csdn.net/zwt_guiji/article/details/80352507
-https://www.cnblogs.com/richard1015/p/7269905.html
-5.把mybatis-plus建立起来
-把angular的test建立起来
 加页面标签（及静态？）
 有一个错误需要前后端协同捕捉到【如果设计上有问题要解决设计的问题】：org.apache.shiro.authc.AccountException: 用户名不正确
                 	at com.greengiant.website.shiro.CustomRealm.doGetAuthenticationInfo(CustomRealm.java:46)
 自定义异常能否加到我的项目中
 
 前端返回值是否根据后端做一个枚举抽象？
-加menu的前端和API弄出来
 这些基本功能有了，开始搞：1.样式；2.组件
 移植公司里面的http，增大代码健壮性
 继续搞基础设施，继续推敲每一段代码，提升自己
-logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 解决搭框架之后的第二个问题，怎么加速，能否到github上搜一些代码
 往前进一步：在我的paper-dashboard-angular-master项目中加一个简单的网站模板
 
-把list样式错乱的问题解决
-把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
 ng-bootstrap：
 https://github.com/ng-bootstrap/ng-bootstrap
 https://ng-bootstrap.github.io/#/home
@@ -129,7 +133,6 @@ mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper�
 
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
-angular-cli 引入ui组件库【admin-lte】：https://www.cnblogs.com/rancho-blog/p/6580185.html
 
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
@@ -142,19 +145,11 @@ foreach (在实现 mybatis in 语句查询时特别有用)：
 https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 1.前端mock；
-2.login后转到用户list；
-3.后端role的API加上；
-3.shiro的permission的API看一下；
-4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
-5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
-6.编辑文章
-7.重新组织前端文件夹和菜单
-8.加样式和前端模板（是否分成2个工程以增强灵活性？）
-9.搞2周技术债务，后端再搞2周
-10.前端文档再看一周，包括service等
-11.写更多基础设施
-12.单元测试
-dashboard：完成热力图、中国地图
+
+周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
+Layui elementUI iView
+https://adminlte.io/
+angular-cli 引入ui组件库【admin-lte】：https://www.cnblogs.com/rancho-blog/p/6580185.html
 
 自动化部署也是关键基础设施，没有这些建立不了优势
 
@@ -769,10 +764,6 @@ druid开启日志
 
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 4.测试
-
-周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
-Layui elementUI iView
-https://adminlte.io/
 
 其实前后端已经连的差不多了，jwt只是可选。下一步：把jwt、把EasyUI与静态模板的关系搞清楚
 https://blog.csdn.net/qq_22771739/article/details/83687175

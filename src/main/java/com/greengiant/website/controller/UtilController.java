@@ -59,4 +59,16 @@ public class UtilController {
         CaptchaUtil.getCode(req, resp);
     }
 
+//    public void export(HttpServletResponse response) {
+//        String filename = "aaa.xls";
+//        HSSFWorkbook wb = new HSSFWorkbook();
+//        HSSFSheet sheet = wb.createSheet("Sheet001");
+//
+//        response.setContentType("application/vnd.ms-excel");
+//        response.addHeader("Content-Disposition", "attachment;filename=" + filename);
+//        response.flushBuffer();
+//
+//        wb.write(response.getOutputStream());
+//    }
+
 }

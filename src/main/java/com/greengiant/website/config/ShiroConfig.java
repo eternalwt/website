@@ -59,6 +59,7 @@ public class ShiroConfig {
         //todo 运维，调试完后应该加上限制
         //todo swagger路径用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/menu/**", "anon");
+        filterChainDefinitionMap.put("/article/**", "anon"); // todo 后面要干掉
 
         filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");

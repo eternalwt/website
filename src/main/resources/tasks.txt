@@ -7,27 +7,54 @@
 
 =======================================================
 
+解决富文本的height问题
+把excel的调通一版
+把websocket继续调试
+
+测试AuthServiceTest的2个问题：
+1.为啥有shiro相关的报错；
+2.为啥要关闭WebSocketController的注解？
+
+把自己拉回来，过年之前还是继续搞功能和基础知识（JS设计模式）
+
+周日：
+0.把打开的文档消灭一点；
+2.继续搞mybatis-plus；
+3.websocket；
+4.解决那个疑问；
+5.思考工作上面的问题：6个按钮的切换、tooltip
+
+JMockit：http://jmockit.github.io/
+
+最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
+
 1.把mybatis-plus调通、看完；
 2.material design那个文章看完
-3.发表文章、文章列表写通
+3.文章列表写通
 4.注册写通
 
 Ng-Matero：基于 Angular Material 搭建的中后台管理框架：
 https://www.cnblogs.com/nzbin/p/11150811.html
 https://www.cnblogs.com/nzbin/p/11392311.html
+基于ng-bootstrap的框架？
 
 鉴权搞成动态的
 
 两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
 把我以前没印象的WebSocketController干掉
+Springboot 集成 Websocket (with Shiro)【从协议层面吃透，几种方式要都能用。用http协议测一把，观察请求的协议】：
+https://zhuanlan.zhihu.com/p/75869037
+https://blog.csdn.net/qq_34763130/article/details/87709848
+https://blog.csdn.net/tanleijin/article/details/82732493
+https://blog.csdn.net/zixiao217/article/details/53098700
 
 =======================================================
 
 周末：
-1.把第三方取数据调通；
 2.把环境监测多个按钮的时序再思考一下
-看postgresql资料及简牍数据库设计
-测试用timestamp进行时间比较的效率
+
+预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？
+flink计算能配hbase这样的数据库吗？示例场景？流式计算存储和hbase这样的存储怎么配合，是不是只用一种就可以了
 
 自增主键用好
 在自增的策略之下，怎么使用saveOrUpdateBatch
@@ -53,9 +80,9 @@ MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/
 【发文章、文章列表（重要）【富文本编辑器】】
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示
 两次登录失败则显示验证码
-2.把mock建立起来；
+2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；
-4.把websocket弄好；
+4.把websocket弄好（权限）；
 https://blog.csdn.net/zwt_guiji/article/details/80352507
 https://www.cnblogs.com/richard1015/p/7269905.html
 5.把mybatis-plus建立起来
@@ -72,6 +99,7 @@ https://www.cnblogs.com/richard1015/p/7269905.html
 继续搞基础设施，继续推敲每一段代码，提升自己
 logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 解决搭框架之后的第二个问题，怎么加速，能否到github上搜一些代码
+往前进一步：在我的paper-dashboard-angular-master项目中加一个简单的网站模板
 
 把list样式错乱的问题解决
 把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
@@ -88,6 +116,8 @@ https://blog.csdn.net/qq_33594101/article/details/80320762
 
 DAO和POJO包的命名有问题
 
+缓存和mybatis的配置再测一轮，然后搞源码分析
+
 mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper的用法；
 周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
 用IDEA的功能重构成泛型。ResultBean搞成泛型的ResuleBean<T>【关键是要看有没有效率、编程方面的提升，除了返回值还有哪里能用到。】，
@@ -96,6 +126,8 @@ mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper�
 把BaseException用起来，和全局异常处理结合
 把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
 看一下有没有必要找一个SpringUtil
+
+后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
 angular-cli 引入ui组件库【admin-lte】：https://www.cnblogs.com/rancho-blog/p/6580185.html
 
@@ -123,6 +155,8 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 11.写更多基础设施
 12.单元测试
 dashboard：完成热力图、中国地图
+
+自动化部署也是关键基础设施，没有这些建立不了优势
 
 GitHub开源的10个超棒后台管理面板【含angular的】：https://blog.csdn.net/m0_38106923/article/details/101050788
 
@@ -300,6 +334,7 @@ Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
 shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
+前后分离springboot2.1集成shiro使用redis做权限认证缓存：https://blog.csdn.net/huiyunfei/article/details/103176940
 
 webSocket：
 1.session的应用；
@@ -795,6 +830,8 @@ Token的接口及实现类族、Subject的接口及实现类族
 
 mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打。能否不同的环境加载不同的配置文件？】：https://www.cnblogs.com/blacksonny/p/6956949.html
 logback 配置详解：https://www.cnblogs.com/cb0327/p/5759441.html
+
+“IoC强调的对代码引用的控制权由调用方法转移到外部容器，在运行时通过某种方式注入进来，实现控制的反转，这大大降低了服务类之间的耦合度”。为什么说大大降低了服务的耦合度？一个最简单的例子：我的示例代码中，对接口进行了不同的实现后（例如shiro），替换的时候不需要动引用他们的类【再审视一下我的代码，看看我的shiro配置是不是底层都是DI】
 
 Spring Boot Junit单元测试【把@WebAppConfiguration注解和注解原理搞懂，尽量多理解一点】：
 https://www.cnblogs.com/jpfss/p/8422770.html

@@ -7,20 +7,21 @@
 
 =======================================================
 
+前端先搞一个组件库，然后再看主题
+
 鉴权搞成动态的
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；
+加menu的前端和API弄出来
+logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 4.把websocket弄好（权限）；
 https://blog.csdn.net/zwt_guiji/article/details/80352507
 https://www.cnblogs.com/richard1015/p/7269905.html
-解决富文本的height问题
+解决富文本的height问题（我用的quill版本是1.3.7，再试一下）
 把excel的调通一版
 把websocket继续调试
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
-加menu的前端和API弄出来
-logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
-把list样式错乱的问题解决
-把material design做一遍。把bootstrap3的admin-lte做一遍，然后替换成bootstrap4？
+
 2.login后转到用户list；
 3.后端role的API加上；
 3.shiro的permission的API看一下；

@@ -1,14 +1,22 @@
 ﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
+【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
+【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
-由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 【周末】开涛的书和JWT不能停
+java-jwt是com.auth0下面的，关系注意一下
+
+后端框架搭好后，下一步工作方向：
+1.前端框架及组件（依托工作）；
+2.scheme及解释器、数值符号计算继续；
+3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
 
 =======================================================
 
-前端先搞一个组件库，然后再看主题
-
+我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
+我的demo websocket鉴权的问题解决掉
+【加一个栏目表，然后把发表文章的功能彻底完善】
 鉴权搞成动态的
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；
 加menu的前端和API弄出来
@@ -16,11 +24,11 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 4.把websocket弄好（权限）；
 https://blog.csdn.net/zwt_guiji/article/details/80352507
 https://www.cnblogs.com/richard1015/p/7269905.html
-解决富文本的height问题（我用的quill版本是1.3.7，再试一下）
 把excel的调通一版
 把websocket继续调试
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
+把quill写通或者回退
 
 2.login后转到用户list；
 3.后端role的API加上；
@@ -34,7 +42,17 @@ https://www.cnblogs.com/richard1015/p/7269905.html
 10.前端文档再看一周，包括service等
 11.写更多基础设施
 12.单元测试
-dashboard：完成热力图、中国地图
+
+【本周】
+心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
+然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
+1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
+2.前端form单独写好，再考虑整合的问题；
+3.把前后端分离配好（前后端数据传递格式）【看一眼chime代码】；
+6.【把2017年写的几个controller整合掉，把现有功能都测一下】
+7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+8.【所有配置文件是怎么读取的】
+9.必备功能：分享、OAuth2、activiti
 
 测试AuthServiceTest的2个问题：
 1.为啥有shiro相关的报错；
@@ -45,21 +63,12 @@ dashboard：完成热力图、中国地图
 周日：
 0.把打开的文档消灭一点；
 3.websocket；
-4.解决那个疑问；
-
 JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
-2.material design那个文章看完
-3.文章列表写通
+3.文章列表写通（练习mybatis-plus的分页功能）
 4.注册写通
-
-Ng-Matero：基于 Angular Material 搭建的中后台管理框架：
-https://www.cnblogs.com/nzbin/p/11150811.html
-https://www.cnblogs.com/nzbin/p/11392311.html
-基于ng-bootstrap的框架？
-
 
 两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
 把我以前没印象的WebSocketController干掉
@@ -69,6 +78,26 @@ https://blog.csdn.net/qq_34763130/article/details/87709848
 https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
 
+做login功能
+
+0.快速在真实和mock之间切换，拆分任务；
+1.写登录、权限控制代码；
+2.能够动态配置页面、用户权限；
+2.富文本编辑器编辑文章（前后端）、文章列表
+
+【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
+可配置的菜单、权限
+webSocket是基础设施
+上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
+图片、文件上传是基础设施
+好用的前端控件是基础设施
+数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
+activiti、规则引擎是基础设施
+kafka和springbatch等是基础设施
+netty是基础设施
+定时任务是基础设施
+站内搜索是基础设施
+测一下CustomSchedulingConfigurer，并思考更多
 =======================================================
 
 预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？
@@ -101,21 +130,6 @@ MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/
                 	at com.greengiant.website.shiro.CustomRealm.doGetAuthenticationInfo(CustomRealm.java:46)
 自定义异常能否加到我的项目中
 
-前端返回值是否根据后端做一个枚举抽象？
-这些基本功能有了，开始搞：1.样式；2.组件
-移植公司里面的http，增大代码健壮性
-继续搞基础设施，继续推敲每一段代码，提升自己
-解决搭框架之后的第二个问题，怎么加速，能否到github上搜一些代码
-往前进一步：在我的paper-dashboard-angular-master项目中加一个简单的网站模板
-
-ng-bootstrap：
-https://github.com/ng-bootstrap/ng-bootstrap
-https://ng-bootstrap.github.io/#/home
-别人在github上的angular项目（特性教学）：
-https://github.com/PatrickJS/angular-starter
-https://github.com/Ismaestro/angular8-example-app
-https://github.com/ui-router/angular
-
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
 
@@ -134,7 +148,6 @@ mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper�
 
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
-
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
 https://www.jianshu.com/p/a749abbdb08d
@@ -147,43 +160,14 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 1.前端mock；
 
-周末：1.EasyUI；2.angular（工作上用到）；3.EasyUI使用angular版本；3.activiti工程配好
-Layui elementUI iView
-https://adminlte.io/
-angular-cli 引入ui组件库【admin-lte】：https://www.cnblogs.com/rancho-blog/p/6580185.html
+周末：1.activiti工程配好
 
 自动化部署也是关键基础设施，没有这些建立不了优势
-
-GitHub开源的10个超棒后台管理面板【含angular的】：https://blog.csdn.net/m0_38106923/article/details/101050788
-
-【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
-模板与angular的整合：模板的每个页面都对应angular的一个component（这个心里没底，单独找一下午开一个工程试一下）
-指导思想：用angular/material把后端和前端基础设施逻辑写好，美化界面是最后一步
-做login功能
-0.快速在真实和mock之间切换，拆分任务；
-1.写登录、权限控制代码；
-2.能够动态配置页面、用户权限；
-2.富文本编辑器编辑文章（前后端）、文章列表
-
-【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
-可配置的菜单、权限
-webSocket是基础设施
-上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
-图片、文件上传是基础设施
-好用的前端控件是基础设施
-数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
-activiti、规则引擎是基础设施
-kafka和springbatch等是基础设施
-netty是基础设施
-定时任务是基础设施
-站内搜索是基础设施
-测一下CustomSchedulingConfigurer，并思考更多
 
 javascript Date format(js日期格式化)(转)【0.自己先根据调用方法试写一下，没那么容易；1.对比自己写的以及学习；2.作为我的基础设施；
 3.这段代码是不是正则的一个绝好的应用？5.注意观察补0是怎么完成的】：
 https://www.cnblogs.com/xianfengzhike/p/9656382.html
 
-把三门峡、管理后台一起灌通：https://github.com/eternalwt/angular_front.git
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
@@ -204,13 +188,6 @@ springboot整合微软的ad域，采用ldap的api来整合，实现用户登录�
 读代码：
 SecurityUtils.getSubject();
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d
-
-java-jwt是com.auth0下面的，关系注意一下
-
-后端框架搭好后，下一步工作方向：
-1.前端框架及组件（依托工作）；
-2.scheme及解释器、数值符号计算继续；
-3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
 
 怎么确认我的禁session成功了？
 
@@ -337,31 +314,12 @@ webSocket：
 2.服务器如何保存客户端IP并找到客户端；
 3.如果出现异常情况，两端怎么判如何时需要关闭；
 
-Webpack、Less、Sass、Gulp、Bower以及这些工具的插件都是Node上开发的---@知乎陈龙
-前端现在有npm （包管理）。而npm是随同Node.js一起安装的。所以前端(vue/angular/react)在开发环境下都是离不开Node.js的(编译、打包等等)
-有了npm，你怎么得到要用的包/模块信息呢？
-初识npm：https://www.cnblogs.com/john-sr/p/6036652.html
-谈一谈NPM：https://cloud.tencent.com/developer/news/216362
-npm完整的教程：http://caibaojian.com/npm/getting-started/what-is-npm.html
-Node.js + Express + Springboot实现前后端分离架构：https://my.oschina.net/u/1185936/blog/1523088
-基于 Node.js 平台，快速、开放、极简的 Web 开发框架：http://www.expressjs.com.cn/
-要能搞清楚前端框架对生产力的提升：1.可以避免写很多类似（重复）的代码，例如双向绑定就可以避免很多取值的代码。搞懂框架就可以少写好多代码
+由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 程序员直播还是要继续
 基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
 
-最近学到的前后端分离知识：https://www.cnblogs.com/Java3y/p/11320606.html
 【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
-下一问题：下载angular版的easyUI界面如何跑起来？（ng serve）
-把前端计划变更为前端技术选型【这是非常关键的战略步骤。少即是多，如何能找到正确的选型？】。模板与组件之间的关系搞清楚【看代码对比就OK了，先把我下载的那个看了】。
-真的弄明白，才有可能性
-https://www.imooc.com/article/37896
-网上大部分选型的文章思考深度不够，没有解决快速灵活使用模板开发的问题
-比较easyui各个版本的异同，可以提升理解
-前端框架与bootstrap等模板的整合
-ng-zorro也是前端可视化技术，跟EasyUI等对比一下
-【一旦把这个问题想清楚，能够根据场景组合出最优化的方案，后端再精进几个月，就差不多了】一定要对自己干的事有非常清晰的认识
-【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
@@ -384,7 +342,6 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 13.继续流式计算和人工智能
 可以搞session的缓存了
 
-我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
 timestamp的使用还要精进，例如比较大小
 再思考一下上次、下载原理，springmvc需要精进
 项目启动时数据库脚本自动执行，这个再思考一下
@@ -395,7 +352,7 @@ timestamp的使用还要精进，例如比较大小
 3.找到合适的模版（知乎上问，bootstrap的，最新的）；
 4.完整学习一次springmvc教程（准备活动，找到兼职美工）；
 2.mybatis：（再思考chime的数据库注解）；
-5.把前后端连起来（写的时候练习一下前后端分离，前端用SublimeText3）；
+5.把前后端连起来（写的时候练习一下前后端分离）；
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；
 10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术
@@ -416,21 +373,6 @@ DefaultFilter 枚举类原理值得仔细分析
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
-
-对比一下easyui和ng-zorro
-
-【本周】
-1.单元测试；
-2.ajax写好（先用jQuery的）
-心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
-然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
-1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
-2.前端form、ajax单独写好，再考虑整合的问题【前端ajax先配好】；
-3.把前后端分离配好（ajax、前后端数据传递格式）【看一眼chime代码】；
-6.【把2017年写的几个controller整合掉，把现有功能都测一下】
-7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
-8.【所有配置文件是怎么读取的】
-9.必备功能：分享、OAuth2、activiti
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程

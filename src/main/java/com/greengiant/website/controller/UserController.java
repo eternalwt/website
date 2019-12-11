@@ -7,9 +7,10 @@ import com.greengiant.website.pojo.vo.AddUserVo;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
@@ -31,6 +32,8 @@ public class UserController{
         }
         //2.分别在user和role关联表里面写数据
         userService.addUser(userVo);
+
+        // todo 注册后如何自动登录？
 
         //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
 

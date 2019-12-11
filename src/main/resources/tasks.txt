@@ -14,18 +14,19 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
-我现在的demo还有些问题：1.有些代码没有放入service里面，controller直接调用的dao；
+Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
+https://blog.csdn.net/tanqidong1992/article/details/48026491
+https://www.cnblogs.com/to-be-continue/p/8260080.html
+https://www.cnblogs.com/handsomeBoys/p/7602084.html
+https://www.cnblogs.com/grasp/p/11813674.html
+
 我的demo websocket鉴权的问题解决掉
 【加一个栏目表，然后把发表文章的功能彻底完善】
-鉴权搞成动态的
+鉴权搞成动态的，可配置的菜单、权限
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；
 加menu的前端和API弄出来
 logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
-4.把websocket弄好（权限）；
-https://blog.csdn.net/zwt_guiji/article/details/80352507
-https://www.cnblogs.com/richard1015/p/7269905.html
 把excel的调通一版
-把websocket继续调试
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
 把quill写通或者回退
@@ -53,6 +54,9 @@ https://www.cnblogs.com/richard1015/p/7269905.html
 7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
+3.文章列表写通（练习mybatis-plus的分页功能）
+4.注册写通
+@Mapper注解都没整明白
 
 测试AuthServiceTest的2个问题：
 1.为啥有shiro相关的报错；
@@ -60,15 +64,10 @@ https://www.cnblogs.com/richard1015/p/7269905.html
 
 把自己拉回来，过年之前还是继续搞功能和基础知识（JS设计模式）
 
-周日：
 0.把打开的文档消灭一点；
-3.websocket；
 JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
-
-3.文章列表写通（练习mybatis-plus的分页功能）
-4.注册写通
 
 两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
 把我以前没印象的WebSocketController干掉
@@ -85,8 +84,6 @@ https://blog.csdn.net/zixiao217/article/details/53098700
 2.能够动态配置页面、用户权限；
 2.富文本编辑器编辑文章（前后端）、文章列表
 
-【把界面搞一版，继续以基础设施为抓手】先搞一般精美的页面，在这个基础上搞基础设施，然后再看整体页面有没有问题
-可配置的菜单、权限
 webSocket是基础设施
 上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
 图片、文件上传是基础设施
@@ -98,6 +95,7 @@ netty是基础设施
 定时任务是基础设施
 站内搜索是基础设施
 测一下CustomSchedulingConfigurer，并思考更多
+
 =======================================================
 
 预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？
@@ -105,7 +103,7 @@ flink计算能配hbase这样的数据库吗？示例场景？流式计算存储�
 
 自增主键用好
 在自增的策略之下，怎么使用saveOrUpdateBatch
-【用mybatis-plus建新表，并逐渐改造旧表】【先用起来再地毯式学习，否则项目迟迟没有进展】
+【用mybatis-plus改造旧表，配置看懂】
 Mybatis-Plus的使用（三）——注解与配置文件：https://blog.csdn.net/ck457897564/article/details/100173959
 然后搞AutoGenerator
 mybatis-plus-boot-starter代码分析
@@ -143,11 +141,12 @@ mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper�
 我们系统里面的返回值ResultBean<?>对应的success等方法根本没用到类型信息，用的object
 再整一下包的划分，还可以建的包名：enums、constant、bean
 把BaseException用起来，和全局异常处理结合
-把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
+
 看一下有没有必要找一个SpringUtil
 
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
+把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
 https://www.jianshu.com/p/a749abbdb08d
@@ -163,10 +162,6 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 周末：1.activiti工程配好
 
 自动化部署也是关键基础设施，没有这些建立不了优势
-
-javascript Date format(js日期格式化)(转)【0.自己先根据调用方法试写一下，没那么容易；1.对比自己写的以及学习；2.作为我的基础设施；
-3.这段代码是不是正则的一个绝好的应用？5.注意观察补0是怎么完成的】：
-https://www.cnblogs.com/xianfengzhike/p/9656382.html
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
@@ -281,7 +276,6 @@ https://blog.csdn.net/liiuijkiuu/article/details/53945062
 SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
 0.把我的CustomRealm里面的todo再搞一次
-1.前端封装jwt【用interceptor接收刷新的token。怎么发请求时带token？】
 2.还是要能直接调试spring的IoC容器，这样才能进一步分析shiro的加载（带着这些问题再精进一轮）
 多调试，通过调试来提升自己的框架能力还有很长的路要走。这是个能拉开差距的非常关键的能力。
 怎么能看出默认的策略，例如：this.authenticationStrategy = new AtLeastOneSuccessfulStrategy();

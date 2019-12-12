@@ -1,5 +1,6 @@
 package com.greengiant.website.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.greengiant.website.pojo.model.UserRole;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -8,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Mapper
-public interface UserRoleMapper {
+public interface UserRoleMapper extends BaseMapper<UserRole> {
     @Delete({
         "delete from auth_user_role",
         "where id = #{id,jdbcType=BIGINT}"

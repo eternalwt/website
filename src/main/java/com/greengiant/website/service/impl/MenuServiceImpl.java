@@ -1,5 +1,6 @@
 package com.greengiant.website.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.greengiant.website.dao.MenuMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.Menu;
@@ -12,17 +13,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MenuServiceImpl implements MenuService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements MenuService {
 
     @Autowired
-    private MenuMapper menuDao;
+    private MenuMapper menuMapper;
 
     @Autowired
     private UserRoleMapper userRoleMapper;
 
     @Override
     public List<Menu> selectByRole(String roleStr) {
-        return menuDao.selectByRole(roleStr);
+        return menuMapper.selectByRole(roleStr);
     }
 
     @Override

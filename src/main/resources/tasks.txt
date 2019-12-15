@@ -14,7 +14,11 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
-【首先完成：后端mybatis-plus的改造】
+把angular material 2的提示框写通
+
+排查我还有哪些基础设施没写【先把定时任务的改变时间写好，测一下CustomSchedulingConfigurer，并思考更多】
+
+周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
 
 Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
 https://blog.csdn.net/tanqidong1992/article/details/48026491
@@ -22,21 +26,20 @@ https://www.cnblogs.com/to-be-continue/p/8260080.html
 https://www.cnblogs.com/handsomeBoys/p/7602084.html
 https://www.cnblogs.com/grasp/p/11813674.html
 
-我的demo websocket鉴权的问题解决掉
 【加一个栏目表，然后把发表文章的功能彻底完善】
 鉴权搞成动态的，可配置的菜单、权限
-3.把角色列表、勾选一级菜单权限弄起来（后端home）；
+3.把角色列表、勾选一级菜单权限弄起来（后端home）；3.后端role的API加上；
 加menu的前端和API弄出来
 logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 把excel的调通一版
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
+4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
 把quill写通或者回退
 
-2.login后转到用户list；
-3.后端role的API加上；
+2.login后转到后端主页
+用户list；
 3.shiro的permission的API看一下；
-4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
 6.编辑文章
 7.重新组织前端文件夹和菜单
@@ -47,9 +50,8 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 12.单元测试
 
 【本周】
-心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
-然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
-1.把ResultUtils用起来；5.把添加用户、角色等基本功能写好（Service、Controller）
+5.把添加用户/注册写通、角色等基本功能写好（Service、Controller）
+1.把ResultUtils用起来；
 2.前端form单独写好，再考虑整合的问题；
 3.把前后端分离配好（前后端数据传递格式）【看一眼chime代码】；
 6.【把2017年写的几个controller整合掉，把现有功能都测一下】
@@ -57,7 +59,6 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
 3.文章列表写通（练习mybatis-plus的分页功能）
-4.注册写通
 @Mapper注解都没整明白
 
 测试AuthServiceTest的2个问题：
@@ -71,7 +72,7 @@ JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
-两套webSocket都调通（先用单元测试一端一端调通）用我安装的jmeter
+webSocket：原生方式已调通，继续看原理，继续调试sockJS的方式（可以用我安装的jmeter）
 把我以前没印象的WebSocketController干掉
 Springboot 集成 Websocket (with Shiro)【从协议层面吃透，几种方式要都能用。用http协议测一把，观察请求的协议】：
 https://zhuanlan.zhihu.com/p/75869037
@@ -79,16 +80,15 @@ https://blog.csdn.net/qq_34763130/article/details/87709848
 https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
 
-做login功能
-
 0.快速在真实和mock之间切换，拆分任务；
 1.写登录、权限控制代码；
 2.能够动态配置页面、用户权限；
-2.富文本编辑器编辑文章（前后端）、文章列表
+2.富文本编辑器编辑文章（前后端）、文章列表(plus的分页功能)
 
+【后端基础设施】
 webSocket是基础设施
-上传、下载、word、pdf，这些都是基础设施，富文本编辑器是基础设置
-图片、文件上传是基础设施
+上传、下载（含zip）是基础设施
+word、pdf预览是基础设施
 好用的前端控件是基础设施
 数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
 activiti、规则引擎是基础设施
@@ -96,7 +96,14 @@ kafka和springbatch等是基础设施
 netty是基础设施
 定时任务是基础设施
 站内搜索是基础设施
-测一下CustomSchedulingConfigurer，并思考更多
+自动化部署也是关键基础设施，没有这些建立不了优势
+基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
+【前端基础设施】
+富文本编辑器是基础设置
+好用的后端管理框架，搭配好的组件库
+按钮、图标、菜单管理
+图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
+怎么使用好图标
 
 =======================================================
 
@@ -163,8 +170,6 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 1.前端mock；
 
 周末：1.activiti工程配好
-
-自动化部署也是关键基础设施，没有这些建立不了优势
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
@@ -275,6 +280,7 @@ https://blog.csdn.net/qq_33842795/article/details/80895594
 https://blog.csdn.net/liiuijkiuu/article/details/53945062
 【上面这个应该是可以配置成功jwt的，配置试一下。理论上来说：应该先debug登录后每一次请求的cookie验证，然后再搞jwt的。这一步补上】
 到了JWT感觉不得不做源码分析了
+【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
 
 SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
@@ -314,9 +320,8 @@ webSocket：
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 程序员直播还是要继续
-基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
-
-【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
+心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
+然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
@@ -328,7 +333,7 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 挤掉其他用户或者能同时登陆（现在的逻辑应该是会挤掉把？用2个浏览器测一下）
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
 3.查看切换redis的难度。对比各cacheManager
-4.看看还有没有todo，过掉
+4.todo过掉
 6.Spring shiro 初次使用小结【里面讲了如何设置cookie名称】：https://www.cnblogs.com/Weagle/p/7908592.html
 7.mybatis再根据这个文章测一下：https://blog.csdn.net/qq_37598011/article/details/80669608
 8.消灭5个shiro文档
@@ -366,10 +371,7 @@ OAuth2要做好
 DefaultFilter 枚举类原理值得仔细分析
 
 密码前端传给后端之前就应该加密
-基础设施：
-按钮、图标、菜单管理
-图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
-怎么使用好图标
+
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程

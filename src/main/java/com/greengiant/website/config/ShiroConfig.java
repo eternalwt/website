@@ -58,6 +58,7 @@ public class ShiroConfig {
         // todo 用一个表保存role和有权限的页面之间的对应关系，既用于加载页面，又用于鉴权。但是这样好像没用到permission表？再考虑一下
         //todo 运维，调试完后应该加上限制
         //todo swagger路径用2个*配置也不行，再思考一下
+        filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
         filterChainDefinitionMap.put("/article/**", "anon"); // todo 后面要干掉
 

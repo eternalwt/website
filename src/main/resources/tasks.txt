@@ -61,6 +61,17 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 3.文章列表写通（练习mybatis-plus的分页功能）
 @Mapper注解都没整明白
 
+2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
+3.用Angular或者vue版的前端；
+https://www.cnblogs.com/jingmoxukong/p/10239821.html
+http://www.jeasyui.cn/download.html
+整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
+给大家推荐8个SpringBoot精选项目：https://cloud.tencent.com/developer/article/1197203
+最值得拥有的免费Bootstrap后台管理模板：https://zhuanlan.zhihu.com/p/39945434
+web-flash: https://github.com/enilu/web-flash
+10个你值得收藏的牛逼开源后台控制面板：https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247487067&idx=1&sn=83241fa91f95b54c59468c9fecc4ed72&chksm=9bd0a3c3aca72ad56d7c39708d4b068d900bd7b3a64d066dad54b39c65e2db9ad7b4cfab6b22&scene=21#wechat_redirect
+有springboot+vue+shiro的，那angular的呢？自己实现一下
+
 测试AuthServiceTest的2个问题：
 1.为啥有shiro相关的报错；
 2.为啥要关闭WebSocketController的注解？
@@ -88,8 +99,6 @@ https://blog.csdn.net/zixiao217/article/details/53098700
 【后端基础设施】
 webSocket是基础设施
 上传、下载（含zip）是基础设施
-word、pdf预览是基础设施
-好用的前端控件是基础设施
 数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
 activiti、规则引擎是基础设施
 kafka和springbatch等是基础设施
@@ -100,6 +109,13 @@ netty是基础设施
 基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
 【前端基础设施】
 富文本编辑器是基础设置
+word、pdf预览是基础设施
+Angular 5+ PDF Viewer：https://www.npmjs.com/package/ng2-pdf-viewer
+WebViewer：
+https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
+这个里面也提到了很多基础设施：https://segmentfault.com/a/1190000011562305
+
+好用的前端控件是基础设施
 好用的后端管理框架，搭配好的组件库
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
@@ -487,7 +503,6 @@ springboot + shiro之登录人数限制、登录判断重定向、session时间�
 【周末剩余事项】
 2.JWT（postman也是可以测试的）
 3.继续看shiro文档，反复看和整理（一个专题一个专题彻底灭掉）
-4.easyui继续
 得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
 禁止账号多点登录或者重复登录：
 https://blog.csdn.net/sunsgne_ac/article/details/79289770
@@ -509,14 +524,6 @@ https://www.sundayfine.com/jwt-refresh-token/
 cacheManager专题分析一下
 RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) 为啥这个有参构造函数能走进来？搞懂这一点至关重要
 把CacheManager搞成static的：https://www.cnblogs.com/imsoft/p/5895905.html
-
-jQuery EasyUI 教程：https://www.runoob.com/jeasyui/jqueryeasyui-tutorial.html
-前端UI框架选择区别对比推荐
-前端路径：http://localhost:8080/static/index.html
-jQuery发送请求：http://www.w3school.com.cn/jquery/ajax_post.asp
-POSTMAN之如何获取COOKIE：https://www.cnblogs.com/yecaiye/p/10251747.html
-如何在Postman中使用cookie：https://blog.csdn.net/niedewang/article/details/80481652
-Postman是可以测试文件参数的，在Body form-data里面
 
 十一之前把项目搞好，然后开始学习脚本语言和机器学习
 战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
@@ -568,6 +575,7 @@ https://blog.csdn.net/niki_yeun/article/details/81335833
 https://blog.csdn.net/zhuyu19911016520/article/details/52573072
 https://blog.csdn.net/dabai_cai/article/details/78154993
 https://blog.csdn.net/lpy1239064101/article/details/79185170
+user_group_user、user_group、user_group_role表的作用：https://zhuanlan.zhihu.com/p/97035035
 2.RBAC新解：基于资源的权限管理(Resource-Based Access Control)：
 https://my.oschina.net/zjllovecode/blog/1601157【看看什么情况下适合绕过role】
 https://blog.csdn.net/youni808/article/details/25612271
@@ -639,8 +647,6 @@ Tkmybatis是在mybatis框架的基础上提供了很多工具，让开发更加�
 【单独击破1】
 realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
 0.复习一下现有代码【同时，再回过头来看，添加的权限相关的代码确实没多少，很简单，验证一下】
-2.把EasyUI看掉；
-3.再决定怎么整合
 【单独击破2】
 1.spring框架源码分析；【究竟应该直接读代码，还是先看熟教程，还是两者结合？】
 2.logback源码（官网那个教程）
@@ -678,7 +684,6 @@ Mockito 2 : https://github.com/mockito/mockito/wiki/What%27s-new-in-Mockito-2
 
 shiro需要搞懂的2点：
 1.权限注解；2.与web集成及拦截器；
-easyui发ajax写通（再看RxJS的优势）
 Shiro过滤器：https://www.cnblogs.com/xk920/p/10827025.html
 Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
 通常自定义Realm需要继承AuthorizingRealm，这样既可以提供身份认证的自定义方法，也可以实现授权的自定义方法。
@@ -707,7 +712,7 @@ druid开启日志
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 4.测试
 
-其实前后端已经连的差不多了，jwt只是可选。下一步：把jwt、把EasyUI与静态模板的关系搞清楚
+其实前后端已经连的差不多了，jwt只是可选
 https://blog.csdn.net/qq_22771739/article/details/83687175
 http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
@@ -1115,9 +1120,6 @@ https://blog.csdn.net/bailinbbc/article/details/76446594
 
 这种写法没有autowire，思考为什么可以成功：https://blog.csdn.net/pingweicheng/article/details/80593258
 
-看看阿里云
-搞点日本的文具过来卖
-
 mysql的geometry扩展：
 https://www.linuxidc.com/Linux/2018-09/154191.htm
 https://www.jianshu.com/p/d6bf587389f1
@@ -1130,23 +1132,11 @@ mybatis plus里面 A extends DataEntity<A>的写法
 https://www.cnblogs.com/linma/p/7845124.html
 https://www.cnblogs.com/gexiaoshan/p/6429888.html
 
-EasyUI【比较EasyUI和bootstrap等不同的技术】：
-2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
-3.用Angular或者vue版的前端；
-https://www.cnblogs.com/jingmoxukong/p/10239821.html
-http://www.jeasyui.cn/download.html
-整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
-给大家推荐8个SpringBoot精选项目：https://cloud.tencent.com/developer/article/1197203
-最值得拥有的免费Bootstrap后台管理模板：https://zhuanlan.zhihu.com/p/39945434
-web-flash: https://github.com/enilu/web-flash
-10个你值得收藏的牛逼开源后台控制面板：https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247487067&idx=1&sn=83241fa91f95b54c59468c9fecc4ed72&chksm=9bd0a3c3aca72ad56d7c39708d4b068d900bd7b3a64d066dad54b39c65e2db9ad7b4cfab6b22&scene=21#wechat_redirect
-有springboot+vue+shiro的，那angular的呢？自己实现一下
-
 简单快速的用SpringBoot访问静态资源（图片、html）【用thymeleaf的方式】：https://blog.csdn.net/qq_36481052/article/details/79075214
 Thymeleaf 模板引擎简介 与 Spring Boot 整合入门：https://blog.csdn.net/wangmx1993328/article/details/81054474
 用yml、properties文件配置静态页面（这种方式更优雅）：https://blog.csdn.net/Mr_yangzc/article/details/80805035
 
-@EnableAsync
+@EnableAsync（进一步简化异步的写法）
 
 shiro需要搞清楚的流程：
 2.CredentialsMatcher使用流程

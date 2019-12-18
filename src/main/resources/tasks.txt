@@ -16,7 +16,7 @@ java-jwt是com.auth0下面的，关系注意一下
 
 把angular material 2的提示框写通
 
-排查我还有哪些基础设施没写【先把定时任务的改变时间写好，测一下CustomSchedulingConfigurer，并思考更多】
+排查我还有哪些基础设施没写
 
 周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
 
@@ -83,7 +83,7 @@ JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
-webSocket：原生方式已调通，继续看原理，继续调试sockJS的方式（可以用我安装的jmeter）
+webSocket：原生方式已调通，继续看原理（阅读代码），继续调试sockJS的方式（可以用我安装的jmeter）
 把我以前没印象的WebSocketController干掉
 Springboot 集成 Websocket (with Shiro)【从协议层面吃透，几种方式要都能用。用http协议测一把，观察请求的协议】：
 https://zhuanlan.zhihu.com/p/75869037
@@ -341,7 +341,14 @@ webSocket：
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
-springboot基于spring task实现动态定时任务(@Scheduled)：https://blog.csdn.net/shan165310175/article/details/98478970
+springboot基于spring task实现动态定时任务(@Scheduled)
+springboot自带定时器实现定时任务的开启关闭以及定时时间可以配置：
+https://blog.csdn.net/weixin_37591536/article/details/82150933
+我实验成功的是下面这种方法：
+https://www.cnblogs.com/je-ge/p/6129667.html
+https://blog.csdn.net/shan165310175/article/details/98478970
+读更多定时任务代码：https://www.cnblogs.com/BINGJJFLY/p/7485599.html
+
 
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）

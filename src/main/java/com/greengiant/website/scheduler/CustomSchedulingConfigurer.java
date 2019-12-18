@@ -16,7 +16,7 @@ public class CustomSchedulingConfigurer implements SchedulingConfigurer {
     private static String cron = "0 0/15 * * * ?";
 
     private static void setCron(int minute) {
-        cron = "0 0/" + String.valueOf(minute) + " * * * ?";
+        cron = "0 0/" + minute + " * * * ?";
     }
 
     @Override
@@ -25,7 +25,7 @@ public class CustomSchedulingConfigurer implements SchedulingConfigurer {
             new Runnable() {
                 @Override
                 public void run() {
-                    // 定时如无
+                    // todo 具体定时任务的代码写在这里
                 }
             },
             new Trigger() {

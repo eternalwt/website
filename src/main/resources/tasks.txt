@@ -14,6 +14,8 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
+
 把angular material 2的提示框写通
 
 排查我还有哪些基础设施没写
@@ -114,6 +116,7 @@ Angular 5+ PDF Viewer：https://www.npmjs.com/package/ng2-pdf-viewer
 WebViewer：
 https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
 这个里面也提到了很多基础设施：https://segmentfault.com/a/1190000011562305
+前端setTimeout、setInterval是基础设施
 
 好用的前端控件是基础设施
 好用的后端管理框架，搭配好的组件库
@@ -308,6 +311,9 @@ SecurityManager可以setRealms，也可以通过setAuthenticator来设置多real
 1.类之间的继承各完成的任务；
 2.类之间的组合关系
 
+再思考一次包的组织，如果包太多是不是再加一个层级
+按照阿里的文档，至少应该有Vo和Query两类（两个方向）数据传输对象
+
 BasicHttpAuthenticationFilter 与 FormAuthenticationFilter 等的区别
 
 Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
@@ -448,6 +454,8 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 跟媳妇聊天意识到的2个问题：
 1.我的熟练程度还不够，还要更多building blocks，还要多写；
 2.要看钉钉等有什么创新功能
+
+密码更新提醒
 
 springboot-plus：
 https://gitee.com/xiandafu/springboot-plus

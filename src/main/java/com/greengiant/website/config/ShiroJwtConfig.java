@@ -1,6 +1,8 @@
 package com.greengiant.website.config;
 
+import com.greengiant.website.dao.MenuMapper;
 import com.greengiant.website.filter.JwtFilter;
+import com.greengiant.website.service.MenuService;
 import com.greengiant.website.shiro.CustomJwtRealm;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
@@ -13,6 +15,7 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -23,6 +26,7 @@ import java.util.Map;
 
 @Configuration
 public class ShiroJwtConfig {
+
     private static final String JWT_FILTER_NAME = "jwt";
 
     /**
@@ -87,6 +91,29 @@ public class ShiroJwtConfig {
         definitionMap.put("/auth/**", "anon");
         definitionMap.put("/websocket/**", "anon");
         definitionMap.put("/**", JWT_FILTER_NAME);
+
+        // todo 思考如何让子目录都能放过（数据库表需要加字段吗？）
+        // todo 1.加载顺序；2.如何缓存
+        // todo 3.用最原始的方式读取数据库表
+         //List<Menu> menuList = menuService.list();
+//        String resource = "mybatis-config.xml";
+//        SqlSession session = null;
+//        try {
+//        InputStream inputStream = Resources.getResourceAsStream(resource);
+//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+//        session = sqlSessionFactory.openSession();
+//            MenuMapper mapper = session.getMapper(MenuMapper.class);
+//            mapper.selectAll();
+//            //mapper.addEmp(employee);
+//            session.commit();
+//        }
+//        catch(Exception ex) {
+//            // todo
+//            System.out.println(ex);
+//        }finally {
+//            session.close();
+//        }
+
         return definitionMap;
     }
 

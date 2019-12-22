@@ -69,14 +69,15 @@ public class LoginController {
                         @RequestParam String password,
                         @RequestParam(required = false, defaultValue = "false") boolean isRememberMe,
                         HttpServletResponse response) {
-        // todo jwt怎么做rememberMe功能？
+        // todo jwt怎么做rememberMe功能？是否把isRememberMe封进token？
         // 从SecurityUtils里边创建一个 subject
-        // todo 要把密码封进去
+        // todo 要把密码封进去。怎么又感觉不需要？再看jwt
         String token = JWTUtil.createToken(username, password);
         loginService.jwtLogin(token);
         response.setHeader("x-auth-token", token);
         //根据权限，指定返回数据
-        return ResultUtils.success(roleService.getRole(username));
+//        return ResultUtils.success(roleService.getRole(username));
+        return ResultUtils.success(token);
     }
 
     /**

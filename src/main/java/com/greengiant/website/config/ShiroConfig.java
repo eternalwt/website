@@ -18,7 +18,6 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import java.util.Arrays;
@@ -26,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 @Slf4j
-@Configuration
+//@Configuration
 public class ShiroConfig {
 
     /**

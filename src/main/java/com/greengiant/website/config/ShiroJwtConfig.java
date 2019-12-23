@@ -2,8 +2,12 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.dao.MenuMapper;
 import com.greengiant.website.filter.JwtFilter;
-import com.greengiant.website.service.MenuService;
+import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.shiro.CustomJwtRealm;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.mgt.DefaultSessionStorageEvaluator;
 import org.apache.shiro.mgt.DefaultSubjectDAO;
@@ -15,13 +19,14 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.DefaultWebSubjectFactory;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
 import javax.servlet.Filter;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -96,23 +101,25 @@ public class ShiroJwtConfig {
         // todo 1.加载顺序；2.如何缓存
         // todo 3.用最原始的方式读取数据库表
          //List<Menu> menuList = menuService.list();
-//        String resource = "mybatis-config.xml";
-//        SqlSession session = null;
-//        try {
-//        InputStream inputStream = Resources.getResourceAsStream(resource);
-//        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//        session = sqlSessionFactory.openSession();
-//            MenuMapper mapper = session.getMapper(MenuMapper.class);
-//            mapper.selectAll();
-//            //mapper.addEmp(employee);
+        String resource = "mybatis-config.xml";
+        SqlSession session = null;
+        try {
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+            sqlSessionFactory.getConfiguration().addMapper(MenuMapper.class);
+            session = sqlSessionFactory.openSession();
+            MenuMapper mapper = session.getMapper(MenuMapper.class);
+            List<Menu> menuList = mapper.selectAll();
+            System.out.println(menuList.size());
 //            session.commit();
-//        }
-//        catch(Exception ex) {
-//            // todo
-//            System.out.println(ex);
-//        }finally {
+        }
+        catch(Exception ex) {
+            // todo
+            System.out.println(ex);
+        }finally {
 //            session.close();
-//        }
+            System.out.println("aaa");
+        }
 
         return definitionMap;
     }

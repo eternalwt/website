@@ -31,7 +31,7 @@
 
 <!--    别名定义 -->
 <!--    <typeAliases>-->
-<!--        <typeAlias alias="pageAccessURL" type="com.lgm.mybatis.model.PageAccessURL" />-->
+<!--        <typeAlias alias="pageAccessURL" type="com.greengiant.website.dao" />-->
 <!--    </typeAliases>-->
 
     <environments default="dev">

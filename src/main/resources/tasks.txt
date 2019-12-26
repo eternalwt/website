@@ -18,19 +18,24 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
-用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算）
+【过年期间有空建立起来】
+用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
-
+把mapper里面多余的方法先注掉
 1.用户绑定角色、用户角色列表做出来
 2.动态分配权限
 3.todo再清一轮
 先把Query和Vo建立起来
-
+1.把redis做起来，我已经装了windows版的redis
+2.确认我现在能否方便切换到redis，以此来提升代码模块化程度和我的认知
+3.确认关闭缓存后，我的代码会受多大影响。如果JVM内存不足的时候，如何砍掉ehcache的内存？进一步学习内存一致性问题
 为ShiroConfig和ShiroJwtConfig抽公共函数【现在改动还是太麻烦了】
+做通一个分页mybatis-plus：文章、用户
+修改密码
 
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
@@ -120,14 +125,16 @@ https://blog.csdn.net/zixiao217/article/details/53098700
 
 【后端基础设施】
 webSocket是基础设施
+单点登录、OAuth2是基础设施
 上传、下载（含zip）是基础设施
-数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
 activiti、规则引擎是基础设施
 kafka和springbatch等是基础设施
 netty是基础设施
 定时任务是基础设施
-站内搜索是基础设施
+站内搜索是基础设施、ES/ELK等是基础设施
 自动化部署也是关键基础设施，没有这些建立不了优势
+日志框架、鉴权框架、ORM框架、springboot框架是基础设施
+流式计算及redis缓存、分布式计算是基础设施
 基础设施：科学计算库、图计算库：https://www.infoq.cn/article/2018/03/propelml-js-machine-learning
 【前端基础设施】
 富文本编辑器是基础设置
@@ -137,17 +144,24 @@ WebViewer：
 https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
 这个里面也提到了很多基础设施：https://segmentfault.com/a/1190000011562305
 前端setTimeout、setInterval是基础设施
+canvas及对应的库是基础设施
+标签云（tag云）等技术是基础设施
+好用的前端控件/组件、模板主题是基础设施
+数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
 
-好用的前端控件是基础设施
-好用的后端管理框架，搭配好的组件库
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
 
 =======================================================
 
-预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？
+预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？是否需要时序数据库InfluxDB？
 flink计算能配hbase这样的数据库吗？示例场景？流式计算存储和hbase这样的存储怎么配合，是不是只用一种就可以了
+
+jwt记住密码、修改密码及重新生成token等问题，把我的cookie文档复习一遍：
+https://blog.csdn.net/u010176097/article/details/80706012
+https://www.jianshu.com/p/792f71bb52dd
+再思考一下我的token生成规则有没有问题、是否需要缓存
 
 自增主键用好
 在自增的策略之下，怎么使用saveOrUpdateBatch

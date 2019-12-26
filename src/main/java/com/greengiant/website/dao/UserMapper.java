@@ -16,14 +16,14 @@ public interface UserMapper extends BaseMapper<User> {
     })
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert({
-        "insert into auth_user (id, user_name, ",
-        "password, password_salt)",
-        "values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, ",
-        "#{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR})"
-    })
-    int insert(User record);
+//    @Options(useGeneratedKeys = true, keyProperty = "id")
+//    @Insert({
+//        "insert into auth_user (id, user_name, ",
+//        "password, password_salt)",
+//        "values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, ",
+//        "#{password,jdbcType=VARCHAR}, #{passwordSalt,jdbcType=VARCHAR})"
+//    })
+//    int insert(User record);
 
     @Select({
         "select",

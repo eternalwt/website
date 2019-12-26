@@ -16,14 +16,14 @@ public interface UserRoleMapper extends BaseMapper<UserRole> {
     })
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert({
-        "insert into auth_user_role (id, user_id, ",
-        "role_id)",
-        "values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, ",
-        "#{roleId,jdbcType=BIGINT})"
-    })
-    int insert(UserRole record);
+//    @Options(useGeneratedKeys = true, keyProperty = "id")
+//    @Insert({
+//        "insert into auth_user_role (id, user_id, ",
+//        "role_id)",
+//        "values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, ",
+//        "#{roleId,jdbcType=BIGINT})"
+//    })
+//    int insert(UserRole record);
 
     @Select({
         "select",

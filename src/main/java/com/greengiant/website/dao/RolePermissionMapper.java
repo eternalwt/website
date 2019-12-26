@@ -16,14 +16,14 @@ public interface RolePermissionMapper extends BaseMapper<RolePermission> {
     })
     int deleteByPrimaryKey(Long id);
 
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert({
-        "insert into auth_role_permission (id, role_id, ",
-        "permission_id)",
-        "values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, ",
-        "#{permissionId,jdbcType=BIGINT})"
-    })
-    int insert(RolePermission record);
+//    @Options(useGeneratedKeys = true, keyProperty = "id")
+//    @Insert({
+//        "insert into auth_role_permission (id, role_id, ",
+//        "permission_id)",
+//        "values (#{id,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, ",
+//        "#{permissionId,jdbcType=BIGINT})"
+//    })
+//    int insert(RolePermission record);
 
     @Select({
         "select",

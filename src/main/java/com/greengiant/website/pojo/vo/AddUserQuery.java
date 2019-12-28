@@ -1,6 +1,6 @@
 package com.greengiant.website.pojo.vo;
 
-public class AddUserVo {
+public class AddUserQuery {
     private String userName;
     private String password;
     private Long roleId;

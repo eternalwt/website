@@ -5,7 +5,7 @@ import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
-import com.greengiant.website.pojo.vo.AddUserVo;
+import com.greengiant.website.pojo.vo.AddUserQuery;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addUser(AddUserVo userVo) {
+    public void addUser(AddUserQuery userVo) {
         //todo 考虑返回值
         //todo 考虑是否链式赋值
 

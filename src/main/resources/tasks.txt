@@ -25,7 +25,6 @@ java-jwt是com.auth0下面的，关系注意一下
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
-把mapper里面多余的方法先注掉
 1.用户绑定角色、用户角色列表做出来
 2.动态分配权限
 3.todo再清一轮
@@ -38,10 +37,6 @@ java-jwt是com.auth0下面的，关系注意一下
 修改密码
 
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
-
-把angular material 2的提示框写通
-
-排查我还有哪些基础设施没写
 
 周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
 
@@ -59,6 +54,8 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 把excel的调通一版
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
+配置mybatis-plus的代码生成器：https://segmentfault.com/a/1190000019397149?utm_source=tag-newest
+
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
 把quill写通或者回退
 
@@ -102,6 +99,9 @@ web-flash: https://github.com/enilu/web-flash
 测试AuthServiceTest的2个问题：
 1.为啥有shiro相关的报错；
 2.为啥要关闭WebSocketController的注解？
+websocket 单元测试异常：
+https://www.cnblogs.com/andysd/p/10253747.html
+https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 
 把自己拉回来，过年之前还是继续搞功能和基础知识（JS设计模式）
 
@@ -123,6 +123,7 @@ https://blog.csdn.net/zixiao217/article/details/53098700
 2.能够动态配置页面、用户权限；
 2.富文本编辑器编辑文章（前后端）、文章列表(plus的分页功能)
 
+【基础设施类的，在学习时要把功能搞熟并深入到源码级，在使用时要有可以快速复用的代码】
 【后端基础设施】
 webSocket是基础设施
 单点登录、OAuth2是基础设施
@@ -152,6 +153,8 @@ canvas及对应的库是基础设施
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
+
+超时后，web界面【自动】跳转到登录页是怎么实现的？
 
 =======================================================
 
@@ -1092,6 +1095,14 @@ springboot新特性
 动态修改日志级别
 通过org.springframework.boot.logging.LoggingSystem提供的api即可
 针对某一个包修改日志级别
+
+【验证】用@Lazy应该能解决我在@Configuration里面@Autowired Mapper的问题，用于改变加载顺序
+【或者试一下@DependsOn】https://blog.csdn.net/neweastsun/article/details/78775371
+Spring系列——@lazy注解：
+https://blog.csdn.net/m0_37941483/article/details/90679524
+https://www.jb51.net/article/170250.htm
+@lazy注解处理循环注入问题：https://www.cnblogs.com/yangxiaohui227/p/10523025.html
+@Dependson注解与@ConditionalOnBean注解的区别：https://www.cnblogs.com/hjw-zq/p/10455879.html
 
 不同注解的扫描顺序？是否先扫@configuration？
 loggingSystem.setLogLevel(null, LogLevel.DEBUG);

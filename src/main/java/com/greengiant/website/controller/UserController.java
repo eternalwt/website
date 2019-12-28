@@ -3,7 +3,7 @@ package com.greengiant.website.controller;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.pojo.model.User;
-import com.greengiant.website.pojo.vo.AddUserVo;
+import com.greengiant.website.pojo.vo.AddUserQuery;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserController{
     //todo addUser editUser delUser listUser
 
     @PostMapping(value = "/add")
-    public ResultBean addUser(@RequestBody AddUserVo userVo) {
+    public ResultBean addUser(@RequestBody AddUserQuery userVo) {
         //1.判断是否有同名的已存在，如果有给出fail的返回值
         // todo 判空
         User user = userService.getByName(userVo.getUserName());
@@ -41,7 +41,7 @@ public class UserController{
     }
 
     @PostMapping(value = "/password/change")
-    public ResultBean changePassword(@RequestBody AddUserVo userVo) {
+    public ResultBean changePassword(@RequestBody AddUserQuery userVo) {
         // todo 写好
         //1.判断是否有同名的已存在，如果有给出fail的返回值
         // todo 判空

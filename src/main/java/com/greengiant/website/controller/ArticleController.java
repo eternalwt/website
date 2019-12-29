@@ -32,7 +32,6 @@ public class ArticleController {
         IPage<Article> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
         IPage<Article> result = articleService.page(page, wrapper);
-        //articleService.
 
         return ResultUtils.success(result);
     }

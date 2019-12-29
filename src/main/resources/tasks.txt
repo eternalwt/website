@@ -55,6 +55,8 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 配置mybatis-plus的代码生成器：https://segmentfault.com/a/1190000019397149?utm_source=tag-newest
+【重要】mybatis-plus的MybatisPlusConfig的原理是啥？如果不配置这个，也能得到结果，但是结果是错的，是全部
+MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改写：http://www.mamicode.com/info-detail-2472754.html
 
 建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
 把quill写通或者回退

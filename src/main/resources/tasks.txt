@@ -22,6 +22,10 @@ java-jwt是com.auth0下面的，关系注意一下
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
+要有条理：
+1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
+2.把前后端权限控制写通【要能分配，涉及到列表、勾选、role等，还有shiro的permission再看一下】
+
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
@@ -111,6 +115,8 @@ https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-featu
 JMockit：http://jmockit.github.io/
 
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
+
+边调试边观察内存
 
 webSocket：原生方式已调通，继续看原理（阅读代码），继续调试sockJS的方式（可以用我安装的jmeter）
 把我以前没印象的WebSocketController干掉

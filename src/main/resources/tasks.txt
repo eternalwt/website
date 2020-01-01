@@ -22,9 +22,20 @@ java-jwt是com.auth0下面的，关系注意一下
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
+doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了：
+https://www.2cto.com/kf/201708/669152.html
+【先把我在这个方法上的几个todo干掉】
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。
+PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+https://blog.csdn.net/weixin_38121659/article/details/78715454
+和doGetAuthorizationInfo是什么关系？
+
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
 2.把前后端权限控制写通【要能分配，涉及到列表、勾选、role等，还有shiro的permission再看一下】
+同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了
+
+session不再由JSP或者servlet管理（从这个角度再确认一下）
 
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
@@ -237,6 +248,12 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
+现在理解更深了，再看我是怎么加密的
+看了认证的源码，现在应该知道realm从哪个继承比较合适的问题了把？现在用的是：CustomRealm extends AuthorizingRealm
+public boolean supports(AuthenticationToken token) {
+    return token != null && this.getAuthenticationTokenClass().isAssignableFrom(token.getClass());
+}
+看ModularRealmAuthenticator里面的getRealms实现，看看类的实现是怎么被加载的
 shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/sunshine-2015/p/5515429.html
 Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
 跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
@@ -245,10 +262,13 @@ shiro可以再来一次了：https://shiro.apache.org/【真正的文档在refer
 细说Shiro系列文章
 我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
 Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可以先搞通一次再搞jwt）：https://www.cnblogs.com/kibana/p/8953566.html
-
+如何实现Authenticator并替换默认实现？
 对着shiro源码再搞一轮。看源码搞清楚：
 1.为啥集成spring很方便；
 2.如果能为shiro贡献sso的代码，将会很好
+尝试使用缓存替换现有的SessionDAO（先看SessionDAO源码）
+Realm + LDAP
+对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
 
 springboot整合微软的ad域，采用ldap的api来整合，实现用户登录验证：https://www.cnblogs.com/anlegou/p/10511683.html
 

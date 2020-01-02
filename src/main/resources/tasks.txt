@@ -22,13 +22,25 @@ java-jwt是com.auth0下面的，关系注意一下
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了：
+解决自定义的doGetAuthorizationInfo没进去问题的思路：
+1.假定他们说的是对的，跟subject对象的hasRole、isPermitted方法，看那一步会调用到doGetAuthorizationInfo方法；
+2.如果1调用了doGetAuthorizationInfo方法，看看是哪个类的，看看重载的方法为啥没进入，自定义的类为啥注入行为不对；
+3.如果解决不了，看更多授权的文章，寻找新的思路
+多realm：
+https://www.cnblogs.com/nfcm/p/9889969.html
+https://blog.csdn.net/cckevincyh/article/details/79629022
+我有一个realm为啥没有配置supports方法？最好配全一点把，看啥时候自己配置的supports方法能够发挥作用
+【授权函数没进去，悲催了】：https://blog.csdn.net/fsgsggd/article/details/81635792
+doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了【我没测通】：
+https://blog.csdn.net/u010994966/article/details/90374887
 https://www.2cto.com/kf/201708/669152.html
 【先把我在这个方法上的几个todo干掉】
 shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。
 PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 https://blog.csdn.net/weixin_38121659/article/details/78715454
 和doGetAuthorizationInfo是什么关系？
+
+授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
 
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】

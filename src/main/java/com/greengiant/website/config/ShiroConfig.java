@@ -60,6 +60,7 @@ public class ShiroConfig {
         //todo swagger路径用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
+        filterChainDefinitionMap.put("/permission/**", "anon");
         filterChainDefinitionMap.put("/article/**", "anon"); // todo 后面要干掉
 
         filterChainDefinitionMap.put("/swagger**", "anon");
@@ -96,7 +97,8 @@ public class ShiroConfig {
         // 注入自定义的realm
 //        securityManager.setRealm(customRealm);
         securityManager.setRealms(Arrays.asList(customRealm));
-        //securityManager.setAuthenticator();
+        // securityManager.setAuthenticator();
+         securityManager.setAuthorizer(customRealm);// todo 这样写不够优雅，而且我的授权函数一直没进去，得继续调
 
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);

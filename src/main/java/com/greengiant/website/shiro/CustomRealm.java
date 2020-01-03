@@ -61,9 +61,7 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // todo 1.默认的是啥？跟踪默认代码
-        // todo 2.我的参数principalCollection都没用上，debug一下
-        // todo 3.带role的filter来测试（当初这句话啥意思？）
+        // todo 加缓存
         log.info("进入角色授权");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);

@@ -98,7 +98,7 @@ public class ShiroConfig {
 //        securityManager.setRealm(customRealm);
         securityManager.setRealms(Arrays.asList(customRealm));
         // securityManager.setAuthenticator();
-         securityManager.setAuthorizer(customRealm);// todo 这样写不够优雅，而且我的授权函数一直没进去，得继续调
+//         securityManager.setAuthorizer(customRealm);// todo 这样写不够优雅
 
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);

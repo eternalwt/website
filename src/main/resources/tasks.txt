@@ -22,14 +22,20 @@ java-jwt是com.auth0下面的，关系注意一下
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-解决自定义的doGetAuthorizationInfo没进去问题的思路：
-1.假定他们说的是对的，跟subject对象的hasRole、isPermitted方法，看那一步会调用到doGetAuthorizationInfo方法；
-2.如果1调用了doGetAuthorizationInfo方法，看看是哪个类的，看看重载的方法为啥没进入，自定义的类为啥注入行为不对；
-3.如果解决不了，看更多授权的文章，寻找新的思路
+把多realm配起来【关键是要测】
 多realm：
 https://www.cnblogs.com/nfcm/p/9889969.html
 https://blog.csdn.net/cckevincyh/article/details/79629022
 我有一个realm为啥没有配置supports方法？最好配全一点把，看啥时候自己配置的supports方法能够发挥作用
+
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
+1.看一下为啥checkPermission那里得到的principal是空；
+2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
+3.看看isPermitted咋用，也尽量把这个调通
+
+一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
+
+
 【授权函数没进去，悲催了】：https://blog.csdn.net/fsgsggd/article/details/81635792
 doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了【我没测通】：
 https://blog.csdn.net/u010994966/article/details/90374887
@@ -39,6 +45,8 @@ shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。
 PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 https://blog.csdn.net/weixin_38121659/article/details/78715454
 和doGetAuthorizationInfo是什么关系？
+session的过期时间怎么配置？
+有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
 
 授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
 
@@ -786,6 +794,11 @@ spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
 Shiro 还提供了 CacheManagerAware 用于注入 CacheManager：
 Shiro 内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如 Realm）是否 实现了 CacheManagerAware 并自动注入相应的 CacheManager。
 Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
+动态改变shiro的Principal属性：https://blog.csdn.net/guojing505123/article/details/79224200
+由principal为空引发的几个问题：
+http://www.nutz.cn/yvr/t/sp8m948654hoao89r3p5bq5758
+https://blog.csdn.net/quanaianzj/article/details/83858575
+LogoutAware是啥？
 
 后端拆成2个模块，最简单的分布式无论如何要搭起来
 注册中心和网关这2样可以独立搭建起来

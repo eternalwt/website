@@ -18,8 +18,8 @@ public class PermissionController {
     public ResultBean checkPermission() {
         Subject subject = SecurityUtils.getSubject();
         subject.hasRole("admin");
-//        boolean result = subject.isPermitted("admin");
-
+        boolean result = subject.isPermitted("admin");
+        // todo 这个方法测完可以干掉。这里为啥principal为空？是不是没传session等过来？
         return ResultUtils.success();
     }
 }

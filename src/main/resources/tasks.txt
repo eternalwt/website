@@ -31,7 +31,7 @@ https://blog.csdn.net/cckevincyh/article/details/79629022
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
 1.看一下为啥checkPermission那里得到的principal是空；
 2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
-3.看看isPermitted咋用，也尽量把这个调通
+3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
 
 一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
 
@@ -41,7 +41,7 @@ doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义
 https://blog.csdn.net/u010994966/article/details/90374887
 https://www.2cto.com/kf/201708/669152.html
 【先把我在这个方法上的几个todo干掉】
-shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
 PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 https://blog.csdn.net/weixin_38121659/article/details/78715454
 和doGetAuthorizationInfo是什么关系？

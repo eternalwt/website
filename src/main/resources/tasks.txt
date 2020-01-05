@@ -18,20 +18,37 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
+可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
+【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
+
+【把definitionMap和doAuthrization获取角色的，这2个地方抽成函数】
+
 【过年期间有空建立起来】
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-把多realm配起来【关键是要测】
-多realm：
-https://www.cnblogs.com/nfcm/p/9889969.html
-https://blog.csdn.net/cckevincyh/article/details/79629022
-我有一个realm为啥没有配置supports方法？最好配全一点把，看啥时候自己配置的supports方法能够发挥作用
+为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
+看看怎么用好各类token：UsernamePasswordToken（和supports一起看）。JWTToken是怎么和JwtRealm配合起来的，是怎么生成并逐步传递到realm底层的
+HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
+JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
-1.看一下为啥checkPermission那里得到的principal是空；
+1.看一下为啥checkPermission那里得到的principal是空【登录完成后，再发一次请求试一下】；
 2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
+
+重载isPermitted【待验证】：
+https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：
+https://blog.csdn.net/weixin_33724046/article/details/93057613
+https://blog.csdn.net/tragedyxd/article/details/52958008
+
+更改用户名怎么样更新subject中的principal：https://blog.csdn.net/qq_33029793/article/details/93477572
+isPermitted看懂后，再看permission的写法：system:role:add：
+https://blog.csdn.net/tragedyxd/article/details/52958008
+使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
+Shiro过滤器配置(ShiroFilterFactoryBean)：https://blog.csdn.net/qq_36850813/article/details/88913552
+shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
 
 一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
 
@@ -49,6 +66,20 @@ session的过期时间怎么配置？
 有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
 
 授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
+
+每一个教程上都会列举出shiro的类，重点是搞清楚他们之间的关联：https://www.cnblogs.com/xiaxinggege/p/5845707.html
+
+既然securityManager指定了CustomRealm，realm里面有doGetAuthorizationInfo，那么SecurityManager里面再指定authrizer会重复吗，他们之间的关系是什么？
+
+shiro动态授权：https://my.oschina.net/jiansin/blog/3024398
+shiro 同一账号多人同时登陆强制下线：
+https://blog.csdn.net/lht931942788/article/details/79179410
+https://blog.csdn.net/qq_39069111/article/details/81156527
+https://www.cnblogs.com/wang-qiang/p/9470527.html
+
+shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂。看懂了，就真正提升了：
+Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去
+Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/1203/142550761.shtm
 
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
@@ -374,14 +405,17 @@ jwt的修改：
 2.response.setHeader("x-auth-token", JWTUtil.createToken(username));
 3.关闭session【可以先不处理把？】；
 4.Filter的注册，是否使用FilterRegistrationBean？
-5.JWT的几个类怎么写整一点
 学习框架彻底体会了组装的感觉
 
 JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
+
 设置多个realm认证策略，一个成功即跳过其它的：https://www.jianshu.com/p/0b1131be7ace
 shiro 多realm 实现 后端 和 前端分离验证：
 https://blog.csdn.net/qq_33842795/article/details/80895594
 https://blog.csdn.net/liiuijkiuu/article/details/53945062
+多realm【自定义ModularRealmAuthenticator并且在SecirityManager里面设置进去。搞懂下一个问题，securityManager没设置时，默认的是怎么初始化的】：
+https://www.cnblogs.com/nfcm/p/9889969.html
+https://blog.csdn.net/cckevincyh/article/details/79629022
 【上面这个应该是可以配置成功jwt的，配置试一下。理论上来说：应该先debug登录后每一次请求的cookie验证，然后再搞jwt的。这一步补上】
 到了JWT感觉不得不做源码分析了
 【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】

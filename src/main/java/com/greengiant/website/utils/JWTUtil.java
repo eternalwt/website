@@ -20,7 +20,7 @@ import java.util.Date;
 @Slf4j
 public class JWTUtil {
     // 过期时间 24 小时 60 * 24 * 60 * 1000
-    private static final long EXPIRE_TIME = 60 * 1000;//todo 改成1分钟测试
+    private static final long EXPIRE_TIME = 60 * 1000;//todo 改成1分钟测试，完了再改回去
     // 密钥
     private static final String SECRET = "SHIRO+JWT";
 

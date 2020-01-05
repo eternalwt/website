@@ -107,6 +107,7 @@ public class ShiroJwtConfig {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
             sqlSessionFactory.getConfiguration().addMapper(MenuMapper.class);
             session = sqlSessionFactory.openSession();
+            // todo 可以继续看动态代理了
             MenuMapper mapper = session.getMapper(MenuMapper.class);
             List<Menu> menuList = mapper.selectAll();
             System.out.println(menuList.size());

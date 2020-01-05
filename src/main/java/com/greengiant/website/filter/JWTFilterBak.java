@@ -1,7 +1,6 @@
 package com.greengiant.website.filter;
 
 import com.greengiant.website.shiro.JWTToken;
-import com.greengiant.website.shiro.JWTTokenBak;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;

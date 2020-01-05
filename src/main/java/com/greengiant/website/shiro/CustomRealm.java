@@ -34,7 +34,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        log.info("authenticate for:[{}]", authenticationToken.getCredentials());
+        log.info("authenticate for:[{}]", authenticationToken.getPrincipal());
 
         // 这里是自定义登录验证用户名密码的规则
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
@@ -62,6 +62,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         // todo 加缓存
+        // todo 下面这段是不是抽到role相关的service里面去
         log.info("进入角色授权");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
@@ -78,4 +79,17 @@ public class CustomRealm extends AuthorizingRealm {
 
         return info;
     }
+
+    @Override
+    public  boolean isPermitted(PrincipalCollection principals, String permission){
+        String username = (String) SecurityUtils.getSubject().getPrincipal();
+//        return user.isAdmin()||super.isPermitted(principals,permission);
+        return true;
+    }
+
+//    @Override
+//    public boolean hasRole(PrincipalCollection principals, String roleIdentifier) {
+//        SecurityUser user = (SecurityUser)principals.getPrimaryPrincipal();
+//        return user.isAdmin()||super.hasRole(principals,roleIdentifier);
+//    }
 }

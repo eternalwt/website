@@ -1,9 +1,9 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.dao.RoleMapper;
-import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.service.RoleService;
+import com.greengiant.website.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -15,15 +15,17 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Slf4j
 public class CustomRealm extends AuthorizingRealm {
-    @Autowired
-    private UserMapper userMapper;
 
     @Autowired
-    private RoleMapper roleMapper;
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 获取身份验证信息
@@ -41,7 +43,7 @@ public class CustomRealm extends AuthorizingRealm {
         // 获取用户输入的用户名
         String username = (String) token.getPrincipal();
         // 从数据库获取对应用户名密码的用户
-        User user = userMapper.selectByName(token.getUsername());
+        User user = userService.getByName(token.getUsername());
         if (null == user) {
             throw new AccountException("用户名不正确");
         }
@@ -62,19 +64,19 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         // todo 加缓存
-        // todo 下面这段是不是抽到role相关的service里面去
-        log.info("进入角色授权");
+        log.info("获取角色信息");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> set = new HashSet<>();
+        // todo service层需要一个由userName得到roleNameList（RoleList，更通用）的函数
         //获得该用户角色
-        Role role = roleMapper.selectByName(username);
-        if (role != null) {
-            set.add(role.getRoleName());
-            //设置该用户拥有的角色
-            info.setRoles(set);
-            // 添加permission的用法是info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
+        List<Role> roleList = roleService.getRoleListByUserName(username);
+        if (roleList != null && !roleList.isEmpty()) {// todo 这里是否需要双重判断？
+            // todo
+//            set.add(role.getRoleName());
+//            //设置该用户拥有的角色
+//            info.setRoles(set);
         }
 
         return info;
@@ -83,6 +85,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
         String username = (String) SecurityUtils.getSubject().getPrincipal();
+        // todo 添加permission的用法是info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
 //        return user.isAdmin()||super.isPermitted(principals,permission);
         return true;
     }

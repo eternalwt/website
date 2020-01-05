@@ -5,7 +5,10 @@ import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.utils.JWTUtil;
-import org.apache.shiro.authc.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -60,7 +63,7 @@ public class CustomJwtRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         Set<String> set = new HashSet<>();
         //获得该用户角色
-        Role role = roleMapper.selectByName(username);
+        Role role = roleMapper.selectByName(username);// todo 这里不对，这个函数的参数是role_name
         if (role != null) {
             set.add(role.getRoleName());
             //设置该用户拥有的角色

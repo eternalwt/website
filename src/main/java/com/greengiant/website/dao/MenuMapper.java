@@ -59,7 +59,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
             "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
             "create_time, update_time",
             "from Menu",
-            "where role like '%${roleStr}'"
+            "where role like '%${roleStr}' order by sort"
     })
     @ConstructorArgs({
             @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),

@@ -18,6 +18,9 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
+思考一下JWT的remember
+JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
+
 可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
 【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
 
@@ -28,9 +31,7 @@ java-jwt是com.auth0下面的，关系注意一下
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
 为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
-看看怎么用好各类token：UsernamePasswordToken（和supports一起看）。JWTToken是怎么和JwtRealm配合起来的，是怎么生成并逐步传递到realm底层的
 HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
-JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
 1.看一下为啥checkPermission那里得到的principal是空【登录完成后，再发一次请求试一下】；
@@ -52,8 +53,8 @@ shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why1542
 
 一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
 
+《深入浅出MyBatis技术原理与实战》用桌面上的这本书来学习源码阅读
 
-【授权函数没进去，悲催了】：https://blog.csdn.net/fsgsggd/article/details/81635792
 doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了【我没测通】：
 https://blog.csdn.net/u010994966/article/details/90374887
 https://www.2cto.com/kf/201708/669152.html
@@ -99,7 +100,7 @@ session不再由JSP或者servlet管理（从这个角度再确认一下）
 2.确认我现在能否方便切换到redis，以此来提升代码模块化程度和我的认知
 3.确认关闭缓存后，我的代码会受多大影响。如果JVM内存不足的时候，如何砍掉ehcache的内存？进一步学习内存一致性问题
 为ShiroConfig和ShiroJwtConfig抽公共函数【现在改动还是太麻烦了】
-做通一个分页mybatis-plus：文章、用户
+mybatis plus强大的条件构造器queryWrapper、updateWrapper：https://blog.csdn.net/m0_37034294/article/details/82917234
 修改密码
 
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html

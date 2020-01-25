@@ -24,7 +24,7 @@ JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jiansh
 可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
 【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
 
-【把definitionMap和doAuthrization获取角色的，这2个地方抽成函数】
+【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 
 【过年期间有空建立起来】
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
@@ -141,6 +141,8 @@ MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改
 12.单元测试
 
 注意用好ResultMap
+
+activemq的整合再搞一次，思考当时在华为时感觉哪里有困惑
 
 【本周】
 5.把添加用户/注册写通、角色等基本功能写好（Service、Controller）

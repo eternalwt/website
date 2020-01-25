@@ -68,15 +68,16 @@ public class CustomRealm extends AuthorizingRealm {
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> set = new HashSet<>();
-        // todo service层需要一个由userName得到roleNameList（RoleList，更通用）的函数
+        Set<String> roleSet = new HashSet<>();
         //获得该用户角色
         List<Role> roleList = roleService.getRoleListByUserName(username);
-        if (roleList != null && !roleList.isEmpty()) {// todo 这里是否需要双重判断？
-            // todo
-//            set.add(role.getRoleName());
-//            //设置该用户拥有的角色
-//            info.setRoles(set);
+        // todo 这里是否需要双重判断？
+        if (roleList != null && !roleList.isEmpty()) {
+            for (Role role : roleList) {
+                roleSet.add(role.getRoleName());
+            }
+            //设置该用户拥有的角色
+            info.setRoles(roleSet);
         }
 
         return info;

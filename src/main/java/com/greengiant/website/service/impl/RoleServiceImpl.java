@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
@@ -27,27 +28,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Autowired
     private UserRoleMapper userRoleMapper;
 
-    @Override
-    public String getRole(String username) {
-        //根据权限，指定返回数据
-        Role role = roleMapper.selectByName(username);
-        if (role != null) {
-            //todo 重构
-            if ("user".equals(role.getRoleName())) {
-                return "欢迎登陆";
-            }
-            if ("admin".equals(role.getRoleName())) {
-                return "欢迎来到管理员页面";
-            }
-        }
-        return "尚未分配角色";
-    }
 
-    @Override
-    public void addRole(Role role) {
-        roleMapper.insert(role);
-    }
-
+    // todo 测试
     @Override
     public List<Role> getRoleListByUserName(String userName) {
         List<Role> roleList = new ArrayList<>();
@@ -57,9 +39,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             List<UserRole> userRoleList = userRoleMapper.selectByUserId(user.getId());
             if (userRoleList != null && !userRoleList.isEmpty()) {
                 QueryWrapper<Role> queryWrapper = new QueryWrapper<>();
-                // todo
-                //queryWrapper.in()
-                //roleMapper.selectList()
+                queryWrapper.in("id", userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList()));
+                roleList = roleMapper.selectList(queryWrapper);
             }
         }
         return roleList;

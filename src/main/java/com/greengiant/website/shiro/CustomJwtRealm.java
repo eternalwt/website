@@ -4,6 +4,7 @@ import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.service.RoleService;
 import com.greengiant.website.utils.JWTUtil;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -16,6 +17,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class CustomJwtRealm extends AuthorizingRealm {
@@ -25,6 +27,9 @@ public class CustomJwtRealm extends AuthorizingRealm {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private RoleService roleService;
 
     /**
      * 必须重写此方法，不然会报错
@@ -61,13 +66,15 @@ public class CustomJwtRealm extends AuthorizingRealm {
         String username = JWTUtil.getUsername(token);
 
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Set<String> set = new HashSet<>();
+        Set<String> roleSet = new HashSet<>();
         //获得该用户角色
-        Role role = roleMapper.selectByName(username);// todo 这里不对，这个函数的参数是role_name
-        if (role != null) {
-            set.add(role.getRoleName());
+        List<Role> roleList = roleService.getRoleListByUserName(username);
+        if (roleList != null && !roleList.isEmpty()) {
+            for (Role role : roleList) {
+                roleSet.add(role.getRoleName());
+            }
             //设置该用户拥有的角色
-            info.setRoles(set);
+            info.setRoles(roleSet);
         }
 
         return info;

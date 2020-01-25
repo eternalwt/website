@@ -1,9 +1,11 @@
 package com.greengiant.website.controller;
 
 import com.greengiant.website.pojo.ResultBean;
+import com.greengiant.website.service.PermService;
 import com.greengiant.website.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
+
+    @Autowired
+    private PermService permService;
 
 //    @RequiresRoles("admin")
 //    @RequiresPermissions("aaa")
@@ -22,4 +27,17 @@ public class PermissionController {
         // todo 这个方法测完可以干掉。这里为啥principal为空？是不是没传session等过来？
         return ResultUtils.success();
     }
+
+    // todo restful改造
+    @RequestMapping(value = "/getPermissionListByUserId", method = RequestMethod.GET)
+    public ResultBean getPermissionListByUserId() {
+        // todo
+        return null;
+    }
+
+    @RequestMapping(value = "/getRolePermissionListMap", method = RequestMethod.GET)
+    public ResultBean getRolePermissionListMap() {
+        return ResultUtils.success(permService.getRolePermissionListMap());
+    }
+
 }

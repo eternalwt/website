@@ -57,7 +57,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
     @Update({
         "update auth_permission",
         "set permission_name = #{permissionName,jdbcType=VARCHAR},",
-          "description = #{description,jdbcType=VARCHAR} ",
+        "description = #{description,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Permission record);

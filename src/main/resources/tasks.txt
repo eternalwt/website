@@ -18,6 +18,8 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
+shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
+
 思考一下JWT的remember
 JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
 

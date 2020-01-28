@@ -41,17 +41,17 @@ public interface UserRoleMapper extends BaseMapper<UserRole> {
     UserRole selectByPrimaryKey(Long id);
 
     @Select({
-            "select",
-            "id, user_id, role_id, create_time, update_time",
-            "from auth_user_role",
-            "where user_id = #{userId,jdbcType=BIGINT}"
+        "select",
+        "id, user_id, role_id, create_time, update_time",
+        "from auth_user_role",
+        "where user_id = #{userId,jdbcType=BIGINT}"
     })
     @ConstructorArgs({
-            @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
-            @Arg(column="user_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
-            @Arg(column="role_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
-            @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-            @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+        @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
+        @Arg(column="user_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+        @Arg(column="role_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+        @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+        @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
     List<UserRole> selectByUserId(Long userId);
 
@@ -72,7 +72,7 @@ public interface UserRoleMapper extends BaseMapper<UserRole> {
     @Update({
         "update auth_user_role",
         "set user_id = #{userId,jdbcType=BIGINT},",
-          "role_id = #{roleId,jdbcType=BIGINT} ",
+        "role_id = #{roleId,jdbcType=BIGINT} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(UserRole record);

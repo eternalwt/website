@@ -57,7 +57,7 @@ public interface RolePermissionMapper extends BaseMapper<RolePermission> {
     @Update({
         "update auth_role_permission",
         "set role_id = #{roleId,jdbcType=BIGINT},",
-          "permission_id = #{permissionId,jdbcType=BIGINT} ",
+        "permission_id = #{permissionId,jdbcType=BIGINT} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(RolePermission record);

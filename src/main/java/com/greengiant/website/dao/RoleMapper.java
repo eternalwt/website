@@ -41,17 +41,17 @@ public interface RoleMapper extends BaseMapper<Role> {
     Role selectByPrimaryKey(Long id);
 
     @Select({
-            "select",
-            "id, role_name, description, create_time, update_time",
-            "from auth_role",
-            "where role_name = #{name}"
+        "select",
+        "id, role_name, description, create_time, update_time",
+        "from auth_role",
+        "where role_name = #{name}"
     })
     @ConstructorArgs({
-            @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
-            @Arg(column="role_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="description", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-            @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+        @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
+        @Arg(column="role_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="description", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+        @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
     Role selectByName(String name);
 
@@ -72,7 +72,7 @@ public interface RoleMapper extends BaseMapper<Role> {
     @Update({
         "update auth_role",
         "set role_name = #{roleName,jdbcType=VARCHAR},",
-          "description = #{description,jdbcType=VARCHAR} ",
+        "description = #{description,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Role record);

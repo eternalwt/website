@@ -55,26 +55,26 @@ public interface MenuMapper extends BaseMapper<Menu> {
     Menu selectByPrimaryKey(Long id);
 
     @Select({
-            "select",
-            "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
-            "create_time, update_time",
-            "from Menu",
-            "where role like '%${roleStr}' order by sort"
+        "select",
+        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
+        "create_time, update_time",
+        "from Menu",
+        "where role like '%${roleStr}' order by sort"
     })
     @ConstructorArgs({
-            @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
-            @Arg(column="menu_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="number", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="url", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="icon", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="parent_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
-            @Arg(column="sort", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
-            @Arg(column="in_use", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
-            @Arg(column="open_way", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
-            @Arg(column="role", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="user", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-            @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
+        @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
+        @Arg(column="menu_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="number", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="url", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="icon", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="parent_id", javaType=Long.class, jdbcType=JdbcType.BIGINT),
+        @Arg(column="sort", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
+        @Arg(column="in_use", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
+        @Arg(column="open_way", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
+        @Arg(column="role", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="user", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
+        @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
     List<Menu> selectByRole(String roleStr);
 

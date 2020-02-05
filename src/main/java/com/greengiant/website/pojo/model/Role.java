@@ -1,7 +1,10 @@
 package com.greengiant.website.pojo.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("auth_role")// 如果没有这个注解BaseMapper里面的方法无法使用
 public class Role {
     private Long id;
 

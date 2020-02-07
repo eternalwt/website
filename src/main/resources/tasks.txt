@@ -71,6 +71,16 @@ session的过期时间怎么配置？
 授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
 
 ResponseResultInterceptor已写好，下一步：1.知识点的融会贯通；2.异常处理
+如何优雅设计 API 接口，实现统一格式返回？：https://mp.weixin.qq.com/s/AtEzrFmCcMJCdCggL6k-yQ
+SpringMVC 中 @ControllerAdvice 注解的三种使用场景！：
+https://www.cnblogs.com/lenve/p/10748453.html
+https://blog.csdn.net/qq_21492635/article/details/89381204
+@ControllerAdvice需要和@ExceptionHandler配合。再思考spring里面的advice（通知是切面的一种实现，可以完成简单的织入功能）：https://www.jianshu.com/p/ddd90a0e340b
+在Spring 3.2中，新增了@ControllerAdvice、@RestControllerAdvice 注解，可以用于定义@ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有@RequestMapping、@PostMapping， @GetMapping注解中。
+有人问@ControllerAdvice和HandlerInterceptor的区别。
+HandlerInterceptor是一个很方便的拦截器，可以用来做Token校验【对比思考一下JWT】。需要配合WebMvcConfigurationSupport使用：https://blog.csdn.net/qq_32768743/article/details/88650567
+
+Springboot 15篇：https://yq.aliyun.com/users/hz3zxsd4wosss?spm=a2c4e.11153940.0.0.1fa660e0yUAIFp
 
 每一个教程上都会列举出shiro的类，重点是搞清楚他们之间的关联：https://www.cnblogs.com/xiaxinggege/p/5845707.html
 
@@ -129,7 +139,6 @@ logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄�
 【重要】mybatis-plus的MybatisPlusConfig的原理是啥？如果不配置这个，也能得到结果，但是结果是错的，是全部
 MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改写：http://www.mamicode.com/info-detail-2472754.html
 
-建立雏形：加登出按钮（登出如果不写会怎么样？）、启动时显示页面改为index、没有权限的页面要给明确的提示（路由守卫）
 把quill写通或者回退
 
 2.login后转到后端主页

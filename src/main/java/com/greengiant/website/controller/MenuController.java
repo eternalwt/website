@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/menu")
 public class MenuController {
 
+    // todo MenuController和PermissionController的整合
+
     @Autowired
     private MenuService menuServce;
 

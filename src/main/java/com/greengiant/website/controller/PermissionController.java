@@ -10,6 +10,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -43,15 +44,22 @@ public class PermissionController {
 
     // todo restful改造
     @RequestMapping(value = "/getPermissionListByUserId", method = RequestMethod.GET)
-    public ResultBean getPermissionListByUserId(Long roleId) {
+    public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
         Map<String, Object> queryMap = new HashedMap();
-        queryMap.put("role", roleId);
+        queryMap.put("role", roleId);// todo 这里应该用in
         return ResultUtils.success(menuService.listByMap(queryMap));
     }
 
     @RequestMapping(value = "/getRolePermissionListMap", method = RequestMethod.GET)
     public ResultBean getRolePermissionListMap() {
         return ResultUtils.success(permService.getRolePermissionListMap());
+    }
+
+    @RequestMapping(value = "/updatePermission", method = RequestMethod.POST)
+    public ResultBean updatePermission() {
+        // menuService.
+        // todo
+        return ResultUtils.success();
     }
 
 }

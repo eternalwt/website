@@ -9,9 +9,9 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class PermServiceImpl implements PermService {
@@ -24,23 +24,47 @@ public class PermServiceImpl implements PermService {
 
     @Override
     public Map<String, List<String>> getRolePermissionListMap() {
-        // todo 改善效率
+        // todo 保证顺序（这个问题才遇到过）
         Map<String, List<String>> rolePermMap = new HashedMap();
-
+        // todo sql初始化脚本里面加入admin初始化赋权限
         List<Role> roleList =  roleService.list();
-        if (roleList != null && !roleList.isEmpty()) {
-            for (Role role : roleList) {
-                Map<String, Object> searchMap = new HashedMap();
-                searchMap.put("role", role.getId());
-                // todo 如果遇到异常怎么处理？感觉这段写的很垃圾
-                List<Menu> menuList = (List<Menu>)menuService.listByMap(searchMap);
-                if (menuList != null && !menuList.isEmpty()) {
-                    rolePermMap.put(role.getRoleName(), menuList.stream().map(Menu::getMenuName).collect(Collectors.toList()));
+        List<Menu> menuList = menuService.list();
+        if (roleList != null && !roleList.isEmpty() && menuList != null && !menuList.isEmpty()) {
+            for (Menu menu : menuList) {
+                String roleStr = menu.getRole();
+                if (roleStr != null) {
+                    String[] roleIdList = roleStr.split(",");
+                    for (int i = 0; i < roleIdList.length; i++) {
+                        if (roleIdList[i] != null && !roleIdList[i].isEmpty()) {
+                            String roleName = this.getRoleName(roleIdList[i], roleList);
+                            if (rolePermMap.containsKey(roleName)) {
+                                rolePermMap.get(roleName).add(menu.getMenuName());
+                            }
+                            else {
+                                List<String> permList = new ArrayList<>();
+                                permList.add(menu.getMenuName());
+                                rolePermMap.put(roleName, permList);
+                            }
+                        }
+                    }
                 }
             }
         }
 
         return rolePermMap;
+    }
+
+    private String getRoleName(String roleId, List<Role> roleList) {
+        String roleName = "";
+        if (roleId != null) {
+            for (Role role : roleList) {
+                if (roleId.equals(role.getId().toString())) {
+                    return role.getRoleName();
+                }
+            }
+        }
+
+        return roleName;
     }
 
 }

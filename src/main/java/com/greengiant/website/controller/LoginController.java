@@ -1,9 +1,9 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.website.ResponseResult;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.AuthService;
-import com.greengiant.website.service.RoleService;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.JWTUtil;
 import com.greengiant.website.utils.ResultUtils;
@@ -24,8 +24,6 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private RoleService roleService;
 
     @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
     public String notLogin() {
@@ -44,8 +42,23 @@ public class LoginController {
      * @param username 用户名
      * @param password 密码
      */
+//    @PostMapping(value = "/login")
+//    public ResultBean login(@RequestParam String username,
+//                            @RequestParam String password,
+//                            @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
+//        // todo 判空与异常处理
+//
+//        // 从SecurityUtils里边创建一个 subject
+//        loginService.login(username, password, isRememberMe);
+//        //根据权限，指定返回数据
+//        User user = userService.getByName(username);
+//
+//        return ResultUtils.success(user.getId());
+//    }
+
     @PostMapping(value = "/login")
-    public ResultBean login(@RequestParam String username,
+    @ResponseResult
+    public Long login(@RequestParam String username,
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // todo 判空与异常处理
@@ -55,8 +68,9 @@ public class LoginController {
         //根据权限，指定返回数据
         User user = userService.getByName(username);
 
-        return ResultUtils.success(user.getId());
+        return user.getId();
     }
+
 
     /**
      * 登陆

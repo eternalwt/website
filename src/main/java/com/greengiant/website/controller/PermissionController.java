@@ -1,6 +1,8 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.pojo.ResultBean;
+import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.PermService;
 import com.greengiant.website.utils.ResultUtils;
@@ -8,22 +10,28 @@ import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/permission")
 public class PermissionController {
 
+    // todo 默认的menu（init.sql脚本）
+
     @Autowired
     private PermService permService;// todo 这个service有坏味道，看看要不要干掉
 
     @Autowired
     private MenuService menuService;
+
+//    @Autowired
+//    private RoleService roleService;
+
+    @Autowired
+    private RoleMapper roleMapper;
 
 //    @RequiresRoles("admin")
 //    @RequiresPermissions("aaa")
@@ -56,9 +64,19 @@ public class PermissionController {
     }
 
     @RequestMapping(value = "/updatePermission", method = RequestMethod.POST)
-    public ResultBean updatePermission() {
-        // menuService.
-        // todo
+    public ResultBean updatePermission(@RequestBody List<Map<String, String>> menuList) {
+        // todo 1.传数据；2.测试
+        if (menuList != null && !menuList.isEmpty()) {
+            for (Map<String, String> menu : menuList) {
+                // todo 1.通过roleName获取roleId
+                // todo 用不用wrapper也要统一
+                Role role = roleMapper.selectByName(menu.get("roleName"));
+                if (role != null) {
+                    menuService.updateRole(menu.get("perm"), Boolean.valueOf(menu.get("checked")), role.getId().toString());
+                }
+            }
+        }
+
         return ResultUtils.success();
     }
 

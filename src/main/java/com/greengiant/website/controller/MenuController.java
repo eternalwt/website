@@ -4,12 +4,9 @@ import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController // todo 要统一一下，不要有的地方用，有的地方不用
 @RequestMapping("/menu")
 public class MenuController {
 
@@ -17,6 +14,12 @@ public class MenuController {
 
     @Autowired
     private MenuService menuServce;
+
+    @PostMapping(value = "/selectByUserId")
+    public ResultBean addMenu() {
+        // todo
+        return null;
+    }
 
     @GetMapping(value = "/selectByUserId")
     public ResultBean selectByUserId(@RequestParam long userId){

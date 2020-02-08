@@ -24,7 +24,7 @@ public class PermServiceImpl implements PermService {
 
     @Override
     public Map<String, List<String>> getRolePermissionListMap() {
-        // todo 保证顺序（这个问题才遇到过）
+        // todo 保证顺序（这个问题遇到过）
         Map<String, List<String>> rolePermMap = new HashedMap();
         // todo sql初始化脚本里面加入admin初始化赋权限
         List<Role> roleList =  roleService.list();
@@ -52,6 +52,12 @@ public class PermServiceImpl implements PermService {
         }
 
         return rolePermMap;
+    }
+
+    // todo
+    void updatePermissionBatch() {
+        // todo 定接口
+
     }
 
     private String getRoleName(String roleId, List<Role> roleList) {

@@ -118,4 +118,17 @@ public interface MenuMapper extends BaseMapper<Menu> {
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Menu record);
+
+    @Update({
+        "update Menu ",
+         "set role = concat(replace(role, concat(',', #{roleId}), ''), concat(',', #{roleId})) where menu_name= #{menuName}"
+    }) // todo 测试
+    int updateRoleAdd(@Param("menuName") String menuName, @Param("roleId") String roleId);
+
+    @Update({
+            "update Menu ",
+            "set role = replace(role, concat(',', #{roleId}), '') where menu_name= #{menuName}"
+    }) // todo 测试
+    int updateRoleDel(@Param("menuName") String menuName, @Param("roleId") String roleId);
+
 }

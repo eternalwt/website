@@ -40,7 +40,7 @@ HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入
 2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
 
-重载isPermitted【待验证】：
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
 https://www.jianshu.com/p/d9175f23c22a
 用户授权isPermitted过程：
 https://blog.csdn.net/weixin_33724046/article/details/93057613
@@ -106,41 +106,28 @@ session不再由JSP或者servlet管理（从这个角度再确认一下）
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
-1.用户绑定角色、用户角色列表做出来
-2.动态分配权限
-3.todo再清一轮
+4.用户绑定角色、用户角色列表做出来
+6.todo再清一轮
+7.看一下PermServiceImpl和MenuServiceImpl，有没有整合的可能性
 先把Query和Vo建立起来
 1.把redis做起来，我已经装了windows版的redis
 2.确认我现在能否方便切换到redis，以此来提升代码模块化程度和我的认知
 3.确认关闭缓存后，我的代码会受多大影响。如果JVM内存不足的时候，如何砍掉ehcache的内存？进一步学习内存一致性问题
 为ShiroConfig和ShiroJwtConfig抽公共函数【现在改动还是太麻烦了】
 mybatis plus强大的条件构造器queryWrapper、updateWrapper：https://blog.csdn.net/m0_37034294/article/details/82917234
-修改密码
-
-SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
-
-周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
-
-Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
-https://blog.csdn.net/tanqidong1992/article/details/48026491
-https://www.cnblogs.com/to-be-continue/p/8260080.html
-https://www.cnblogs.com/handsomeBoys/p/7602084.html
-https://www.cnblogs.com/grasp/p/11813674.html
-
+修改密码（跟shiro有没有关联）
 【加一个栏目表，然后把发表文章的功能彻底完善】
 鉴权搞成动态的，可配置的菜单、权限
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；3.后端role的API加上；
 加menu的前端和API弄出来
 logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 把excel的调通一版
+权限的修改再试图重构一下：updatePermission，对应前端savePermission
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
 4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
 配置mybatis-plus的代码生成器：https://segmentfault.com/a/1190000019397149?utm_source=tag-newest
 【重要】mybatis-plus的MybatisPlusConfig的原理是啥？如果不配置这个，也能得到结果，但是结果是错的，是全部
 MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改写：http://www.mamicode.com/info-detail-2472754.html
-
-把quill写通或者回退
-
 2.login后转到后端主页
 用户list；
 3.shiro的permission的API看一下；
@@ -152,6 +139,17 @@ MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改
 10.前端文档再看一周，包括service等
 11.写更多基础设施
 12.单元测试
+
+
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
+
+周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
+
+Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
+https://blog.csdn.net/tanqidong1992/article/details/48026491
+https://www.cnblogs.com/to-be-continue/p/8260080.html
+https://www.cnblogs.com/handsomeBoys/p/7602084.html
+https://www.cnblogs.com/grasp/p/11813674.html
 
 注意用好ResultMap
 

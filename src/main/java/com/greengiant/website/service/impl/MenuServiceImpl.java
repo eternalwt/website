@@ -40,4 +40,15 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         return menuList;
     }
+
+    @Override
+    public int updateRole(String menuName, boolean checked, String roleId) {
+        if (checked) {
+            return menuMapper.updateRoleAdd(menuName, roleId);
+        }
+        else {
+            return menuMapper.updateRoleDel(menuName, roleId);
+        }
+    }
+
 }

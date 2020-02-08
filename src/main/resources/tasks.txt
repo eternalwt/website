@@ -107,7 +107,7 @@ session不再由JSP或者servlet管理（从这个角度再确认一下）
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
 4.用户绑定角色、用户角色列表做出来
-6.todo再清一轮
+6.todo再清一轮，还是要逐个搞透
 7.看一下PermServiceImpl和MenuServiceImpl，有没有整合的可能性
 先把Query和Vo建立起来
 1.把redis做起来，我已经装了windows版的redis

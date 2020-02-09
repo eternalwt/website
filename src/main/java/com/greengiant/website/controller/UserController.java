@@ -1,5 +1,9 @@
 package com.greengiant.website.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.pojo.model.User;
@@ -20,7 +24,7 @@ public class UserController{
     @Autowired
     private UserService userService;
 
-    //todo addUser editUser delUser listUser
+    //todo editUser delUser listUser
 
     @PostMapping(value = "/add")
     public ResultBean addUser(@RequestBody AddUserQuery userVo) {
@@ -58,16 +62,19 @@ public class UserController{
         return ResultUtils.success();
     }
 
-    // todo 分页
     @RequestMapping("/users")
-    public String getUserList() {
-//        //todo
-//        List<User> list = userDao.selectAll();
-//        //todo 修改判断
-//        if (list != null && list.size() > 0) {
-//            return String.valueOf(list.size());
-//        }
-        return "empty list";
+    public ResultBean getUserList() {
+        return ResultUtils.success(userService.list());
+    }
+
+    @RequestMapping("/getUserListByPage")
+    public ResultBean getUserListByPage(@RequestBody PageParam pageParam) {
+        IPage<User> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        // todo 分页加条件过滤，形成一个通用的操作
+        IPage<User> result = userService.page(page, wrapper);
+
+        return ResultUtils.success(result);
     }
 
 }

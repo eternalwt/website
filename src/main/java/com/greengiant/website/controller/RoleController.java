@@ -28,8 +28,14 @@ public class RoleController {
         return null;
     }
 
-    //todo editRole
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public void editRole(Role role) {
+        //todo editRole
+    }
 
-    //todo delete
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public void delRole(Role role) {
+        //todo delete
+    }
 
 }

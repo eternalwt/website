@@ -14,7 +14,7 @@ public class FileUtil {
         headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
         headers.setContentDispositionFormData("attachment", getShortName(fileFullName));
         
-        return new ResponseEntity<byte[]>(toByteArray(fileFullName), headers, HttpStatus.CREATED);
+        return new ResponseEntity<>(toByteArray(fileFullName), headers, HttpStatus.CREATED);
     }
 	
 	private static String getShortName(String fileFullName)
@@ -24,34 +24,33 @@ public class FileUtil {
 	
 	private static byte[] toByteArray(String filename) throws IOException {  
 		  
-        File f = new File(filename);  
-        if (!f.exists()) {  
+        File f = new File(filename);
+        if (!f.exists()) {
             throw new FileNotFoundException(filename);  
-        }  
+        }
   
         ByteArrayOutputStream bos = new ByteArrayOutputStream((int) f.length());  
-        BufferedInputStream in = null;  
-        try {  
+        BufferedInputStream in = null;
+        try {
             in = new BufferedInputStream(new FileInputStream(f));  
-            int buf_size = 1024;  
+            int buf_size = 1024;
             byte[] buffer = new byte[buf_size];  
-            int len = 0;  
+            int len = 0;
             while (-1 != (len = in.read(buffer, 0, buf_size))) {  
-                bos.write(buffer, 0, len);  
-            }  
+                bos.write(buffer, 0, len);
+            }
             return bos.toByteArray();  
         } catch (IOException ex) {
             ex.printStackTrace();
             throw ex;
-        } finally {  
-            try {  
+        } finally {
+            try {
                 in.close();  
             } catch (IOException e) {  
-                e.printStackTrace();  
-            }  
+                e.printStackTrace();
+            }
             bos.close();  
-        }  
-    } 
-	
-	
+        }
+    }
+
 }

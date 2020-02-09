@@ -20,6 +20,7 @@ import java.util.Map;
 public class PermissionController {
 
     // todo 默认的menu（init.sql脚本）
+    // todo 有了menu表，permission表怎么处理？关系始终没理顺
 
     @Autowired
     private PermService permService;// todo 这个service有坏味道，看看要不要干掉
@@ -65,10 +66,8 @@ public class PermissionController {
 
     @RequestMapping(value = "/updatePermission", method = RequestMethod.POST)
     public ResultBean updatePermission(@RequestBody List<Map<String, String>> menuList) {
-        // todo 1.传数据；2.测试
         if (menuList != null && !menuList.isEmpty()) {
             for (Map<String, String> menu : menuList) {
-                // todo 1.通过roleName获取roleId
                 // todo 用不用wrapper也要统一
                 Role role = roleMapper.selectByName(menu.get("roleName"));
                 if (role != null) {

@@ -27,10 +27,9 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "list", method = RequestMethod.POST)
-    public ResultBean getPageList(@RequestBody PageParam pageParam) {
-        // todo
+    public ResultBean getPageList(@RequestBody PageParam pageParam) {// todo 分页加条件过滤，形成一个通用的操作
         IPage<Article> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
-        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();// todo 分页加条件过滤，形成一个通用的操作
         IPage<Article> result = articleService.page(page, wrapper);
 
         return ResultUtils.success(result);

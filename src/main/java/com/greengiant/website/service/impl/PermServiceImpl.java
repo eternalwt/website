@@ -54,11 +54,6 @@ public class PermServiceImpl implements PermService {
         return rolePermMap;
     }
 
-    // todo
-    void updatePermissionBatch() {
-        // todo 定接口
-
-    }
 
     private String getRoleName(String roleId, List<Role> roleList) {
         String roleName = "";

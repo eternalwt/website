@@ -11,10 +11,7 @@ import com.greengiant.website.pojo.vo.AddUserQuery;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -62,12 +59,12 @@ public class UserController{
         return ResultUtils.success();
     }
 
-    @RequestMapping("/users")
+    @GetMapping("/users")
     public ResultBean getUserList() {
         return ResultUtils.success(userService.list());
     }
 
-    @RequestMapping("/getUserListByPage")
+    @PostMapping("/getUserListByPage")
     public ResultBean getUserListByPage(@RequestBody PageParam pageParam) {
         IPage<User> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<User> wrapper = new QueryWrapper<>();

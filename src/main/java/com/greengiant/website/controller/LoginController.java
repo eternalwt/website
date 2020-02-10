@@ -25,13 +25,13 @@ public class LoginController {
     private UserService userService;
 
 
-    @RequestMapping(value = "/notLogin", method = RequestMethod.GET)
+    @GetMapping(value = "/notLogin")
     public String notLogin() {
         //todo 前端给几秒提示，然后转到登录页面
         return "您尚未登陆！";
     }
 
-    @RequestMapping(value = "/notRole", method = RequestMethod.GET)
+    @GetMapping(value = "/notRole")
     public String notRole() {
         return "您没有权限！";
     }
@@ -98,7 +98,7 @@ public class LoginController {
      * 注销
      * @return
      */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @GetMapping(value = "/logout")
     public ResultBean logout() {
         Subject subject = SecurityUtils.getSubject();
         subject.logout();

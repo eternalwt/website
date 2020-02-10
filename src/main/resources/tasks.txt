@@ -18,13 +18,15 @@ java-jwt是com.auth0下面的，关系注意一下
 
 =======================================================
 
+试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+
+可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
+【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
+
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
 思考一下JWT的remember
 JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
-
-可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
-【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
 
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 
@@ -69,6 +71,8 @@ session的过期时间怎么配置？
 有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
 
 授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
+
+测试AuthServiceTest：为啥有shiro相关的报错；
 
 ResponseResultInterceptor已写好，下一步：1.知识点的融会贯通；2.异常处理
 如何优雅设计 API 接口，实现统一格式返回？：https://mp.weixin.qq.com/s/AtEzrFmCcMJCdCggL6k-yQ
@@ -157,18 +161,13 @@ activemq的整合再搞一次，思考当时在华为时感觉哪里有困惑
 
 【本周】
 5.把添加用户/注册写通、角色等基本功能写好（Service、Controller）
-1.把ResultUtils用起来；
-2.前端form单独写好，再考虑整合的问题；
-3.把前后端分离配好（前后端数据传递格式）【看一眼chime代码】；
 6.【把2017年写的几个controller整合掉，把现有功能都测一下】
-7.把设置权限放到数据库，debug观察那段代码的执行顺序（要能debug bean的加载顺序，至关重要），然后通过代码看；4.继续调试剩下的springboot+shiro
+4.继续调试剩下的springboot+shiro（要能debug bean的加载顺序，至关重要）
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
-3.文章列表写通（练习mybatis-plus的分页功能）
 @Mapper注解都没整明白
 
 2.前后端连起来（包括shiro）：springboot+EasyUI+Shiro；
-3.用Angular或者vue版的前端；
 https://www.cnblogs.com/jingmoxukong/p/10239821.html
 http://www.jeasyui.cn/download.html
 整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
@@ -178,9 +177,6 @@ web-flash: https://github.com/enilu/web-flash
 10个你值得收藏的牛逼开源后台控制面板：https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247487067&idx=1&sn=83241fa91f95b54c59468c9fecc4ed72&chksm=9bd0a3c3aca72ad56d7c39708d4b068d900bd7b3a64d066dad54b39c65e2db9ad7b4cfab6b22&scene=21#wechat_redirect
 有springboot+vue+shiro的，那angular的呢？自己实现一下
 
-测试AuthServiceTest的2个问题：
-1.为啥有shiro相关的报错；
-2.为啥要关闭WebSocketController的注解？
 websocket 单元测试异常：
 https://www.cnblogs.com/andysd/p/10253747.html
 https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing

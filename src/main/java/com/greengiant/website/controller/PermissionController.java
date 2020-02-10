@@ -36,7 +36,7 @@ public class PermissionController {
 
 //    @RequiresRoles("admin")
 //    @RequiresPermissions("aaa")
-    @RequestMapping(value = "/isPermitted", method = RequestMethod.GET)
+    @GetMapping(value = "/isPermitted")
     public ResultBean checkPermission() {
         Subject subject = SecurityUtils.getSubject();
         subject.hasRole("admin");
@@ -45,26 +45,26 @@ public class PermissionController {
         return ResultUtils.success();
     }
 
-    @RequestMapping(value = "/getAllPermissionList", method = RequestMethod.GET)
+    @GetMapping(value = "/getAllPermissionList")
     public ResultBean getAllPermissionList() {
         // todo 把返回值的异常处理加一下
         return ResultUtils.success(menuService.list());
     }
 
     // todo restful改造
-    @RequestMapping(value = "/getPermissionListByUserId", method = RequestMethod.GET)
+    @GetMapping(value = "/getPermissionListByUserId")
     public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
         Map<String, Object> queryMap = new HashedMap();
         queryMap.put("role", roleId);// todo 这里应该用in
         return ResultUtils.success(menuService.listByMap(queryMap));
     }
 
-    @RequestMapping(value = "/getRolePermissionListMap", method = RequestMethod.GET)
+    @GetMapping(value = "/getRolePermissionListMap")
     public ResultBean getRolePermissionListMap() {
         return ResultUtils.success(permService.getRolePermissionListMap());
     }
 
-    @RequestMapping(value = "/updatePermission", method = RequestMethod.POST)
+    @PostMapping(value = "/updatePermission")
     public ResultBean updatePermission(@RequestBody List<Map<String, String>> menuList) {
         if (menuList != null && !menuList.isEmpty()) {
             for (Map<String, String> menu : menuList) {

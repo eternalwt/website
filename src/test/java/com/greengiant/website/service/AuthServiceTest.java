@@ -8,9 +8,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+//
+//Error creating bean with name 'serverEndpointExporter' 问题的解决：
+//        https://blog.csdn.net/qq_27101653/article/details/85072241
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = {WebsiteApplication.class})
+@SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class AuthServiceTest {
 
     @Autowired

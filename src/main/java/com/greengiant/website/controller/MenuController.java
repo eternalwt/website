@@ -44,4 +44,9 @@ public class MenuController {
         return null;
     }
 
+    @GetMapping(value = "/getMenuTree")
+    public ResultBean getMenuTree() {
+        return ResultUtils.success(menuServce.getMenuTree());
+    }
+
 }

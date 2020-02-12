@@ -21,7 +21,7 @@ public class UserController{
     @Autowired
     private UserService userService;
 
-    //todo editUser delUser listUser
+    //todo editUser
 
     @PostMapping(value = "/add")
     public ResultBean addUser(@RequestBody AddUserQuery userVo) {
@@ -72,6 +72,11 @@ public class UserController{
         IPage<User> result = userService.page(page, wrapper);
 
         return ResultUtils.success(result);
+    }
+
+    @PostMapping(value = "/delete")
+    public ResultBean delUser(Long userId) {
+        return ResultUtils.success(userService.removeById(userId));
     }
 
 }

@@ -5,13 +5,17 @@ import com.greengiant.website.dao.MenuMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.dto.MenuTreeNode;
 import com.greengiant.website.pojo.model.Menu;
+import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.UserRole;
 import com.greengiant.website.service.MenuService;
+import com.greengiant.website.service.RoleService;
+import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +26,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RoleService roleService;
 
     @Override
     public List<Menu> selectByRole(String roleStr) {
@@ -101,6 +108,53 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
             traverseList(nodeList.get(i).getChildren(), menuList);
         }
+    }
+
+
+    @Override
+    public Map<String, List<String>> getRolePermissionListMap() {
+        // todo 保证顺序（这个问题遇到过）
+        Map<String, List<String>> rolePermMap = new HashedMap();
+        // todo sql初始化脚本里面加入admin初始化赋权限
+        List<Role> roleList =  roleService.list();
+        List<Menu> menuList = this.list();
+        if (roleList != null && !roleList.isEmpty() && menuList != null && !menuList.isEmpty()) {
+            for (Menu menu : menuList) {
+                String roleStr = menu.getRole();
+                if (roleStr != null) {
+                    String[] roleIdList = roleStr.split(",");
+                    for (int i = 0; i < roleIdList.length; i++) {
+                        if (roleIdList[i] != null && !roleIdList[i].isEmpty()) {
+                            String roleName = this.getRoleName(roleIdList[i], roleList);
+                            if (rolePermMap.containsKey(roleName)) {
+                                rolePermMap.get(roleName).add(menu.getMenuName());
+                            }
+                            else {
+                                List<String> permList = new ArrayList<>();
+                                permList.add(menu.getMenuName());
+                                rolePermMap.put(roleName, permList);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return rolePermMap;
+    }
+
+
+    private String getRoleName(String roleId, List<Role> roleList) {
+        String roleName = "";
+        if (roleId != null) {
+            for (Role role : roleList) {
+                if (roleId.equals(role.getId().toString())) {
+                    return role.getRoleName();
+                }
+            }
+        }
+
+        return roleName;
     }
 
 }

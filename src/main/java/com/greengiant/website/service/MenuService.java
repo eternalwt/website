@@ -5,6 +5,7 @@ import com.greengiant.website.pojo.dto.MenuTreeNode;
 import com.greengiant.website.pojo.model.Menu;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MenuService extends IService<Menu> {
 
@@ -15,5 +16,7 @@ public interface MenuService extends IService<Menu> {
     int updateRole(String menuName, boolean checked, String roleId);
 
     List<MenuTreeNode> getMenuTree();
+
+    Map<String, List<String>> getRolePermissionListMap();
 
 }

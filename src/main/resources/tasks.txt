@@ -1,4 +1,5 @@
-﻿【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
+﻿
+【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
 【我的后端和脚手架没有突破，所以一直没办法接项目】
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
@@ -16,7 +17,16 @@ java-jwt是com.auth0下面的，关系注意一下
 2.scheme及解释器、数值符号计算继续；
 3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
 
-=======================================================
+========================================================================================================================
+
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
+https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：
+https://blog.csdn.net/weixin_33724046/article/details/93057613
+https://blog.csdn.net/tragedyxd/article/details/52958008
+isPermitted看懂后，再看permission的写法：system:role:add：
+https://blog.csdn.net/tragedyxd/article/details/52958008
+shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
 
 试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 
@@ -42,15 +52,8 @@ HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入
 2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
 
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：
-https://blog.csdn.net/weixin_33724046/article/details/93057613
-https://blog.csdn.net/tragedyxd/article/details/52958008
 
 更改用户名怎么样更新subject中的principal：https://blog.csdn.net/qq_33029793/article/details/93477572
-isPermitted看懂后，再看permission的写法：system:role:add：
-https://blog.csdn.net/tragedyxd/article/details/52958008
 使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
 Shiro过滤器配置(ShiroFilterFactoryBean)：https://blog.csdn.net/qq_36850813/article/details/88913552
 shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689

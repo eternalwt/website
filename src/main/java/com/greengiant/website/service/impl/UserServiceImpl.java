@@ -29,10 +29,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     public void addUser(AddUserQuery userVo) {
         //todo 考虑返回值
         //todo 考虑是否链式赋值
-
         User user = new User();
         user.setUserName(userVo.getUserName());
-        String salt = PasswordUtil.getSalt();// todo 这里加密相关的代码怎么写的更加模块化？
+        String salt = PasswordUtil.getSalt();
         user.setPasswordSalt(salt);
         // 密码加盐加密
         user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));

@@ -144,7 +144,6 @@ MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改
 11.写更多基础设施
 12.单元测试
 
-
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
 周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
@@ -278,6 +277,8 @@ webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
 
 DAO和POJO包的命名有问题
+
+shiro框架中，各个模块的重要性是不同的，授权模块就没那么重要。倒是登录等模块封装了很多（如果自己写）很麻烦的操作
 
 缓存和mybatis的配置再测一轮，然后搞源码分析
 

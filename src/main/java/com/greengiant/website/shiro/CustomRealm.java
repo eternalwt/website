@@ -1,7 +1,10 @@
 package com.greengiant.website.shiro;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.RoleService;
 import com.greengiant.website.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +29,9 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private MenuService menuService;
 
     /**
      * 获取身份验证信息
@@ -83,12 +89,30 @@ public class CustomRealm extends AuthorizingRealm {
         return info;
     }
 
+    // todo 添加permission的用法是info.addStringPermission(perms)，能否用这个来修改我的授权操作？（比较一下用和不用的区别）
+    //  https://www.cnblogs.com/116970u/p/10954812.html
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
+        // todo 为啥不直接用principals？
         String username = (String) SecurityUtils.getSubject().getPrincipal();
-        // todo 添加permission的用法是info.addStringPermission(perms)的用法：https://www.cnblogs.com/116970u/p/10954812.html
-//        return user.isAdmin()||super.isPermitted(principals,permission);
-        return true;
+
+        QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
+        menuWrapper.eq("menu_name", permission);
+        Menu menu = menuService.getOne(menuWrapper);
+        if (menu == null) {
+            return false;
+        }
+
+        List<Role> roleList = roleService.getRoleListByUserName(username);
+        if (roleList != null && !roleList.isEmpty()) {
+            for (Role role : roleList) {
+                if (menu.getRole() != null && menu.getRole().contains(role.getId().toString())) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
 //    @Override

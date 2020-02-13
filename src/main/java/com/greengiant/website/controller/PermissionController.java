@@ -1,12 +1,13 @@
 package com.greengiant.website.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.pojo.ResultBean;
+import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.PermService;
 import com.greengiant.website.utils.ResultUtils;
-import org.apache.commons.collections.map.HashedMap;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,15 +35,12 @@ public class PermissionController {
     @Autowired
     private RoleMapper roleMapper;
 
-//    @RequiresRoles("admin")
-//    @RequiresPermissions("aaa")
     @GetMapping(value = "/isPermitted")
-    public ResultBean checkPermission() {
+    public ResultBean checkPermission(String permission) {
+        // todo 过滤一遍很多地方不需要userId，从subject里面获取
         Subject subject = SecurityUtils.getSubject();
         subject.hasRole("admin");
-        boolean result = subject.isPermitted("admin");
-        // todo 这个方法测完可以干掉。这里为啥principal为空？是不是没传session等过来？
-        return ResultUtils.success();
+        return ResultUtils.success(subject.isPermitted(permission));
     }
 
     @GetMapping(value = "/getAllPermissionList")
@@ -54,9 +52,10 @@ public class PermissionController {
     // todo restful改造
     @GetMapping(value = "/getPermissionListByUserId")
     public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
-        Map<String, Object> queryMap = new HashedMap();
-        queryMap.put("role", roleId);// todo 这里应该用in
-        return ResultUtils.success(menuService.listByMap(queryMap));
+        QueryWrapper<Menu> menuWrapper = new QueryWrapper<Menu>();
+        menuWrapper.like("role", roleId);
+
+        return ResultUtils.success(menuService.list(menuWrapper));
     }
 
     @GetMapping(value = "/getRolePermissionListMap")

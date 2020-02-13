@@ -20,7 +20,7 @@ import java.util.Map;
 @RequestMapping("/permission")
 public class PermissionController {
 
-    // todo 默认的menu（init.sql脚本）
+    // todo 菜单稳定一点后，添加默认的menu（init.sql脚本）
     // todo 有了menu表，permission表怎么处理？关系始终没理顺
 
     @Autowired
@@ -38,8 +38,8 @@ public class PermissionController {
     @GetMapping(value = "/isPermitted")
     public ResultBean checkPermission(String permission) {
         // todo 过滤一遍很多地方不需要userId，从subject里面获取
+        // todo 加缓存
         Subject subject = SecurityUtils.getSubject();
-        subject.hasRole("admin");
         return ResultUtils.success(subject.isPermitted(permission));
     }
 
@@ -49,7 +49,6 @@ public class PermissionController {
         return ResultUtils.success(menuService.list());
     }
 
-    // todo restful改造
     @GetMapping(value = "/getPermissionListByUserId")
     public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
         QueryWrapper<Menu> menuWrapper = new QueryWrapper<Menu>();
@@ -67,7 +66,7 @@ public class PermissionController {
     public ResultBean updatePermission(@RequestBody List<Map<String, String>> menuList) {
         if (menuList != null && !menuList.isEmpty()) {
             for (Map<String, String> menu : menuList) {
-                // todo 用不用wrapper也要统一
+                // todo 尝试用updateWrapper重构
                 Role role = roleMapper.selectByName(menu.get("roleName"));
                 if (role != null) {
                     menuService.updateRole(menu.get("perm"), Boolean.valueOf(menu.get("checked")), role.getId().toString());

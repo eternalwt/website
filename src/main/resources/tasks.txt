@@ -451,10 +451,10 @@ Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
 
 DefaultWebSecurityManager
 
+// todo API前后端restful改造
+
 ModularRealmAuthenticator：
 https://blog.csdn.net/iteye_10899/article/details/82675363
-
-SubjectFactory，factory要看懂，同时把subject搞清楚
 
 Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
 根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf

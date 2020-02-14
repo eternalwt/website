@@ -33,7 +33,7 @@ public class MenuController {
     private RoleMapper roleMapper;
 
     @GetMapping(value = "/isPermitted")
-    public ResultBean checkPermission(String permission) {
+    public ResultBean checkPermission(@RequestParam String permission) {
         // todo 过滤一遍很多地方不需要userId，从subject里面获取
         // todo 加缓存
         Subject subject = SecurityUtils.getSubject();

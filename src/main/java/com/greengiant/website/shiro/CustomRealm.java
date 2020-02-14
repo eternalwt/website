@@ -93,9 +93,8 @@ public class CustomRealm extends AuthorizingRealm {
     //  https://www.cnblogs.com/116970u/p/10954812.html
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
-        // todo 为啥不直接用principals？
-        String username = (String) SecurityUtils.getSubject().getPrincipal();
-
+//        String username = (String) SecurityUtils.getSubject().getPrincipal();
+        String username = principals.toString();
         QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
         menuWrapper.eq("menu_name", permission);
         Menu menu = menuService.getOne(menuWrapper);

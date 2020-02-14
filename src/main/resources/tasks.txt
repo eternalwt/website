@@ -103,6 +103,8 @@ shiro的concurrency只有一句话描述，是一个底层机制，这个需要�
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去
 Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/1203/142550761.shtm
 
+分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
+
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
 2.把前后端权限控制写通【要能分配，涉及到列表、勾选、role等，还有shiro的permission再看一下】

@@ -338,8 +338,13 @@ StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始�
 
 调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
 session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
+看代码：如果是 Web 应用，每次进入 ShiroFilter 都会自动调用 session.touch()来更新最后访问时间。
+当 Subject.logout()时会自动调用 stop 方法来销毁会话。思考一下jwt的。
+【重要，层级@Autowired】实现SessionDAO接口的类的注入？
+MemorySessionDAO用到concurrentMap，看看这个数据结构
 SessionDAO【是怎么存储管理session的】与Session共享：
-https://blog.csdn.net/changudeng1992/article/details/81914628（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
+https://blog.csdn.net/changudeng1992/article/details/81914628
+（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.jianshu.com/p/f7d5a9ecfd3a
 https://www.jianshu.com/p/f85e50f41100
@@ -347,7 +352,6 @@ https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
 https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
 怎么确认我的禁session成功了？
 尝试使用缓存替换现有的SessionDAO（先看SessionDAO源码）
-logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 session的过期时间怎么配置？
 有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？

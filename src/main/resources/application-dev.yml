@@ -6,10 +6,23 @@ spring:
     password: eternal2002@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-    # 要能够测出来有没有的区别
+    # todo 测试配置是否成功
     cache:
       ehcache:
         config: ehcache.xml
+
+  resources:
+    static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/templates/
+
+#mybatis:
+#  config-location: mybatis-config.xml
+##  mapper-locations: mapper/*.xml
+##  config-location: classpath:mybatis-config.xml
+##  mapper-locations: classpath:mapper/*.xml
+#  configuration:
+#    #配置项：开启下划线到驼峰的自动转换. 作用：将数据库字段根据驼峰规则自动注入到对象属性。
+#    map-underscore-to-camel-case: true
+#    # logging.level.TAlarmInformationMapper=debug
 
 #mybatis-plus:
 #  mapper-location: classpath*:/mapper/*Mapper.xml
@@ -22,19 +35,11 @@ spring:
 #      logic-not-delete-value: 0
 #    #refresh: true
 #  configuration:
-#    cahe-enabled: true
+#    ccahe-enabled: true
 #    map-underscore-to-camel-case: true
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
-  resources:
-    static-locations: classpath:/META-INF/resources/, classpath:/resources/,classpath:/static/, classpath:/public/,classpath:/templates/
-
-mybatis:
-  configuration:
-    #配置项：开启下划线到驼峰的自动转换. 作用：将数据库字段根据驼峰规则自动注入到对象属性。
-    map-underscore-to-camel-case: true
-
-# todo 配置druid
+# todo 配置druid，和mybatis-config.xml的配置有什么关联？
 
 #logging:
 #  level:

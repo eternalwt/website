@@ -19,21 +19,11 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：
-https://blog.csdn.net/weixin_33724046/article/details/93057613
-https://blog.csdn.net/tragedyxd/article/details/52958008
-isPermitted看懂后，再看permission的写法：system:role:add：
-https://blog.csdn.net/tragedyxd/article/details/52958008
-shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
-
-试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+通用文件上传设计【文件上传根据这个文档搞出来】：https://blog.csdn.net/minaki_/article/details/85163343
+分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
 
 可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
 【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
-
-shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
 思考一下JWT的remember
 JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
@@ -46,12 +36,6 @@ JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jiansh
 
 为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
 HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
-
-经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
-1.看一下为啥checkPermission那里得到的principal是空【登录完成后，再发一次请求试一下】；
-2.既然能使用hasRole，可以把页面对应允许的role列表查出来，然后依次看用户有没有那些role；
-3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
-
 
 更改用户名怎么样更新subject中的principal：https://blog.csdn.net/qq_33029793/article/details/93477572
 使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
@@ -66,12 +50,6 @@ doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义
 https://blog.csdn.net/u010994966/article/details/90374887
 https://www.2cto.com/kf/201708/669152.html
 【先把我在这个方法上的几个todo干掉】
-shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
-PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-https://blog.csdn.net/weixin_38121659/article/details/78715454
-和doGetAuthorizationInfo是什么关系？
-session的过期时间怎么配置？
-有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
 
 授权自己写用filter很好写，理论上登录也很好写。1.想想自己如果写登录返回值注意什么（对比观察cookie那些，需要自己处理）；2.
 
@@ -107,10 +85,7 @@ Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/
 
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
-2.把前后端权限控制写通【要能分配，涉及到列表、勾选、role等，还有shiro的permission再看一下】
 同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了
-
-session不再由JSP或者servlet管理（从这个角度再确认一下）
 
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
@@ -129,7 +104,6 @@ mybatis plus强大的条件构造器queryWrapper、updateWrapper：https://blog.
 鉴权搞成动态的，可配置的菜单、权限
 3.把角色列表、勾选一级菜单权限弄起来（后端home）；3.后端role的API加上；
 加menu的前端和API弄出来
-logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
 把excel的调通一版
 权限的修改再试图重构一下：updatePermission，对应前端savePermission
 2.继续搞mybatis-plus；把mybatis-plus看完（已调通）；
@@ -180,6 +154,9 @@ http://www.jeasyui.cn/download.html
 web-flash: https://github.com/enilu/web-flash
 10个你值得收藏的牛逼开源后台控制面板：https://mp.weixin.qq.com/s?__biz=MzAxODcyNjEzNQ==&mid=2247487067&idx=1&sn=83241fa91f95b54c59468c9fecc4ed72&chksm=9bd0a3c3aca72ad56d7c39708d4b068d900bd7b3a64d066dad54b39c65e2db9ad7b4cfab6b22&scene=21#wechat_redirect
 有springboot+vue+shiro的，那angular的呢？自己实现一下
+
+// todo 添加permission的用法是info.addStringPermission(perms)，能否用这个来修改我的授权操作？（比较一下用和不用的区别）
+//  https://www.cnblogs.com/116970u/p/10954812.html
 
 websocket 单元测试异常：
 https://www.cnblogs.com/andysd/p/10253747.html
@@ -333,17 +310,13 @@ Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能（可�
 对着shiro源码再搞一轮。看源码搞清楚：
 1.为啥集成spring很方便；
 2.如果能为shiro贡献sso的代码，将会很好
-尝试使用缓存替换现有的SessionDAO（先看SessionDAO源码）
 Realm + LDAP
-对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
 
 springboot整合微软的ad域，采用ldap的api来整合，实现用户登录验证：https://www.cnblogs.com/anlegou/p/10511683.html
 
 读代码：
 SecurityUtils.getSubject();
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d
-
-怎么确认我的禁session成功了？
 
 爬虫先不搞，找现成的
 
@@ -361,7 +334,24 @@ https://www.cnblogs.com/ljdblog/p/6237683.html
 张开涛的shiro再看一遍，然后源码分析一次
 StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
 
-把前端提交到github，把scheme提交到github
+把scheme提交到github
+
+调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
+session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
+SessionDAO【是怎么存储管理session的】与Session共享：
+https://blog.csdn.net/changudeng1992/article/details/81914628（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
+https://blog.csdn.net/acmman/article/details/78955730
+https://www.jianshu.com/p/f7d5a9ecfd3a
+https://www.jianshu.com/p/f85e50f41100
+https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
+https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
+怎么确认我的禁session成功了？
+尝试使用缓存替换现有的SessionDAO（先看SessionDAO源码）
+logout：跟踪代码，分析是怎么找到session的，然后把jwt的也弄好
+shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
+session的过期时间怎么配置？
+有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
+对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
 
 jwt token验证的两种方式：
 1.封装成UserPasswordToken（这种方式比较间接）：https://www.jianshu.com/p/0b1131be7ace；
@@ -607,17 +597,25 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
 
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
+3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
+https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：
+https://blog.csdn.net/weixin_33724046/article/details/93057613
+https://blog.csdn.net/tragedyxd/article/details/52958008
+isPermitted看懂后，再看permission的写法：system:role:add：
+https://blog.csdn.net/tragedyxd/article/details/52958008
+shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
+试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
+PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+https://blog.csdn.net/weixin_38121659/article/details/78715454
+和doGetAuthorizationInfo是什么关系？
+
 @Bean的加载时机，@Autowired的加载时机
 
 该清这个文档里面的内容了【花一个周末清理】
-
-SessionDAO【默认是怎么保存的？思考session共享】与Session共享：
-https://blog.csdn.net/changudeng1992/article/details/81914628（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
-https://blog.csdn.net/acmman/article/details/78955730
-https://www.jianshu.com/p/f7d5a9ecfd3a
-https://www.jianshu.com/p/f85e50f41100
-https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
-https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
 
 @Bean注解修饰带参数方法时的参数取值：
 https://blog.csdn.net/ncuzengxiebo/article/details/80805786
@@ -1066,11 +1064,10 @@ https://blog.csdn.net/sunsgne_ac/article/details/79289770
 https://blog.csdn.net/wdsafmy468619/article/details/47041467
 https://www.cnblogs.com/zhanying999666/p/8392592.html
 
-
+官网文档：https://spring.io/guides
 
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
 @Bean的参数bean都已经生成了，再用我的demo工程再确认一下
-result：先写通，再优
 
 mybatis-spring：
 sqlsessionfactory 注入datasource
@@ -1455,4 +1452,20 @@ Import 注解与 ImportSelector 和 ImportBeanDefinitionRegistrar：https://www.
 
 RetryLimitHashedCredentialsMatcher与cache已成功解耦
 
-
+【文件上传下载，通过postman和junit进一步掌握】
+springmvc文件下载的总结：
+HttpServletResponse写数据的时候，发生了什么？
+1.使用HttpServletResponse：https://howtodoinjava.com/spring-mvc/spring-mvc-download-file-controller-example/
+2.ResponseEntity其实可以看做是把HttpServletResponse封装了，但是功能比HttpServletResponse多，推介使用：https://blog.csdn.net/qq_26584263/article/details/97972922
+3.SpringBoot如何优雅的使用@ResponseBody返回图片（byte[]比较一下ResponseEntity）：https://blog.csdn.net/u014449560/article/details/82807517
+文件上传总结：
+官网教程Uploading Files【官网里面的代码还是写的很好的，有空要多看】：https://spring.io/guides/gs/uploading-files/
+1.搞清楚multipart request的概念（搞懂这个是关键，纲举目张）：https://stackoverflow.com/questions/16958448/what-is-http-multipart-request
+postman中 form-data、x-www-form-urlencoded、raw、binary的区别：https://blog.csdn.net/xybelieve1990/article/details/81111786
+multipart/form-data：https://zhuanlan.zhihu.com/p/25038933
+前端multipart request与MultipartHttpServletRequest的关联，MultipartHttpServletRequest与MultipartFile的关联：
+看一下multipartFile.getInputStream()的实现。我的感觉：multipart应该是stream源，new了一个stream跟这个源关联
+Sending MultipartFile Request：https://www.oodlestechnologies.com/blogs/Upload-Files-by-Sending-MultipartFile-Request-In-Java/
+RequestEntity的用法：https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/request-response-entity.html
+Uploading and Downloading Files with Spring Boot：https://www.devglan.com/spring-boot/spring-boot-file-upload-download
+测试：https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/request-response-entity.html

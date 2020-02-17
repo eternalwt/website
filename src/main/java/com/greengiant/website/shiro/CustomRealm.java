@@ -89,8 +89,7 @@ public class CustomRealm extends AuthorizingRealm {
         return info;
     }
 
-    // todo 添加permission的用法是info.addStringPermission(perms)，能否用这个来修改我的授权操作？（比较一下用和不用的区别）
-    //  https://www.cnblogs.com/116970u/p/10954812.html
+
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
 //        String username = (String) SecurityUtils.getSubject().getPrincipal();

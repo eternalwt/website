@@ -8,6 +8,11 @@ import org.springframework.http.ResponseEntity;
 import java.io.*;
 
 public class FileUtil {
+    // todo postman和JUnit测试文件上传下载
+
+    // todo 这个util类应该把http相关的内容分离，放入FileController中去
+    //  也可以做成fileService或者storageService
+
 	//TODO 文件下载还有2个重要问题：1.大文件下载（文件太大(例如视频)这种方式能否支持？）2.怎么被其他模块调用
 	public static ResponseEntity<byte[]> download(String fileFullName) throws IOException {
         HttpHeaders headers = new HttpHeaders();
@@ -16,7 +21,7 @@ public class FileUtil {
         
         return new ResponseEntity<>(toByteArray(fileFullName), headers, HttpStatus.CREATED);
     }
-	
+
 	private static String getShortName(String fileFullName)
 	{
 		return fileFullName.split("\\")[fileFullName.split("\\").length - 1];

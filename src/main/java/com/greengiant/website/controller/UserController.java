@@ -54,28 +54,22 @@ public class UserController{
         userService.addUser(userVo);
 
         //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
-        //todo 修改密码后，对登录/JWT的影响？
+        //todo 修改密码后，对登录/JWT的影响？（先把非jwt的搞定）
 
         return ResultUtils.success();
     }
 
-    @GetMapping("/users")
-    public ResultBean getUserList() {
-        return ResultUtils.success(userService.list());
-    }
-
-    @PostMapping("/getUserListByPage")
-    public ResultBean getUserListByPage(@RequestBody PageParam pageParam) {
+    @PostMapping("/list")
+    public ResultBean getUserListByPage(@RequestBody PageParam pageParam) {// todo search
         IPage<User> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<User> wrapper = new QueryWrapper<>();
-        // todo 分页加条件过滤，形成一个通用的操作
         IPage<User> result = userService.page(page, wrapper);
 
         return ResultUtils.success(result);
     }
 
     @PostMapping(value = "/delete")
-    public ResultBean delUser(Long userId) {
+    public ResultBean delUser(@RequestParam Long userId) {
         return ResultUtils.success(userService.removeById(userId));
     }
 

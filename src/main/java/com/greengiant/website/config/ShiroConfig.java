@@ -39,6 +39,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
         //todo 和后端action对应起来。success的url是什么时候用的？
+//        shiroFilterFactoryBean.setLoginUrl("/notLogin.html"); // 点击没有权限的菜单项是可以触发的，再测一下。对应到login页面
         shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
         //todo 测试，应该是登录成功后跳转的页面吧
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
@@ -71,8 +72,8 @@ public class ShiroConfig {
         //开放登陆接口
         filterChainDefinitionMap.put("/auth/**", "anon");
         //用户，需要角色权限 “user”
-        filterChainDefinitionMap.put("/user/**", "user");
-        //filterChainDefinitionMap.put("/user/**", "roles[user]");
+        filterChainDefinitionMap.put("/user/**", "anon"); // todo 用("/user/**", "user");触发notLogin "roles[admin]"
+        filterChainDefinitionMap.put("/role/**", "anon");
         //管理员，需要角色权限 “admin”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
         //其余接口一律拦截

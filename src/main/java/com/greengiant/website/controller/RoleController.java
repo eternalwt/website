@@ -1,5 +1,9 @@
 package com.greengiant.website.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.RoleService;
@@ -15,23 +19,26 @@ public class RoleController {
     private RoleService roleService;
 
     @PostMapping(value = "/add")
-    public ResultBean addRole(Role role) {
+    public ResultBean addRole(@RequestBody Role role) {
         return ResultUtils.success(roleService.save(role));
     }
 
-    @GetMapping(value="/list")
-    public ResultBean getRoleList() {
-        // todo return List<Role>;
-        return ResultUtils.success(roleService.list());
+    @PostMapping(value="/list")
+    public ResultBean getRoleListByPage(@RequestBody PageParam pageParam) {// todo search
+        IPage<Role> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        IPage<Role> result = roleService.page(page, wrapper);
+
+        return ResultUtils.success(result);
     }
 
     @PostMapping(value = "/edit")
-    public void editRole(Role role) {
+    public void editRole(@RequestBody Role role) {
         //todo editRole
     }
 
     @PostMapping(value = "/delete")
-    public ResultBean delRole(Long roleId) {
+    public ResultBean delRole(@RequestParam Long roleId) {
         return ResultUtils.success(roleService.removeById(roleId));
     }
 

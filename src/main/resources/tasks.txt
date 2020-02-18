@@ -111,8 +111,6 @@ mybatis plus强大的条件构造器queryWrapper、updateWrapper：https://blog.
 配置mybatis-plus的代码生成器：https://segmentfault.com/a/1190000019397149?utm_source=tag-newest
 【重要】mybatis-plus的MybatisPlusConfig的原理是啥？如果不配置这个，也能得到结果，但是结果是错的，是全部
 MyBatis-Plus 3.0.3 Sql注入器添加,即全局配置Sql注入器,sqlInjector改写：http://www.mamicode.com/info-detail-2472754.html
-2.login后转到后端主页
-用户list；
 3.shiro的permission的API看一下；
 5.能否动态设置权限、根据role控制页面的访问（把material Design的表格用上）
 6.编辑文章
@@ -206,16 +204,15 @@ WebViewer：
 https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
 这个里面也提到了很多基础设施：https://segmentfault.com/a/1190000011562305
 前端setTimeout、setInterval是基础设施
+图片预览
 canvas及对应的库是基础设施
 标签云（tag云）等技术是基础设施
 好用的前端控件/组件、模板主题是基础设施
 数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
-
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
-
-超时后，web界面【自动】跳转到登录页是怎么实现的？
+前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、
 
 =======================================================
 
@@ -342,16 +339,17 @@ session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，�
 当 Subject.logout()时会自动调用 stop 方法来销毁会话。思考一下jwt的。
 【重要，层级@Autowired】实现SessionDAO接口的类的注入？
 MemorySessionDAO用到concurrentMap，看看这个数据结构
+SessionListener用法？
 SessionDAO【是怎么存储管理session的】与Session共享：
 https://blog.csdn.net/changudeng1992/article/details/81914628
-（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？为啥够用？）
+（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？看使用方式）
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.jianshu.com/p/f7d5a9ecfd3a
 https://www.jianshu.com/p/f85e50f41100
 https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
 https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
-怎么确认我的禁session成功了？
-尝试使用缓存替换现有的SessionDAO（先看SessionDAO源码）
+使用jwt时，怎么测试禁session成功了？
+EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 session的过期时间怎么配置？
 有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
@@ -387,14 +385,6 @@ jwt的关键点：
 SubjectDAO那些代码还是要看
 
 从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
-
-多租户架构：
-https://www.jianshu.com/p/fd798c84ff4b
-https://www.cnblogs.com/pingfan21/p/7478242.html
-https://blog.csdn.net/leon_wzm/article/details/80181623
-@SqlParser、TenantSqlParser：https://www.jb51.net/article/151723.htm
-【通过数据库的schema来实现多租户，再思考一下】
-Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394.html
 
 jwt的RememberMe：
 1.先从实现接口的角度来理解框架：RememberMeManager - AbstractRememberMeManager - CookieRememberMeManager【最好不要绕过subject.isRemembered()】；
@@ -439,6 +429,14 @@ SecurityManager可以setRealms，也可以通过setAuthenticator来设置多real
 读代码的关注点：
 1.类之间的继承各完成的任务；
 2.类之间的组合关系
+
+多租户架构：
+https://www.jianshu.com/p/fd798c84ff4b
+https://www.cnblogs.com/pingfan21/p/7478242.html
+https://blog.csdn.net/leon_wzm/article/details/80181623
+@SqlParser、TenantSqlParser：https://www.jb51.net/article/151723.htm
+【通过数据库的schema来实现多租户，再思考一下】
+Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394.html
 
 再思考一次包的组织，如果包太多是不是再加一个层级
 按照阿里的文档，至少应该有Vo和Query两类（两个方向）数据传输对象

@@ -46,7 +46,7 @@ public class ArticleController {
         PageParam pageParam = pageQuery.getPageParam();
 
         IPage<Article> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
-        QueryWrapper<Article> wrapper = new QueryWrapper<>();// todo 分页加条件过滤，形成一个通用的操作
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
         wrapper.allEq(conditionMap);
         IPage<Article> result = articleService.page(page, wrapper);
 

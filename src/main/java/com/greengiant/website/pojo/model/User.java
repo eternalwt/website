@@ -1,7 +1,10 @@
 package com.greengiant.website.pojo.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("auth_user")
 public class User {
     private Long id;
 
@@ -10,6 +13,8 @@ public class User {
     private String password;
 
     private String passwordSalt;
+
+    private Boolean locked;
 
     private Date createTime;
 
@@ -58,6 +63,14 @@ public class User {
 
     public void setPasswordSalt(String passwordSalt) {
         this.passwordSalt = passwordSalt == null ? null : passwordSalt.trim();
+    }
+
+    public Boolean getLocked() {
+        return locked;
+    }
+
+    public void setLocked(Boolean locked) {
+        this.locked = locked;
     }
 
     public Date getCreateTime() {

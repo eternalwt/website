@@ -14,17 +14,18 @@ public class User {
 
     private String passwordSalt;
 
-    private Boolean locked;
+    private Integer locked;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public User(Long id, String userName, String password, String passwordSalt, Date createTime, Date updateTime) {
+    public User(Long id, String userName, String password, String passwordSalt, Integer locked, Date createTime, Date updateTime) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.passwordSalt = passwordSalt;
+        this.locked = locked;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -65,11 +66,11 @@ public class User {
         this.passwordSalt = passwordSalt == null ? null : passwordSalt.trim();
     }
 
-    public Boolean getLocked() {
+    public Integer getLocked() {
         return locked;
     }
 
-    public void setLocked(Boolean locked) {
+    public void setLocked(Integer locked) {
         this.locked = locked;
     }
 

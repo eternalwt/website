@@ -53,7 +53,7 @@ public interface UserMapper extends BaseMapper<User> {
             @Arg(column="user_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="password_salt", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="locked", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
+            @Arg(column="locked", javaType=Integer.class, jdbcType=JdbcType.TINYINT),
             @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
             @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })

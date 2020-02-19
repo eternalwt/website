@@ -438,6 +438,8 @@ https://blog.csdn.net/leon_wzm/article/details/80181623
 【通过数据库的schema来实现多租户，再思考一下】
 Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394.html
 
+现在算是对搭建系统的工作量有了一点概念（搭建到可以让其他人愉快写代码的程度），不是那么容易的。
+
 再思考一次包的组织，如果包太多是不是再加一个层级
 按照阿里的文档，至少应该有Vo和Query两类（两个方向）数据传输对象
 
@@ -482,6 +484,7 @@ https://www.cnblogs.com/je-ge/p/6129667.html
 https://blog.csdn.net/shan165310175/article/details/98478970
 读更多定时任务代码：https://www.cnblogs.com/BINGJJFLY/p/7485599.html
 
+菜单和授权权限的对应关系是不是装入role表（分级授权知道怎么做了，是不是再查查资料）
 
 ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）

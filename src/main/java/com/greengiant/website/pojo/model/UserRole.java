@@ -1,7 +1,10 @@
 package com.greengiant.website.pojo.model;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
 import java.util.Date;
 
+@TableName("auth_user_role")
 public class UserRole {
     private Long id;
 

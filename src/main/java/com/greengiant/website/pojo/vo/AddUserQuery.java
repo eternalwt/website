@@ -1,9 +1,11 @@
 package com.greengiant.website.pojo.vo;
 
+import java.util.List;
+
 public class AddUserQuery {
     private String userName;
     private String password;
-    private Long roleId;
+    private List<Long> roleIdList;
 
     public String getUserName() {
         return userName;
@@ -21,11 +23,11 @@ public class AddUserQuery {
         this.password = password;
     }
 
-    public Long getRoleId() {
-        return roleId;
+    public List<Long> getRoleIdList() {
+        return roleIdList;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setRoleIdList(List<Long> roleIdList) {
+        this.roleIdList = roleIdList;
     }
 }

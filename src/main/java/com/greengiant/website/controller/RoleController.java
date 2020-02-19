@@ -32,6 +32,11 @@ public class RoleController {
         return ResultUtils.success(result);
     }
 
+    @GetMapping(value="/alllist")
+    public ResultBean getAllRoleList() {
+        return ResultUtils.success(roleService.list());
+    }
+
     @PostMapping(value = "/edit")
     public void editRole(@RequestBody Role role) {
         //todo editRole

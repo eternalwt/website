@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
@@ -21,8 +23,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserRoleMapper userRoleMapper;
 
-    //todo 事务放在这里，思考一下我在威盛电子服务划分过多遇到的问题
-    //3.注意：加密和事务。看些这些东西能否用上：PlatformTransactionManager、DefaultTransactionDefinition、TransactionStatus
+    // todo 事务放在这里，思考一下我在威盛电子服务划分过多遇到的问题
+    // todo 注意：看些这些事务相关的东西能否用上：PlatformTransactionManager、DefaultTransactionDefinition、TransactionStatus
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -37,10 +39,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));
         userMapper.insert(user);
 
-        UserRole userRole = new UserRole();
-        userRole.setRoleId(userVo.getRoleId());
-        userRole.setUserId(user.getId());
-        userRoleMapper.insert(userRole);
+        // todo 如何批量插入
+        List<Long> roleIdList = userVo.getRoleIdList();
+        if (roleIdList != null && !roleIdList.isEmpty()) {
+            for (Long roleId : roleIdList) {
+                UserRole userRole = new UserRole();
+                userRole.setRoleId(roleId);
+                userRole.setUserId(user.getId());
+                // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
+                // todo 确认抛异常后返回值显示正确
+                userRoleMapper.insert(userRole);
+            }
+        }
     }
 
     @Override

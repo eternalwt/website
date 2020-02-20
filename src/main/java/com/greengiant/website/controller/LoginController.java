@@ -58,7 +58,7 @@ public class LoginController {
 
     @PostMapping(value = "/login")
     @ResponseResult
-    public Long login(@RequestParam String username,
+    public User login(@RequestParam String username,
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // todo 判空与异常处理
@@ -68,7 +68,7 @@ public class LoginController {
         //根据权限，指定返回数据
         User user = userService.getByName(username);
 
-        return user.getId();
+        return user;
     }
 
 

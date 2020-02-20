@@ -19,8 +19,10 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
-session cookie和remember cookie是怎么被使用的？（rememberme没学透把）
+1.session cookie和remember cookie是怎么被使用的？（rememberme没学透把）
 要看清shiro代码是怎么拦截获取cookie并转换成账户信息比对的
+
+经过过年这段时间的精进，todo应该能搞定一大部分了
 
 通用文件上传设计【文件上传根据这个文档搞出来】：https://blog.csdn.net/minaki_/article/details/85163343
 分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
@@ -260,6 +262,8 @@ webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
 
 DAO和POJO包的命名有问题
+
+配置不对，没测通：filterChainDefinitionMap.put("/user/**", "roles[admin]");
 
 shiro框架中，各个模块的重要性是不同的，授权模块就没那么重要。倒是登录等模块封装了很多（如果自己写）很麻烦的操作
 

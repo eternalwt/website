@@ -101,8 +101,6 @@ public class LoginController {
     @GetMapping(value = "/logout")
     public ResultBean logout() {
         Subject subject = SecurityUtils.getSubject();
-        // todo 这里subject的principals和session都是null，不对把？难道只有登录那个方法能读到subject？
-        //  如果是这样bug出在哪儿？angular和ajax发送请求，是否/怎么附带cookie？
         subject.logout();
 
         return ResultUtils.success("登出成功！");

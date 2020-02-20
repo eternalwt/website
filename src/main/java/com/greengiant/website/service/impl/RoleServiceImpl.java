@@ -45,4 +45,11 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return roleList;
     }
 
+    @Override
+    public void delRole(Long roleId) {
+        this.removeById(roleId);
+
+        // todo 关联删除菜单、授权权限等
+    }
+
 }

@@ -641,6 +641,8 @@ RunAs理解：
 看runas代码
 把runas写出来：https://www.xlongwei.com/detail/17080116
 
+// todo 删除角色也要把权限删掉（有用户则不允许删除），要等角色和权限的关联理顺后再做
+
 ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5
 https://www.cnblogs.com/zhangjianbing/p/10114196.html

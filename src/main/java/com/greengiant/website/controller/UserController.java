@@ -70,7 +70,8 @@ public class UserController{
 
     @PostMapping(value = "/delete")
     public ResultBean delUser(@RequestParam Long userId) {
-        return ResultUtils.success(userService.removeById(userId));
+        userService.delUser(userId);
+        return ResultUtils.success();
     }
 
 }

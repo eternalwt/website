@@ -9,4 +9,5 @@ public interface RoleService extends IService<Role> {
 
     List<Role> getRoleListByUserName(String userName);
 
+    void delRole(Long roleId);
 }

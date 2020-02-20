@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
@@ -54,8 +56,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delUser(Long userId) {
+        this.removeById(userId);
+
+        // todo 测试
+        Map<String, Object> map = new HashMap<>();
+        map.put("user_id", userId);
+        userRoleMapper.deleteByMap(map);
+    }
+
+    @Override
     public User getByName(String userName) {
-        //todo 判空在哪里做？用java8那种很简洁的语法，想明白。
         //todo 想明白了：前端从业务角度判空，后端只在最下层操作数据库的时候用java8语法判断，然后用全局异常处理返回给前端
         User user = userMapper.selectByName(userName);
 

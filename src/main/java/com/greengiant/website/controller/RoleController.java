@@ -44,7 +44,8 @@ public class RoleController {
 
     @PostMapping(value = "/delete")
     public ResultBean delRole(@RequestParam Long roleId) {
-        return ResultUtils.success(roleService.removeById(roleId));
+        roleService.delRole(roleId);
+        return ResultUtils.success();
     }
 
 }

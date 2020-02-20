@@ -9,6 +9,8 @@ public interface UserService extends IService<User> {
 
     void addUser(AddUserQuery userVo);
 
+    void delUser(Long userId);
+
     User getByName(String userName);
 
 }

@@ -36,6 +36,7 @@ public interface UserMapper extends BaseMapper<User> {
         @Arg(column="user_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="password_salt", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="avatar", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="locked", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
@@ -53,6 +54,7 @@ public interface UserMapper extends BaseMapper<User> {
             @Arg(column="user_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="password_salt", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+            @Arg(column="avatar", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="locked", javaType=Integer.class, jdbcType=JdbcType.TINYINT),
             @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
             @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
@@ -61,7 +63,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
         "select",
-        "id, user_name, password, password_salt, create_time, update_time",
+        "id, user_name, password, password_salt, avatar, create_time, update_time",
         "from auth_user"
     })
     @ConstructorArgs({
@@ -69,6 +71,7 @@ public interface UserMapper extends BaseMapper<User> {
         @Arg(column="user_name", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="password", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="password_salt", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="avatar", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="locked", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)

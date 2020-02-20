@@ -17,17 +17,20 @@ public class User {
 
     private String passwordSalt;
 
+    private String avatar;
+
     private Integer locked;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public User(Long id, String userName, String password, String passwordSalt, Integer locked, Date createTime, Date updateTime) {
+    public User(Long id, String userName, String password, String passwordSalt, String avatar, Integer locked, Date createTime, Date updateTime) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.passwordSalt = passwordSalt;
+        this.avatar = avatar;
         this.locked = locked;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -67,6 +70,14 @@ public class User {
 
     public void setPasswordSalt(String passwordSalt) {
         this.passwordSalt = passwordSalt == null ? null : passwordSalt.trim();
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public Integer getLocked() {

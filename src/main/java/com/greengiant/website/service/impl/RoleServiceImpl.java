@@ -1,6 +1,7 @@
 package com.greengiant.website.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.dao.UserMapper;
@@ -44,6 +45,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             }
         }
         return roleList;
+    }
+
+    @Override
+    public int editRole(Role role) {
+        UpdateWrapper<Role> roleUpdateWrapper = new UpdateWrapper<>();
+        roleUpdateWrapper.eq("id", role.getId());
+        // todo 用user测试一下，能否更新部分字段
+        int update = roleMapper.update(role, roleUpdateWrapper);
+        return update;
     }
 
     @Override

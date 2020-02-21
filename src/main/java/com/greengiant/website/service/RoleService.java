@@ -9,5 +9,7 @@ public interface RoleService extends IService<Role> {
 
     List<Role> getRoleListByUserName(String userName);
 
+    int editRole(Role role);
+
     void delRole(Long roleId);
 }

@@ -27,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
         "select",
-        "id, user_name, password, password_salt, locked, create_time, update_time",
+        "id, user_name, password, password_salt, avatar, locked, create_time, update_time",
         "from auth_user",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -45,7 +45,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
             "select",
-            "id, user_name, password, password_salt, locked, create_time, update_time",
+            "id, user_name, password, password_salt, avatar, locked, create_time, update_time",
             "from auth_user",
             "where user_name = #{username}"
     })
@@ -63,7 +63,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
         "select",
-        "id, user_name, password, password_salt, avatar, create_time, update_time",
+        "id, user_name, password, password_salt, avatar, locked, create_time, update_time",
         "from auth_user"
     })
     @ConstructorArgs({

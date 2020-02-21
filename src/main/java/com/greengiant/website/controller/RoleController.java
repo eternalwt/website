@@ -23,6 +23,11 @@ public class RoleController {
         return ResultUtils.success(roleService.save(role));
     }
 
+    @GetMapping(value = "/getById")
+    public ResultBean getById(@RequestParam Long id) {
+        return ResultUtils.success(roleService.getById(id));
+    }
+
     @PostMapping(value="/list")
     public ResultBean getRoleListByPage(@RequestBody PageParam pageParam) {// todo search
         IPage<Role> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
@@ -38,8 +43,8 @@ public class RoleController {
     }
 
     @PostMapping(value = "/edit")
-    public void editRole(@RequestBody Role role) {
-        //todo editRole
+    public ResultBean editRole(@RequestBody Role role) {
+        return ResultUtils.success(roleService.editRole(role));
     }
 
     @PostMapping(value = "/delete")

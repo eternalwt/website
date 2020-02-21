@@ -358,10 +358,13 @@ https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
 https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
 使用jwt时，怎么测试禁session成功了？
 EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
+RedisSessionDAO：https://blog.csdn.net/njpkhuan/article/details/100563389?depth_1.utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 session的过期时间怎么配置？
 有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
 对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
+配置shiro会话监听【看一下如果sessionManager没有实例化，代码是什么样的】：https://www.jianshu.com/p/0f949aa730c1
+（SessionListener体现了这样一种可插拔设计风格：初始化了就多一个功能点，并且可以有不同的实现；没有初始化就少一个功能点，但是不影响主要功能。或者可以先给一个默认实现）
 
 jwt token验证的两种方式：
 1.封装成UserPasswordToken（这种方式比较间接）：https://www.jianshu.com/p/0b1131be7ace；
@@ -974,23 +977,30 @@ https://blog.csdn.net/jrn1012/article/details/70396502
 
 【确认这个过程】在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，
 框架会自动默认分别注入DataSourceTransactionManager或JpaTransactionManager。
-mybati事务管理：
+mybatis事务管理：
 https://www.cnblogs.com/geningchao/p/6628452.html
 https://www.jianshu.com/p/f3017479bd30
 https://www.jianshu.com/p/f0662c10ce4f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 https://blog.csdn.net/qq_36688143/article/details/82769423
+
 Spring中的@Transactional(rollbackFor = Exception.class)属性详解：https://www.cnblogs.com/clwydjgs/p/9317849.html
+1.回滚后返回值如何处理？2.如何打日志？
+3.为何“回滚失效”、未生效？可能是没有配置事务管理器，做好单元测试：
+https://blog.csdn.net/weixin_44138309/article/details/100561860
+https://www.cnblogs.com/Z-share/p/11713863.html
 我没加的时候阿里巴巴给了提示：需要在Transactional注解指定rollbackFor或者在方法中显示的rollback：
 https://blog.csdn.net/ostar_liang/article/details/80770837
 https://blog.csdn.net/qq_16605855/article/details/79653282
-@Transactional注解的实现
+搞懂@Transactional注解的实现原理：
+    声明式事务管理建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。
+    声明式事务管理也有两种常用的方式，一种是基于tx和aop名字空间的xml配置文件，另一种就是基于@Transactional注解。显然基于注解的方式更简单易用，更清爽。
 
-//@RequiresRoles("role1")
-//@RequiresPermissions("+user1+100")
+【再看看springmvc的线程模型】如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。
+
+//@RequiresPermissions("+user1+100")【一旦这样使用，底层就要按照shiro要求的方式重载了】
 再看ModelAndView的用法，和return "anth/login";这种比较一下
 
 shiro源码分析，搞透
-
 再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？

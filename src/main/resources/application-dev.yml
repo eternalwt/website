@@ -25,6 +25,9 @@ spring:
 #    # logging.level.TAlarmInformationMapper=debug
 
 #mybatis-plus:
+#  config-location: classpath:/mybatis-config.xml
+
+#mybatis-plus:
 #  mapper-location: classpath*:/mapper/*Mapper.xml
 #  type-aliases-package: com.greengiant.website.dao
 #  global-config:

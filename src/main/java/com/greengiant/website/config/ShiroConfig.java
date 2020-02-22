@@ -42,9 +42,9 @@ public class ShiroConfig {
 //        shiroFilterFactoryBean.setLoginUrl("/notLogin.html"); // 点击没有权限的菜单项是可以触发的，再测一下。对应到login页面
         shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
         //todo 测试，应该是登录成功后跳转的页面吧
-        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
+        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");// todo 有用吗？
         // 设置无权限时跳转的 url;
-        shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");
+        shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");// todo 1.如果不加域名则会到localhost:8080；2.原理是啥？
         // 设置拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
         log.info("Shiro拦截器工厂类注入成功");
@@ -52,32 +52,31 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    // 下面这个函数也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
+    // 下面这个函数也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace // todo 再分析一下
     private Map<String, String> getfilterChainDefinitionMap() {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
-        //todo 运维，调试完后应该加上限制
-        //todo swagger路径用2个*配置也不行，再思考一下
+        // todo 运维，调试完后应该加上限制
+        // todo swagger路径用2个*配置也不行，再思考一下
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
         filterChainDefinitionMap.put("/permission/**", "anon");
-        filterChainDefinitionMap.put("/article/**", "anon"); // todo 后面要干掉
+        filterChainDefinitionMap.put("/article/**", "anon");
 
         filterChainDefinitionMap.put("/swagger**", "anon");
         filterChainDefinitionMap.put("/actuator/**", "anon");
         filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/website-websocket/**", "anon");
 
-        //游客，开发权限
+        // 游客，开放权限
         filterChainDefinitionMap.put("/guest/**", "anon");
-        //开放登陆接口
+        // 开放登陆接口
         filterChainDefinitionMap.put("/auth/**", "anon");
-        //用户，需要角色权限 “user”
-        filterChainDefinitionMap.put("/user/**", "anon"); // todo 用("/user/**", "user");触发notLogin "roles[admin]"
+        // 用户，需要角色权限 “user”
+        filterChainDefinitionMap.put("/user/**", "anon");
         filterChainDefinitionMap.put("/role/**", "anon");
-        //管理员，需要角色权限 “admin”
+        // 管理员，需要角色权限 “admin”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
-        //其余接口一律拦截
-        //主要这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截
+        // 其余接口一律拦截（这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截）
         filterChainDefinitionMap.put("/**", "user");
 
         return filterChainDefinitionMap;
@@ -94,10 +93,7 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
         // 注入自定义的realm
-//        securityManager.setRealm(customRealm);
         securityManager.setRealms(Arrays.asList(customRealm));
-        // securityManager.setAuthenticator();
-//         securityManager.setAuthorizer(customRealm);// todo 这样写不够优雅
 
         // 注入缓存管理器
         securityManager.setCacheManager(ehCacheCacheManager);
@@ -156,9 +152,10 @@ public class ShiroConfig {
      */
     @Bean
     public SimpleCookie rememberMeCookie() {
-        //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
+        // cookie的名称
         SimpleCookie simpleCookie = new SimpleCookie("REMEMBERCOOKIE");
         //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
+        // todo 如何把jsessionid的httponly设置为false？要判断是否登录
         simpleCookie.setHttpOnly(true);
         // 生效时间,单位是秒
         simpleCookie.setMaxAge(60 * 60 * 24 * 30);
@@ -166,15 +163,16 @@ public class ShiroConfig {
     }
 
     /**
-     * cookie管理器;
+     * cookie管理器
      */
     @Bean
     public CookieRememberMeManager rememberMeManager(SimpleCookie rememberMeCookie) {
         CookieRememberMeManager cookieRememberMeManager = new CookieRememberMeManager();
-        //rememberme cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位），通过以下代码可以获取
+        // cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位），通过以下代码可以获取
         //KeyGenerator keygen = KeyGenerator.getInstance("AES");
         //SecretKey deskey = keygen.generateKey();
         //System.out.println(Base64.encodeToString(deskey.getEncoded()));
+        // todo 密钥太短，根据上面的注释生成长的
         byte[] cipherKey = Base64.decode("wGiHplamyXlVB11UXWol8g==");
         cookieRememberMeManager.setCipherKey(cipherKey);
         cookieRememberMeManager.setCookie(rememberMeCookie);
@@ -185,24 +183,12 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        sessionManager.setGlobalSessionTimeout(180000);//单位毫秒
-        //sessionManager.setSessionIdCookie();
-        //sessionManager.setSessionIdCookieEnabled(true);
+        //单位毫秒
+        sessionManager.setGlobalSessionTimeout(180000);
 
         return sessionManager;
     }
 
-//    @Bean
-//    public PasswordService getPasswordService() {
-//        //todo 写通后考虑，是否放入util里面去
-//        DefaultPasswordService defaultPasswordService = new DefaultPasswordService();
-//        DefaultHashService defaultHashService = new DefaultHashService();
-//        defaultHashService.setHashAlgorithmName(PasswordUtil.algorithmName);
-//        defaultHashService.setHashIterations(PasswordUtil.hashIterationCount);
-//        defaultPasswordService.setHashService(defaultHashService);
-//
-//        return defaultPasswordService;
-//    }
 
     /**
      * Shiro生命周期处理器

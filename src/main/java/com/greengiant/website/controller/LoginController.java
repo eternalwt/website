@@ -46,7 +46,6 @@ public class LoginController {
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // todo 判空与异常处理
-
         // 从SecurityUtils里边创建一个 subject
         loginService.login(username, password, isRememberMe);
         //根据权限，指定返回数据
@@ -55,7 +54,7 @@ public class LoginController {
         return ResultUtils.success(user);
     }
 
-    // todo 拦截器没整合好，如果抛出异常返回值又包了一层
+    // todo 启用拦截器需同步修改GlobalExceptionHandler里的返回值
 //    @PostMapping(value = "/login")
 //    @ResponseResult
 //    public User login(@RequestParam String username,
@@ -105,7 +104,6 @@ public class LoginController {
 
         return ResultUtils.success("登出成功！");
     }
-
 
 
 }

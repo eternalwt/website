@@ -1,5 +1,6 @@
 package com.greengiant.website.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
@@ -72,5 +73,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         User user = userMapper.selectByName(userName);
 
         return user;
+    }
+
+    @Override
+    public int changePassword(User user, String rawPassword) {
+        String password = PasswordUtil.encrypt(rawPassword, user.getPasswordSalt());
+
+        UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
+        userUpdateWrapper.eq("userName", user.getUserName());
+        // todo 测试一下，能否更新部分字段，对时间字段的影响是啥？
+        int update = userMapper.update(user, userUpdateWrapper);
+
+        return update;
     }
 }

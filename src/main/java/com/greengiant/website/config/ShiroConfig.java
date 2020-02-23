@@ -46,7 +46,8 @@ public class ShiroConfig {
         //todo 测试，应该是登录成功后跳转的页面吧
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");// todo 有用吗？
         // 设置无权限时跳转的 url;
-        shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");// todo 1.如果不加域名则会到localhost:8080；2.原理是啥？
+        // todo 下面的用法是不是错了，是不是应该结合后端方法（例如notLogin）来处理？
+        shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");
         // 设置拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
         log.info("Shiro拦截器工厂类注入成功");

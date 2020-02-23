@@ -27,20 +27,20 @@ public class PasswordUtil {
 
     /**
      * 对密码进行加密
-     * @param originalPassword 原始密码
+     * @param rawPassword 原始密码
      * @param salt 盐值
      * @return 加密后的密码
      */
-    public static String encrypt(String originalPassword, String salt) {
+    public static String encrypt(String rawPassword, String salt) {
         String newPassword = null;
 
         if (storedCredentialsHexEncoded) {
-            newPassword = new SimpleHash(algorithmName, originalPassword, ByteSource.Util.bytes(salt),
+            newPassword = new SimpleHash(algorithmName, rawPassword, ByteSource.Util.bytes(salt),
                     hashIterationCount).toHex();
         }
         else {
             //对应HashedCredentialsMatcher里面的2种判断
-            newPassword = new SimpleHash(algorithmName, originalPassword, ByteSource.Util.bytes(salt),
+            newPassword = new SimpleHash(algorithmName, rawPassword, ByteSource.Util.bytes(salt),
                     hashIterationCount).toBase64();
         }
 

@@ -34,29 +34,20 @@ public class UserController{
         //2.分别在user和role关联表里面写数据
         userService.addUser(userVo);
 
-        // todo 注册后如何自动登录？
-
         //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
-
         return ResultUtils.success();
     }
 
     @PostMapping(value = "/password/change")
     public ResultBean changePassword(@RequestBody AddUserQuery userVo) {
-        // todo 写好
-        //1.判断是否有同名的已存在，如果有给出fail的返回值
-        // todo 判空
+        // todo password判空
+        //1.判断用户名是否存在
         User user = userService.getByName(userVo.getUserName());
-        if (user != null) {
-            return ResultUtils.fail(StatusCodeEnum.USER_EXISTS.getCode(), StatusCodeEnum.USER_EXISTS.getMsg());
+        if (user == null) {
+            return ResultUtils.fail();
         }
-        //2.分别在user和role关联表里面写数据
-        userService.addUser(userVo);
 
-        //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
-        //todo 修改密码后，对登录/JWT的影响？（先把非jwt的搞定）
-
-        return ResultUtils.success();
+        return ResultUtils.success(userService.changePassword(user, userVo.getPassword()));
     }
 
     @PostMapping("/list")

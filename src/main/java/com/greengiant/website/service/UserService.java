@@ -13,4 +13,6 @@ public interface UserService extends IService<User> {
 
     User getByName(String userName);
 
+    int changePassword(User user, String rawPassword);
+
 }

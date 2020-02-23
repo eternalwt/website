@@ -52,7 +52,7 @@ public class LoginController {
         //根据权限，指定返回数据
         User user = userService.getByName(username);
 
-        return ResultUtils.success(user.getId());
+        return ResultUtils.success(user);
     }
 
     // todo 拦截器没整合好，如果抛出异常返回值又包了一层

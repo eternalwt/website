@@ -1,6 +1,5 @@
 package com.greengiant.website.controller;
 
-import com.greengiant.website.ResponseResult;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.AuthService;
@@ -42,23 +41,8 @@ public class LoginController {
      * @param username 用户名
      * @param password 密码
      */
-//    @PostMapping(value = "/login")
-//    public ResultBean login(@RequestParam String username,
-//                            @RequestParam String password,
-//                            @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
-//        // todo 判空与异常处理
-//
-//        // 从SecurityUtils里边创建一个 subject
-//        loginService.login(username, password, isRememberMe);
-//        //根据权限，指定返回数据
-//        User user = userService.getByName(username);
-//
-//        return ResultUtils.success(user.getId());
-//    }
-
     @PostMapping(value = "/login")
-    @ResponseResult
-    public User login(@RequestParam String username,
+    public ResultBean login(@RequestParam String username,
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // todo 判空与异常处理
@@ -68,8 +52,24 @@ public class LoginController {
         //根据权限，指定返回数据
         User user = userService.getByName(username);
 
-        return user;
+        return ResultUtils.success(user.getId());
     }
+
+    // todo 拦截器没整合好，如果抛出异常返回值又包了一层
+//    @PostMapping(value = "/login")
+//    @ResponseResult
+//    public User login(@RequestParam String username,
+//                            @RequestParam String password,
+//                            @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
+//        // todo 判空与异常处理
+//
+//        // 从SecurityUtils里边创建一个 subject
+//        loginService.login(username, password, isRememberMe);
+//        //根据权限，指定返回数据
+//        User user = userService.getByName(username);
+//
+//        return user;
+//    }
 
 
     /**

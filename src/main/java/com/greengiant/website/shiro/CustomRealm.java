@@ -7,6 +7,7 @@ import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.RoleService;
 import com.greengiant.website.service.UserService;
+import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -42,22 +43,28 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        log.info("authenticate for:[{}]", authenticationToken.getPrincipal());
+        log.info("authenticate for:[{}]", authenticationToken.getPrincipal());// todo 这里日志参数好像打的不对
 
         // 这里是自定义登录验证用户名密码的规则
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 获取用户输入的用户名
         String username = (String) token.getPrincipal();
+        String password = new String(token.getPassword());
         // 从数据库获取对应用户名密码的用户
         User user = userService.getByName(token.getUsername());
         if (null == user) {
-            throw new AccountException("用户名不正确");
+            throw new UnknownAccountException("用户名错误");
+        }
+        else {
+            password = PasswordUtil.encrypt(password, user.getPasswordSalt());
+            if (!password.equals(user.getPassword())) {
+                throw new IncorrectCredentialsException("密码错误");
+            }
         }
 
-        String password = user.getPassword();
+//        String password = user.getPassword();
         String salt = user.getPasswordSalt();
-
-        // todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
+        // todo 既然比较密码在上面，这里authenticationInfo里面塞入salt是干嘛的？
         return new SimpleAuthenticationInfo(username, password, ByteSource.Util.bytes(salt), this.getName());
     }
 

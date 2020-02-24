@@ -13,7 +13,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     //todo 后续用缓存处理 1.用注解的方式写通；
     // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去
-    private int MAX_RETRY_COUNT = 5;
+    private int MAX_RETRY_COUNT = 5; // todo 放入配置文件
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {

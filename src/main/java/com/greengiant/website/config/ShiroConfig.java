@@ -182,8 +182,8 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //单位毫秒 todo 现在是3分钟，后续增大到1个小时
-        sessionManager.setGlobalSessionTimeout(180000);
+        //单位毫秒 todo 现在是10分钟，后续增大到1个小时
+        sessionManager.setGlobalSessionTimeout(600000);
 
         return sessionManager;
     }

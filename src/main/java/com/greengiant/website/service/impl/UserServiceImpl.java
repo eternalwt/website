@@ -77,11 +77,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public int changePassword(User user, String rawPassword) {
-        String password = PasswordUtil.encrypt(rawPassword, user.getPasswordSalt());
+        String newPassword = PasswordUtil.encrypt(rawPassword, user.getPasswordSalt());
+        user.setPassword(newPassword);
 
         UpdateWrapper<User> userUpdateWrapper = new UpdateWrapper<>();
-        userUpdateWrapper.eq("userName", user.getUserName());
-        // todo 测试一下，能否更新部分字段，对时间字段的影响是啥？
+        userUpdateWrapper.eq("user_name", user.getUserName());
         int update = userMapper.update(user, userUpdateWrapper);
 
         return update;

@@ -53,7 +53,9 @@ FactoryBean：
 https://blog.51cto.com/4247649/2118353（这个需要反复看）
 http://www.cnblogs.com/aspirant/p/9082858.html
 https://blog.csdn.net/baidu_19473529/article/details/80558996
-
+为什么有的Bean带参数有的又直接在函数内部里面弄对象？
+如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
+@Bean的参数bean都已经生成了，再用我的demo工程再确认一下
 
 Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
 【ShiroConfig.java里面的注释干掉一轮】
@@ -196,7 +198,11 @@ mybatis-spring这种包是桥梁
 
 ================================================================================================
 
-测试一版修改密码（测试修改后无需重新登录）
+
+使用redis作为mybatis内置缓存（二级缓存）【看一下怎么配】：
+https://blog.csdn.net/stefwu/article/details/82803116
+https://zhuanlan.zhihu.com/p/55109753
+https://www.cnblogs.com/shuangyueliao/p/11504604.html
 
 shiro的授权缓存是默认开启的：https://cloud.tencent.com/developer/article/1329729
 细说shiro之七：缓存：https://www.cnblogs.com/nuccch/p/8044226.html（Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义。
@@ -318,16 +324,22 @@ shiro 同一账号多人同时登陆强制下线【默认就是这样的把？�
 https://blog.csdn.net/lht931942788/article/details/79179410
 https://blog.csdn.net/qq_39069111/article/details/81156527
 https://www.cnblogs.com/wang-qiang/p/9470527.html
+shiro的重复登录问题：
+https://blog.csdn.net/sunsgne_ac/article/details/79289770
+https://blog.csdn.net/wdsafmy468619/article/details/47041467
+https://www.cnblogs.com/zhanying999666/p/8392592.html
 
-shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂。看懂了，就真正提升了：
+shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂【如果没有资料就看源码，并写博客】。看懂了，就真正提升了：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去
 Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/1203/142550761.shtm
+
+思考并过一遍：@Transactional和BaseException的配合使用
 
 分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
-同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了
+同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了（不行把？涉及到cookie、token等）
 为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
 HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
 思考一下JWT的remember
@@ -683,8 +695,6 @@ shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点�
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 程序员直播还是要继续
-心得：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
-然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密（再看一下流程）。看一下SimpleAuthenticationInfo几个构造函数的区别
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
 
@@ -1196,31 +1206,22 @@ Spring mvc 之 AbstractHttpMessageConverter 自定义Http消息转化器：https
 jwt工程里面用的token不一样，注意对比一下，并分析源代码。jwt token过期重发机制搞清楚
 看一下UsernamePasswordToken实现的2个接口里面都有什么方法
 
-看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
-
-为什么有的Bean带参数有的又直接在函数内部里面弄对象？
-SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
-
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
 KickoutSessionControlFilter extends AccessControlFilter
 如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
 
-
-shiro的重复登录问题：
-https://blog.csdn.net/sunsgne_ac/article/details/79289770
-https://blog.csdn.net/wdsafmy468619/article/details/47041467
-https://www.cnblogs.com/zhanying999666/p/8392592.html
-
-官网文档：https://spring.io/guides
-
-如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
-@Bean的参数bean都已经生成了，再用我的demo工程再确认一下
+spring官网文档：https://spring.io/guides
 
 mybatis-spring：
 sqlsessionfactory 注入datasource
 为啥有了@Mapper注解后就不需要@Repository了
 以前只知道双向绑定这个名字，现在可以思考原理了
 Spring与Mybatis三种整合方法：https://www.cnblogs.com/onlymate/p/7865463.html
+
+登录时密码比对过程：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
+然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密。看一下SimpleAuthenticationInfo几个构造函数的区别
+SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
+看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
 
 spring AOP再搞一遍
 尝试使用rest接口，可以更简洁同时也能暴露更少信息

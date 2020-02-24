@@ -13,22 +13,14 @@ public class EhcacheUtil {
     /**
      * 创建ehcache缓存，创建之后的有效期是1小时
      */
-
-    // todo 用ehcache始终要思考全局性的问题（多个服务的话）
-    // todo 先尝试写通，然后再思考和xml配置文件的关系（可以先把配置拷过来）
-    private static Cache passwordRetryCache = new Cache(new CacheConfiguration("systemCache", 5000)
+    // todo 和xml配置文件的关系？
+    private static Cache passwordRetryCache = new Cache(new CacheConfiguration("passwordRetryCache", 5000)
             .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
             .timeoutMillis(300)
             .timeToLiveSeconds(60 * 60));
-//    private static Cache passwordRetryCache = new Cache(new CacheConfiguration("systemCache", 5000)
-//                                    .memoryStoreEvictionPolicy(MemoryStoreEvictionPolicy.FIFO)
-//                                    .timeoutMillis(300)
-//                                    .timeToLiveSeconds( 60 * 60));
 
     static {
         cacheManager.addCache(passwordRetryCache);
-
-        //passwordRetryCache = cacheManager.getCache("passwordRetry");
     }
 
     public static void putItem(String key, Object item) {

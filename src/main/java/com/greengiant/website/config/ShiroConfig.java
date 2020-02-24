@@ -25,8 +25,6 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-//import org.apache.shiro.cache.ehcache.EhCacheManager;
-
 @Slf4j
 @Configuration
 public class ShiroConfig {
@@ -90,7 +88,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-                                           CacheManager ehCacheCacheManager,
+//                                           CacheManager ehCacheCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -99,7 +97,7 @@ public class ShiroConfig {
         securityManager.setRealms(Arrays.asList(customRealm));
 
         // 注入缓存管理器
-        securityManager.setCacheManager(ehCacheCacheManager);
+//        securityManager.setCacheManager(ehCacheCacheManager);// todo cachemanager 要从源码层面分析
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
@@ -144,7 +142,7 @@ public class ShiroConfig {
      *
      */
     @Bean(name = "shiroEhCacheCacheManager")
-    public CacheManager getEhCacheManager() {
+    public CacheManager getEhCacheManager() {// todo 搞清楚shiro-ehcache的作用
         CacheManager cacheManager = new EhCacheManager();
 
         return cacheManager;
@@ -158,7 +156,7 @@ public class ShiroConfig {
         // cookie的名称
         SimpleCookie simpleCookie = new SimpleCookie("REMEMBERCOOKIE");
         //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
-        // todo 如何把jsessionid的httponly设置为false？要判断是否登录
+        // todo 如何把jsessionid的httponly设置为false（是否有必要）？要判断是否登录
         simpleCookie.setHttpOnly(true);
         // 生效时间,单位是秒
         simpleCookie.setMaxAge(60 * 60 * 24 * 30);
@@ -186,7 +184,7 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //单位毫秒
+        //单位毫秒 todo 现在是3分钟，后续增大到1个小时
         sessionManager.setGlobalSessionTimeout(180000);
 
         return sessionManager;

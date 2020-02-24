@@ -19,13 +19,42 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
+看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
+private static final class SpringShiroFilter extends AbstractShiroFilter
+从SpringShiroFilter到AbstractShiroFilter到Filter，看整个继承关系。别人分析的是返回了【要能调试看清楚这个过程】：
+https://blog.csdn.net/wangjun5159/article/details/89873842
+https://blog.csdn.net/u013995395/article/details/90715272
+StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
+
+shiro的ThreadContext简单介绍：
+https://blog.csdn.net/Entodie/article/details/100526765
+https://blog.csdn.net/zch1990s/article/details/83379483
+
+3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
+Shiro是如何拦截未登录请求的(一)：https://www.jianshu.com/p/511d3adf95e9
+【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，factoryBean得自己使用一把
+Shiro过滤器配置(ShiroFilterFactoryBean)：https://blog.csdn.net/qq_36850813/article/details/88913552
+FactoryBean如果实在看不懂就看源码分析（shiro、cache、mybatis、activiti）：https://www.cnblogs.com/xwy6/p/11279518.html
+为什么要用FactoryBean，非用不可吗？
+ShiroFilterFactoryBean源码及拦截原理深入分析：
+https://blog.csdn.net/u012345283/article/details/44199791
+https://blog.csdn.net/lqzkcx3/article/details/78776555FactoryBean：通过使用FactoryBean，我们可以得到不同类型的对象实例。这也就是我们在AOP中通过设置calss为ProxyFactoryBean可以返回不同类型的业务对象的原理：https://www.cnblogs.com/quanyongan/p/4133724.html
+ShiroFilterFactoryBean implements FactoryBean, BeanPostProcessor
+如果大家有看过Mybatis的SessionFactoryBean和Activiti初始化引擎的ProcessEngineFactoryBean两个类就应该了解FactoryBean的具体使用：
+https://www.cnblogs.com/quanyongan/p/4133724.html
+ShiroFilterFactoryBean是怎么加载和替换默认的的？【看一下这个bean怎么被使用的】【如果可以看容器里面的对象，可以进去之前看看，之后再看看】
+shiroFilterFactoryBean：
+https://blog.csdn.net/u012345283/article/details/44199791
+https://blog.csdn.net/lqzkcx3/article/details/78776555
+BeanFactory 和FactoryBean的区别（亲手使用一下FactoryBean）：https://www.cnblogs.com/wangzhongqiu/p/6608103.html
+FactoryBean：
+https://blog.51cto.com/4247649/2118353（这个需要反复看）
+http://www.cnblogs.com/aspirant/p/9082858.html
+https://blog.csdn.net/baidu_19473529/article/details/80558996
+
+
+Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
 【ShiroConfig.java里面的注释干掉一轮】
-
-基于shiro框架实现自动登录(rememberMe)【是不是应该考虑后端的方案】：
-https://www.jianshu.com/p/5b99c0ef6fb7
-https://www.cnblogs.com/sunruntheway/articles/4447806.html
-isRemembered()==true的时候怎么设计后端逻辑？【我对这个问题还是没有搞清水】https://www.cnblogs.com/bq-med/p/8603664.html
-
 
 读代码：
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d
@@ -40,7 +69,6 @@ shiro动态授权：https://my.oschina.net/jiansin/blog/3024398
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 // getfilterChainDefinitionMap()也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
 securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关联？
-Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能：https://www.cnblogs.com/kibana/p/8953566.html
 
 Spring boot CommandLineRunner接口使用例子：
 https://blog.csdn.net/weixin_34320724/article/details/93707657
@@ -78,6 +106,8 @@ Spring Tutorial：https://www.tutorialspoint.com/spring/index.htm
 https://codeboje.de/difference-spring-bean-component/
 https://www.danvega.dev/blog/2017/05/17/spring-component-vs-bean/
 反过来，理解了@Bean才能理解@Configuration注解类的左右
+想要让一个普通类接受 Spring 容器管理的4种方法（含@Bean、@Import注解）：https://www.jianshu.com/p/afd2c49394c2
+查看Import注解源码及讲解：https://blog.csdn.net/panchao888888/article/details/82882279
 springboot属性注入的四种方式【配置多个数据源的理解。没有使用这种方式时，DataSource是怎么注入的？】：https://blog.csdn.net/Ru_yin_hai/article/details/98939615
 springboot声明bean的六种方式：https://www.jianshu.com/p/ed99d6111d46
 源码怎么分析？1.要有源码；2.要懂通用的源码分析方法并结合起来分析。如何结合教程看？如何debug？
@@ -95,27 +125,113 @@ https://www.cnblogs.com/eoooxy/p/6438109.html
 从我们代码里面spring整合activiti我对bean又有了更多理解，再次确认我在shiro里面的用法有没有问题：
 1.保持返回值和@Bean注解的函数名一致（函数名第一字母小写）；
 2.参数是怎么加载的？
-3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
 https://www.cnblogs.com/demodashi/p/8509895.html
 @Bean用于已经定义好的类，配置选项，@Component用于定义类，并搞成bean
 用@Bean的方式才能动态设置选项
 如果没有声明bean，默认的对象是怎么加载的？找到并看看初始化代码，把config相关的初始化代码都看一下
-【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，得继续看
 spring获取加载的所有bean及bean的加载过程：
 https://blog.csdn.net/long243416336/article/details/80590032
 https://blog.csdn.net/dc282614966/article/details/81480002
 https://www.cnblogs.com/leftthen/p/5440107.html
 https://www.jianshu.com/p/210115d5a4aa
-在Spring容器中，我们手工注解@Bean 将被优先加载，框架不会重新实例化其他的 PlatformTransactionManager 实现类
+在Spring容器中，我们手工注解 @Bean 将被优先加载，框架不会重新实例化其他的 PlatformTransactionManager 实现类
 ApplicationContext也能autowire？https://www.cnblogs.com/trekxu/p/9094860.html
 @bean和@component：
 https://blog.csdn.net/u011263417/article/details/79781686
 https://blog.csdn.net/ztx114/article/details/82665544
 http://www.cnblogs.com/shamo89/p/8051350.html
 
+
+================================================================================================
+
+1.从最初的MybatisAutoConfiguration的@Configuration类讲解：https://blog.csdn.net/weixin_34452850/article/details/90544868
+问题1：springboot怎么保证三方库中的@Configuration注解也被扫描到？
+2.SqlSessionTemplate：MyBatis的代理类，将SqlSession与Spring的事务进行了整合【进一步熟悉】
+2.MapperFactoryBean初始化【可以尝试打断点跟踪启动流程，提升能力】【这个流程一定要非常熟，然后其他的整合也就懂了】：
+https://blog.csdn.net/qq_43193797/article/details/85011683
+问题2：MapperFactoryBean初始化是怎么初始化的？是被谁调用的？（mapperInterface是怎么初始化的？）
+问题3：有没有注解的都要看懂
+3.@MapperScanner注解原理：https://blog.csdn.net/Shaun_luotao/article/details/87094700
+可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
+【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
+
+来看一下如何使用spring整合mybatis【感觉可以猜一下了】：https://blog.csdn.net/weixin_36977069/article/details/82801419
+https://blog.csdn.net/smonkeyking/article/details/82661814
+
+【是不是我用的是mybatis-plus，应该直接配置mybatis-plus的配置文件】
+mybatis和mybatis-plus的配置要玩的非常熟：
+https://mp.baomidou.com/config/#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE
+https://mybatis.org/mybatis-3/zh/configuration.html
+有没有一种可能，是两部分都要配置？（但是又没测通）：https://www.cnblogs.com/bangpenggao/articles/11328923.html
+
+Mybatis使用的设计模式：
+https://blog.csdn.net/u014401141/article/details/86920900
+https://blog.csdn.net/emprere/article/details/100190638
+https://blog.csdn.net/youanyyou/article/details/89368772
+@Mapper注解都没整明白
+Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
+https://blog.csdn.net/tanqidong1992/article/details/48026491
+https://www.cnblogs.com/to-be-continue/p/8260080.html
+https://www.cnblogs.com/handsomeBoys/p/7602084.html
+https://www.cnblogs.com/grasp/p/11813674.html
+
+用的是mybatisplus的IPage/Page，看一下mybatis分页插件PageHelper
+下一步搞懂3个问题：
+3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+mybatis-spring这种包是桥梁
+为啥不需要写MybatisConfig这种类？
+
+================================================================================================
+
 测试一版修改密码（测试修改后无需重新登录）
 
 shiro的授权缓存是默认开启的：https://cloud.tencent.com/developer/article/1329729
+细说shiro之七：缓存：https://www.cnblogs.com/nuccch/p/8044226.html（Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义。
+搞清楚一个地方定义后，另一个地方是怎么获取的）
+真正使用CacheManager的组件是Realm：是给默认realm使用的把？自定义realm自己加缓存后，是不是就不用cacheManager了？
+还是要看cacheManager用到的地方。跟踪获取角色、获取权限的函数，如果都没用到cachemanager，那么就可以放心大胆的不配置；另一方面，用默认的内存缓存在我的应用中也是够的
+前后分离springboot2.1集成shiro使用redis做权限认证缓存：https://blog.csdn.net/huiyunfei/article/details/103176940
+shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据说认证默认关闭，授权默认打开】【写入是在哪里进行的？】：https://blog.csdn.net/csujiangyu/article/details/49076531
+Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
+shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
+【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
+springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
+把redisson配好，把事务和分布式锁用起来
+1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
+Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
+SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
+spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
+shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
+关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
+CacheConfiguration类实现看一下，然后看看怎么切换redis
+1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
+假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
+shiro-ehcache的代码是可以读完的，从这个入手
+对shiro-ehcache包的理解：
+1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
+对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
+EhCacheManager已经配好，整个shiro里cache的使用？
+Ehcache看到这里了：https://blog.csdn.net/qq_32786139/article/details/82658197
+Ehcache【要能最接近生产环境测试】【先得搞清楚shiro自己的cache】:
+https://www.jianshu.com/p/05f3ede0b389
+https://blog.csdn.net/qq_28988969/article/details/78210873
+https://blog.csdn.net/qq_28143647/article/details/79789368
+开涛的例子中，为啥要使用单例的缓存？
+【这个文章有注入缓存管理器的用法】
+https://blog.csdn.net/qq_32786139/article/details/82658197
+含清楚缓存的写法：https://www.cnblogs.com/yinfengjiujian/p/9083361.html
+使用@Cacheable把数据存进缓存：切换为redis后可以这样搞吗？了解这个注解的细节
+Spring定义了CacheManager和Cache接口统一不同的缓存技术。其中CacheManager是Spring提供的各种缓存技术的抽象接口【要理解这种设计方式，再思考一下】
+ehcache3、javax.cache API（JSR-107）需要搞清楚
+Shiro缓存使用Redis、Ehcache、自带的MpCache实现的三种方式实例：https://www.cnblogs.com/zfding/p/8536480.html
+shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
+解决shiro-redis集成序列化的问题：https://blog.csdn.net/Nightliar/article/details/81282164
+springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
+https://blog.csdn.net/qq_32786139/article/details/82658197
+多实例时：session、权限缓存都需要集中存储
+
+CachingSecurityManager、CachingReam，注意这些类的协同关系
+shiro + memcached：https://blog.csdn.net/weixin_42396189/article/details/89713065
 
 shiro的使用2 灵活使用shiro的密码服务模块：https://www.cnblogs.com/imsoft/p/5895905.html
 搞Realm和CacheManager的关系【可以通过分析代码、观察数据库日志的方式，判断缓存是否起效】（authorizationCache、authenticationCache）：
@@ -125,9 +241,6 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 
 测试AuthServiceTest：为啥有shiro相关的报错；
 
-Shiro是如何拦截未登录请求的(一)：https://www.jianshu.com/p/511d3adf95e9
-session cookie和remember cookie是怎么被使用的？（rememberme没学透把）
-要看清shiro代码是怎么拦截获取cookie并转换成账户信息比对的
 把启动时INFO日志里面注册的bean都看一遍
 
 面试问烂的 Spring AOP 原理、SpringMVC 过程全解答！https://mp.weixin.qq.com/s/9YyrEC2JqZyIEo8oT7U07g
@@ -148,25 +261,14 @@ https://zhuanlan.zhihu.com/p/22456973
 // todo 原生mybatis如何批量插入
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 
-
-可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
-【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
-
-思考一下JWT的remember
-JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
-
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 
 【过年期间有空建立起来】
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
-HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
-
 更改用户名怎么样更新subject中的principal：https://blog.csdn.net/qq_33029793/article/details/93477572
 使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
-Shiro过滤器配置(ShiroFilterFactoryBean)：https://blog.csdn.net/qq_36850813/article/details/88913552
 shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
 
 一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
@@ -204,6 +306,10 @@ Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
 同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了
+为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
+HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
+思考一下JWT的remember
+JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
 
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
@@ -219,7 +325,7 @@ Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/
 权限的修改再试图重构一下：updatePermission，对应前端savePermission
 
 3.shiro的permission的API看一下；
-6.编辑文章
+6.编辑文章【angular forms还要再推进一次】
 7.重新组织前端文件夹和菜单
 8.加样式和前端模板（是否分成2个工程以增强灵活性？）
 9.搞2周技术债务，后端再搞2周
@@ -245,8 +351,6 @@ web-flash: https://github.com/enilu/web-flash
 // todo 添加permission的用法是info.addStringPermission(perms)，能否用这个来修改我的授权操作？（比较一下用和不用的区别）
 //  https://www.cnblogs.com/116970u/p/10954812.html
 
-JMockit：http://jmockit.github.io/
-
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
 边调试边观察内存
@@ -258,9 +362,14 @@ https://zhuanlan.zhihu.com/p/75869037
 https://blog.csdn.net/qq_34763130/article/details/87709848
 https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
+webSocket的掉线重连以及session超时？
+https://blog.csdn.net/qq_33594101/article/details/80320762
+webSocket：
+1.session的应用；
+2.服务器如何保存客户端IP并找到客户端；
+3.如果出现异常情况，两端怎么判如何时需要关闭；
 
 0.快速在真实和mock之间切换，拆分任务；
-2.富文本编辑器编辑文章（前后端）、文章列表(plus的分页功能)
 
 不把框架搭建彻底突破，做不到敏捷
 
@@ -330,14 +439,24 @@ mybatis-plus源码及doc：https://gitee.com/baomidou
 MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/9462582.html
 mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper的用法；
 周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
-
+把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
+批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
+1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
+https://www.jianshu.com/p/a749abbdb08d
+https://www.cnblogs.com/shuaifing/p/9327465.html
+https://blog.csdn.net/zeal9s/article/details/86003225
+https://www.jianshu.com/p/041bec8ae6d3
+http://www.imooc.com/article/details/id/284701
+foreach (在实现 mybatis in 语句查询时特别有用)：
+https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 两次登录失败则显示验证码
-2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
-自定义异常能否加到我的项目中
+网上的captcha库：
+Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
+直接注入一个passwordService来加密密码
+Springboot整合Shiro：集成Kaptcha验证码：https://www.jianshu.com/p/ad0bc0508abd
 
-webSocket的掉线重连以及session超时？
-https://blog.csdn.net/qq_33594101/article/details/80320762
+2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
 
 DAO和POJO包的命名有问题
 
@@ -354,18 +473,7 @@ shiro框架中，各个模块的重要性是不同的，授权模块就没那么
 
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
-把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
-批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
-1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
-https://www.jianshu.com/p/a749abbdb08d
-https://www.cnblogs.com/shuaifing/p/9327465.html
-https://blog.csdn.net/zeal9s/article/details/86003225
-https://www.jianshu.com/p/041bec8ae6d3
-http://www.imooc.com/article/details/id/284701
-foreach (在实现 mybatis in 语句查询时特别有用)：
-https://blog.csdn.net/haoxin1805487180/article/details/82778991
-
-1.前端mock；
+1.前端mock：意义大吗？假数据很好造
 
 周末：1.activiti工程配好
 
@@ -381,7 +489,7 @@ shiro实现APP、web统一登录认证和权限管理：https://www.cnblogs.com/
 Apache Shiro（七篇文章）：https://blog.csdn.net/vae1314chuanchen/article/category/8231465
 跟着大宇学Shiro：https://blog.csdn.net/yanluandai1985/column/info/31708
 shiro可以再来一次了：https://shiro.apache.org/【真正的文档在reference这个链接：http://shiro.apache.org/reference.html】
-细说shiro之七：缓存【要完全看懂并学习这个人的思维方式】：https://www.cnblogs.com/nuccch/p/8044226.html
+Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能：https://www.cnblogs.com/kibana/p/8953566.html
 细说Shiro系列文章
 我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
 对着shiro源码再搞一轮。看源码搞清楚：
@@ -397,6 +505,8 @@ springboot整合微软的ad域，采用ldap的api来整合，实现用户登录�
 
 接私活必备的 10 个开源项目！https://blog.csdn.net/sinat_33224091/article/details/100980160
 
+如何打开trace信息？例如ShiroFilterFactoryBean里面就有
+
 SpringBoot系列 - 集成JWT实现接口权限认证：http://ju.outofmemory.cn/entry/341269
 Filter过滤器：
 https://www.jianshu.com/p/054c925cd45d
@@ -411,7 +521,6 @@ jwt版的修改密码再思考一下
 看一下JwtFilter及BasicHttpAuthenticationFilter，各个方法的场景
 
 张开涛的shiro再看一遍，然后源码分析一次
-StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
 
 如果自己返回set-Cookie字段，需要理解cookie结构
 1.shiro的DefaultWebSessionManager设置了httponly为true，导致客户端不能使用document.cookie获取值：https://www.cnblogs.com/onlymate/p/9151010.html
@@ -440,7 +549,12 @@ session的过期时间怎么配置？
 对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
 配置shiro会话监听【看一下如果sessionManager没有实例化，代码是什么样的】：https://www.jianshu.com/p/0f949aa730c1
 （SessionListener体现了这样一种可插拔设计风格：初始化了就多一个功能点，并且可以有不同的实现；没有初始化就少一个功能点，但是不影响主要功能。或者可以先给一个默认实现）
-
+session cookie和remember cookie是怎么被使用的？（rememberme没学透把）
+Http协议中Cookie详细介绍：https://www.cnblogs.com/bq-med/p/8603664.html
+要看清shiro代码是怎么拦截获取cookie并转换成账户信息比对的
+基于shiro框架实现自动登录(rememberMe)【是不是应该考虑后端的方案】：
+https://www.jianshu.com/p/5b99c0ef6fb7
+https://www.cnblogs.com/sunruntheway/articles/4447806.html
 jwt token验证的两种方式：
 1.封装成UserPasswordToken（这种方式比较间接）：https://www.jianshu.com/p/0b1131be7ace；
 2.直接使用JWTToken（已写通，还需要更深入的理解。matcher与realm的关系。下一步是重构代码了）；
@@ -452,7 +566,6 @@ jwt token验证的两种方式：
 确认【先跟一次代码】：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
 刷新我是照这个写的：https://www.jianshu.com/p/48b39f6b1f86
 涉及到替换原有token、修改session状态的JWT方向才是对的：https://yq.aliyun.com/articles/646440
-JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
 先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
 https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
 https://blog.csdn.net/u011456867/article/details/80484559
@@ -463,7 +576,6 @@ sessionValidationScheduler（会话验证调度器、QuartzSessionValidationSche
 shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
 Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
 是否区分access_token和refresh_token？
-后续验证应该只需要看一下缓存里面有没有就OK了
 
 jwt的关键点：
 4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去（token放在缓存中是个很典型的场景）
@@ -489,9 +601,9 @@ jwt的修改：
 2.response.setHeader("x-auth-token", JWTUtil.createToken(username));
 3.关闭session【可以先不处理把？】；
 4.Filter的注册，是否使用FilterRegistrationBean？
-学习框架彻底体会了组装的感觉
-
 JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
+
+学习框架彻底体会了组装的感觉
 
 设置多个realm认证策略，一个成功即跳过其它的：https://www.jianshu.com/p/0b1131be7ace
 shiro 多realm 实现 后端 和 前端分离验证：
@@ -532,8 +644,6 @@ BasicHttpAuthenticationFilter 与 FormAuthenticationFilter 等的区别
 Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
 Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
 
-DefaultWebSecurityManager
-
 // todo API前后端restful改造
 
 ModularRealmAuthenticator：
@@ -545,12 +655,6 @@ Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
 
 shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
-前后分离springboot2.1集成shiro使用redis做权限认证缓存：https://blog.csdn.net/huiyunfei/article/details/103176940
-
-webSocket：
-1.session的应用；
-2.服务器如何保存客户端IP并找到客户端；
-3.如果出现异常情况，两端怎么判如何时需要关闭；
 
 由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
@@ -585,7 +689,6 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 11.webSocket
 12.继续看开涛的教程
 13.继续流式计算和人工智能
-可以搞session的缓存了
 
 timestamp的使用还要精进，例如比较大小
 再思考一下上次、下载原理，springmvc需要精进
@@ -601,6 +704,7 @@ timestamp的使用还要精进，例如比较大小
 6.完成监理的需求（先把PC端的做起来，再跟进手机的需求，要快）；
 7.读spring源码，写demo；
 10.学习老侯，一定要注意在做的过程中积累各种工程经验：前后端分离、单元测试、安全测试、code review、充分比较各种技术
+JMockit：http://jmockit.github.io/
 11.玩玩github的开源代码和blog
 12.mybatis和spring的测试必须要搞的非常熟
 13.加测试例、加业务逻辑工程
@@ -641,11 +745,20 @@ DispatcherType
 
 SpringBoot----跨域配置：https://www.cnblogs.com/csguo/p/9597791.html
 
+JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
 lifecycleBeanPostProcessor：
 LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调
 https://blog.csdn.net/hxm_code/article/details/78697305
 https://blog.csdn.net/peterwanghao/article/details/8824981
 shiro学习之LifecycleBeanPostProcessor的作用：https://blog.csdn.net/hxm_code/article/details/78697305
+Spring的后置处理器BeanPostProcessor【关键问题：什么场景在自己的代码里面使用？】：
+https://www.cnblogs.com/libra0920/p/6118157.html
+https://www.cnblogs.com/sishang/p/6576665.html
+https://segmentfault.com/a/1190000015830477
+https://uule.iteye.com/blog/2094549
+DefaultAdvisorAutoProxyCreator、AuthorizationAttributeSourceAdvisor
+这里为什么要配置DefaultAdvisorAutoProxyCreator？：https://www.jianshu.com/p/7f724bec3dc3
+
 使用DefaultAdvisorAutoProxyCreator实现spring的自动代理
 【原理是啥？】DefaultAdvisorAutoProxyCreator，Spring的一个bean，由Advisor决定对哪些类的方法进行AOP代理
 
@@ -659,12 +772,6 @@ springboot-plus：
 https://gitee.com/xiandafu/springboot-plus
 https://www.cnblogs.com/xinweiyun/p/9943784.html
 
-分页到底是用mybatis分页插件PageHelper，还是用mybatisplus的IPage/Page？
-
-下一步搞懂3个问题：
-3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
-mybatis-spring这种包是桥梁
-为啥不需要写MybatisConfig这种类？
 springboot的包扫描顺序再研究一下
 shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看。shiro源码分析的几个方面：1.跟别人的文档；2.建立主题意识，按主题分析；3.建立问题意识
 
@@ -679,7 +786,6 @@ https://blog.csdn.net/weixin_33724046/article/details/93057613
 https://blog.csdn.net/tragedyxd/article/details/52958008
 isPermitted看懂后，再看permission的写法：system:role:add：
 https://blog.csdn.net/tragedyxd/article/details/52958008
-shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
 试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
 PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
@@ -700,11 +806,6 @@ RunAs理解：
 ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5
 https://www.cnblogs.com/zhangjianbing/p/10114196.html
-
-FactoryBean如果实在看不懂就看源码分析（shiro、cache、mybatis、activiti）：https://www.cnblogs.com/xwy6/p/11279518.html
-为什么要用FactoryBean，非用不可吗？
-Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
-我的加密为啥没用PasswordService？
 
 doGetAuthenticationInfo与doGetAuthorizationInfo 什么时候执行【调试一下】：https://www.cnblogs.com/tusheng/articles/7453587.html
 注意思考一类问题：当类有多级继承时，每一层分别加什么内容，怎么合理组织？（找token或者SessionManager等分析一下）：https://blog.csdn.net/weixin_34289744/article/details/88164013
@@ -897,7 +998,6 @@ Shiro 登录后跳转到最后一个访问的页面：https://www.sojson.com/shi
 spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
 Shiro 还提供了 CacheManagerAware 用于注入 CacheManager：
 Shiro 内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如 Realm）是否 实现了 CacheManagerAware 并自动注入相应的 CacheManager。
-Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
 动态改变shiro的Principal属性：https://blog.csdn.net/guojing505123/article/details/79224200
 由principal为空引发的几个问题：
 http://www.nutz.cn/yvr/t/sp8m948654hoao89r3p5bq5758
@@ -927,11 +1027,6 @@ http://www.17sucai.com/pins/tag/14624.html
 https://www.cnblogs.com/wyguo/p/3556049.html
 在@Configuration里面打断点观察执行情况
 
-ShiroFilterFactoryBean源码及拦截原理深入分析：
-https://blog.csdn.net/u012345283/article/details/44199791
-https://blog.csdn.net/lqzkcx3/article/details/78776555
-
-如果对shiro不能完全理解的话，自己写权限控制的代码似乎比用shiro更简单。无论是ASP时代还是mvc时代
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错
@@ -1055,25 +1150,7 @@ https://blog.csdn.net/jinhaijing/article/details/83933573
 EnvironmentCapable：
 https://blog.csdn.net/weixin_39165515/article/details/76976685
 
-FactoryBean：通过使用FactoryBean，我们可以得到不同类型的对象实例。这也就是我们在AOP中通过设置calss为ProxyFactoryBean可以返回不同类型的业务对象的原理：https://www.cnblogs.com/quanyongan/p/4133724.html
-ShiroFilterFactoryBean implements FactoryBean, BeanPostProcessor
-如果大家有看过Mybatis的SessionFactoryBean和Activiti初始化引擎的ProcessEngineFactoryBean两个类就应该了解FactoryBean的具体使用：
-https://www.cnblogs.com/quanyongan/p/4133724.html
-ShiroFilterFactoryBean是怎么加载和替换默认的的？【看一下这个bean怎么被使用的】【如果可以看容器里面的对象，可以进去之前看看，之后再看看】
-shiroFilterFactoryBean：
-https://blog.csdn.net/u012345283/article/details/44199791
-https://blog.csdn.net/lqzkcx3/article/details/78776555
-FactoryBean：
-https://blog.51cto.com/4247649/2118353（这个需要反复看）
-http://www.cnblogs.com/aspirant/p/9082858.html
-https://blog.csdn.net/baidu_19473529/article/details/80558996
-
 https://www.jianshu.com/p/6f0a59623090
-Spring的后置处理器BeanPostProcessor：
-https://www.cnblogs.com/libra0920/p/6118157.html
-https://www.cnblogs.com/sishang/p/6576665.html
-https://segmentfault.com/a/1190000015830477
-https://uule.iteye.com/blog/2094549
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
@@ -1081,7 +1158,7 @@ spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/do
 activiti生产的图片如何做缓存？
 
 把开涛后面有几章看一下，把有道里面的内容排查一下
-shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据说认证默认关闭，授权默认打开】【写入是在哪里进行的？】：https://blog.csdn.net/csujiangyu/article/details/49076531
+
 不懂的地方可以多借助调试来观察，把spring的调试配起来
 
 加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
@@ -1185,10 +1262,6 @@ jwt是否放到common里面并且便于后面抽包？
 
 ts里面的Observable<T> implements Subscribable<T>。涉及到RxJS的概念
 
-网上的captcha库：
-Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
-直接注入一个passwordService来加密密码
-
 前端开发了解：
 1.VSCode、node、angular、typescript：
 https://www.cnblogs.com/clwydjgs/p/10078065.html
@@ -1264,8 +1337,6 @@ loggingSystem.setLogLevel(null, LogLevel.DEBUG);
 
 如，默认时是info模式，未修改时，debug模式是不会输出的。
 
-BeanFactory 和FactoryBean的区别（亲手使用一下FactoryBean）：https://www.cnblogs.com/wangzhongqiu/p/6608103.html
-
 框架搭好后，shiro需要学习第二遍。springmvc+shiro彻底搞清楚、知道怎么调试后，会是一个大的突破
 不能够快速调试，在新工作中也会遇到困难
 Spring源码解析——如何阅读源码：
@@ -1280,40 +1351,6 @@ https://www.jianshu.com/p/d6991030d84d?jdyscene=chat
 https://www.jianshu.com/p/22863e6c1210
 https://blog.csdn.net/u010994169/article/details/71169986
 
-关于缓存：
-
-【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
-springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
-把redisson配好，把事务和分布式锁用起来
-1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
-Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
-SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
-spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
-shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
-关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
-CacheConfiguration类实现看一下，然后看看怎么切换redis
-1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
-假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
-shiro-ehcache的代码是可以读完的，从这个入手
-EhCacheManager已经配好，整个shiro里cache的使用？
-Ehcache看到这里了：https://blog.csdn.net/qq_32786139/article/details/82658197
-Ehcache【要能最接近生产环境测试】【先得搞清楚shiro自己的cache】:
-https://www.jianshu.com/p/05f3ede0b389
-https://blog.csdn.net/qq_28988969/article/details/78210873
-https://blog.csdn.net/qq_28143647/article/details/79789368
-开涛的例子中，为啥要使用单例的缓存？
-【这个文章有注入缓存管理器的用法】
-https://blog.csdn.net/qq_32786139/article/details/82658197
-含清楚缓存的写法：https://www.cnblogs.com/yinfengjiujian/p/9083361.html
-使用@Cacheable把数据存进缓存：切换为redis后可以这样搞吗？了解这个注解的细节
-Spring定义了CacheManager和Cache接口统一不同的缓存技术。其中CacheManager是Spring提供的各种缓存技术的抽象接口【要理解这种设计方式，再思考一下】
-ehcache3、javax.cache API（JSR-107）需要搞清楚
-Shiro缓存使用Redis、Ehcache、自带的MpCache实现的三种方式实例：https://www.cnblogs.com/zfding/p/8536480.html
-对shiro-ehcache包的理解：这个包实现了shiro里面缓存相关的接口，同时带有ehcache的功能。类似的实现还有shiro-redis。
-shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
-解决shiro-redis集成序列化的问题：https://blog.csdn.net/Nightliar/article/details/81282164
-springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
-https://blog.csdn.net/qq_32786139/article/details/82658197
 
 Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csdn.net/qq_27529917/article/details/79329809
 吐血整理 20 道 Spring Boot 面试题：https://www.jianshu.com/p/63ad69c480fe/

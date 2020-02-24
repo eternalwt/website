@@ -6,10 +6,15 @@ spring:
     password: eternal2002@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-    # todo 测试配置是否成功
-    cache:
-      ehcache:
-        config: ehcache.xml
+#  # 这是ehcache 2的配置方式：https://memorynotfound.com/spring-boot-ehcache-2-caching-example-configuration/
+#  cache:
+#    ehcache:
+#      config: ehcache2.xml
+
+  # ehcache 3的配置方式
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
 
   resources:
     static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/templates/

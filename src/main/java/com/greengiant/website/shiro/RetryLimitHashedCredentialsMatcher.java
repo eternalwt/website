@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
     //todo 后续用缓存处理 1.用注解的方式写通；
-    // 用注解的方式，我再维护一个map是没有意义的（对于需要操作数据库的再加方法才有意义）。尝试最终用CacheManager解决问题
     // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去
     private int MAX_RETRY_COUNT = 5;
 

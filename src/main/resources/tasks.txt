@@ -19,6 +19,8 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
+mybatis的缓存怎么配置？能否拿出来？
+
 看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
 private static final class SpringShiroFilter extends AbstractShiroFilter
 从SpringShiroFilter到AbstractShiroFilter到Filter，看整个继承关系。别人分析的是返回了【要能调试看清楚这个过程】：
@@ -80,6 +82,12 @@ shiro、spring整合原理：
 https://blog.csdn.net/wangjun5159/article/details/89873842
 https://blog.csdn.net/u013995395/article/details/90715272
 
+
+关于shiro cache【重要】：
+1.看shiro-ehcache代码，搞清楚我的shiro-ehcache配置报错的原因；
+2.搞清楚shiro代码里面哪些地方用到CacheManager及缓存方法（开涛的教程）；
+3.看看shiro-redis高版本有没有报错；
+4.自行实现CacheManager、Cache等接口
 熟悉一项配置，要从spring框架自身开始，例如缓存先从搞清楚@EnableCaching注解开始
 @EnableCaching背后的动作（“这样的话，启动类启动时会去启动缓存启动器”）。由于CacheConfig会被扫描，所以@EnableCaching放这里也是可以的
 Spring Boot缓存实战 默认Cache（ConcurrentMapCacheManager）：https://www.jianshu.com/p/f1c1b7ce5249
@@ -97,8 +105,13 @@ https://blog.csdn.net/qq_28988969/article/details/78210873
 ehCache使用注解和不使用注解的2种使用方式【搜一下】
 ehcache的单独使用，看官网：
 http://www.ehcache.org/
-https://javabeat.net/ehcache/
 https://www.baeldung.com/ehcache
+ehcache是不是因为3.x更新较大，为了不引起混乱所以jar包的域名变更了？【要搞清楚这些】
+
+<groupId>javax.cache</groupId><artifactId>cache-api</artifactId>提供的是“Java缓存新标准（javax.cache）”：
+https://www.ituring.com.cn/article/699
+https://blog.csdn.net/caomiao2006/article/details/51934326
+https://blog.csdn.net/boonya/article/details/54632129
 
 Spring Tutorial：https://www.tutorialspoint.com/spring/index.htm
 其实真正没明白的是@Autowired注解？
@@ -153,7 +166,7 @@ https://blog.csdn.net/qq_43193797/article/details/85011683
 问题3：有没有注解的都要看懂
 3.@MapperScanner注解原理：https://blog.csdn.net/Shaun_luotao/article/details/87094700
 可以看mybatis怎么跟springboot整合【原理】了，然后看缓存、shiro的整合（又前进一步）：
-【自己打断点一步一步看清楚】https://blog.csdn.net/weixin_33842328/article/details/92645861
+一 、Spring Boot中Mybatis启动过程概述【自己打断点一步一步看清楚】：https://blog.csdn.net/weixin_33842328/article/details/92645861
 
 来看一下如何使用spring整合mybatis【感觉可以猜一下了】：https://blog.csdn.net/weixin_36977069/article/details/82801419
 https://blog.csdn.net/smonkeyking/article/details/82661814
@@ -229,6 +242,20 @@ shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_3795
 springboot+shiro实现登陆过滤、权限认证、shiro密码加密、ehcache缓存（附demo项目）：
 https://blog.csdn.net/qq_32786139/article/details/82658197
 多实例时：session、权限缓存都需要集中存储
+shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并不好）
+细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
+shiro的JSR-107标准
+springboot②最正确的集成shiro并使用ehcache缓存【看误区那一段】：https://blog.csdn.net/tanleijin/article/details/81118963
+
+
+Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】【怎么能灵活运用】：
+https://www.cnblogs.com/Jarris/p/10125980.html
+https://blog.csdn.net/bailinbbc/article/details/76446594
+https://blog.csdn.net/jinhaijing/article/details/83933573
+EnvironmentCapable：
+https://blog.csdn.net/weixin_39165515/article/details/76976685
+面试问烂的 Spring AOP 原理、SpringMVC 过程全解答！https://mp.weixin.qq.com/s/9YyrEC2JqZyIEo8oT7U07g
+经过过年这段时间的精进，todo应该能搞定一大部分了
 
 CachingSecurityManager、CachingReam，注意这些类的协同关系
 shiro + memcached：https://blog.csdn.net/weixin_42396189/article/details/89713065
@@ -243,12 +270,8 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 
 把启动时INFO日志里面注册的bean都看一遍
 
-面试问烂的 Spring AOP 原理、SpringMVC 过程全解答！https://mp.weixin.qq.com/s/9YyrEC2JqZyIEo8oT7U07g
-经过过年这段时间的精进，todo应该能搞定一大部分了
-
 通用文件上传设计【文件上传根据这个文档搞出来】：https://blog.csdn.net/minaki_/article/details/85163343
 分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
-
 
 通知系统设计：
 http://www.woshipm.com/pd/32652.html
@@ -257,7 +280,6 @@ http://www.xueui.cn/tutorials/web-course/design-of-web-end-message-center.html
 https://www.zhihu.com/question/25459379
 https://zhuanlan.zhihu.com/p/22456973
 
-后端还有一堆问题：
 // todo 原生mybatis如何批量插入
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 
@@ -267,7 +289,7 @@ https://zhuanlan.zhihu.com/p/22456973
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-更改用户名怎么样更新subject中的principal：https://blog.csdn.net/qq_33029793/article/details/93477572
+更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
 使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
 shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
 
@@ -354,6 +376,8 @@ web-flash: https://github.com/enilu/web-flash
 最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
 
 边调试边观察内存
+
+发现单元测试很适合EhCache这一类jar包配置的test，并且可以用来存放网上的示例代码
 
 webSocket：原生方式已调通，继续看原理（阅读代码），继续调试sockJS的方式（可以用我安装的jmeter）
 把我以前没印象的WebSocketController干掉
@@ -1142,14 +1166,6 @@ shiro源码分析，搞透
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？
 
-细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
-Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】：
-https://www.cnblogs.com/Jarris/p/10125980.html
-https://blog.csdn.net/bailinbbc/article/details/76446594
-https://blog.csdn.net/jinhaijing/article/details/83933573
-EnvironmentCapable：
-https://blog.csdn.net/weixin_39165515/article/details/76976685
-
 https://www.jianshu.com/p/6f0a59623090
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
@@ -1186,7 +1202,6 @@ jwt工程里面用的token不一样，注意对比一下，并分析源代码。
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
-shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并不好）
 KickoutSessionControlFilter extends AccessControlFilter
 如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
 

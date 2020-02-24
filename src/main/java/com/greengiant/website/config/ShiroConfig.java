@@ -5,8 +5,6 @@ import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.CacheManager;
-import org.apache.shiro.cache.ehcache.EhCacheManager;// todo shiro-ehcache
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -53,7 +51,6 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    // 下面这个函数也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace // todo 再分析一下
     private Map<String, String> getfilterChainDefinitionMap() {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // todo 运维，调试完后应该加上限制
@@ -141,12 +138,12 @@ public class ShiroConfig {
      * shiro缓存管理器
      *
      */
-    @Bean(name = "shiroEhCacheCacheManager")
-    public CacheManager getEhCacheManager() {// todo 搞清楚shiro-ehcache的作用
-        CacheManager cacheManager = new EhCacheManager();
-
-        return cacheManager;
-    }
+//    @Bean(name = "shiroEhCacheCacheManager")
+//    public CacheManager getEhCacheManager() {// todo 搞清楚shiro-ehcache的作用
+//        CacheManager cacheManager = new EhCacheManager();
+//
+//        return cacheManager;
+//    }
 
     /**
      *Cookie
@@ -159,7 +156,8 @@ public class ShiroConfig {
         // todo 如何把jsessionid的httponly设置为false（是否有必要）？要判断是否登录
         simpleCookie.setHttpOnly(true);
         // 生效时间,单位是秒
-        simpleCookie.setMaxAge(60 * 60 * 24 * 30);
+        simpleCookie.setMaxAge(60 * 60 * 24 * 30);// todo cookie和session超时时间对比
+
         return simpleCookie;
     }
 

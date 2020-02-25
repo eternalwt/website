@@ -153,10 +153,9 @@ public class ShiroConfig {
         // cookie的名称
         SimpleCookie simpleCookie = new SimpleCookie("REMEMBERCOOKIE");
         //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
-        // todo 如何把jsessionid的httponly设置为false（是否有必要）？要判断是否登录
         simpleCookie.setHttpOnly(true);
-        // 生效时间,单位是秒
-        simpleCookie.setMaxAge(60 * 60 * 24 * 30);// todo cookie和session超时时间对比
+        // 有效时间1个月,单位是秒。如果要按没有操作时间来算，需要每次发送Set-Cookie，影响性能不划算  // todo 下面有个地方是毫秒，这里再测试一下
+        simpleCookie.setMaxAge(60 * 60 * 24 * 30);
 
         return simpleCookie;
     }
@@ -182,8 +181,8 @@ public class ShiroConfig {
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        //单位毫秒 todo 现在是10分钟，后续增大到1个小时
-        sessionManager.setGlobalSessionTimeout(600000);
+        //单位毫秒，1小时后失效
+        sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
 
         return sessionManager;
     }

@@ -117,6 +117,13 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         Map<String, List<String>> rolePermMap = new HashedMap();
         // todo sql初始化脚本里面加入admin初始化赋权限
         List<Role> roleList =  roleService.list();
+        if (roleList != null && !roleList.isEmpty()) {
+            for (Role role : roleList) {
+                List<String> permList = new ArrayList<>();
+                rolePermMap.put(role.getRoleName(), permList);
+            }
+        }
+
         List<Menu> menuList = this.list();
         if (roleList != null && !roleList.isEmpty() && menuList != null && !menuList.isEmpty()) {
             for (Menu menu : menuList) {
@@ -126,14 +133,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                     for (int i = 0; i < roleIdList.length; i++) {
                         if (roleIdList[i] != null && !roleIdList[i].isEmpty()) {
                             String roleName = this.getRoleName(roleIdList[i], roleList);
-                            if (rolePermMap.containsKey(roleName)) {
-                                rolePermMap.get(roleName).add(menu.getMenuName());
-                            }
-                            else {
-                                List<String> permList = new ArrayList<>();
-                                permList.add(menu.getMenuName());
-                                rolePermMap.put(roleName, permList);
-                            }
+                            rolePermMap.get(roleName).add(menu.getMenuName());
                         }
                     }
                 }

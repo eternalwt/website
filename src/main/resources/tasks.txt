@@ -32,6 +32,7 @@ shiro的ThreadContext简单介绍：
 https://blog.csdn.net/Entodie/article/details/100526765
 https://blog.csdn.net/zch1990s/article/details/83379483
 
+Spring FactoryBean应用：https://www.jianshu.com/p/6f0a59623090
 3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
 Shiro是如何拦截未登录请求的(一)：https://www.jianshu.com/p/511d3adf95e9
 【非常重要】在EhCache、Shiro、Activiti的配置里面都有一个FactoryBean，factoryBean得自己使用一把
@@ -198,11 +199,13 @@ mybatis-spring这种包是桥梁
 
 ================================================================================================
 
+ORM层自动生成代码还需要练习并形成文档
 
 使用redis作为mybatis内置缓存（二级缓存）【看一下怎么配】：
 https://blog.csdn.net/stefwu/article/details/82803116
 https://zhuanlan.zhihu.com/p/55109753
 https://www.cnblogs.com/shuangyueliao/p/11504604.html
+MyBatis默认是支持一级缓存和二级缓存,他自身的实现是通过PerpetualCache：https://blog.csdn.net/yinni11/article/details/80054547
 
 shiro的授权缓存是默认开启的：https://cloud.tencent.com/developer/article/1329729
 细说shiro之七：缓存：https://www.cnblogs.com/nuccch/p/8044226.html（Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义。
@@ -299,8 +302,7 @@ https://zhuanlan.zhihu.com/p/22456973
 使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
 shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
 
-一定要把登录后返回给前端的东西看清楚，并且比较JSP的处理方式，并自己想想怎么实现。这样才能彻底理解。
-
+看看别人怎么评价注解的易用性可读性
 《深入浅出MyBatis技术原理与实战》用桌面上的这本书来学习源码阅读
 
 doGetAuthorizationInfo被调用的3个地方，有了这个，就可以自定义授权了【我没测通】：
@@ -439,7 +441,7 @@ canvas及对应的库是基础设施
 按钮、图标、菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 怎么使用好图标
-前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、
+前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、树控件、红点、时间线
 
 ======================================================================================================
 
@@ -1172,15 +1174,12 @@ https://blog.csdn.net/qq_16605855/article/details/79653282
 再看ModelAndView的用法，和return "anth/login";这种比较一下
 
 shiro源码分析，搞透
-再看一下shiro相关的包一共有多少个：shiro-quartz、shiro-cas、shiro-guice、shiro-spring、shiro-web、shiro-core
+再看一下shiro相关的包一共有多少个：shiro-core、shiro-spring、shiro-web、shiro-redis、shiro-ehcache、shiro-quartz、shiro-cas、shiro-guice
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？
 
-https://www.jianshu.com/p/6f0a59623090
-
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
-把gitk显示乱码的问题解决
 activiti生产的图片如何做缓存？
 
 把开涛后面有几章看一下，把有道里面的内容排查一下

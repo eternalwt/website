@@ -19,7 +19,6 @@ import java.util.Map;
 @RequestMapping("/menu")
 public class MenuController {
 
-
     @Autowired
     private MenuService menuService;
 

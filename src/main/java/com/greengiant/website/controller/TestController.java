@@ -13,33 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Slf4j
-@Deprecated
 @RestController
-@RequestMapping("/hello")
-public class UtilController {
-
-    @RequestMapping("/world")
-    public String sayHello() {
-        return "Hello, world!";
-    }
-
-    @RequestMapping("/index")
-    public String index()
-    {
-        return "index";
-    }
-
-    @RequestMapping("/fnf")
-    public String fileNFound()
-    {
-        return "404";
-    }
-
-    @RequestMapping("/ws")
-    public String ws()
-    {
-        return "ws";
-    }
+@RequestMapping("/test")
+public class TestController {
 
     @RequestMapping("/download")
     public ResponseEntity<byte[]> down(@RequestParam String fileName)
@@ -53,7 +29,7 @@ public class UtilController {
         return null;
     }
 
-    @RequestMapping("/captchaCode")
+    @RequestMapping("/captchaCode")// todo 弄好后放入loginController
     public void getCode(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         CaptchaUtil.getCode(req, resp);

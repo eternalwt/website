@@ -1,4 +1,4 @@
-package com.greengiant.website.websocket;
+package com.greengiant.website.controller.websocket;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;

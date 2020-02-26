@@ -1,4 +1,4 @@
-package com.greengiant.website.websocket;
+package com.greengiant.website.controller.websocket;
 
 public class Notifications {
     private int count;

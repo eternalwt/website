@@ -15,7 +15,7 @@ public class CustomSchedulingConfigurer implements SchedulingConfigurer {
 
     private static String cron = "0 0/15 * * * ?";
 
-    private static void setCron(int minute) {
+    public static void setIntervalMinute(int minute) {
         cron = "0 0/" + minute + " * * * ?";
     }
 

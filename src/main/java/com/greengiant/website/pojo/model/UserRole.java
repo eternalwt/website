@@ -8,7 +8,7 @@ import java.util.Date;
 
 @TableName("auth_user_role")
 public class UserRole {
-    @TableId(type= IdType.AUTO)
+    @TableId(type=IdType.AUTO)
     private Long id;
 
     private Long userId;

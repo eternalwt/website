@@ -19,6 +19,28 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
+考虑使用influxDB、HBase、Kafka
+IoT实时数据可视化方案：Grafana+InfluxDB+Telegraf+MQTT协议+Windows 10：https://segmentfault.com/a/1190000012514865
+看看IoT数据库别人的选择
+
+多数据源的配置再理解一下
+
+Spring框架大量注解会影响性能吗？怎样优雅地使用注解？
+https://www.zhihu.com/question/36486629/answer/68063702
+https://www.zhihu.com/question/272055204/answer/365679479
+https://www.zhihu.com/question/47449512/answer/658228092
+
+
+kafka：思考一下对我的图表大数据系统的帮助？
+https://www.liangzl.com/get-article-detail-38554.html
+https://www.liangzl.com/get-article-detail-134408.html
+
+应该用最直接的办法，放开版本号直接定位shiro-ehcache的bug！！！
+
+1.搜索英文资料，JWT的典型应用；
+2.JWT是不是可以用来生成cookie内容（用法之一）；
+3.再次思考只用JWT不用cookie是不是很傻逼
+
 mybatis的缓存怎么配置？能否拿出来？
 
 看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
@@ -379,6 +401,8 @@ JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jiansh
 4.继续调试剩下的springboot+shiro（要能debug bean的加载顺序，至关重要）
 8.【所有配置文件是怎么读取的】
 9.必备功能：分享、OAuth2、activiti
+周末：1.activiti工程配好
+前端timeline组件能否用于工作流？思考工作流最少需要几张表，再看activiti为啥需要那么多表
 
 整理了八个开源的 Spring Boot 学习资源：https://zhuanlan.zhihu.com/p/66125910
 给大家推荐8个SpringBoot精选项目：https://cloud.tencent.com/developer/article/1197203
@@ -396,6 +420,7 @@ web-flash: https://github.com/enilu/web-flash
 
 发现单元测试很适合EhCache这一类jar包配置的test，并且可以用来存放网上的示例代码
 
+webSocket如何单元测试？
 webSocket：原生方式已调通，继续看原理（阅读代码），继续调试sockJS的方式（可以用我安装的jmeter）
 把我以前没印象的WebSocketController干掉
 Springboot 集成 Websocket (with Shiro)【从协议层面吃透，几种方式要都能用。用http协议测一把，观察请求的协议】：
@@ -405,10 +430,31 @@ https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
 webSocket的掉线重连以及session超时？
 https://blog.csdn.net/qq_33594101/article/details/80320762
+websocket的升级(upgrade)细节？
 webSocket：
 1.session的应用；
 2.服务器如何保存客户端IP并找到客户端；
 3.如果出现异常情况，两端怎么判如何时需要关闭；
+Atmosphere 2.4.1 发布，异步 WebSocket 框架：https://www.oschina.net/news/68451/atmosphere-2-4-1
+七种WebSocket框架的性能比较：http://www.360doc.com/content/16/0626/08/9200790_570799810.shtml
+1.了解webSocket session的作用；2.默认连接时长
+WebSocket Session共享：https://www.jianshu.com/p/2c5c4b0349df
+websocket长链接和短连接：
+https://www.cnblogs.com/miaozhihang/p/9518584.html
+https://blog.csdn.net/q1312882392/article/details/99621897
+webSocket在angular里面如何快速调试？在后端如何单元测试？
+webSocket官网教程：Using WebSocket to build an interactive web application：https://spring.io/guides/gs/messaging-stomp-websocket/
+faye-websocket 的使用：https://www.jianshu.com/p/2721e8d04fc9
+websocket选型：https://www.jianshu.com/p/809e0ca0403e
+Nodejs实现websocket的4种方式：https://blog.csdn.net/zr15829039341/article/details/65628008
+springboot集成websocket的两种实现方式：https://blog.csdn.net/huiyunfei/article/details/90719351
+关于controller调用controller/service调用service/util调用service/websocket中autowired的解决方法：https://blog.csdn.net/moshowgame/article/details/83415545
+WebSocket在线测试工具：http://ws.douqq.com/
+jmeter测试websocket接口：
+https://www.cnblogs.com/nanaheidebk/p/10129936.html
+https://blog.csdn.net/huoyunshen88/article/details/77511788
+Spring Boot + WebSocket Simple Example：https://www.javainuse.com/spring/boot-websocket
+
 
 0.快速在真实和mock之间切换，拆分任务；
 
@@ -515,8 +561,6 @@ shiro框架中，各个模块的重要性是不同的，授权模块就没那么
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
 1.前端mock：意义大吗？假数据很好造
-
-周末：1.activiti工程配好
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
@@ -725,7 +769,6 @@ ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
 8.消灭5个shiro文档
 9.动态权限做好，继续看permission【还差2步：1是bean的重写；2是放入数据库】
 10.看源码（从spring、mybatis开始）及集成activiti
-11.webSocket
 12.继续看开涛的教程
 13.继续流式计算和人工智能
 
@@ -882,9 +925,9 @@ cacheManager专题分析一下
 RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) 为啥这个有参构造函数能走进来？搞懂这一点至关重要
 把CacheManager搞成static的：https://www.cnblogs.com/imsoft/p/5895905.html
 
-十一之前把项目搞好，然后开始学习脚本语言和机器学习
-战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
+@EnableScheduling搞懂原理
 
+战略要正确，用一年的时间紧锣密鼓的完成。我的目标就是把CRM技术搞的非常熟，能够快速搭
 
 【再把菜单、权限这事儿自己思考一下】
 1.通过注解来完成权限控制（5个权限注解）【新问题：我配了后启动失败了】；
@@ -1378,7 +1421,6 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 有没有jwt的两套应该是可以快速切换的，做成通用的
 全局异常处理做进来
 富文本编辑器、activiti做进来
-websocket用起来
 
 activiti demo网站试用：
 http://www.jq22.com/yanshi4014

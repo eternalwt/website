@@ -1,8 +1,12 @@
 package com.greengiant.website.pojo.model;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+
 import java.util.Date;
 
 public class Article {
+    @TableId(type= IdType.AUTO)
     private Long id;
 
     private String title;

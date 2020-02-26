@@ -1,4 +1,4 @@
-package com.greengiant.website.controller;
+package com.greengiant.website.controller.websocket;
 
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.utils.ResultUtils;

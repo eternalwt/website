@@ -60,6 +60,7 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // todo 路径放入配置文件
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/files/download/")
                 .path(fileName)

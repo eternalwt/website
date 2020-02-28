@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 
 /**
- * 原生webSocket配置
+ * 原生tomcat版的webSocket配置
  */
 @Configuration
 public class WsConfig {
@@ -14,4 +14,5 @@ public class WsConfig {
     public ServerEndpointExporter serverEndpointExporter() {
         return new ServerEndpointExporter();
     }
+
 }

@@ -19,11 +19,9 @@ java-jwt是com.auth0下面的，关系注意一下
 
 ========================================================================================================================
 
-考虑使用influxDB、HBase、Kafka
+考虑使用influxDB、HBase、Kafka【一旦上IoT数据库，就开始拆服务，加gateway和eureke服务】
 IoT实时数据可视化方案：Grafana+InfluxDB+Telegraf+MQTT协议+Windows 10：https://segmentfault.com/a/1190000012514865
 看看IoT数据库别人的选择
-
-多数据源的配置再理解一下
 
 Spring框架大量注解会影响性能吗？怎样优雅地使用注解？
 https://www.zhihu.com/question/36486629/answer/68063702
@@ -42,6 +40,8 @@ https://www.liangzl.com/get-article-detail-134408.html
 3.再次思考只用JWT不用cookie是不是很傻逼
 
 mybatis的缓存怎么配置？能否拿出来？
+
+网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
 
 看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
 private static final class SpringShiroFilter extends AbstractShiroFilter
@@ -414,46 +414,51 @@ web-flash: https://github.com/enilu/web-flash
 // todo 添加permission的用法是info.addStringPermission(perms)，能否用这个来修改我的授权操作？（比较一下用和不用的区别）
 //  https://www.cnblogs.com/116970u/p/10954812.html
 
-最近没时间搞scheme，先把七语言文档里面JS的东西消灭一点
-
 边调试边观察内存
 
 发现单元测试很适合EhCache这一类jar包配置的test，并且可以用来存放网上的示例代码
 
-webSocket如何单元测试？
-webSocket：原生方式已调通，继续看原理（阅读代码），继续调试sockJS的方式（可以用我安装的jmeter）
-把我以前没印象的WebSocketController干掉
+大话jmeter，带你了解jmeter的基础用法：https://zhuanlan.zhihu.com/p/82841445
+
+【准备知识】
+1.@SendTo 与 @SendToUser 是Spring的STOMP协议中注解的标签：https://blog.csdn.net/fly_leopard/article/details/78664409
+2.sockjs、stompjs。采用stomp的方式能传二进制吗？
+WebSocket和Stomp协议：https://www.jianshu.com/p/db21502518b9
+ServerEndpoint方式的后端webSocket：https://www.pegaxchange.com/2018/01/28/websocket-server-java/
+第18章-使用WebSocket和STOMP实现消息功能：https://www.cnblogs.com/myitroad/p/9334141.html
+Spring消息之STOMP：https://www.cnblogs.com/jmcui/p/8999998.html
+Spring Boot + WebSocket Simple Example(TextWebSocketHandler or BinaryWebSocketHandler)：https://www.javainuse.com/spring/boot-websocket
+springboot集成websocket的两种实现方式：https://blog.csdn.net/huiyunfei/article/details/90719351
+Using WebSocket to build an interactive web application：https://spring.io/guides/gs/messaging-stomp-websocket/
+webSocket：原生方式已调通，继续看原理（阅读代码）
+websocket+sockjs+stompjs详解及实例：https://segmentfault.com/a/1190000017204277
+https://blog.csdn.net/qq_33594101/article/details/80320762
+websocket的升级(upgrade)细节？【从http到升级tcp看看对IP的管理】【升级过程中怎么管理session？】
+1.session 的应用（ServerEndpoint的方式）
+Interface WebSocketSession：https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/socket/WebSocketSession.html
+https://developer.jboss.org/thread/278757?_sscc=t
+通过心跳包实现webSocket的掉线重连以及避免session超时（默认连接时长1分钟）：https://www.v2ex.com/amp/t/472034
+WebSocket加入心跳包防止自动断开连接：https://yq.aliyun.com/articles/636357
+WebSocket Session共享：https://www.jianshu.com/p/2c5c4b0349df
+Atmosphere 2.4.1 发布，异步 WebSocket 框架：https://www.oschina.net/news/68451/atmosphere-2-4-1
+websocket长链接和短连接：
+https://www.cnblogs.com/miaozhihang/p/9518584.html
+https://blog.csdn.net/q1312882392/article/details/99621897
+WebSocket在线测试工具：http://ws.douqq.com/
+jmeter测试websocket接口：
+https://www.cnblogs.com/nanaheidebk/p/10129936.html
+https://blog.csdn.net/huoyunshen88/article/details/77511788
+@ServerEndpoint是个什么东西？
+为什么你的websocket只能建立256个连接？https://zhuanlan.zhihu.com/p/103289590
+京东到家基于netty与websocket的实践：https://zhuanlan.zhihu.com/p/100394633
 Springboot 集成 Websocket (with Shiro)【从协议层面吃透，几种方式要都能用。用http协议测一把，观察请求的协议】：
 https://zhuanlan.zhihu.com/p/75869037
 https://blog.csdn.net/qq_34763130/article/details/87709848
 https://blog.csdn.net/tanleijin/article/details/82732493
 https://blog.csdn.net/zixiao217/article/details/53098700
-webSocket的掉线重连以及session超时？
-https://blog.csdn.net/qq_33594101/article/details/80320762
-websocket的升级(upgrade)细节？
-webSocket：
-1.session的应用；
-2.服务器如何保存客户端IP并找到客户端；
-3.如果出现异常情况，两端怎么判如何时需要关闭；
-Atmosphere 2.4.1 发布，异步 WebSocket 框架：https://www.oschina.net/news/68451/atmosphere-2-4-1
-七种WebSocket框架的性能比较：http://www.360doc.com/content/16/0626/08/9200790_570799810.shtml
-1.了解webSocket session的作用；2.默认连接时长
-WebSocket Session共享：https://www.jianshu.com/p/2c5c4b0349df
-websocket长链接和短连接：
-https://www.cnblogs.com/miaozhihang/p/9518584.html
-https://blog.csdn.net/q1312882392/article/details/99621897
-webSocket在angular里面如何快速调试？在后端如何单元测试？
-webSocket官网教程：Using WebSocket to build an interactive web application：https://spring.io/guides/gs/messaging-stomp-websocket/
-faye-websocket 的使用：https://www.jianshu.com/p/2721e8d04fc9
-websocket选型：https://www.jianshu.com/p/809e0ca0403e
-Nodejs实现websocket的4种方式：https://blog.csdn.net/zr15829039341/article/details/65628008
-springboot集成websocket的两种实现方式：https://blog.csdn.net/huiyunfei/article/details/90719351
-关于controller调用controller/service调用service/util调用service/websocket中autowired的解决方法：https://blog.csdn.net/moshowgame/article/details/83415545
-WebSocket在线测试工具：http://ws.douqq.com/
-jmeter测试websocket接口：
-https://www.cnblogs.com/nanaheidebk/p/10129936.html
-https://blog.csdn.net/huoyunshen88/article/details/77511788
-Spring Boot + WebSocket Simple Example：https://www.javainuse.com/spring/boot-websocket
+websocket 单元测试异常（已解决）：
+https://www.cnblogs.com/andysd/p/10253747.html
+https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 
 
 0.快速在真实和mock之间切换，拆分任务；
@@ -538,9 +543,7 @@ foreach (在实现 mybatis in 语句查询时特别有用)：
 https://blog.csdn.net/haoxin1805487180/article/details/82778991
 
 两次登录失败则显示验证码
-网上的captcha库：
-Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
-直接注入一个passwordService来加密密码
+网上的captcha库：Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 Springboot整合Shiro：集成Kaptcha验证码：https://www.jianshu.com/p/ad0bc0508abd
 
 2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
@@ -1167,10 +1170,6 @@ https://blog.csdn.net/sinat_32481295/article/details/79764749
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
 
 shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
-
-websocket 单元测试异常（已解决）：
-https://www.cnblogs.com/andysd/p/10253747.html
-https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-features.html#boot-features-testing
 
 功能写好后，再搭建eureka server和spring cloud gateway
 搭建Eureka注册中心：

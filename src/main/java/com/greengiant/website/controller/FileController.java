@@ -21,37 +21,6 @@ import java.nio.file.StandardCopyOption;
 @RequestMapping("/file")
 public class FileController {
 
-
-
-//    private final StorageService storageService;
-// todo 再看：https://spring.io/guides/gs/uploading-files/。
-//  从这个文章也看出，我的单元测试技能是不够的。把这个做了就能提升一截
-//
-//    @Autowired
-//    public FileController(StorageService storageService) {
-//        this.storageService = storageService;
-//    }
-
-//    @GetMapping("/")
-//    public String listUploadedFiles(Model model) throws IOException {
-//
-//        model.addAttribute("files", storageService.loadAll().map(
-//                path -> MvcUriComponentsBuilder.fromMethodName(FileUploadController.class,
-//                        "serveFile", path.getFileName().toString()).build().toString())
-//                .collect(Collectors.toList()));
-//
-//        return "uploadForm";
-//    }
-
-//    @GetMapping("/files/{filename:.+}")
-//    @ResponseBody
-//    public ResponseEntity<Resource> serveFile(@PathVariable String filename) {
-//
-//        Resource file = storageService.loadAsResource(filename);
-//        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-//                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
-//    }
-
     @Value("${file.upload-path}")
     private String fileBasePath;
 
@@ -64,7 +33,8 @@ public class FileController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        // todo 路径放入配置文件
+
+        // todo 存入数据库
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/files/download/")
                 .path(fileName)
@@ -74,11 +44,8 @@ public class FileController {
     }
 
     // todo 上传单个和多个文件：https://www.devglan.com/spring-boot/spring-boot-file-upload-download
-    //  这个文章里面还有下载多个文件同时打包的操作（要试一下，我们系统可能用得上）
-
-//    @ExceptionHandler(StorageFileNotFoundException.class)
-//    public ResponseEntity<?> handleStorageFileNotFound(StorageFileNotFoundException exc) {
-//        return ResponseEntity.notFound().build();
-//    }
+    // todo 下载：1.进度【下载完后消息中心提示】；2.打包zip
+    // todo 再看：https://spring.io/guides/gs/uploading-files/。
+    //  从这个文章也看出，我的单元测试技能是不够的。把这个做了就能提升一截
 
 }

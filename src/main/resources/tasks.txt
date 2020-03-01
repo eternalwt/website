@@ -1543,11 +1543,19 @@ Import 注解与 ImportSelector 和 ImportBeanDefinitionRegistrar：https://www.
 RetryLimitHashedCredentialsMatcher与cache已成功解耦
 
 【文件上传下载，通过postman和junit进一步掌握】
+Postman Post请求上传文件：https://blog.csdn.net/maowendi/article/details/80537304
+才发现文件上传后端可以用@RequestParam来接的：
+    @RequestParam 可以用于从query parameters, form data, 和parts in multipart requests中获取参数：
+    https://blog.csdn.net/whan8080/article/details/90345749
+    剩下的传递方式都是用@RequestBody吗？网上有没有对应关系表？怎么看spring源码确认？
 springmvc文件下载的总结：
 HttpServletResponse写数据的时候，发生了什么？
 1.使用HttpServletResponse：https://howtodoinjava.com/spring-mvc/spring-mvc-download-file-controller-example/
 2.ResponseEntity其实可以看做是把HttpServletResponse封装了，但是功能比HttpServletResponse多，推介使用：https://blog.csdn.net/qq_26584263/article/details/97972922
 3.SpringBoot如何优雅的使用@ResponseBody返回图片（byte[]比较一下ResponseEntity）：https://blog.csdn.net/u014449560/article/details/82807517
+【下载zip文件】
+    1.https://blog.csdn.net/lesouls/article/details/80279960
+    2.下载还有种不常见的写法：@Produces(MediaType.APPLICATION_OCTET_STREAM)：https://stackoverflow.com/questions/51342844/spring-boot-rest-service-to-download-a-zip-file-which-contains-multiple-file
 文件上传总结：
 官网教程Uploading Files【官网里面的代码还是写的很好的，有空要多看】：https://spring.io/guides/gs/uploading-files/
 1.搞清楚multipart request的概念（搞懂这个是关键，纲举目张）：https://stackoverflow.com/questions/16958448/what-is-http-multipart-request
@@ -1559,3 +1567,8 @@ Sending MultipartFile Request：https://www.oodlestechnologies.com/blogs/Upload-
 RequestEntity的用法：https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/request-response-entity.html
 Uploading and Downloading Files with Spring Boot：https://www.devglan.com/spring-boot/spring-boot-file-upload-download
 测试：https://www.logicbig.com/tutorials/spring-framework/spring-web-mvc/request-response-entity.html
+多文件上传：
+https://blog.csdn.net/gnail_oug/article/details/80324120
+https://blog.csdn.net/magi1201/article/details/82757063
+
+

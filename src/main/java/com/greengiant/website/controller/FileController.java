@@ -2,10 +2,12 @@ package com.greengiant.website.controller;
 
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.utils.ResultUtils;
-import org.springframework.stereotype.Controller;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -15,7 +17,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 
-@Controller
+@RestController
+@RequestMapping("/file")
 public class FileController {
 
 
@@ -49,7 +52,8 @@ public class FileController {
 //                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
 //    }
 
-    private static final String fileBasePath = "/";
+    @Value("${file.upload-path}")
+    private String fileBasePath;
 
     @PostMapping("/upload")
     public ResultBean handleFileUpload(@RequestParam("file") MultipartFile file) {// todo 为啥不是RequestBody？

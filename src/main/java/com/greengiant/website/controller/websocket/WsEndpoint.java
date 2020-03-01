@@ -20,6 +20,8 @@ public class WsEndpoint {
     // todo 把 synchronized 和CopyOnWriteArraySet再看一下
     // todo 写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
 
+    // todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
+
     /**
      *  concurrent包的线程安全Set，用来存放每个客户端对应的MyWebSocket对象。
      */
@@ -36,7 +38,7 @@ public class WsEndpoint {
         sessionSet.add(session);
         // 2.调用它实现的接口里面的open方法
         // todo 根据参数生成不同类的对象
-        // WsBusiness business = new OnlineCount();
+        // WsBusiness business = new OnlineStatWsBusiness();
         // business.open();
         try {
             // todo 通知连接成功也用标准数据格式

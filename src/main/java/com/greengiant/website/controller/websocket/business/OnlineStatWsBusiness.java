@@ -1,9 +1,9 @@
-package com.greengiant.website.controller.websocket;
+package com.greengiant.website.controller.websocket.business;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class OnlineCount implements WsBusiness{
+public class OnlineStatWsBusiness implements WsBusiness{
 
     /**
      * 当前在线连接数。应该把它设计成线程安全的
@@ -23,19 +23,18 @@ public class OnlineCount implements WsBusiness{
     }
 
     @Override
-    public Integer getBusinessType() {
-        // todo
-        return null;
-    }
-
-    @Override
     public Integer getMsgType() {
         // todo
         return null;
     }
 
     @Override
-    public void processMsg() {
+    public void receiveMsg() {
+        // todo
+    }
+
+    @Override
+    public void sendMsg() {
         // todo
     }
 

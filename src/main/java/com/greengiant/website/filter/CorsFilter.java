@@ -17,14 +17,14 @@ public class CorsFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) res;
         HttpServletRequest request = (HttpServletRequest) req;
 
-        //        response.setHeader("Access-Control-Allow-Origin","*");
+        // response.setHeader("Access-Control-Allow-Origin","*");
         response.setHeader("Access-Control-Allow-Origin", request.getHeader("origin"));
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT, OPTIONS");
-//        response.setHeader("Access-Control-Allow-Methods", "*");
+        // response.setHeader("Access-Control-Allow-Methods", "*");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//        response.setHeader("Access-Control-Allow-Headers", "**");// todo 这样配通配符无效，再找一下
+        // response.setHeader("Access-Control-Allow-Headers", "**");// todo 这样配通配符无效，再找一下
 
         // 预请求 options 直接返回
         // todo 下面是为了解决：Response to preflight request doesn't pass access control check: It does not have HTTP ok status.

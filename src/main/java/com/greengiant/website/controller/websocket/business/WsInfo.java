@@ -1,4 +1,4 @@
-package com.greengiant.website.controller.websocket;
+package com.greengiant.website.controller.websocket.business;
 
 public class WsInfo {
     String sessionId;

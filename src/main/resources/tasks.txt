@@ -9,19 +9,37 @@
 
 买百度云搭建持续集成和大数据
 
-【周末】开涛的书和JWT不能停
-java-jwt是com.auth0下面的，关系注意一下
+【周末】开涛的书不能停
 
 后端框架搭好后，下一步工作方向：
 1.前端框架及组件（依托工作）；
 2.scheme及解释器、数值符号计算继续；
-3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读
+3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读。5亿整数的大文件，来排个序【用50万个就OK了】
+bloomfilter：
+https://www.baeldung.com/guava-bloom-filter
+https://www.javamex.com/tutorials/collections/bloom_filter_java.shtml
+https://dzone.com/articles/redis-based-bloom-filter-for-java
+https://www.interviewcake.com/concept/java/bloom-filter
+https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implementation/
 
 ========================================================================================================================
 
+1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
+2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
+3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
+6.todo再清一轮，还是要逐个搞透
+
+使用Objects.requireNonNull(h);简化代码
+
+前端上传的文件是怎么被转化为MultiPartFile的？
+
+传感器如何连局域网？农业传感器是连的公网还是局域网？【这不就是IPv6的初衷吗？】
+安装使用一个时序数据库、图数据库、消息队列（有哪些知识点？）看看IoT数据库别人的选择
 考虑使用influxDB、HBase、Kafka【一旦上IoT数据库，就开始拆服务，加gateway和eureke服务】
 IoT实时数据可视化方案：Grafana+InfluxDB+Telegraf+MQTT协议+Windows 10：https://segmentfault.com/a/1190000012514865
-看看IoT数据库别人的选择
+通过消息队列、ES、redis分析这些中间件难在哪儿，分别涉及到哪些技术
+
+我现在包的划分还有提升的空间
 
 Spring框架大量注解会影响性能吗？怎样优雅地使用注解？
 https://www.zhihu.com/question/36486629/answer/68063702
@@ -35,10 +53,7 @@ https://www.liangzl.com/get-article-detail-134408.html
 
 应该用最直接的办法，放开版本号直接定位shiro-ehcache的bug！！！
 
-1.搜索英文资料，JWT的典型应用；
-2.JWT是不是可以用来生成cookie内容（用法之一）；
-3.再次思考只用JWT不用cookie是不是很傻逼
-
+逐项分析mybatis的每一个配置
 mybatis的缓存怎么配置？能否拿出来？
 
 网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
@@ -106,7 +121,6 @@ https://www.ucloud.cn/yun/7401.html
 shiro、spring整合原理：
 https://blog.csdn.net/wangjun5159/article/details/89873842
 https://blog.csdn.net/u013995395/article/details/90715272
-
 
 关于shiro cache【重要】：
 1.看shiro-ehcache代码，搞清楚我的shiro-ehcache配置报错的原因；
@@ -205,7 +219,7 @@ https://mybatis.org/mybatis-3/zh/configuration.html
 有没有一种可能，是两部分都要配置？（但是又没测通）：https://www.cnblogs.com/bangpenggao/articles/11328923.html
 
 Mybatis使用的设计模式：
-https://blog.csdn.net/u014401141/article/details/86920900
+https://blog.csdn.net/u014401141/article/details/86920900【1.比较装饰模式与继承；2.再思考一下filter的责任链模式；3.其他的再看】
 https://blog.csdn.net/emprere/article/details/100190638
 https://blog.csdn.net/youanyyou/article/details/89368772
 @Mapper注解都没整明白
@@ -313,7 +327,6 @@ http://www.xueui.cn/tutorials/web-course/design-of-web-end-message-center.html
 https://www.zhihu.com/question/25459379
 https://zhuanlan.zhihu.com/p/22456973
 
-// todo 原生mybatis如何批量插入
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
@@ -343,7 +356,7 @@ https://blog.csdn.net/qq_21492635/article/details/89381204
 @ControllerAdvice需要和@ExceptionHandler配合。再思考spring里面的advice（通知是切面的一种实现，可以完成简单的织入功能）：https://www.jianshu.com/p/ddd90a0e340b
 在Spring 3.2中，新增了@ControllerAdvice、@RestControllerAdvice 注解，可以用于定义@ExceptionHandler、@InitBinder、@ModelAttribute，并应用到所有@RequestMapping、@PostMapping， @GetMapping注解中。
 有人问@ControllerAdvice和HandlerInterceptor的区别。
-HandlerInterceptor是一个很方便的拦截器，可以用来做Token校验【对比思考一下JWT】。需要配合WebMvcConfigurationSupport使用：https://blog.csdn.net/qq_32768743/article/details/88650567
+HandlerInterceptor是一个很方便的拦截器，可以用来做Token校验。需要配合WebMvcConfigurationSupport使用：https://blog.csdn.net/qq_32768743/article/details/88650567
 
 Springboot 15篇：https://yq.aliyun.com/users/hz3zxsd4wosss?spm=a2c4e.11153940.0.0.1fa660e0yUAIFp
 
@@ -364,23 +377,14 @@ Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/
 
 分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 
+HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
 要有条理：
 1.把完整的二级菜单移到左侧【其中有一个菜单专门用来做demo】
-同时配置多个Realm：同时配置JdbcRealm和JwtRealm，这样就不用后台配置改来改去了（不行把？涉及到cookie、token等）
-为什么要加jwtfilter？（补上了哪个环节的缺失？）【在不使用jwt的时候，shiro不用filter功能也是很完善的，思考一下场景】
-HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
-思考一下JWT的remember
-JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jianshu.com/p/9ac577427b44
 
-1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
-2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
-3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
-6.todo再清一轮，还是要逐个搞透
 先把Query和Vo建立起来
 1.把redis做起来，我已经装了windows版的redis
 2.确认我现在能否方便切换到redis，以此来提升代码模块化程度和我的认知
 3.确认关闭缓存后，我的代码会受多大影响。如果JVM内存不足的时候，如何砍掉ehcache的内存？进一步学习内存一致性问题
-为ShiroConfig和ShiroJwtConfig抽公共函数【现在改动还是太麻烦了】
 【加一个栏目表，然后把发表文章的功能彻底完善】
 把excel的调通一版
 权限的修改再试图重构一下：updatePermission，对应前端savePermission
@@ -393,6 +397,7 @@ JWT记住我是否用到实现RememberMeAuthenticationToken？https://www.jiansh
 10.前端文档再看一周，包括service等
 11.写更多基础设施
 12.单元测试
+思考一下chime用到哪些基础设施【ES、kafka】
 
 周末回到正确的思路：1.休息，不要冲进度；2.哪怕只能解决2个小问题，只要是自己思考，也很有价值，不要冲进度
 
@@ -418,7 +423,16 @@ web-flash: https://github.com/enilu/web-flash
 
 发现单元测试很适合EhCache这一类jar包配置的test，并且可以用来存放网上的示例代码
 
+jmeter和Load Runner是对等物：https://howtodoinjava.com/library/jmeter-beginners-tutorial/
+jmeter tutorial：
+https://www.tutorialspoint.com/jmeter/index.htm
+https://www.guru99.com/jmeter-tutorials.html
+https://www.toolsqa.com/jmeter-tutorial/
 大话jmeter，带你了解jmeter的基础用法：https://zhuanlan.zhihu.com/p/82841445
+Apache Jmeter 5.0 websocket插件安装与使用：https://blog.csdn.net/qq_32524177/article/details/85231104
+jmeter测试websocket接口：
+https://blog.csdn.net/huoyunshen88/article/details/77511788
+https://www.cnblogs.com/nanaheidebk/p/10129936.html
 
 【准备知识】
 1.@SendTo 与 @SendToUser 是Spring的STOMP协议中注解的标签：https://blog.csdn.net/fly_leopard/article/details/78664409
@@ -445,9 +459,6 @@ websocket长链接和短连接：
 https://www.cnblogs.com/miaozhihang/p/9518584.html
 https://blog.csdn.net/q1312882392/article/details/99621897
 WebSocket在线测试工具：http://ws.douqq.com/
-jmeter测试websocket接口：
-https://www.cnblogs.com/nanaheidebk/p/10129936.html
-https://blog.csdn.net/huoyunshen88/article/details/77511788
 @ServerEndpoint是个什么东西？
 为什么你的websocket只能建立256个连接？https://zhuanlan.zhihu.com/p/103289590
 京东到家基于netty与websocket的实践：https://zhuanlan.zhihu.com/p/100394633
@@ -482,20 +493,19 @@ netty是基础设施
 【前端基础设施】
 富文本编辑器是基础设置
 word、pdf预览是基础设施
-Angular 5+ PDF Viewer：https://www.npmjs.com/package/ng2-pdf-viewer
-WebViewer：
 https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
 这个里面也提到了很多基础设施：https://segmentfault.com/a/1190000011562305
 前端setTimeout、setInterval是基础设施
-图片预览
 canvas及对应的库是基础设施
 标签云（tag云）等技术是基础设施
-好用的前端控件/组件、模板主题是基础设施
+模板主题是基础设施
 数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
-按钮、图标、菜单管理
+按钮、图标、多级菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
-怎么使用好图标
-前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、树控件、红点、时间线
+前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、树控件、消息中心、时间线
+好用的前端控件/组件（好用的表格、表单、对话框、tab、面包屑、图片预览、上传组件、图表）
+Angular 5+ PDF Viewer：https://www.npmjs.com/package/ng2-pdf-viewer
+WebViewer：
 
 ======================================================================================================
 
@@ -595,18 +605,11 @@ springboot整合微软的ad域，采用ldap的api来整合，实现用户登录�
 
 如何打开trace信息？例如ShiroFilterFactoryBean里面就有
 
-SpringBoot系列 - 集成JWT实现接口权限认证：http://ju.outofmemory.cn/entry/341269
 Filter过滤器：
 https://www.jianshu.com/p/054c925cd45d
 https://cloud.tencent.com/developer/article/1376558
 http://www.360doc.com/content/17/1227/15/16915_716741886.shtml
 https://www.cnblogs.com/ljdblog/p/6237683.html
-jwt记住密码、修改密码及重新生成token等问题，把我的cookie文档复习一遍：
-https://blog.csdn.net/u010176097/article/details/80706012
-https://www.jianshu.com/p/792f71bb52dd
-再思考一下我的token生成规则有没有问题、是否需要缓存
-jwt版的修改密码再思考一下
-看一下JwtFilter及BasicHttpAuthenticationFilter，各个方法的场景
 
 张开涛的shiro再看一遍，然后源码分析一次
 
@@ -615,7 +618,7 @@ jwt版的修改密码再思考一下
 调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
 session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
 看代码：如果是 Web 应用，每次进入 ShiroFilter 都会自动调用 session.touch()来更新最后访问时间。
-当 Subject.logout()时会自动调用 stop 方法来销毁会话。思考一下jwt的。
+当 Subject.logout()时会自动调用 stop 方法来销毁会话
 DefaultSessionManager里面默认用的是MemorySessionDAO
 【重要，层级@Autowired】实现SessionDAO接口的类的注入？
 MemorySessionDAO用到concurrentMap，看看这个数据结构
@@ -628,13 +631,14 @@ https://www.jianshu.com/p/f7d5a9ecfd3a
 https://www.jianshu.com/p/f85e50f41100
 https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
 https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
-使用jwt时，怎么测试禁session成功了？
 EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
 RedisSessionDAO：https://blog.csdn.net/njpkhuan/article/details/100563389?depth_1.utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
-session的过期时间怎么配置？
-有了JSESSIONID的概念，再思考一下使用JWT时怎么做超时管理。能否用这个？
-对Session有了更多了解。应该是先看session的细节，再看jwt怎么发挥session那样的作用
+
+SpringMVC整合shiro、自定义sessionManager实现前后端分离：
+https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
+https://blog.csdn.net/u011456867/article/details/80484559
+
 配置shiro会话监听【看一下如果sessionManager没有实例化，代码是什么样的】：https://www.jianshu.com/p/0f949aa730c1
 （SessionListener体现了这样一种可插拔设计风格：初始化了就多一个功能点，并且可以有不同的实现；没有初始化就少一个功能点，但是不影响主要功能。或者可以先给一个默认实现）
 session cookie和remember cookie是怎么被使用的？（rememberme没学透把）
@@ -643,53 +647,11 @@ Http协议中Cookie详细介绍：https://www.cnblogs.com/bq-med/p/8603664.html
 基于shiro框架实现自动登录(rememberMe)【是不是应该考虑后端的方案】：
 https://www.jianshu.com/p/5b99c0ef6fb7
 https://www.cnblogs.com/sunruntheway/articles/4447806.html
-jwt token验证的两种方式：
-1.封装成UserPasswordToken（这种方式比较间接）：https://www.jianshu.com/p/0b1131be7ace；
-2.直接使用JWTToken（已写通，还需要更深入的理解。matcher与realm的关系。下一步是重构代码了）；
 
-// todo 用的是数据库里面取出来的password，应该是跟UsernamePasswordToken里面封装的password比较，继续跟代码
-【把jwt的文档搞定】
-【下一步重中之重：把代码比对搞清楚，然后就能把jwt里面封入密码，彻底把jwt搞定了】
-2.token的刷新【写完和别人的代码对比（研究别人的代码）：1.前端框架接受到刷新的token后替换保存（interceptor）
-确认【先跟一次代码】：jwt登录和后续请求都用到CustomJwtRealm里面的doGetAuthenticationInfo方法。并跟踪调试非jwt版本的代码
-刷新我是照这个写的：https://www.jianshu.com/p/48b39f6b1f86
-涉及到替换原有token、修改session状态的JWT方向才是对的：https://yq.aliyun.com/articles/646440
-先看自定义sessionManager实现前后端分离，再看JWT（把token作为sessionId？）：
-https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
-https://blog.csdn.net/u011456867/article/details/80484559
-Jwt与sessionIdGenerator的关系？
-验证：cookie设置为即时过期（和不过期2种情况）、session设置超时的测试【session和cookie关系还是没完全搞明白】
-sessionIdCookieEnabled和sessionIdCookie是干嘛的？https://www.cnblogs.com/xyhero/p/86b01d0949feaac01459e654747b9bff.html
-sessionValidationScheduler（会话验证调度器、QuartzSessionValidationScheduler、ExecutorServiceSessionValidationScheduler）：https://blog.csdn.net/yifansj/article/details/78007231
-shiro自定义会话验证调度器：https://blog.csdn.net/jin5203344/article/details/53580242
-Shiro 分布式架构下 Session 的共享实现：https://blog.csdn.net/zcyhappy1314/article/details/71270937
-是否区分access_token和refresh_token？
-
-jwt的关键点：
-4.最基本的jwt写通后，把缓存、错误次数等其他基础设施都加上去（token放在缓存中是个很典型的场景）
-0.jwt已有的代码没有完全读完：https://www.jianshu.com/p/504bfbbd5896
 SubjectDAO那些代码还是要看
-
-从cookie来看我的session没有完全禁掉，我的hello world请求也有问题吧
-
-jwt的RememberMe：
-1.先从实现接口的角度来理解框架：RememberMeManager - AbstractRememberMeManager - CookieRememberMeManager【最好不要绕过subject.isRemembered()】；
-2.我的理解：分刷新时间、过期时间、rememberMe过期时间（这样的话过期时间如何刷新？）
-3.登出的逻辑也要改
-如果每一次请求都更换token，实现rememberMe是可行也是很好实现的，不会有并发问题【这是真正正确的逻辑，但是还是要先搞懂issuedAt】
-jwt验证subject.isAuthenticated()
-
 
 Shiro之CredentialsMatcher详解：https://blog.csdn.net/dh554112075/article/details/90760318
 
-【又想了一下，把记录的问题精进一下再继续】有jwt和没有jwt的版本还要再搭一到二次，把框架的有效使用再精进一步
-
-jwt的修改：
-1.securityManager.setRealms(Arrays.asList(customRealm));
-2.response.setHeader("x-auth-token", JWTUtil.createToken(username));
-3.关闭session【可以先不处理把？】；
-4.Filter的注册，是否使用FilterRegistrationBean？
-JWT，先把这个页面的实现一次【还有刷新的问题】：https://www.sundayfine.com/shiro-jwt/
 
 学习框架彻底体会了组装的感觉
 
@@ -700,9 +662,6 @@ https://blog.csdn.net/liiuijkiuu/article/details/53945062
 多realm【自定义ModularRealmAuthenticator并且在SecirityManager里面设置进去。搞懂下一个问题，securityManager没设置时，默认的是怎么初始化的】：
 https://www.cnblogs.com/nfcm/p/9889969.html
 https://blog.csdn.net/cckevincyh/article/details/79629022
-【上面这个应该是可以配置成功jwt的，配置试一下。理论上来说：应该先debug登录后每一次请求的cookie验证，然后再搞jwt的。这一步补上】
-到了JWT感觉不得不做源码分析了
-【JWT：网上的文章都太复杂了，自己先看看鉴权过程自己思考一下，或者先写起来】
 
 SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
@@ -760,8 +719,7 @@ https://blog.csdn.net/shan165310175/article/details/98478970
 
 菜单和授权权限的对应关系是不是装入role表（分级授权知道怎么做了，是不是再查查资料）
 
-ShiroConfig前面已经一马平川【终于到动态权限和jwt了】：
-1.JWT、JWT要能快速切换，要能复述步骤（在现在的基础上只需要不到1小时就能配好了）。搞定JWT需要对整个流程再来一次梳理，很有意义（禁用session后对cookie的影响？）
+
 最终的替换目标要验证登录次数限制、权限等没有问题
 挤掉其他用户或者能同时登陆（现在的逻辑应该是会挤掉把？用2个浏览器测一下）
 2.增加了账号连续输错的限制后，逻辑有问题，在时间范围之内输入正确的账号也应该不让登陆【作为测试问题解决验证】
@@ -820,8 +778,6 @@ mybatis一级缓存二级缓存：https://www.cnblogs.com/happyflyingpig/p/77397
 
 再思考cookie传过来后是怎么验证的。通过SessionManager设置session过期时间后，时间到了怎么办？https://www.cnblogs.com/yinfengjiujian/p/9083593.html
 
-jwt环境下怎么做记住我？【因为token要隔时间更换，这个我在威盛都没做】
-
 沉住气，精进是要一直进行的【光是这个文档里面的东西都至少要精进到年底】
 
 Servlet Tutorial【当今servlet的场景？】：
@@ -830,7 +786,6 @@ DispatcherType
 
 SpringBoot----跨域配置：https://www.cnblogs.com/csguo/p/9597791.html
 
-JWT搞懂（要彻底）后后端就可以告一段落了，有兴趣可以继续看lifecycleBeanPostProcessor
 lifecycleBeanPostProcessor：
 LifecycleBeanPostProcessor用于在实现了Initializable接口的Shiro bean初始化时调用Initializable接口回调，在实现了Destroyable接口的Shiro bean销毁时调用 Destroyable接口回调
 https://blog.csdn.net/hxm_code/article/details/78697305
@@ -903,8 +858,6 @@ springboot + shiro之登录人数限制、登录判断重定向、session时间�
 
 前端路由非常重要，是一个枢纽，并且涉及到权限控制，需要好好研究组件的实现及使用
 
-【周末剩余事项】
-2.JWT（postman也是可以测试的）
 3.继续看shiro文档，反复看和整理（一个专题一个专题彻底灭掉）
 得看spring-shiro的源码 得再打断点调试一下，现在的熟悉程度和收获远远不够
 禁止账号多点登录或者重复登录：
@@ -918,11 +871,6 @@ https://www.jianshu.com/p/44ee5b1c1e77
 shiro的权限控制应用，集成spring项目，密码错误次数过多短时间锁定：http://www.mamicode.com/info-detail-1449798.html
 
 @Controller注解的类也是被IoC容器管理的，从这个角度思考一下
-
-Shiro整合JWT+Token过期刷新，全都帮你整好了：
-https://www.sundayfine.com/shiro-jwt/
-https://www.sundayfine.com/jwt-refresh-token/
-使用更多debug
 
 cacheManager专题分析一下
 RetryLimitHashedCredentialsMatcher(CacheManager cacheManager) 为啥这个有参构造函数能走进来？搞懂这一点至关重要
@@ -1010,13 +958,6 @@ https://bbs.csdn.net/topics/392084645
 Session失效问题：https://www.cnblogs.com/OnlyCT/p/9151010.html
 Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/8391274.html
 如果没有logout，session的过期策略是什么？【和cookie的过期问题对比考虑】
-修改成jwt后，锁定会出问题吗？
-
-JWT登录的几个要点：
-    1.将登录成功的信息包括Token信息返回给前端，前端在请求后台时，将Token信息存入请求头中。
-    2.配置自定义拦截器，拦截所有URL请求，取出请求头信息中的Token信息，对Token信息进行验证
-    3.关闭原有的session功能
-https://blog.csdn.net/qq_36838191/article/details/82893149
 看看shiro默认是怎么拦截的
 
 cookie和session的关系：
@@ -1104,14 +1045,6 @@ https://blog.csdn.net/lpw_cn/article/details/84779387
 druid开启日志
 
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
-4.测试
-
-其实前后端已经连的差不多了，jwt只是可选
-https://blog.csdn.net/qq_22771739/article/details/83687175
-http://www.17sucai.com/pins/tag/14624.html
-https://www.cnblogs.com/wyguo/p/3556049.html
-在@Configuration里面打断点观察执行情况
-
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
 升级springboot 2.1.5后启动报错
@@ -1127,11 +1060,6 @@ shiro的登陆应该是用到了session相关的东西【要搞懂这个必须�
 https://www.jianshu.com/p/c9e65e014db9?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 https://blog.csdn.net/u013615903/article/details/78781166/
 Shiro用starter方式优雅整合到SpringBoot中
-2.jwt：https://www.jianshu.com/p/3c51832f1051
-你在用 JWT 代替 Session? https://blog.csdn.net/weixin_41153791/article/details/82291144
-把JdbcRealm、JndiLdapRealm、ActiveDirectoryRealm写通
-为增加可靠性，sessionId的管理使用了shiro-redis开源插件，避免sessionId断电丢失【前后端分离，sessionId放在header里面】：https://blog.csdn.net/u013615903/article/details/78781166
-SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
 
 VS code中的Node.js教程：https://blog.csdn.net/qq_40420795/article/details/81909392
 
@@ -1246,8 +1174,6 @@ https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
 
 Spring mvc 之 AbstractHttpMessageConverter 自定义Http消息转化器：https://blog.csdn.net/fang_qiming/article/details/79927708
 
-各种token，分别用于什么场景？
-jwt工程里面用的token不一样，注意对比一下，并分析源代码。jwt token过期重发机制搞清楚
 看一下UsernamePasswordToken实现的2个接口里面都有什么方法
 
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
@@ -1304,18 +1230,12 @@ spring-boot-starter-web
 周日：
 静态页面的目录放开：http://localhost:8080/static/index.html
 @RequestBody用起来
-1.加jwt支持（ShiroJwtConfig、CustomJwtRealm，把里面的代码逐行看懂），密码过期及“记住我”的策略，密码输错次数限制；
-https://blog.csdn.net/qq_32786139/article/details/82658197
-https://blog.csdn.net/qq_32786139/article/details/82658197
-【把jwt和前后端分离配好后，完整测一波】
-registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");：https://my.oschina.net/silenceyawen/blog/1609603
 
 spring和Java Enterprise标签可以看了
 activiti从6.0上面的版本开始搞
 【观察】配置了数据源和activiti后，启动项目，activiti 的各个服务组件就已经被加入到spring容器中了
 run菜单里的Endpoints
 
-jwt是否放到common里面并且便于后面抽包？
 观察日志里面对中间件的日志打的是不是全，把这一块彻底搞明白
 
 泛型的问号适合放在返回值里面吗？Response<?>
@@ -1417,7 +1337,6 @@ Spring解析，加载及实例化Bean的顺序（零配置）：https://blog.csd
 看代码：sessionValidationScheduler ： 会话验证调度器，sessionManager 默认就是使用 ExecutorServiceSessionValidationScheduler，其使用 JDK 的 ScheduledExecutorService 进行定 期调度并验证会话是否过期
 
 要敏捷
-有没有jwt的两套应该是可以快速切换的，做成通用的
 全局异常处理做进来
 富文本编辑器、activiti做进来
 
@@ -1459,10 +1378,6 @@ redirectAttributes.addFlashAttribute("msg", "操作成功");
 
 最初配通springboot+shiro的文档：
 https://blog.csdn.net/weixin_38132621/article/details/80216056
-springboot+shiro+jwt：
-https://blog.csdn.net/u013615903/article/details/78781166
-https://blog.csdn.net/u012149181/article/details/79445758
-https://www.jianshu.com/p/0b1131be7ace【这个里面还用到了FilterRegistrationBean、Authenticator、SessionStorageEvaluator】
 SessionStorageEvaluator【代码其实很简单，看代码】：
 https://www.jianshu.com/p/3b48ea215990
 https://blog.csdn.net/iteye_10899/article/details/82675611
@@ -1478,6 +1393,20 @@ https://www.jianshu.com/p/e09d2370b796
 https://www.cnblogs.com/zcy_soft/p/3357980.html
 5.flyway
 6.druid
+
+时间线timeline的后端设计（feed）：
+https://www.php.cn/mysql-tutorials-53724.html
+https://www.cnblogs.com/literoad/archive/2013/03/18/2966921.html
+https://blog.csdn.net/weixin_33806300/article/details/90569157
+http://www.html5dw.com/post/1903
+https://www.liangzl.com/get-article-detail-522.html
+https://mp.weixin.qq.com/s?__biz=MjM5NzQ3ODAwMQ==&mid=404465806&idx=1&sn=3a68a786138538ffc452bca06a4892c8&scene=0#rd
+Feed流的概念：
+https://yq.aliyun.com/articles/224132
+https://www.useit.com.cn/thread-8342-1-1.html
+https://wenku.baidu.com/view/3fb43833ff4733687e21af45b307e87100f6f879.html
+http://www.lmyw.net.cn/?p=619
+https://blog.csdn.net/mituan1234567/article/details/47008451
 
 logback 配置详解（还需要继续搞）：
 https://www.jianshu.com/p/1ded57f6c4e3?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
@@ -1520,6 +1449,14 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 重新封装返回值【网上看别人的规范】前后端接口规范
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
+Windows下RabbitMQ安装及配置：
+https://blog.csdn.net/lihua5419/article/details/93006834
+https://www.cnblogs.com/liyouming/p/9150473.html
+http://localhost:15672/api/index.html
+我的系统中有curl，是安装RabbitMQ带的吗？
+RabbitMQ tutorial：
+
+
 maven跑test搞清楚（为啥放开2个注释会有报错）
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -1535,7 +1472,7 @@ SpringRunner is an alias for the SpringJUnit4ClassRunner.
 
 SpringBoot源码研究之Actuator：https://blog.csdn.net/lqzkcx3/article/details/89737579
 
-前后端分离后续：spring跨域配置、jwt配置、启动多个服务，或者用shiro-redis的方式
+前后端分离后续：spring跨域配置、启动多个服务，或者用shiro-redis的方式
 以前的架构水平还是不行，现在深入搭框架后，对业务逻辑的兴趣没有以前那么大了
 
 UUID 和 GUID是有区别的：
@@ -1577,7 +1514,6 @@ public interface HttpServletRequest extends ServletRequest {
 将我的项目中HttpServletRequest都过一遍，都干掉。另外：参数中既有request又有response的怎么理解？
 
 UsernamePasswordToken实现了RememberMeAuthenticationToken接口。
-jwt的rememberMe是不是也要有查看和支付的不同级别的区分？https://blog.csdn.net/vae1314chuanchen/article/details/83475717
 
 SpringBoot中application参数中文详解：https://blog.csdn.net/qq_25667339/article/details/79155805
 

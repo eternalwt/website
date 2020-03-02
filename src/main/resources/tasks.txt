@@ -24,6 +24,15 @@ https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implemen
 
 ========================================================================================================================
 
+对缓存的理解：该看SpringDataRedis了：https://blog.csdn.net/weixin_41987908/article/details/90897421
+整合redis缓存的几个方面问题：
+1.比较和原生用法的差别，能简化多少（例如RedisTemplate的方式）；
+2.JSR-107：https://www.cnblogs.com/MagicAsa/p/10756331.html
+3.确定注解方式是通的【看懂整合细节】；
+3.SpringDataRedis（是不是和DataJpa一样可用可不用？）
+
+SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM技术。结束各个ORM框架各自为营的局面：https://www.cnblogs.com/wadmwz/p/10313495.html
+
 1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
 2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
 3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
@@ -256,6 +265,7 @@ Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了
 shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
 【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
 springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
+整合redis其实就是注入了一个CacheManager进去，那么start还做了啥？
 把redisson配好，把事务和分布式锁用起来
 1.缓存的使用、更新等细节问题；2.如果不使用shiro提供的Cache接口呢？换句话说，shiro的Cache接口在集成方面有什么优势？
 Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed

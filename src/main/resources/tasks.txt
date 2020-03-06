@@ -24,6 +24,12 @@ https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implemen
 
 ========================================================================================================================
 
+【mybatis配置有所突破，可以继续搞一轮】
+1.mysql再看一轮，对每个机制分析涉及到的底层技术
+2.mybatis的教程，缓存等高级特性、测试各项配置
+3.mybatis源码分析（设计模式等）
+4.connector、datasource、mybatis的关系看清楚
+
 对缓存的理解：该看SpringDataRedis了：https://blog.csdn.net/weixin_41987908/article/details/90897421
 整合redis缓存的几个方面问题：
 1.比较和原生用法的差别，能简化多少（例如RedisTemplate的方式）；
@@ -32,11 +38,6 @@ https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implemen
 3.SpringDataRedis（是不是和DataJpa一样可用可不用？）
 
 SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM技术。结束各个ORM框架各自为营的局面：https://www.cnblogs.com/wadmwz/p/10313495.html
-
-1.单独用最原始的方式配通、测试mybatis（现在在做menu权限的时候遇到了一个bug），最好做成测试类；
-2.用同样的方式测试mybatis-plus、ehcache、logback和更多中间件的配置；
-3.两个很关键的问题：（1）如何测试并确保xml文件加载了【才发现配置中的错误，可见并没有加载mybatis的xml配置】；（2）如何测试并确保配置都生效了
-6.todo再清一轮，还是要逐个搞透
 
 使用Objects.requireNonNull(h);简化代码
 
@@ -61,9 +62,6 @@ https://www.liangzl.com/get-article-detail-38554.html
 https://www.liangzl.com/get-article-detail-134408.html
 
 应该用最直接的办法，放开版本号直接定位shiro-ehcache的bug！！！
-
-逐项分析mybatis的每一个配置
-mybatis的缓存怎么配置？能否拿出来？
 
 网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
 
@@ -103,9 +101,6 @@ https://blog.csdn.net/baidu_19473529/article/details/80558996
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
 @Bean的参数bean都已经生成了，再用我的demo工程再确认一下
-
-Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
-【ShiroConfig.java里面的注释干掉一轮】
 
 读代码：
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d
@@ -204,6 +199,13 @@ http://www.cnblogs.com/shamo89/p/8051350.html
 
 
 ================================================================================================
+
+【mybatis的配置】
+1.必须要在application文件里面配spring.datasource；
+2.mybatis用xml文件配置选型的方式示例：mybatis.config-location: classpath:mybatis-config-bak.xml。xml文件前面要有classpath，xml文件中可以有中划线，不能有下划线；
+3.验证配置成功：(1)没有classpath会报错；(2)xml里面的setting项的value配置为空""会启动报错，证明配置项被读取了；
+4.更多验证：(1)根据启动流程，阅读加载配置文件的代码；(2)看我下载的文件，xml里面pooled还配数据库连接的作用是啥，是否需要？(3)再看一次连接超时的问题；(4)再看一遍mybatis教程，测试配置项，打造一个合理的配置文件。
+Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
 
 1.从最初的MybatisAutoConfiguration的@Configuration类讲解：https://blog.csdn.net/weixin_34452850/article/details/90544868
 问题1：springboot怎么保证三方库中的@Configuration注解也被扫描到？

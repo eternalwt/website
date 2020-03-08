@@ -22,7 +22,22 @@ https://dzone.com/articles/redis-based-bloom-filter-for-java
 https://www.interviewcake.com/concept/java/bloom-filter
 https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implementation/
 
+Spring Boot: Excel, Csv and Pdf view example：https://aboullaite.me/spring-boot-excel-csv-and-pdf-view-example/
+pdf预览的两种方式【office预览就只能用方法2了把】：
+  1.后端response把pdf写入流，并且根据http协议设置http头告诉浏览器文件类型和直接打开的操作；
+  2.前端使用pdf组件，例如ng2-pdf-viewer、pdf.js、simple-pdf-viewer。这种方式相比第一种，是不是控制更加精细？是不是更精美？较大的文件能不能边下边预览？怎么接收文件？怎么根据pdf协议解析流？【要会对前后端数据】
+office文件预览：
+  https://www.pdftron.com/blog/ms-office-sdk/office-viewer-angular/
+  https://github.com/Marcelh1983/angular-document-viewer
+  https://www.c-sharpcorner.com/article/read-data-from-excel-with-preview-in-asp-net-mvc-using-angular/
+
 ========================================================================================================================
+
+Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视图解析器：https://blog.csdn.net/blueboz/article/details/81840593
+【再思考一下同时使用ViewResolver和httpResponse，代码到底是什么样的？】
+根据ViewResolver这个文章的讲解，最终的写入还是用的response。另一个问题是：response是怎么传给controller方法的？
+
+读、写、预览、上传、下载
 
 【mybatis配置有所突破，可以继续搞一轮】
 1.mysql再看一轮，对每个机制分析涉及到的底层技术

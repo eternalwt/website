@@ -460,6 +460,7 @@ Apache Jmeter 5.0 websocket插件安装与使用：https://blog.csdn.net/qq_3252
 jmeter测试websocket接口：
 https://blog.csdn.net/huoyunshen88/article/details/77511788
 https://www.cnblogs.com/nanaheidebk/p/10129936.html
+【jmeter压测简单的试了一下，后续需要更详尽的使用】
 
 【准备知识】
 1.@SendTo 与 @SendToUser 是Spring的STOMP协议中注解的标签：https://blog.csdn.net/fly_leopard/article/details/78664409

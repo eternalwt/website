@@ -34,7 +34,7 @@ public class MenuController {
     @GetMapping(value = "/isPermitted")
     public ResultBean checkPermission(@RequestParam String permission) {
         // todo 过滤一遍很多地方不需要userId，从subject里面获取
-        // todo 加缓存
+        // todo 加缓存。具体加在哪一层要细看一下
         Subject subject = SecurityUtils.getSubject();
         return ResultUtils.success(subject.isPermitted(permission));
     }

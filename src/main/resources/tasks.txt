@@ -221,6 +221,9 @@ http://www.cnblogs.com/shamo89/p/8051350.html
 3.验证配置成功：(1)没有classpath会报错；(2)xml里面的setting项的value配置为空""会启动报错，证明配置项被读取了；
 4.更多验证：(1)根据启动流程，阅读加载配置文件的代码；(2)看我下载的文件，xml里面pooled还配数据库连接的作用是啥，是否需要？(3)再看一次连接超时的问题；(4)再看一遍mybatis教程，测试配置项，打造一个合理的配置文件。
 Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+单独搜DataSource的英文资料，从这里入手
+4.spring配置datasource三种方式【要能搞懂原理】：https://www.cnblogs.com/libin6505/p/11001968.html
+  搞懂springboot是怎么使用application.properties文件的（才能把配置彻底搞清楚，例如mybatis的配置）：(1)看懂数据源的默认配置；
 
 1.从最初的MybatisAutoConfiguration的@Configuration类讲解：https://blog.csdn.net/weixin_34452850/article/details/90544868
 问题1：springboot怎么保证三方库中的@Configuration注解也被扫描到？
@@ -528,6 +531,7 @@ canvas及对应的库是基础设施
 标签云（tag云）等技术是基础设施
 模板主题是基础设施
 数据可视化库 D3.js、three.js、echarts（dashboard、热力图）这些也是基础设施
+地图、坐标功能是基础设施（看openlayer和其他的，选型）
 按钮、图标、多级菜单管理
 图标库【思考我还欠缺的是什么】：https://www.iconfont.cn/home/index
 前端theme选型【用列出的这些基础设施选一下】：要有2级菜单、上方有搜索和登入头像登出按钮、有面包屑、弹出框、树控件、消息中心、时间线

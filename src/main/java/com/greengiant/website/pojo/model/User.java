@@ -19,18 +19,28 @@ public class User {
 
     private String avatar;
 
+    private String phone;
+
+    private String email;
+
+    private String qq;
+
     private Integer locked;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public User(Long id, String userName, String password, String passwordSalt, String avatar, Integer locked, Date createTime, Date updateTime) {
+    public User(Long id, String userName, String password, String passwordSalt, String avatar, String phone, String email,
+                String qq, Integer locked, Date createTime, Date updateTime) {
         this.id = id;
         this.userName = userName;
         this.password = password;
         this.passwordSalt = passwordSalt;
         this.avatar = avatar;
+        this.phone = phone;
+        this.email = email;
+        this.qq = qq;
         this.locked = locked;
         this.createTime = createTime;
         this.updateTime = updateTime;
@@ -78,6 +88,30 @@ public class User {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
     }
 
     public Integer getLocked() {

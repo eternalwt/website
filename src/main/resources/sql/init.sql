@@ -10,6 +10,9 @@ create table auth_user(
   password varchar(128),
   password_salt varchar(128),
   avatar varchar(256),
+  phone varchar(32),
+  email varchar(128),
+  qq varchar(32),
   locked tinyint(1) DEFAULT 0 COMMENT '是否锁定',
   create_time timestamp DEFAULT CURRENT_TIMESTAMP,
   update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP

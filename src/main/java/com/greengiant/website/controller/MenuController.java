@@ -24,6 +24,7 @@ public class MenuController {
 
     // todo 菜单稳定一点后，添加默认的menu（init.sql脚本）
     // todo 有了menu表，permission表怎么处理？关系始终没理顺
+    // todo menu是相对固定的东西，这个文件里面的很多方法是需要加缓存的
 
 //    @Autowired
 //    private RoleService roleService;

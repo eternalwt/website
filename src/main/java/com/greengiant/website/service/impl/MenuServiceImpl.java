@@ -13,9 +13,7 @@ import org.apache.commons.collections.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,7 +43,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
         }
 
-        // todo menuList的去重和排序
+        // 去重，排序，判空
+        if (!menuList.isEmpty()) {
+            menuList = menuList.stream()
+                    .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Menu::getId))), ArrayList::new));
+            menuList = menuList.stream().sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());// todo 这段代码可以写都更简洁
+        }
 
         return menuList;
     }

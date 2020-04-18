@@ -73,7 +73,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             List<Menu> parentList = menuList.stream().filter(item -> item.getParentId() == null).collect(Collectors.toList());
             if (parentList != null && !parentList.isEmpty()) {
                 for (Menu menu : parentList) {
-                    MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getUrl());
+                    MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getIcon(), menu.getUrl());
                     nodeList.add(node);
                 }
             }
@@ -105,7 +105,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             // todo filter之后需要2次判断吗？
             if (list != null && !list.isEmpty()) {
                 for (Menu menu : list) {
-                    MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getUrl());
+                    MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getIcon(), menu.getUrl());
                     nodeList.get(i).getChildren().add(node);
                 }
             }

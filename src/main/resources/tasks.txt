@@ -33,6 +33,8 @@ office文件预览：
 
 ========================================================================================================================
 
+再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？【为什么我的redis还没配和测试？】
+
 Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视图解析器：https://blog.csdn.net/blueboz/article/details/81840593
 【再思考一下同时使用ViewResolver和httpResponse，代码到底是什么样的？】
 根据ViewResolver这个文章的讲解，最终的写入还是用的response。另一个问题是：response是怎么传给controller方法的？
@@ -44,19 +46,21 @@ Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视�
 2.mybatis的教程，缓存等高级特性、测试各项配置
 3.mybatis源码分析（设计模式等）
 4.connector、datasource、mybatis的关系看清楚
+MybatisPlus实现多租户架构(Multi-tenancy)：https://blog.csdn.net/qq_35250752/article/details/99842499
+
 
 对缓存的理解：该看SpringDataRedis了：https://blog.csdn.net/weixin_41987908/article/details/90897421
 整合redis缓存的几个方面问题：
 1.比较和原生用法的差别，能简化多少（例如RedisTemplate的方式）；
 2.JSR-107：https://www.cnblogs.com/MagicAsa/p/10756331.html
 3.确定注解方式是通的【看懂整合细节】；
-3.SpringDataRedis（是不是和DataJpa一样可用可不用？）
+3.SpringDataRedis（是不是和SpringDataJpa一样可用可不用？）
 
 SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM技术。结束各个ORM框架各自为营的局面：https://www.cnblogs.com/wadmwz/p/10313495.html
 
 使用Objects.requireNonNull(h);简化代码
 
-前端上传的文件是怎么被转化为MultiPartFile的？
+前端上传的文件是怎么被转化为MultiPartFile的？【spring源码层面的学习】
 
 传感器如何连局域网？农业传感器是连的公网还是局域网？【这不就是IPv6的初衷吗？】
 安装使用一个时序数据库、图数据库、消息队列（有哪些知识点？）看看IoT数据库别人的选择
@@ -1256,9 +1260,6 @@ spring-boot-starter-web
 
 @Service("activityService")注解参数有帮助吗？
 
-百度云20元每年弄一个（RabbitMQ用windows完，用于redis、zookeeper、zuul）：https://cloud.baidu.com/campaign/CreateFuture-2019/index.html?track=cp:dsp|pf:pc|pp:chui-bokeyuan-huodong-19kuanghuanji-rumenjianzhanyunxuji-C1-190515|pu:C1-tupian|ci:2019khj|kw:2121019#4
-29元的服务器：https://www.yisu.com/hk/huodong.html?gclid=EAIaIQobChMI_OyGjcmc4gIV1m6LCh1NxgdsEAEYASAAEgLCHfD_BwE
-
 周日：
 静态页面的目录放开：http://localhost:8080/static/index.html
 @RequestBody用起来
@@ -1477,7 +1478,6 @@ ObjectMapper也autowire，这样有没有问题？
 https://www.cnblogs.com/strugglion/p/10021173.html
 https://blog.csdn.net/moshowgame/article/details/80275084
 要能快速验证我的哪些方法没有被权限覆盖到，必须要做到这一点【尝试用反射控制】
-再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？
 重新封装返回值【网上看别人的规范】前后端接口规范
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
 
@@ -1486,8 +1486,10 @@ https://blog.csdn.net/lihua5419/article/details/93006834
 https://www.cnblogs.com/liyouming/p/9150473.html
 http://localhost:15672/api/index.html
 我的系统中有curl，是安装RabbitMQ带的吗？
-RabbitMQ tutorial：
-
+【RabbitMQ的学习特点和shiro不一样】
+搭建 RabbitMQ Server 高可用集群：https://www.cnblogs.com/xishuai/p/centos-rabbitmq-cluster-and-haproxy.html
+RabbitMQ 集群原理和完善：https://www.cnblogs.com/xishuai/p/rabbitmq-cluster.html
+不完全准确的一个【我用了里面的图】：https://www.jianshu.com/p/b7cc32b94d2a
 
 maven跑test搞清楚（为啥放开2个注释会有报错）
 @RunWith(SpringRunner.class)

@@ -42,7 +42,8 @@ public class CustomRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        log.info("authenticate for:[{}]", authenticationToken.getPrincipal());// todo 这里日志参数好像打的不对
+        // todo 这里日志参数好像打的不对
+        log.info("authenticate for:[{}]", authenticationToken.getPrincipal());
 
         // 这里是自定义登录验证用户名密码的规则
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;

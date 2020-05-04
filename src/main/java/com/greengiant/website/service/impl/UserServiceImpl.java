@@ -62,7 +62,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         this.removeById(userId);
 
         // todo 测试
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>(16);
         map.put("user_id", userId);
         userRoleMapper.deleteByMap(map);
     }

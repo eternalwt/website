@@ -22,7 +22,8 @@ public class CustomSchedulingConfigurer implements SchedulingConfigurer {
     @Override
     public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
         scheduledTaskRegistrar.addTriggerTask(
-            new Runnable() {
+            // todo 这里用的是一个匿名类，还需要加深印象
+                new Runnable() {
                 @Override
                 public void run() {
                     // todo 具体定时任务的代码写在这里

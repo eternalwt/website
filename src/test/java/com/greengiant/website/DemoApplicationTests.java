@@ -8,6 +8,12 @@ import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import static java.lang.Thread.sleep;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class DemoApplicationTests {
@@ -33,6 +39,21 @@ public class DemoApplicationTests {
     public void contextLoads1() {
         System.out.println("测试中2");
         TestCase.assertEquals(1,1);
+    }
+
+    @Test
+    public void testVoidStream() {
+        List<Integer> list = new ArrayList<>();
+        list.add(2);
+        list.add(1);
+        list.add(3);
+        list.add(5);
+
+        try {
+            list.stream().filter(x -> x > 10).max((a, b) -> a > b ? 1 : -1).get();
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
     }
 
 }

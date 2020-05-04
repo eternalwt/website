@@ -33,6 +33,14 @@ office文件预览：
 
 ========================================================================================================================
 
+【连接kafka的代码可以写了】
+SchedulingConfigurer 的原理还没搞清楚，看源码
+接入ShardingSphere
+
+把springboot admin、actuator等这些先加上，为后续升级springboot、加完整的监控（zabbix、grafana等）做准备
+
+Java项目构建基础：统一结果，统一异常，统一日志：https://zhuanlan.zhihu.com/p/127134464
+
 再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？【为什么我的redis还没配和测试？】
 
 Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视图解析器：https://blog.csdn.net/blueboz/article/details/81840593

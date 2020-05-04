@@ -45,9 +45,10 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         // 去重，排序，判空
         if (!menuList.isEmpty()) {
+            // todo 这段代码可以写都更简洁
             menuList = menuList.stream()
                     .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Menu::getId))), ArrayList::new));
-            menuList = menuList.stream().sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());// todo 这段代码可以写都更简洁
+            menuList = menuList.stream().sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
         }
 
         return menuList;

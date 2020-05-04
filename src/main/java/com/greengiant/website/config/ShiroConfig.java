@@ -40,7 +40,8 @@ public class ShiroConfig {
 //        shiroFilterFactoryBean.setLoginUrl("/notLogin.html"); // 点击没有权限的菜单项是可以触发的，再测一下。对应到login页面
         shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
         //todo 测试，应该是登录成功后跳转的页面吧
-        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");// todo 有用吗？
+        // todo 有用吗？
+        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
         // 设置无权限时跳转的 url;
         // todo 下面的用法是不是错了，是不是应该结合后端方法（例如notLogin）来处理？
         shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");
@@ -125,11 +126,11 @@ public class ShiroConfig {
         RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
 
         //hash算法
-        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.algorithmName);
+        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
         //加密次数
-        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.hashIterationCount);
+        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
         //存储散列后的密码是否为16进制
-        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.storedCredentialsHexEncoded);
+        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
 
         return retryLimitHashedCredentialsMatcher;
     }

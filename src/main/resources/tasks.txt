@@ -23,10 +23,12 @@ Excel：
     Apache POI、EasyExcel、jxl、excelPOI(到底是easyPOI还是这个)
     jxl与poi对比：https://blog.csdn.net/baidu_15873551/article/details/91157689
 Java-------操作word工具的选择：https://blog.csdn.net/lq18894033018/article/details/97934901
+java导出word大致有6种解决方案：https://www.cnblogs.com/lcngu/p/5247179.html
+POI各Jar包的作用：https://www.cnblogs.com/zhangchengbing/p/6340036.html
 【指导思想】
-    1.默认使用Apache POI来操作word、excel、ppt；
-    2.只支持2003以上版本；
-    3.如果POI处理大数据量excel遇到内存问题，对于excel单独使用easyExcel作为补充；
+    1.默认使用Apache POI来操作word、excel、ppt（是否依赖office的安装？）；
+    2.只支持office 2007以上版本（xml格式）；
+    3.如果POI处理大数据量excel遇到内存问题，考虑是否对于excel单独使用easyExcel作为补充（网上说poi-ooxml的SXSSHWorkbook也适用于处理大量数据）；
     4.用Itext操作pdf文档及转换word，例如都转换成pdf预览。
 
 字典表放入缓存，是一个好的实践，要配起来
@@ -90,6 +92,8 @@ SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM�
 使用Objects.requireNonNull(h);简化代码
 
 前端上传的文件是怎么被转化为MultiPartFile的？【spring源码层面的学习】
+
+每年升级一次pom
 
 传感器如何连局域网？农业传感器是连的公网还是局域网？【这不就是IPv6的初衷吗？】
 安装使用一个时序数据库、图数据库、消息队列（有哪些知识点？）看看IoT数据库别人的选择

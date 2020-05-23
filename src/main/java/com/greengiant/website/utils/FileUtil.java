@@ -8,6 +8,9 @@ import org.springframework.http.ResponseEntity;
 import java.io.*;
 
 public class FileUtil {
+
+    private FileUtil() {}
+
     // todo postman和JUnit测试文件上传下载
 
     // todo 这个util类应该把http相关的内容分离，放入FileController中去

@@ -6,6 +6,9 @@ import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.util.ByteSource;
 
 public class PasswordUtil {
+
+    private PasswordUtil() {}
+
     /**
      * 随机数生成器
      */

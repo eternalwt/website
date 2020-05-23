@@ -227,6 +227,8 @@ http://www.cnblogs.com/shamo89/p/8051350.html
 
 ================================================================================================
 
+我的ResultUtils应该改名，这个严格来说不能叫工具类
+
 【mybatis的配置】
 1.必须要在application文件里面配spring.datasource；
 2.mybatis用xml文件配置选型的方式示例：mybatis.config-location: classpath:mybatis-config-bak.xml。xml文件前面要有classpath，xml文件中可以有中划线，不能有下划线；

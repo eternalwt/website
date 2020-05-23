@@ -5,6 +5,8 @@ import com.greengiant.website.pojo.StatusCodeEnum;
 
 public class ResultUtils {
 
+    private ResultUtils() {}
+
     public static ResultBean success() {
         return success(null);
     }

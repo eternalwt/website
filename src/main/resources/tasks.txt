@@ -7,20 +7,41 @@
 用敏捷的方式来提升计划性和成功率
 用软件工程的DevOps方法来提升效率和规范性
 
-买百度云搭建持续集成和大数据
+了解华为云的持续集成
 
 【周末】开涛的书不能停
+
+1.搞懂CustomSchedulingConfigurer的源码；
+2.把下载和上传彻底写好【基础设施】【比较现有的代码，然后整合一个好用的】
+3.把doc、excel的utils弄好
+4.图片预览
+
+选择excel、word操作库的几个方面：
+1.速度；2.内存；3.代码是否干净（易用性）；4.功能是否强大（支持完善度）；5.生态：例如POI还有ppt的、是否依赖office库（最好选独立的），office的不同版本
+Excel：
+    easyexcel是快速、简单避免OOM的java处理Excel工具：https://github.com/alibaba/easyexcel
+    Apache POI、EasyExcel、jxl、excelPOI(到底是easyPOI还是这个)
+    jxl与poi对比：https://blog.csdn.net/baidu_15873551/article/details/91157689
+Java-------操作word工具的选择：https://blog.csdn.net/lq18894033018/article/details/97934901
+【指导思想】
+    1.默认使用Apache POI来操作word、excel、ppt；
+    2.只支持2003以上版本；
+    3.如果POI处理大数据量excel遇到内存问题，对于excel单独使用easyExcel作为补充；
+    4.用Itext操作pdf文档及转换word，例如都转换成pdf预览。
+
+字典表放入缓存，是一个好的实践，要配起来
+设计一个好的临时目录的机制
 
 后端框架搭好后，下一步工作方向：
 1.前端框架及组件（依托工作）；
 2.scheme及解释器、数值符号计算继续；
 3.后端IoC、bloomfilter等练习，零散练习以及框架代码阅读。5亿整数的大文件，来排个序【用50万个就OK了】
 bloomfilter：
-https://www.baeldung.com/guava-bloom-filter
-https://www.javamex.com/tutorials/collections/bloom_filter_java.shtml
-https://dzone.com/articles/redis-based-bloom-filter-for-java
-https://www.interviewcake.com/concept/java/bloom-filter
-https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implementation/
+    https://www.baeldung.com/guava-bloom-filter
+    https://www.javamex.com/tutorials/collections/bloom_filter_java.shtml
+    https://dzone.com/articles/redis-based-bloom-filter-for-java
+    https://www.interviewcake.com/concept/java/bloom-filter
+    https://blog.locut.us/2008/01/12/a-decent-stand-alone-java-bloom-filter-implementation/
 
 Spring Boot: Excel, Csv and Pdf view example：https://aboullaite.me/spring-boot-excel-csv-and-pdf-view-example/
 pdf预览的两种方式【office预览就只能用方法2了把】：

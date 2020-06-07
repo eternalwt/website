@@ -16,6 +16,18 @@
 3.把doc、excel的utils弄好
 4.图片预览
 
+【自己写 MultiRequestBody】
+1.https及http/2的配置；
+2.看MQ或者little java；
+过一遍公司代码中的util、前端控件
+测一下我的ZipUtil（速度）
+1.启用https；2.配置HTTP/2：
+https://www.callicoder.com/configuring-spring-boot-application/
+https://stackoverflow.com/questions/38612704/enable-http2-with-tomcat-in-spring-boot
+Add Login to Your Spring Boot App in 10 Mins：https://dzone.com/articles/add-login-to-your-spring-boot-app-in-10-mins
+把字符串省略的directive搞过来：stringAbbreviation（把http里面公司的代码干掉）
+把现在封装的大写Post移植到我的代码（this.http.Post()）
+
 选择excel、word操作库的几个方面：
 1.速度；2.内存；3.代码是否干净（易用性）；4.功能是否强大（支持完善度）；5.生态：例如POI还有ppt的、是否依赖office库（最好选独立的），office的不同版本
 Excel：
@@ -545,6 +557,8 @@ https://docs.spring.io/spring-boot/docs/current/reference/html/spring-boot-featu
 0.快速在真实和mock之间切换，拆分任务；
 
 不把框架搭建彻底突破，做不到敏捷
+
+一文详解 SpringBoot 多数据源中的分布式事务：https://baijiahao.baidu.com/s?id=1652241112018535329&wfr=spider&for=pc
 
 【基础设施类的，在学习时要把功能搞熟并深入到源码级，在使用时要有可以快速复用的代码】
 【后端基础设施】

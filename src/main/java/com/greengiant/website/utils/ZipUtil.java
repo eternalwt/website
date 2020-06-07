@@ -80,6 +80,7 @@ public class ZipUtil {
         fos.close();
     }
 
+    // todo 阅读ZipOutputStream等源码
     private static void zipFile(File fileToZip, String fileName, ZipOutputStream zipOut) throws IOException {
         if (fileToZip.isHidden()) {
             return;

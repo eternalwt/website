@@ -17,7 +17,9 @@
 4.图片预览
 
 【自己写 MultiRequestBody】
-1.https及http/2的配置；
+1.https及http/2的配置（nginx、springcloud gateway的配置。前后端分离的单体服务又是不一样的，要考虑清楚）；
+https://zhuanlan.zhihu.com/p/95038188
+https://cloud.spring.io/spring-cloud-gateway/multi/multi__tls_ssl.html
 2.看MQ或者little java；
 过一遍公司代码中的util、前端控件
 测一下我的ZipUtil（速度）
@@ -37,6 +39,7 @@ Excel：
 Java-------操作word工具的选择：https://blog.csdn.net/lq18894033018/article/details/97934901
 java导出word大致有6种解决方案：https://www.cnblogs.com/lcngu/p/5247179.html
 POI各Jar包的作用：https://www.cnblogs.com/zhangchengbing/p/6340036.html
+jxls2.3-简明教程【比较、并入我的知识库】：https://www.cnblogs.com/klguang/p/6425422.html
 【指导思想】
     1.默认使用Apache POI来操作word、excel、ppt（是否依赖office的安装？）；
     2.只支持office 2007以上版本（xml格式）；
@@ -168,6 +171,8 @@ https://blog.csdn.net/baidu_19473529/article/details/80558996
 
 读代码：
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d
+
+多种鉴权方式（如数据库、OpenID、LDAP、OAuth、REMOTE_USER 等）
 
 【shiro配置文章大集合】
 看属性注入，学会判断哪些是可以注入（定制）的

@@ -1,9 +1,11 @@
 package com.greengiant.website;
 
 import com.greengiant.website.model.Student;
+import com.greengiant.website.utils.ZipUtil;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.HashMap;
@@ -104,6 +106,11 @@ public class SimpleJavaTest {
         }
 
         return bean;
+    }
+
+    @Test
+    public void testMyZip() throws IOException {
+        ZipUtil.zipDirectory("d:\\ziptest", "d:\\a.zip");
     }
 
 }

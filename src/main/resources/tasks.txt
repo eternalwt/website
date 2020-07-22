@@ -11,6 +11,22 @@
 
 【周末】开涛的书不能停
 
+【下一步先配缓存，再看原理】
+ShiroFilter为什么要用FactoryBean的方式加载？
+shiro的启动过程【现在的知识结构来说最关键的一步需要理解的。能否打断点跟踪？】：
+https://blog.csdn.net/weixin_41920291/article/details/94916369
+https://blog.csdn.net/weixin_38312719/article/details/95936994
+https://www.cnblogs.com/step-and-step/p/13330550.html【搞清楚springboot与web.xml的封装对应关系】
+https://blog.csdn.net/zknxx/article/details/79572387
+1.看现有的shiro配置，回忆一下；
+2.看shiro-spring；
+3.看shiro-ehcache，配通；
+4.看shiro-redis，配通
+5.RetryLimitHashedCredentialsMatcher里面用缓存和给shiro配缓存不是一码事把？先把shiro自身缓存搞定。HashedCredentialsMatcher自身是不是也有配缓存的选项？
+再次回忆mybatis、shiro的初始化
+逐个bean看shiro里面的bean的默认值
+看看shiro是如何autowire进去声明的bean的
+
 1.搞懂CustomSchedulingConfigurer的源码；
 2.把下载和上传彻底写好【基础设施】【比较现有的代码，然后整合一个好用的】
 3.把doc、excel的utils弄好

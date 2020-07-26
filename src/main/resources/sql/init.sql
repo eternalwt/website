@@ -54,9 +54,6 @@ create table auth_role_permission(
   update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
-insert into auth_user(user_name, password)values('zhang','123');
--- insert into shiro_user_role(username, role_name) values('zhang', 'admin');
-
 drop table if exists menu;
 create table menu(
      id bigint(64) auto_increment primary key,
@@ -90,3 +87,9 @@ create table article(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 -- 栏目表
+
+insert into auth_role(`role_name`) values("admin");
+insert into auth_user(user_name, password, password_salt)
+    values('admin','7262db0dd9c3865016dac3227a3fbfb4', '83061e526dff50fff56d4ff587d7f581');
+insert into auth_user_role("user_id", "role_id") values(1,1);
+-- insert into shiro_user_role(username, role_name) values('zhang', 'admin');

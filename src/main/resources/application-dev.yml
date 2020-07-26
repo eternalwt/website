@@ -2,8 +2,8 @@ spring:
   datasource:
     #连接MySQL useSSL=false& 搞懂每个参数意义
     url: jdbc:mysql://localhost:3306/website?allowPublicKeyRetrieval=true&serverTimezone=Asia/Shanghai
-    username: admin
-    password: eternal2002@
+    username: root
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 #  # 这是ehcache 2的配置方式：https://memorynotfound.com/spring-boot-ehcache-2-caching-example-configuration/

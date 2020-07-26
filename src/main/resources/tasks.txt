@@ -11,13 +11,15 @@
 
 【周末】开涛的书不能停
 
-1.现在是用的加密存储，把初始化生成admin用户的脚本改一下
+1.先把ehcache彻底搞懂，包括session
+（1）springboot里面的ehcacheUtil已经调通了，下一步配通shiro的cache、配通session的cache，搞懂两个cacheManager的异同
 2.缓存先完成如下3步：
 （1）吧用户名的缓存搞好；
 （2）把session缓存搞好
 （3）整站的缓存
+（4）再看一次token的方案
 
-【下一步先配缓存，再看原理】
+【先配好缓存，再看原理】
 ShiroFilter为什么要用FactoryBean的方式加载？
 shiro的启动过程【现在的知识结构来说最关键的一步需要理解的。能否打断点跟踪？】：
 https://blog.csdn.net/weixin_41920291/article/details/94916369

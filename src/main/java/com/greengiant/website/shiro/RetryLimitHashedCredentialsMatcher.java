@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
 
+    // todo 能否把EhcacheUtil干掉，用注解？https://blog.csdn.net/tanleijin/article/details/81118963
     //todo 后续用缓存处理
     // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去，看AtomicInteger源码
     @Value("${password.max-retry-count}")

@@ -4,7 +4,9 @@ import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
@@ -14,6 +16,8 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -86,7 +90,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-//                                           CacheManager ehCacheCacheManager,
+                                           EhCacheManager ehCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -94,8 +98,10 @@ public class ShiroConfig {
         // 注入自定义的realm
         securityManager.setRealms(Arrays.asList(customRealm));
 
+        // 自定义缓存实现 使用redis
+//        securityManager.setCacheManager(cacheManager());
         // 注入缓存管理器
-//        securityManager.setCacheManager(ehCacheCacheManager);// todo cachemanager 要从源码层面分析
+        securityManager.setCacheManager(ehCacheManager);// todo cachemanager 要从源码层面分析
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
@@ -145,6 +151,48 @@ public class ShiroConfig {
 //
 //        return cacheManager;
 //    }
+
+    @Bean
+    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成
+        EhCacheManager em = new EhCacheManager();
+        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
+        em.setCacheManager(cacheManager); // todo 跟踪代码确认意义
+        //em.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return em;
+    }
+
+
+    /**
+     * cacheManager 缓存 redis实现
+     * 使用的是shiro-redis开源插件
+     *
+     * @return
+     */
+    public RedisCacheManager cacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        return redisCacheManager;
+    }
+
+    /**
+     * 配置shiro redisManager
+     * 使用的是shiro-redis开源插件
+     *
+     * @return
+     */
+    @Bean
+    public RedisManager redisManager() {
+//        RedisManager redisManager = new MyRedisManager();
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("localhost:6379");
+//        redisManager.set
+//        redisManager.setPort(6379);
+//        // 配置缓存过期时间
+//        redisManager.setExpire(expireTime);
+//        redisManager.setTimeout(timeOut);
+        // redisManager.setPassword(password);
+        return redisManager;
+    }
 
     /**
      *Cookie

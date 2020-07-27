@@ -11,6 +11,14 @@
 
 【周末】开涛的书不能停
 
+1.把EhcacheUtil干掉；https://blog.csdn.net/dreamhai/article/details/80642010
+2.把session放入ehcache，进一步理解shiro配置缓存；3.把ShiroConfig里面多余的缓存配置干掉
+还是得花时间从根本上搞懂ehcache和springboot的集成，这是首要的
+
+springboot②最正确的集成shiro并使用ehcache缓存：
+https://blog.csdn.net/tanleijin/java/article/details/81118963
+https://gitee.com/xieke90/common-admin/blob/SpringBoot2.X_EhCache/src/main/java/com/xieke/admin/config/ShiroConfig.java
+
 1.先把ehcache彻底搞懂，包括session
 （1）springboot里面的ehcacheUtil已经调通了，下一步配通shiro的cache、配通session的cache，搞懂两个cacheManager的异同
 2.缓存先完成如下3步：

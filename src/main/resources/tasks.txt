@@ -11,8 +11,19 @@
 
 【周末】开涛的书不能停
 
-1.把EhcacheUtil干掉；https://blog.csdn.net/dreamhai/article/details/80642010
-2.把session放入ehcache，进一步理解shiro配置缓存；3.把ShiroConfig里面多余的缓存配置干掉
+1.ehcache3需要单独学习，功能很强大，而且缓存是系统的关键：
+https://blog.csdn.net/nainaiqiuwencun/article/details/92445127
+https://springframework.guru/using-ehcache-3-in-spring-boot/
+https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
+2.搞清楚shiro-cache和shiro-ehcache的关系；
+3.由EhCacheManager的setCacheManager方法参数是net.sf.ehcache.CacheManager类型来看，shiro-ehcache只能配合ehcache2版本；
+4.由3可知，shiro-ehcache应该对ehcache进行了provided的依赖，思考这样设计的理由，想想是怎么打包的；看一下它的pom里面<relativePath>../pom.xml</relativePath>是什么意思
+
+先把shiro官网缓存部分看了，以求获得蛛丝马迹：https://shiro.apache.org/
+根据下面两句话看代码，在代码中断点调试：”Shiro的用户认证是没有提供缓冲机制的，shiro的授权缓存是默认开启的“：https://www.jianshu.com/p/94028ce76efb
+
+1.把session放入ehcache，进一步理解shiro配置缓存；2.把ShiroConfig里面多余的缓存配置干掉
+3.把EhcacheUtil搞成component（不用读取配置文件位置，直接autowire）；https://blog.csdn.net/dreamhai/article/details/80642010
 还是得花时间从根本上搞懂ehcache和springboot的集成，这是首要的
 
 springboot②最正确的集成shiro并使用ehcache缓存：

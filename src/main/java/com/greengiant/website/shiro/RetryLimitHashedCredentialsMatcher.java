@@ -1,22 +1,23 @@
 package com.greengiant.website.shiro;
 
 import com.greengiant.website.utils.EhcacheUtil;
+import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+//import org.springframework.stereotype.Component;
 
-@Component
+//@Component todo 再思考一下用component的用法
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
-
     // todo 能否把EhcacheUtil干掉，用注解？https://blog.csdn.net/tanleijin/article/details/81118963
-    //todo 后续用缓存处理
-    // todo 把shiro、ehcache、spring里面的缓存都学通，不是那么容易。把AtomicInteger写进去，看AtomicInteger源码
+    // todo 把AtomicInteger写进去，看AtomicInteger源码
     @Value("${password.max-retry-count}")
     private int MAX_RETRY_COUNT;
+
+//    CacheManager cacheManager = new CacheManager();// todo 能否作为参数传入？
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {

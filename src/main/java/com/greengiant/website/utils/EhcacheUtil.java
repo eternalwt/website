@@ -16,23 +16,6 @@ public class EhcacheUtil {
      */
     private static Cache passwordRetryCache = cacheManager.getCache("passwordRetryCache");
 
-    public static void putItem(String key, Object item) {
-
-        if (passwordRetryCache.get(key) != null) {
-            passwordRetryCache.remove(key);
-        }
-        Element element = new Element(key, item);
-        passwordRetryCache.put(element);
-    }
-
-    public static void removeItem(String key) {
-        passwordRetryCache.remove(key);
-    }
-
-    public static void updateItem(String key, Object value) {
-        putItem(key, value);
-    }
-
     public static Object getItem(String key) {
         Element element=  passwordRetryCache.get(key);
         if(null!=element)
@@ -40,6 +23,22 @@ public class EhcacheUtil {
             return element.getObjectValue();
         }
         return null;
+    }
+
+    public static void putItem(String key, Object item) {
+        if (passwordRetryCache.get(key) != null) {
+            passwordRetryCache.remove(key);
+        }
+        Element element = new Element(key, item);
+        passwordRetryCache.put(element);
+    }
+
+    public static void updateItem(String key, Object value) {
+        putItem(key, value);
+    }
+
+    public static void removeItem(String key) {
+        passwordRetryCache.remove(key);
     }
 
 }

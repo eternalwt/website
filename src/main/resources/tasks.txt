@@ -11,7 +11,11 @@
 
 【周末】开涛的书不能停
 
-不能急躁，还是要读读别人的门户代码，然后再做自己的产品。
+不能急躁，还是要读读别人的门户代码，然后再做自己的产品
+
+把EhcacheUtil搞成component
+
+到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
 
 打断点看一下我的redis缓存session的key是什么
 把realm缓存调通
@@ -20,6 +24,7 @@
 自己实现一个ShiroEhcacheSessionDAO
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
 我的EhcacheUtil怎么写成可以快速切换缓存的？
+CacheManager之间的转换
 
 进一步深入：
 1.把ShiriConfig里面每一个配置点都看一下是如何切换的；

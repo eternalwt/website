@@ -25,8 +25,8 @@ spring:
     password:
     database: 0
     lettuce:
-      pool:
-        max-active:32
+      pool2:
+        max-active: 32
         max-wait: 300ms
         max-idle: 16
         min-idle: 8

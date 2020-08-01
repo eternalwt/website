@@ -11,13 +11,43 @@
 
 【周末】开涛的书不能停
 
-1.ehcache3需要单独学习，功能很强大，而且缓存是系统的关键：
+不能急躁，还是要读读别人的门户代码
+
+把realm缓存调通
+然后从spring整合shiro看起，然后看类是怎么autowired进去的
+看
+自己实现一个ShiroEhcacheSessionDAO
+用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
+我的EhcacheUtil怎么写成可以快速切换缓存的？
+
+进一步深入：
+1.把ShiriConfig里面每一个配置点都看一下是如何切换的；
+2.shiro的分析分两部分：1.shiro本身的源码（再次结合开涛的书）；2.整合spring的原理
+
+customRealm里面应该可以自行对需要的信息进行缓存
+session的缓存和sessionDAO：
+https://blog.csdn.net/river472242652/article/details/79182008
+https://blog.csdn.net/dgh112233/article/details/100019711
+可以开始对缓存接口打断点了，从ShiroConfig里面的东西开始摸索
+现在我加的EnterpriseCacheSessionDAO还是没有找到一个好的验证方式。怎么验证默认用的是什么sessionDao（MemorySessionDAO？），怎么注入的？
+CachingSessionDAO、EnterpriseCacheSessionDAO
+目标：要能看到ehcache里面的session
+【要读代码】
+
+【上面一个搞完后，继续从集成的入口往下进一步深入】
+Shiro在Spring session管理：https://www.cnblogs.com/jtlgb/p/9577617.html
+为啥AuthorizingRealm extends AuthenticatingRealm
+
+1.ehcache3需要单独学习，功能很强大，而且缓存是系统的关键【为什么学ehcache时遇到这么多配置，学redis时就淡化一些？】：
 https://blog.csdn.net/nainaiqiuwencun/article/details/92445127
 https://springframework.guru/using-ehcache-3-in-spring-boot/
 https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
 2.搞清楚shiro-cache和shiro-ehcache的关系；
 3.由EhCacheManager的setCacheManager方法参数是net.sf.ehcache.CacheManager类型来看，shiro-ehcache只能配合ehcache2版本；
 4.由3可知，shiro-ehcache应该对ehcache进行了provided的依赖，思考这样设计的理由，想想是怎么打包的；看一下它的pom里面<relativePath>../pom.xml</relativePath>是什么意思
+只有看源码，才能看出别人是怎么编译的。除了看spring-redis、spring-ehcache、mybatis整合外，可以在mvnrepository里面找spring开头的包
+
+彻底搞懂mybatis、redis等与spring的整合至关重要，要能打断点观察启动过程
 
 先把shiro官网缓存部分看了，以求获得蛛丝马迹：https://shiro.apache.org/
 根据下面两句话看代码，在代码中断点调试：”Shiro的用户认证是没有提供缓冲机制的，shiro的授权缓存是默认开启的“：https://www.jianshu.com/p/94028ce76efb
@@ -53,6 +83,10 @@ https://blog.csdn.net/zknxx/article/details/79572387
 再次回忆mybatis、shiro的初始化
 逐个bean看shiro里面的bean的默认值
 看看shiro是如何autowire进去声明的bean的
+
+再次思考jwt
+
+shiro-redis的官方文档：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
 1.搞懂CustomSchedulingConfigurer的源码；
 2.把下载和上传彻底写好【基础设施】【比较现有的代码，然后整合一个好用的】
@@ -119,6 +153,10 @@ SchedulingConfigurer 的原理还没搞清楚，看源码
 接入ShardingSphere
 
 把springboot admin、actuator等这些先加上，为后续升级springboot、加完整的监控（zabbix、grafana等）做准备
+
+Spring Web Flow：
+https://www.cnblogs.com/chenjl001/articles/12833382.html
+https://www.cnblogs.com/limeiky/p/5275303.html
 
 Java项目构建基础：统一结果，统一异常，统一日志：https://zhuanlan.zhihu.com/p/127134464
 

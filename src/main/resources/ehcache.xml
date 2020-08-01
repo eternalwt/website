@@ -47,6 +47,15 @@
            statistics="true">
     </cache>
 
+    <!-- 会话缓存 -->
+    <cache name="shiro-activeSessionCache" maxEntriesLocalHeap="10000"
+           eternal="true"
+           timeToIdleSeconds="0" timeToLiveSeconds="0"
+           overflowToDisk="true" statistics="true" >
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"/>
+    </cache>
+
 </ehcache>
 
         <!--

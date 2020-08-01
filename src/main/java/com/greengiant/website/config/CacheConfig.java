@@ -11,7 +11,7 @@ public class CacheConfig {
 //    @Bean
 //    public EhCacheManagerFactoryBean ehCacheManagerFactoryBean(){
 //        EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
-//        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache2.xml")); // todo 这里是不是和yml里面重复了？
+//        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml")); // todo 这里是不是和yml里面重复了？
 //        cacheManagerFactoryBean.setShared(true);
 //        return cacheManagerFactoryBean;
 //    }

@@ -1,5 +1,6 @@
 package com.greengiant.website.config;
 
+import com.greengiant.website.shiro.ShiroRedisSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
@@ -9,6 +10,7 @@ import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -16,12 +18,14 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-import org.crazycake.shiro.RedisCacheManager;
-import org.crazycake.shiro.RedisManager;
+//import org.crazycake.shiro.RedisCacheManager;
+//import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -30,6 +34,9 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class ShiroConfig {
+
+    @Autowired
+    private RedisTemplate redisTemplate;
 
     /**
      * 设置过滤器，将自定义的Filter加入
@@ -162,37 +169,37 @@ public class ShiroConfig {
     }
 
 
-    /**
-     * cacheManager 缓存 redis实现
-     * 使用的是shiro-redis开源插件
-     *
-     * @return
-     */
-    public RedisCacheManager cacheManager() {
-        RedisCacheManager redisCacheManager = new RedisCacheManager();
-        redisCacheManager.setRedisManager(redisManager());
-        return redisCacheManager;
-    }
-
-    /**
-     * 配置shiro redisManager
-     * 使用的是shiro-redis开源插件
-     *
-     * @return
-     */
-    @Bean
-    public RedisManager redisManager() {
-//        RedisManager redisManager = new MyRedisManager();
-        RedisManager redisManager = new RedisManager();
-        redisManager.setHost("localhost:6379");
-//        redisManager.set
-//        redisManager.setPort(6379);
-//        // 配置缓存过期时间
-//        redisManager.setExpire(expireTime);
-//        redisManager.setTimeout(timeOut);
-        // redisManager.setPassword(password);
-        return redisManager;
-    }
+//    /**
+//     * cacheManager 缓存 redis实现
+//     * 使用的是shiro-redis开源插件
+//     *
+//     * @return
+//     */
+//    public RedisCacheManager cacheManager() {
+//        RedisCacheManager redisCacheManager = new RedisCacheManager();
+//        redisCacheManager.setRedisManager(redisManager());
+//        return redisCacheManager;
+//    }
+//
+//    /**
+//     * 配置shiro redisManager
+//     * 使用的是shiro-redis开源插件
+//     *
+//     * @return
+//     */
+//    @Bean
+//    public RedisManager redisManager() {
+////        RedisManager redisManager = new MyRedisManager();
+//        RedisManager redisManager = new RedisManager();
+//        redisManager.setHost("localhost:6379");
+////        redisManager.set
+////        redisManager.setPort(6379);
+////        // 配置缓存过期时间
+////        redisManager.setExpire(expireTime);
+////        redisManager.setTimeout(timeOut);
+//        // redisManager.setPassword(password);
+//        return redisManager;
+//    }
 
     /**
      *Cookie
@@ -232,10 +239,31 @@ public class ShiroConfig {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
+        // 相隔多久检查一次session的有效性
+        sessionManager.setSessionValidationInterval(1000 * 60 * 15);
+        // 删除失效session
+        sessionManager.setDeleteInvalidSessions(true);
+
+        sessionManager.setSessionDAO(sessionDao(redisTemplate));
 
         return sessionManager;
     }
 
+//    @Bean(name = "sessionDao")
+//    public EnterpriseCacheSessionDAO sessionDao(){
+//        EnterpriseCacheSessionDAO sessionDao = new EnterpriseCacheSessionDAO();
+////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
+//        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+//        return sessionDao;
+//    }
+
+    @Bean(name = "sessionDao")
+    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){
+        ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
+//        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
+        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+        return sessionDao;
+    }
 
     /**
      * Shiro生命周期处理器

@@ -8,6 +8,7 @@ import com.greengiant.website.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +21,9 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+
+    @Autowired
+    private CacheManager cacheManager;
 
     @GetMapping(value = "/notLogin")
     public String notLogin() {

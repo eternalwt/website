@@ -14,6 +14,7 @@
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
 一人或者多人登陆的问题
+autowired members must be defined in valid spring bean
 
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站

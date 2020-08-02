@@ -13,9 +13,16 @@
 
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
-把EhcacheUtil搞成component
+一人或者多人登陆的问题
 
-到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
+晚上两件事：
+2.把crawler4j引入项目，找第一批10个招标网站
+3.开始写通知模块，前端继续进入
+
+把EhcacheUtil搞成CacheManager版本的。到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
+SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+
+ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
 
 打断点看一下我的redis缓存session的key是什么
 把realm缓存调通

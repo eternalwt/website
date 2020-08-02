@@ -1,12 +1,14 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.utils.EhcacheUtil;
+import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 //import org.springframework.stereotype.Component;
 
@@ -17,35 +19,68 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     @Value("${password.max-retry-count}")
     private int MAX_RETRY_COUNT;
 
+    private static final String cacheName = "passwordRetryCache";
+
 //    CacheManager cacheManager = new CacheManager();// todo 能否作为参数传入？
+    @Autowired
+    // todo 在现在的配置下，这里还是用的ehcache。注释掉ehcache后把redis版的写通
+    private CacheManager cacheManager; // todo 类上面没有注解，成员也是可以autowired的。1.搞懂扫描过程；2.这样会不会导致代码混乱不好维护？
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         String username = (String)token.getPrincipal();
-
-        if(EhcacheUtil.getItem(username) != null && Integer.valueOf(EhcacheUtil.getItem(username).toString()) >= MAX_RETRY_COUNT) {
+        if(this.getItem(username) != null && Integer.valueOf(this.getItem(username).toString()) >= MAX_RETRY_COUNT) {
             // todo 重试的时候需要输入验证码
-            throw new ExcessiveAttemptsException("您已连续输错" + MAX_RETRY_COUNT + "次密码！请30分钟后再试");
+            throw new ExcessiveAttemptsException("您已连续输错" + MAX_RETRY_COUNT + "次密码！请30分钟后再试");// todo 30根据配置来写
         }
 
         boolean matches = super.doCredentialsMatch(token, info);
         if(matches) {
             //clear retry count
-            EhcacheUtil.removeItem(username);
+            this.removeItem(username);
         }
         else {
-            if(EhcacheUtil.getItem(username) == null) {
-                EhcacheUtil.putItem(username, 0);
+            if(this.getItem(username) == null) {
+                this.putItem(username, 0);
                 throw new IncorrectCredentialsException("密码错误");
             }
             else {
-                EhcacheUtil.updateItem(username, Integer.valueOf(EhcacheUtil.getItem(username).toString()) + 1);
-                throw new IncorrectCredentialsException("密码错误，已连续错误" + (EhcacheUtil.getItem(username).toString())
+                this.updateItem(username, Integer.valueOf(this.getItem(username).toString()) + 1);
+                throw new IncorrectCredentialsException("密码错误，已连续错误" + (this.getItem(username).toString())
                         + "次，最多连续错误" + MAX_RETRY_COUNT + "次");
             }
         }
 
         return matches;
+    }
+
+    private Object getItem(String key) {
+        Cache passwordRetryCache = cacheManager.getCache(cacheName);
+        Element element=  passwordRetryCache.get(key);
+        if(null!=element)
+        {
+            return element.getObjectValue();
+        }
+        return null;
+    }
+
+    private void putItem(String key, Object item) {
+        Cache passwordRetryCache = cacheManager.getCache(cacheName);
+
+        if (passwordRetryCache.get(key) != null) {
+            passwordRetryCache.remove(key);
+        }
+        Element element = new Element(key, item);
+        passwordRetryCache.put(element);
+    }
+
+    private void updateItem(String key, Object value) {
+        putItem(key, value);
+    }
+
+    public boolean removeItem(String key) {
+        Cache passwordRetryCache = cacheManager.getCache(cacheName);
+        return passwordRetryCache.remove(key);
     }
 
 }

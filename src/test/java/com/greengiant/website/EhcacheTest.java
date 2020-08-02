@@ -1,14 +1,10 @@
-package com.greengiant.website.utils;
+package com.greengiant.website;
 
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.store.MemoryStoreEvictionPolicy;
 
-public class EhcacheUtil {
-//    private static final CacheManager cacheManager = CacheManager.getInstance();
-    // todo 如何用ioc的方式初始化？要把这一方面突破
+public class EhcacheTest {
     private static final CacheManager cacheManager = CacheManager.create("src/main/resources/ehcache.xml");
 
     /**
@@ -37,8 +33,7 @@ public class EhcacheUtil {
         putItem(key, value);
     }
 
-    public static void removeItem(String key) {
-        passwordRetryCache.remove(key);
+    public static boolean removeItem(String key) {
+        return passwordRetryCache.remove(key);
     }
-
 }

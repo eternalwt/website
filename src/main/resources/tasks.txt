@@ -13,8 +13,22 @@
 
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
+======================================================================
+
+【做项目和学知识两条线并行】
+
+下周工作事项：
+1.搭建angular环境，把原有的代码跑起来；
+2.以湖北省招标网为例，思考抓取策略。把三十多个省的招标网站都纳入进去；
+3.把门户网站技术思考清楚；
+4.把我以前的简洁模板下载下来；
+5.爬虫做到能抓取文章的程度
+6.爬虫的bloomfilter配起来；
+
+各省市县人民政府网站
+======================================================================
+
 一人或者多人登陆的问题
-autowired members must be defined in valid spring bean
 
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站
@@ -25,11 +39,11 @@ SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/o
 
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
 
-打断点看一下我的redis缓存session的key是什么
+打断点看一下我的redis缓存session的key是什么。如果key不满意，可以学习公司里面的RedisConfig进行配置
 把realm缓存调通
 然后从spring整合shiro看起，然后看类是怎么autowired进去的
 看
-自己实现一个ShiroEhcacheSessionDAO
+自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
 我的EhcacheUtil怎么写成可以快速切换缓存的？
 CacheManager之间的转换
@@ -102,6 +116,24 @@ https://blog.csdn.net/zknxx/article/details/79572387
 
 shiro-redis的官方文档：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
+并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
+
+autowired members must be defined in valid spring bean
+Spring依赖注入（DI）的三种方式【搞清楚注解对应的形式，尤其是接口注入方式】：https://www.cnblogs.com/ycq-qiang/p/11161941.html
+【下一步搞懂：1.接口注入；2.基于注解的依赖注入；3.三种依赖注入对应的springboot的方式】
+由我的RetryLimitHashedCredentialsMatcher的@Autowired用getBean替换，再思考@Service、@Component等注解
+spring项目中获取ApplicationContext对象【注意springboot方式的变化，以及对aware的理解】：
+http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
+https://blog.csdn.net/ex_tang/article/details/82749844
+https://blog.csdn.net/weixin_38361347/article/details/89304414
+再看我们代码中用到@Bean的地方，对比@Component、@Bean
+
+3、写一个工具类 比如BaseHolder 实现ApplicationContextAware接口：https://blog.csdn.net/ex_tang/article/details/82749844
+把凯涛shiro教材缓存那一章的aware也搞懂
+
+看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
+看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
+
 1.搞懂CustomSchedulingConfigurer的源码；
 2.把下载和上传彻底写好【基础设施】【比较现有的代码，然后整合一个好用的】
 3.把doc、excel的utils弄好
@@ -167,6 +199,10 @@ SchedulingConfigurer 的原理还没搞清楚，看源码
 接入ShardingSphere
 
 把springboot admin、actuator等这些先加上，为后续升级springboot、加完整的监控（zabbix、grafana等）做准备
+
+@TestComponent注解：https://www.jianshu.com/p/72b19e24a602
+@Bean 和 @Component的区别：https://www.cnblogs.com/just-for-beyond/p/12783889.html
+Spring三级缓存解决循环依赖：https://www.cnblogs.com/longy2012/articles/12834762.html
 
 Spring Web Flow：
 https://www.cnblogs.com/chenjl001/articles/12833382.html

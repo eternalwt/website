@@ -35,12 +35,6 @@ import java.util.Map;
 @Configuration
 public class ShiroConfig {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-//    @Autowired
-//    private CacheManager cacheManager;// todo 为啥这样注入是空的？redisTemplate呢？
-
     /**
      * 设置过滤器，将自定义的Filter加入
      */
@@ -137,7 +131,7 @@ public class ShiroConfig {
         return realm;
     }
 
-    @Bean // todo 为啥cacheManager autowired不行这样就行？
+    @Bean
     public HashedCredentialsMatcher hashedCredentialsMatcher(CacheManager cacheManager) {
         RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
         retryLimitHashedCredentialsMatcher.setCacheManager(cacheManager);
@@ -164,7 +158,7 @@ public class ShiroConfig {
 //    }
 
     @Bean
-    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成
+    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成（在那个里面定义的bean）
         EhCacheManager em = new EhCacheManager();
         //将ehcacheManager转换成shiro包装后的ehcacheManager对象
         em.setCacheManager(cacheManager); // todo 跟踪代码确认意义
@@ -239,7 +233,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager() {
+    public DefaultWebSessionManager sessionManager(RedisTemplate redisTemplate) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);

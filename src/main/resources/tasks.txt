@@ -26,9 +26,14 @@
 6.爬虫的bloomfilter配起来；
 
 各省市县人民政府网站
+
 ======================================================================
 
+把realm缓存调通
+
+
 一人或者多人登陆的问题
+并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
 
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站
@@ -36,16 +41,15 @@
 
 到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
 SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
-
+现在我有的地方用的redis，有的地方用的ehcache
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
 
 打断点看一下我的redis缓存session的key是什么。如果key不满意，可以学习公司里面的RedisConfig进行配置
-把realm缓存调通
 然后从spring整合shiro看起，然后看类是怎么autowired进去的
 看
 自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
-我的EhcacheUtil怎么写成可以快速切换缓存的？
+我Matcher里面的EhcacheU相关的几个方法怎么写成可以快速切换缓存的？
 CacheManager之间的转换
 
 进一步深入：
@@ -113,10 +117,11 @@ https://blog.csdn.net/zknxx/article/details/79572387
 看看shiro是如何autowire进去声明的bean的
 
 再次思考jwt
+找几个公司的前端控件看看，应该没那么难
+
+什么时候可以把session清除？
 
 shiro-redis的官方文档：https://www.cnblogs.com/qlqwjy/p/10392268.html
-
-并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
 
 autowired members must be defined in valid spring bean
 Spring依赖注入（DI）的三种方式【搞清楚注解对应的形式，尤其是接口注入方式】：https://www.cnblogs.com/ycq-qiang/p/11161941.html
@@ -236,6 +241,9 @@ MybatisPlus实现多租户架构(Multi-tenancy)：https://blog.csdn.net/qq_35250
 2.JSR-107：https://www.cnblogs.com/MagicAsa/p/10756331.html
 3.确定注解方式是通的【看懂整合细节】；
 3.SpringDataRedis（是不是和SpringDataJpa一样可用可不用？）
+在SpringBoot中 @Configuration类中 @Autowired 不能注入的问题：
+https://blog.csdn.net/qq_35064246/article/details/80677164
+https://www.it1352.com/1841433.html
 
 SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM技术。结束各个ORM框架各自为营的局面：https://www.cnblogs.com/wadmwz/p/10313495.html
 

@@ -38,6 +38,9 @@ public class ShiroConfig {
     @Autowired
     private RedisTemplate redisTemplate;
 
+//    @Autowired
+//    private CacheManager cacheManager;// todo 为啥这样注入是空的？redisTemplate呢？
+
     /**
      * 设置过滤器，将自定义的Filter加入
      */
@@ -134,9 +137,10 @@ public class ShiroConfig {
         return realm;
     }
 
-    @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+    @Bean // todo 为啥cacheManager autowired不行这样就行？
+    public HashedCredentialsMatcher hashedCredentialsMatcher(CacheManager cacheManager) {
         RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+        retryLimitHashedCredentialsMatcher.setCacheManager(cacheManager);
 
         //hash算法
         retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);

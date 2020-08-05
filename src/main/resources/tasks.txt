@@ -34,7 +34,7 @@
 2.把crawler4j引入项目，找第一批10个招标网站
 3.开始写通知模块，前端继续进入
 
-把EhcacheUtil搞成CacheManager版本的。到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
+到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
 SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
@@ -120,8 +120,10 @@ shiro-redis的官方文档：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
 autowired members must be defined in valid spring bean
 Spring依赖注入（DI）的三种方式【搞清楚注解对应的形式，尤其是接口注入方式】：https://www.cnblogs.com/ycq-qiang/p/11161941.html
-【下一步搞懂：1.接口注入；2.基于注解的依赖注入；3.三种依赖注入对应的springboot的方式】
-由我的RetryLimitHashedCredentialsMatcher的@Autowired用getBean替换，再思考@Service、@Component等注解
+【下一步搞懂：1.接口注入；2.基于注解的依赖注入（构造器、setter）】
+autowired自动装配原理搞懂（底层实现），两种装配方式：https://blog.csdn.net/u010512429/article/details/80455971
+Spring为什么@Autowired注入的是接口：https://www.cnblogs.com/zhoading/p/11763426.html
+RetryLimitHashedCredentialsMatcher的@Autowired用getBean替换写通
 spring项目中获取ApplicationContext对象【注意springboot方式的变化，以及对aware的理解】：
 http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
 https://blog.csdn.net/ex_tang/article/details/82749844
@@ -133,6 +135,8 @@ https://blog.csdn.net/weixin_38361347/article/details/89304414
 
 看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
 看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
+
+搞懂这种文化：@Resource(javax.annotation.Resource)这个注解是javax扩展包中注解规范的一种，而spring对这一注解提供了支持
 
 1.搞懂CustomSchedulingConfigurer的源码；
 2.把下载和上传彻底写好【基础设施】【比较现有的代码，然后整合一个好用的】

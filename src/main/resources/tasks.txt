@@ -30,7 +30,8 @@
 ======================================================================
 
 把realm缓存调通
-
+把redis和ehcache代码统一起来
+JWT再看一轮（这次要结合SSO）
 
 一人或者多人登陆的问题
 并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
@@ -133,7 +134,8 @@ spring项目中获取ApplicationContext对象【注意springboot方式的变化�
 http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
 https://blog.csdn.net/ex_tang/article/details/82749844
 https://blog.csdn.net/weixin_38361347/article/details/89304414
-再看我们代码中用到@Bean的地方，对比@Component、@Bean
+@Bean的name用法：https://blog.csdn.net/qq_35981283/article/details/80002611
+
 
 3、写一个工具类 比如BaseHolder 实现ApplicationContextAware接口：https://blog.csdn.net/ex_tang/article/details/82749844
 把凯涛shiro教材缓存那一章的aware也搞懂

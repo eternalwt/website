@@ -5,7 +5,7 @@ import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
-import net.sf.ehcache.CacheManager;
+//import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
@@ -22,6 +22,7 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 //import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -94,7 +95,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-                                           EhCacheManager ehCacheManager,
+//                                           EhCacheManager cacheManager,// todo 现在最关键的就是这里的写法了
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -102,10 +103,8 @@ public class ShiroConfig {
         // 注入自定义的realm
         securityManager.setRealms(Arrays.asList(customRealm));
 
-        // 自定义缓存实现 使用redis
-//        securityManager.setCacheManager(cacheManager());
         // 注入缓存管理器
-        securityManager.setCacheManager(ehCacheManager);// todo cachemanager 要从源码层面分析
+//        securityManager.setCacheManager(cacheManager);// todo cachemanager 要从源码层面分析
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
@@ -157,14 +156,14 @@ public class ShiroConfig {
 //        return cacheManager;
 //    }
 
-    @Bean
-    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成（在那个里面定义的bean）
-        EhCacheManager em = new EhCacheManager();
-        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
-        em.setCacheManager(cacheManager); // todo 跟踪代码确认意义
-        //em.setCacheManagerConfigFile("classpath:ehcache.xml");
-        return em;
-    }
+//    @Bean
+//    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成（在那个里面定义的bean）
+//        EhCacheManager em = new EhCacheManager();
+//        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
+//        em.setCacheManager(cacheManager); // todo 跟踪代码确认意义
+//        //em.setCacheManagerConfigFile("classpath:ehcache.xml");
+//        return em;
+//    }
 
 
 //    /**

@@ -1,25 +1,16 @@
 package com.greengiant.website.shiro;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.web.context.ContextLoader;
-import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 
-import javax.servlet.ServletContext;
-//import org.springframework.stereotype.Component;
 
-//@Component todo 再思考一下用component的用法
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
-    // todo 能否把EhcacheUtil干掉，用注解？https://blog.csdn.net/tanleijin/article/details/81118963
     // todo 把AtomicInteger写进去，看AtomicInteger源码
     @Value("${password.max-retry-count}")
     private int MAX_RETRY_COUNT;
@@ -35,13 +26,6 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     public void setCacheManager(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
-    }
-
-    public RetryLimitHashedCredentialsMatcher() {
-//        ServletContext sc = ContextLoader.getCurrentWebApplicationContext().getServletContext();
-//        ApplicationContext ac = WebApplicationContextUtils.getRequiredWebApplicationContext(sc);
-//
-//        cacheManager = (CacheManager) ac.getBean("CacheManager");
     }
 
     @Override
@@ -65,7 +49,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
             else {
                 this.updateItem(username, Integer.parseInt(this.getItem(username).toString()) + 1);
                 throw new IncorrectCredentialsException("密码错误，已连续错误" + (this.getItem(username).toString())
-                        + "次，最多连续错误" + MAX_RETRY_COUNT + "次");
+                        + "次，连续错误" + MAX_RETRY_COUNT + "次账号将被锁定");
             }
         }
 
@@ -74,22 +58,17 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     private Object getItem(String key) {
         Cache passwordRetryCache = cacheManager.getCache(cacheName);
-        Element element=  passwordRetryCache.get(key);
-        if(null!=element)
-        {
-            return element.getObjectValue();
+        Cache.ValueWrapper vw = passwordRetryCache.get(key);
+        if (vw != null) {
+            return vw.get();
         }
+
         return null;
     }
 
     private void putItem(String key, Object item) {
         Cache passwordRetryCache = cacheManager.getCache(cacheName);
-
-        if (passwordRetryCache.get(key) != null) {
-            passwordRetryCache.remove(key);
-        }
-        Element element = new Element(key, item);
-        passwordRetryCache.put(element);
+        passwordRetryCache.put(key, item);
     }
 
     private void updateItem(String key, Object value) {
@@ -98,7 +77,7 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     public boolean removeItem(String key) {
         Cache passwordRetryCache = cacheManager.getCache(cacheName);
-        return passwordRetryCache.remove(key);
+        return passwordRetryCache.evictIfPresent(key);
     }
 
 }

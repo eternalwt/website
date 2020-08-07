@@ -49,6 +49,10 @@ Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/a
 // todo 3.看spring与ehcache、redis的整合
 // todo 4.把下面注释掉的redis代码再看一下
 
+1.EhcacheSessionDAO怎么写？
+2.CustomCacheSessionDAO直接使用CacheManager（再思考CacheManager与具体实现的整合）
+3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
+
 一人或者多人登陆的问题
 并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
 

@@ -16,13 +16,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-/**
- * shiro redis session
- *
- * @author seer
- * @date 2018/3/25 10:38
- */
-public class ShiroRedisSessionDAO extends AbstractSessionDAO {
+public class CustomCacheSessionDAO extends AbstractSessionDAO {
     private static Logger LOGGER = LogManager.getLogger(ShiroRedisSessionDAO.class);
     /**
      * key前缀

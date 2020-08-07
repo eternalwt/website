@@ -95,7 +95,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-//                                           EhCacheManager cacheManager,// todo 现在最关键的就是这里的写法了
+//                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -104,7 +104,17 @@ public class ShiroConfig {
         securityManager.setRealms(Arrays.asList(customRealm));
 
         // 注入缓存管理器
-//        securityManager.setCacheManager(cacheManager);// todo cachemanager 要从源码层面分析
+        /**
+         * EhCacheManager 实现了shiro的 CacheManager，因此只要注入了EhcacheManager（推测是shiro-ehcache里面的），这里就能正常
+         * 但是这样并没有体现依赖注入可以随时替换实现类的好处，因此我打算用org.springframework.cache.CacheManager
+         * 由spring的CacheManager来管理具体的缓存，并且类型转换成shiro的CacheManager，供shiro使用
+         */
+        // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
+        // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
+        // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
+        // todo 3.看spring与ehcache、redis的整合
+        // todo 4.把下面注释掉的redis代码再看一下
+//        securityManager.setCacheManager(cacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
@@ -144,27 +154,6 @@ public class ShiroConfig {
 
         return retryLimitHashedCredentialsMatcher;
     }
-
-    /**
-     * shiro缓存管理器
-     *
-     */
-//    @Bean(name = "shiroEhCacheCacheManager")
-//    public CacheManager getEhCacheManager() {// todo 搞清楚shiro-ehcache的作用
-//        CacheManager cacheManager = new EhCacheManager();
-//
-//        return cacheManager;
-//    }
-
-//    @Bean
-//    public EhCacheManager ehCacheManager(CacheManager cacheManager) {// todo 确认这个是由 shiro-ehcache 完成（在那个里面定义的bean）
-//        EhCacheManager em = new EhCacheManager();
-//        //将ehcacheManager转换成shiro包装后的ehcacheManager对象
-//        em.setCacheManager(cacheManager); // todo 跟踪代码确认意义
-//        //em.setCacheManagerConfigFile("classpath:ehcache.xml");
-//        return em;
-//    }
-
 
 //    /**
 //     * cacheManager 缓存 redis实现
@@ -255,7 +244,7 @@ public class ShiroConfig {
 //    }
 
     @Bean(name = "sessionDao")
-    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){
+    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){// todo 能否用CacheManager的方式实现？
         ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
 //        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
         sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());

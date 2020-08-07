@@ -32,6 +32,17 @@
 把realm缓存调通
 把redis和ehcache代码统一起来
 JWT再看一轮（这次要结合SSO）
+1.把ShiroConfig里面的那行缓存CacheManager调通
+2.把两类缓存整合，只用一类cacheManager；
+shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
+3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
+Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
+
+// todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
+// todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
+// todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
+// todo 3.看spring与ehcache、redis的整合
+// todo 4.把下面注释掉的redis代码再看一下
 
 一人或者多人登陆的问题
 并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html

@@ -29,6 +29,10 @@
 
 ======================================================================
 
+【周末】
+1.把admin-lte用npm install试一下；
+2.把这段时间的股票疑问梳理一下；
+
 把realm缓存调通
 把redis和ehcache代码统一起来
 JWT再看一轮（这次要结合SSO）
@@ -37,6 +41,7 @@ JWT再看一轮（这次要结合SSO）
 shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
 3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
 Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
+自动装配就是得到对象的引用把？这个过程是怎样的？
 
 // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
@@ -93,7 +98,6 @@ https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
 
 彻底搞懂mybatis、redis等与spring的整合至关重要，要能打断点观察启动过程
 
-先把shiro官网缓存部分看了，以求获得蛛丝马迹：https://shiro.apache.org/
 根据下面两句话看代码，在代码中断点调试：”Shiro的用户认证是没有提供缓冲机制的，shiro的授权缓存是默认开启的“：https://www.jianshu.com/p/94028ce76efb
 
 1.把session放入ehcache，进一步理解shiro配置缓存；2.把ShiroConfig里面多余的缓存配置干掉
@@ -136,7 +140,9 @@ https://blog.csdn.net/zknxx/article/details/79572387
 shiro-redis的官方文档：https://www.cnblogs.com/qlqwjy/p/10392268.html
 
 autowired members must be defined in valid spring bean
-Spring依赖注入（DI）的三种方式【搞清楚注解对应的形式，尤其是接口注入方式】：https://www.cnblogs.com/ycq-qiang/p/11161941.html
+Spring依赖注入（DI）的三种方式【搞清楚注解对应的形式，尤其是接口注入方式】：
+https://www.cnblogs.com/ycq-qiang/p/11161941.html
+https://www.cnblogs.com/ooo0/p/10962360.html
 【下一步搞懂：1.接口注入；2.基于注解的依赖注入（构造器、setter）】
 autowired自动装配原理搞懂（底层实现），两种装配方式：https://blog.csdn.net/u010512429/article/details/80455971
 Spring为什么@Autowired注入的是接口：https://www.cnblogs.com/zhoading/p/11763426.html
@@ -146,7 +152,8 @@ http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
 https://blog.csdn.net/ex_tang/article/details/82749844
 https://blog.csdn.net/weixin_38361347/article/details/89304414
 @Bean的name用法：https://blog.csdn.net/qq_35981283/article/details/80002611
-
+@Bean的参数实际上就是@Autowired的
+@Autowired自动装配的三种方式：https://blog.csdn.net/inflaRunAs/article/details/92839204
 
 3、写一个工具类 比如BaseHolder 实现ApplicationContextAware接口：https://blog.csdn.net/ex_tang/article/details/82749844
 把凯涛shiro教材缓存那一章的aware也搞懂
@@ -323,7 +330,6 @@ http://www.cnblogs.com/aspirant/p/9082858.html
 https://blog.csdn.net/baidu_19473529/article/details/80558996
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
-@Bean的参数bean都已经生成了，再用我的demo工程再确认一下
 
 读代码：
 AdviceFilter：https://www.jianshu.com/p/054c925cd45d

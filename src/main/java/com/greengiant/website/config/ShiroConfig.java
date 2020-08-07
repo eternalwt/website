@@ -1,5 +1,6 @@
 package com.greengiant.website.config;
 
+import com.greengiant.website.shiro.EndShiroCacheManager;
 import com.greengiant.website.shiro.ShiroRedisSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
@@ -95,7 +96,8 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-//                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
+                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
+                                           EndShiroCacheManager endShiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -115,10 +117,18 @@ public class ShiroConfig {
         // todo 3.看spring与ehcache、redis的整合
         // todo 4.把下面注释掉的redis代码再看一下
 //        securityManager.setCacheManager(cacheManager);
+        securityManager.setCacheManager(endShiroCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
         return securityManager;
+    }
+
+    @Bean
+    public EndShiroCacheManager endShiroCacheManager(CacheManager cacheManager) {
+        EndShiroCacheManager endShiroCacheManager = new EndShiroCacheManager();
+        endShiroCacheManager.setSpringCacheManager(cacheManager);
+        return endShiroCacheManager;
     }
 
     /**

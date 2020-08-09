@@ -47,6 +47,11 @@ jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/detail
 ehcache：如何观察CacheManager中的值？
 
 shiro-ehcache这种桥梁类包的思路很简单【再看看实现细节】：实现shiro留出的接口，把ehcache的功能塞进实现类，然后用@Bean把实现类引进来。
+完全可以参考shiro-ehcache1.5.3很快实现出ehcache3的版本
+看shiro-ehcache、shiro-redis
+对shiro-ehcache包的理解：
+1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
+对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
 
 依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
 ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
@@ -55,7 +60,6 @@ ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（s
 CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
 RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
-看shiro-ehcache、shiro-redis
 
 把realm缓存调通【现在的代码怎么看到缓存的值？】
 把redis和ehcache代码统一起来
@@ -154,7 +158,6 @@ https://www.cnblogs.com/step-and-step/p/13330550.html【搞清楚springboot与we
 https://blog.csdn.net/zknxx/article/details/79572387
 1.看现有的shiro配置，回忆一下；
 2.看shiro-spring；
-3.看shiro-ehcache，配通；
 4.看shiro-redis，配通
 5.RetryLimitHashedCredentialsMatcher里面用缓存和给shiro配缓存不是一码事把？先把shiro自身缓存搞定。HashedCredentialsMatcher自身是不是也有配缓存的选项？
 再次回忆mybatis、shiro的初始化
@@ -320,8 +323,6 @@ kafka：思考一下对我的图表大数据系统的帮助？
 https://www.liangzl.com/get-article-detail-38554.html
 https://www.liangzl.com/get-article-detail-134408.html
 
-应该用最直接的办法，放开版本号直接定位shiro-ehcache的bug！！！
-
 网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
 
 看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
@@ -387,7 +388,6 @@ https://blog.csdn.net/wangjun5159/article/details/89873842
 https://blog.csdn.net/u013995395/article/details/90715272
 
 关于shiro cache【重要】：
-1.看shiro-ehcache代码，搞清楚我的shiro-ehcache配置报错的原因；
 2.搞清楚shiro代码里面哪些地方用到CacheManager及缓存方法（开涛的教程）；
 3.看看shiro-redis高版本有没有报错；
 4.自行实现CacheManager、Cache等接口
@@ -538,15 +538,10 @@ springboot使用redis缓存【和ehcache比较，单独配置与放入spring配�
 Spring boot shiro session cache ecache redis 共存配置：https://www.jianshu.com/p/f304f77875ed
 SpringBoot+Shiro+ehcache实现登录失败超次数锁定帐号：https://blog.csdn.net/qq_33229669/article/details/87945020
 spring boot 使用spring cache 整合多级缓存(EhCache,Redis)：https://blog.csdn.net/zhaoyachao123/article/details/79657358
-shiro-ehcache要求ehcache的版本是2.6.11，升版本怎么搞？
 关于ehcache缓存中eternal及timeToLiveSeconds和timeToIdleSeconds的说明：https://blog.csdn.net/xiongzirui/article/details/50820181
 CacheConfiguration类实现看一下，然后看看怎么切换redis
 1.ehcache并且要能快速降级成没有cache的版本，或者升级成redis；
 假如要用ehcache又没人实现CacheManager接口的话，正确的方式就是自己实现了
-shiro-ehcache的代码是可以读完的，从这个入手
-对shiro-ehcache包的理解：
-1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
-对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
 EhCacheManager已经配好，整个shiro里cache的使用？
 Ehcache看到这里了：https://blog.csdn.net/qq_32786139/article/details/82658197
 Ehcache【要能最接近生产环境测试】【先得搞清楚shiro自己的cache】:

@@ -29,6 +29,9 @@
 
 ======================================================================
 
+ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
+把realm缓存调通【现在的代码怎么看到缓存的值？】
+
 【下一步】
 为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
 EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代码；；
@@ -43,8 +46,6 @@ jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/detail
 
 【周末】
 2.把这段时间的股票疑问梳理一下；
-
-ehcache：如何观察CacheManager中的值？
 
 shiro-ehcache这种桥梁类包的思路很简单【再看看实现细节】：实现shiro留出的接口，把ehcache的功能塞进实现类，然后用@Bean把实现类引进来。
 完全可以参考shiro-ehcache1.5.3很快实现出ehcache3的版本
@@ -61,7 +62,6 @@ CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
 RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
 
-把realm缓存调通【现在的代码怎么看到缓存的值？】
 把redis和ehcache代码统一起来
 JWT再看一轮（这次要结合SSO）
 1.把ShiroConfig里面的那行缓存CacheManager调通

@@ -1,5 +1,6 @@
 package com.greengiant.website.shiro;
 
+import com.greengiant.website.utils.CacheUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -31,7 +32,8 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {
         String username = (String)token.getPrincipal();
-        if(this.getItem(username) != null && Integer.parseInt(this.getItem(username).toString()) >= MAX_RETRY_COUNT) {
+        if(CacheUtil.getItem(cacheManager, cacheName, username) != null &&
+                Integer.parseInt(CacheUtil.getItem(cacheManager, cacheName, username).toString()) >= MAX_RETRY_COUNT) {
             // todo 重试的时候需要输入验证码
             throw new ExcessiveAttemptsException("您已连续输错" + MAX_RETRY_COUNT + "次密码！请30分钟后再试");// todo 30根据配置来写
         }
@@ -39,45 +41,22 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
         boolean matches = super.doCredentialsMatch(token, info);
         if(matches) {
             //clear retry count
-            this.removeItem(username);
+            CacheUtil.removeItem(cacheManager, cacheName, username);
         }
         else {
-            if(this.getItem(username) == null) {
-                this.putItem(username, 1);
+            if(CacheUtil.getItem(cacheManager, cacheName, username) == null) {
+                CacheUtil.putItem(cacheManager, cacheName, username, 1);
                 throw new IncorrectCredentialsException("密码错误");
             }
             else {
-                this.updateItem(username, Integer.parseInt(this.getItem(username).toString()) + 1);
-                throw new IncorrectCredentialsException("密码错误，已连续错误" + (this.getItem(username).toString())
+                CacheUtil.updateItem(cacheManager, cacheName, username,
+                        Integer.parseInt(CacheUtil.getItem(cacheManager, cacheName, username).toString()) + 1);
+                throw new IncorrectCredentialsException("密码错误，已连续错误" + (CacheUtil.getItem(cacheManager, cacheName, username).toString())
                         + "次，连续错误" + MAX_RETRY_COUNT + "次账号将被锁定");
             }
         }
 
         return matches;
-    }
-
-    private Object getItem(String key) {
-        Cache passwordRetryCache = cacheManager.getCache(cacheName);
-        Cache.ValueWrapper vw = passwordRetryCache.get(key);
-        if (vw != null) {
-            return vw.get();
-        }
-
-        return null;
-    }
-
-    private void putItem(String key, Object item) {
-        Cache passwordRetryCache = cacheManager.getCache(cacheName);
-        passwordRetryCache.put(key, item);
-    }
-
-    private void updateItem(String key, Object value) {
-        putItem(key, value);
-    }
-
-    public boolean removeItem(String key) {
-        Cache passwordRetryCache = cacheManager.getCache(cacheName);
-        return passwordRetryCache.evictIfPresent(key);
     }
 
 }

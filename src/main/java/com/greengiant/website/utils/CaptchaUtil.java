@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.Random;
 
 public class CaptchaUtil {
+
+    private CaptchaUtil() {};
+
 	private static int width = 80;
     private static int height = 20;
     private static int codeCount = 4;

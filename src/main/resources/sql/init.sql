@@ -88,8 +88,23 @@ create table article(
 
 -- 栏目表
 
+-- 初始化数据
 insert into auth_role(`role_name`) values("admin");
 insert into auth_user(user_name, password, password_salt)
     values('admin','7262db0dd9c3865016dac3227a3fbfb4', '83061e526dff50fff56d4ff587d7f581');
 insert into auth_user_role("user_id", "role_id") values(1,1);
--- insert into shiro_user_role(username, role_name) values('zhang', 'admin');
+
+insert into menu(menu_name, url, sort, in_use, role) values('控制台', '/home/main', 1, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('添加用户', '/home/adduser', 2, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('用户列表', '/home/userlist', 3, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('添加角色', '/home/addrole', 4, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('角色列表', '/home/rolelist', 5, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('发表文章', '/home/addarticle', 6, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('文章列表', '/home/articlelist', 7, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('添加菜单', '/home/addmenu', 8, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('权限配置', '/home/permassign', 9, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('仪表盘', '/home/dashboard', 10, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('material组件', '/home/components', 11, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 12, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
+insert into menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');

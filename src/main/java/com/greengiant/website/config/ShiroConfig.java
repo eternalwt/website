@@ -1,9 +1,6 @@
 package com.greengiant.website.config;
 
-import com.greengiant.website.shiro.EndShiroCacheManager;
-import com.greengiant.website.shiro.ShiroRedisSessionDAO;
-import com.greengiant.website.shiro.CustomRealm;
-import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
+import com.greengiant.website.shiro.*;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 //import net.sf.ehcache.CacheManager;
@@ -27,7 +24,7 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-import org.springframework.data.redis.core.RedisTemplate;
+//import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;
@@ -108,7 +105,7 @@ public class ShiroConfig {
         // 注入缓存管理器
         /**
          * EhCacheManager 实现了shiro的 CacheManager，因此只要注入了EhcacheManager（推测是shiro-ehcache里面的），这里就能正常
-         * 但是这样并没有体现依赖注入可以随时替换实现类的好处，因此我打算用org.springframework.cache.CacheManager
+         * 但是这样并没有体现依赖注入可以随时替换不同实现类的好处，因此我打算用org.springframework.cache.CacheManager
          * 由spring的CacheManager来管理具体的缓存，并且类型转换成shiro的CacheManager，供shiro使用
          */
         // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
@@ -231,7 +228,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(RedisTemplate redisTemplate) {
+    public DefaultWebSessionManager sessionManager(CacheManager cacheManager) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
@@ -239,8 +236,8 @@ public class ShiroConfig {
         sessionManager.setSessionValidationInterval(1000 * 60 * 15);
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
-
-        sessionManager.setSessionDAO(sessionDao(redisTemplate));
+//        sessionManager.setSessionDAO(sessionDao(redisTemplate));
+        sessionManager.setSessionDAO(sessionDao(cacheManager));
 
         return sessionManager;
     }
@@ -253,12 +250,19 @@ public class ShiroConfig {
 //        return sessionDao;
 //    }
 
+//    @Bean(name = "sessionDao")
+//    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){// todo 能否用CacheManager的方式实现？
+//        ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
+////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
+//        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+//        return sessionDao;
+//    }
+
     @Bean(name = "sessionDao")
-    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){// todo 能否用CacheManager的方式实现？
-        ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
-//        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
-        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-        return sessionDao;
+    public CustomCacheSessionDAO sessionDao(CacheManager cacheManager){
+        CustomCacheSessionDAO sessionDAO = new CustomCacheSessionDAO(cacheManager);
+        sessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+        return sessionDAO;
     }
 
     /**

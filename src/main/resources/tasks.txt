@@ -33,7 +33,18 @@
 1.把admin-lte用npm install试一下；
 2.把这段时间的股票疑问梳理一下；
 
-把realm缓存调通
+ehcache：如何观察CacheManager中的值？
+
+依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
+ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
+并且ehcache、redis分别都要尝试用spring的CacheManager和自己的CacheManager两种方式
+
+CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
+RedisTemplate是spring-redis相关的东西。怎么注入的？
+CacheManager与cache@注解的关系
+看shiro-ehcache、shiro-redis
+
+把realm缓存调通【现在的代码怎么看到缓存的值？】
 把redis和ehcache代码统一起来
 JWT再看一轮（这次要结合SSO）
 1.把ShiroConfig里面的那行缓存CacheManager调通
@@ -64,6 +75,7 @@ Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/a
 SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 现在我有的地方用的redis，有的地方用的ehcache
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
+ehcache2没有在xml里面配置的cache会报空指针
 
 打断点看一下我的redis缓存session的key是什么。如果key不满意，可以学习公司里面的RedisConfig进行配置
 然后从spring整合shiro看起，然后看类是怎么autowired进去的

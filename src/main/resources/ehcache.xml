@@ -47,6 +47,15 @@
            statistics="true">
     </cache>
 
+    <cache name="sessionCache"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="3600"
+           timeToLiveSeconds="1800"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+
     <!-- 会话缓存 -->
     <cache name="shiro-activeSessionCache" maxEntriesLocalHeap="10000"
            eternal="true"

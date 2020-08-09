@@ -30,17 +30,23 @@
 ======================================================================
 
 【下一步】
-1.看shiro-ehcache；
-2.看ehcache
+为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
+EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代码；；
+2.看ehcache（先把我自己的配置搞懂）
 3.看CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware：是不是通过aware给没有注解的类引入CacheManager？
 4.EnterpriseCacheSessionDAO使用的是MapCache做缓存的？
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.cnblogs.com/sunshine-2015/p/5686750.html
+5.我对MemorySessionDAO和CachingSessionDAO的理解：前者用的是ConcurrentMap，后者用的是cache结构。再看一下实现细节
+
+jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/details/82414069
 
 【周末】
 2.把这段时间的股票疑问梳理一下；
 
 ehcache：如何观察CacheManager中的值？
+
+shiro-ehcache这种桥梁类包的思路很简单【再看看实现细节】：实现shiro留出的接口，把ehcache的功能塞进实现类，然后用@Bean把实现类引进来。
 
 依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
 ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）

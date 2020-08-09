@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 public class CustomCacheSessionDAO extends AbstractSessionDAO {
-    // todo 看EnterpriseCacheSessionDAO代码，为啥不像它一样直接 extends CachingSessionDAO
+    // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
 
     private static Logger LOGGER = LogManager.getLogger(ShiroRedisSessionDAO.class);
 

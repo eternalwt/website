@@ -228,7 +228,8 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(CacheManager cacheManager) {
+    public DefaultWebSessionManager sessionManager(CacheManager cacheManager,
+                                                   CustomCacheSessionDAO customCacheSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
@@ -237,7 +238,8 @@ public class ShiroConfig {
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
 //        sessionManager.setSessionDAO(sessionDao(redisTemplate));
-        sessionManager.setSessionDAO(sessionDao(cacheManager));
+//        sessionManager.setSessionDAO(sessionDao(cacheManager));// todo 思考这样写存在的问题
+        sessionManager.setSessionDAO(customCacheSessionDAO);
 
         return sessionManager;
     }
@@ -251,7 +253,7 @@ public class ShiroConfig {
 //    }
 
 //    @Bean(name = "sessionDao")
-//    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){// todo 能否用CacheManager的方式实现？
+//    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){
 //        ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
 ////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
 //        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());

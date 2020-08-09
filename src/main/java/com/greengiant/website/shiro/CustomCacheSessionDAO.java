@@ -1,25 +1,21 @@
 package com.greengiant.website.shiro;
 
 import com.greengiant.website.utils.CacheUtil;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.springframework.cache.CacheManager;
-//import org.springframework.data.redis.core.RedisTemplate;
-//import org.springframework.data.redis.core.ValueOperations;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 public class CustomCacheSessionDAO extends AbstractSessionDAO {
+    // todo 看EnterpriseCacheSessionDAO代码，为啥不像它一样直接 extends CachingSessionDAO
+
     private static Logger LOGGER = LogManager.getLogger(ShiroRedisSessionDAO.class);
+
     /**
      * key前缀
      */
@@ -27,23 +23,11 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
 
     private static final String cacheName = "sessionCache";
 
-
-//    private RedisTemplate redisTemplate;
-
-//    private ValueOperations valueOperations;
-
     private CacheManager cacheManager;
 
     public CustomCacheSessionDAO(CacheManager cacheManager) {
         this.cacheManager = cacheManager;
     }
-
-//    public CustomCacheSessionDAO(RedisTemplate redisTemplate) {
-//        this.redisTemplate = redisTemplate;
-//        this.valueOperations = redisTemplate.opsForValue();
-//    }
-
-
 
     @Override
     protected Serializable doCreate(Session session) {
@@ -54,7 +38,6 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
         this.assignSessionId(session, sessionId);
 
         CacheUtil.putItem(cacheManager, cacheName, generateKey(sessionId), session);
-//        valueOperations.set(generateKey(sessionId), session, session.getTimeout(), TimeUnit.MILLISECONDS);
         return sessionId;
     }
 
@@ -64,7 +47,6 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
             LOGGER.debug("shiro redis session read. sessionId={}", sessionId);
         }
         return (Session) CacheUtil.getItem(cacheManager, cacheName, generateKey(sessionId));
-//        return (Session) valueOperations.get(generateKey(sessionId));
     }
 
     @Override
@@ -73,7 +55,6 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
             LOGGER.debug("shiro redis session update. sessionId={}", session.getId());
         }
         CacheUtil.putItem(cacheManager, cacheName, generateKey(session.getId()), session);
-//        valueOperations.set(generateKey(session.getId()), session, session.getTimeout(), TimeUnit.MILLISECONDS);
     }
 
     @Override
@@ -82,7 +63,6 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
             LOGGER.debug("shiro redis session delete. sessionId={}", session.getId());
         }
         CacheUtil.removeItem(cacheManager, cacheName, generateKey(session.getId()));
-//        redisTemplate.delete(generateKey(session.getId()));
     }
 
     @Override

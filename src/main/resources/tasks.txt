@@ -29,8 +29,15 @@
 
 ======================================================================
 
+【下一步】
+1.看shiro-ehcache；
+2.看ehcache
+3.看CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware：是不是通过aware给没有注解的类引入CacheManager？
+4.EnterpriseCacheSessionDAO使用的是MapCache做缓存的？
+https://blog.csdn.net/acmman/article/details/78955730
+https://www.cnblogs.com/sunshine-2015/p/5686750.html
+
 【周末】
-1.把admin-lte用npm install试一下；
 2.把这段时间的股票疑问梳理一下；
 
 ehcache：如何观察CacheManager中的值？

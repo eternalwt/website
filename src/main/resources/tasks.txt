@@ -29,12 +29,14 @@
 
 ======================================================================
 
+把redis版的配好，现在从其他方向有点突破不了了
+
 ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
-把realm缓存调通【现在的代码怎么看到缓存的值？】
+先搞懂realm缓存是咋回事，然后把realm缓存调通【现在的代码怎么看到缓存的值？】
 
 【下一步】
 为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
-EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代码；；
+EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代码；
 2.看ehcache（先把我自己的配置搞懂）
 3.看CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware：是不是通过aware给没有注解的类引入CacheManager？
 4.EnterpriseCacheSessionDAO使用的是MapCache做缓存的？
@@ -75,7 +77,6 @@ Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/a
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
 // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 // todo 3.看spring与ehcache、redis的整合
-// todo 4.把下面注释掉的redis代码再看一下
 
 1.EhcacheSessionDAO怎么写？
 2.CustomCacheSessionDAO直接使用CacheManager（再思考CacheManager与具体实现的整合）
@@ -94,8 +95,6 @@ SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/o
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
 ehcache2没有在xml里面配置的cache会报空指针
 
-打断点看一下我的redis缓存session的key是什么。如果key不满意，可以学习公司里面的RedisConfig进行配置
-然后从spring整合shiro看起，然后看类是怎么autowired进去的
 看
 自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
@@ -285,7 +284,7 @@ Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视�
 3.mybatis源码分析（设计模式等）
 4.connector、datasource、mybatis的关系看清楚
 MybatisPlus实现多租户架构(Multi-tenancy)：https://blog.csdn.net/qq_35250752/article/details/99842499
-
+使用 @Mapper，最终 Mybatis 会有一个拦截器，会自动的把 @Mapper 注解的接口生成动态代理类。这点可以在 MapperRegistry 类中的源代码中查看
 
 对缓存的理解：该看SpringDataRedis了：https://blog.csdn.net/weixin_41987908/article/details/90897421
 整合redis缓存的几个方面问题：
@@ -565,7 +564,9 @@ shiro与缓存再看一下，开涛的书要看透（虽然有些章节写的并
 细说shiro系列：https://www.cnblogs.com/nuccch/p/6775855.html【调试代码观察认证、授权的缓存状态】
 shiro的JSR-107标准
 springboot②最正确的集成shiro并使用ehcache缓存【看误区那一段】：https://blog.csdn.net/tanleijin/article/details/81118963
-
+Apache Shiro 配置 LDAP 验证：
+https://segmentfault.com/a/1190000018960246?utm_source=tag-newest
+https://blog.csdn.net/u011537073/article/details/51777531
 
 Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】【怎么能灵活运用】：
 https://www.cnblogs.com/Jarris/p/10125980.html

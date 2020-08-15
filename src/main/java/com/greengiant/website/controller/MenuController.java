@@ -6,6 +6,7 @@ import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.MenuService;
+import com.greengiant.website.service.RoleService;
 import com.greengiant.website.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -22,15 +23,11 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    // todo 菜单稳定一点后，添加默认的menu（init.sql脚本）
     // todo 有了menu表，permission表怎么处理？关系始终没理顺
-    // todo menu是相对固定的东西，这个文件里面的很多方法是需要加缓存的
-
-//    @Autowired
-//    private RoleService roleService;
+    // todo 文件里面的很多方法是需要加缓存的，配合CustomRealm里面的缓存读取
 
     @Autowired
-    private RoleMapper roleMapper;
+    private RoleService roleService;
 
     @GetMapping(value = "/isPermitted")
     public ResultBean checkPermission(@RequestParam String permission) {
@@ -48,7 +45,7 @@ public class MenuController {
 
     @GetMapping(value = "/getPermissionListByUserId")
     public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
-        QueryWrapper<Menu> menuWrapper = new QueryWrapper<Menu>();
+        QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
         menuWrapper.like("role", roleId);
 
         return ResultUtils.success(menuService.list(menuWrapper));
@@ -64,9 +61,9 @@ public class MenuController {
         if (menuList != null && !menuList.isEmpty()) {
             for (Map<String, String> menu : menuList) {
                 // todo 尝试用updateWrapper重构
-                Role role = roleMapper.selectByName(menu.get("roleName"));
+                Role role = roleService.selectByName(menu.get("roleName"));
                 if (role != null) {
-                    menuService.updateRole(menu.get("perm"), Boolean.valueOf(menu.get("checked")), role.getId().toString());
+                    menuService.updateRole(menu.get("perm"), Boolean.getBoolean(menu.get("checked")), role.getId().toString());
                 }
             }
         }

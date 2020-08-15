@@ -12,4 +12,7 @@ public interface RoleService extends IService<Role> {
     int editRole(Role role);
 
     void delRole(Long roleId);
+
+    Role selectByName(String roleName);
+
 }

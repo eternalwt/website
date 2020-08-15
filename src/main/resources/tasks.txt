@@ -28,6 +28,10 @@
 
 ======================================================================
 
+private RoleMapper roleMapper;// todo 把mapper从controller里面干掉
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
+https://www.jianshu.com/p/d9175f23c22a
+
 继续：搜索如何读代码的文章，再读shiro代码
 
 把redis版的配好，现在从其他方向有点突破不了了
@@ -1125,7 +1129,7 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
 
-经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo，subject.isPermitted("admin");没有进入:
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
 重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
 https://www.jianshu.com/p/d9175f23c22a

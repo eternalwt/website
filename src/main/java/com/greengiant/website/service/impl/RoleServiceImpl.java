@@ -64,4 +64,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         // todo 关联删除菜单、授权权限等
     }
 
+    @Override
+    public Role selectByName(String roleName) {
+        return roleMapper.selectByName(roleName);
+    }
+
 }

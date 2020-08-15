@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
@@ -68,11 +69,10 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        // todo 加缓存
         log.info("获取角色信息");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         log.info("authorization for: [{}]" + username);
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roleSet = new HashSet<>();
         //获得该用户角色
         List<Role> roleList = roleService.getRoleListByUserName(username);
@@ -82,16 +82,15 @@ public class CustomRealm extends AuthorizingRealm {
                 roleSet.add(role.getRoleName());
             }
             //设置该用户拥有的角色
-            info.setRoles(roleSet);
+            authorizationInfo.setRoles(roleSet);
         }
 
-        return info;
+        return authorizationInfo;
     }
 
 
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
-//        String username = (String) SecurityUtils.getSubject().getPrincipal();
         String username = principals.toString();
         QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
         menuWrapper.eq("menu_name", permission);
@@ -99,6 +98,9 @@ public class CustomRealm extends AuthorizingRealm {
         if (menu == null) {
             return false;
         }
+
+        CacheManager cacheManager = this.getCacheManager();
+        // todo 这里加缓存意义重大
 
         List<Role> roleList = roleService.getRoleListByUserName(username);
         if (roleList != null && !roleList.isEmpty()) {

@@ -18,7 +18,6 @@
 【做项目和学知识两条线并行】
 
 下周工作事项：
-1.搭建angular环境，把原有的代码跑起来；
 2.以湖北省招标网为例，思考抓取策略。把三十多个省的招标网站都纳入进去；
 3.把门户网站技术思考清楚；
 4.把我以前的简洁模板下载下来；
@@ -29,7 +28,28 @@
 
 ======================================================================
 
+继续：搜索如何读代码的文章，再读shiro代码
+
 把redis版的配好，现在从其他方向有点突破不了了
+对比redis和ehcache的配置文件
+
+看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
+看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
+
+SessionsSecurityManager里面的代码：
+protected void applyEventBusToSessionManager() {
+    EventBus eventBus = this.getEventBus();
+    if (eventBus != null && this.sessionManager instanceof EventBusAware) {
+        ((EventBusAware)this.sessionManager).setEventBus(eventBus);
+    }
+}
+
+体会EventBus的抽象【可以先对比guava。现在还看不懂这个，证明我没理解】：
+public interface EventBus {
+    void publish(Object var1);
+    void register(Object var1);
+    void unregister(Object var1);
+}
 
 ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
 先搞懂realm缓存是咋回事，然后把realm缓存调通【现在的代码怎么看到缓存的值？】
@@ -37,14 +57,21 @@ ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后�
 【下一步】
 为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
 EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代码；
-2.看ehcache（先把我自己的配置搞懂）
+2.看ehcache
 3.看CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware：是不是通过aware给没有注解的类引入CacheManager？
 4.EnterpriseCacheSessionDAO使用的是MapCache做缓存的？
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.cnblogs.com/sunshine-2015/p/5686750.html
 5.我对MemorySessionDAO和CachingSessionDAO的理解：前者用的是ConcurrentMap，后者用的是cache结构。再看一下实现细节
 
-jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/details/82414069
+shiro里面有CacheManagerAware和EventBusAware、PermissionResolverAware、RolePermissionResolverAware
+把凯涛shiro教材缓存那一章的aware也搞懂
+CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
+3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
+Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
+Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
+LogoutAware
+
 
 【周末】
 2.把这段时间的股票疑问梳理一下；
@@ -60,7 +87,6 @@ shiro-ehcache这种桥梁类包的思路很简单【再看看实现细节】：�
 ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
 并且ehcache、redis分别都要尝试用spring的CacheManager和自己的CacheManager两种方式
 
-CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
 RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
 
@@ -69,8 +95,6 @@ JWT再看一轮（这次要结合SSO）
 1.把ShiroConfig里面的那行缓存CacheManager调通
 2.把两类缓存整合，只用一类cacheManager；
 shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
-3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
-Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
 自动装配就是得到对象的引用把？这个过程是怎样的？
 
 // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
@@ -142,6 +166,7 @@ https://gitee.com/xieke90/common-admin/blob/SpringBoot2.X_EhCache/src/main/java/
 
 1.先把ehcache彻底搞懂，包括session
 （1）springboot里面的ehcacheUtil已经调通了，下一步配通shiro的cache、配通session的cache，搞懂两个cacheManager的异同
+关于Ehcache缓存中timeToLiveSeconds和timeToIdleSeconds区别：https://blog.csdn.net/fiwrc/article/details/54909868
 2.缓存先完成如下3步：
 （1）吧用户名的缓存搞好；
 （2）把session缓存搞好
@@ -178,19 +203,26 @@ https://www.cnblogs.com/ooo0/p/10962360.html
 autowired自动装配原理搞懂（底层实现），两种装配方式：https://blog.csdn.net/u010512429/article/details/80455971
 Spring为什么@Autowired注入的是接口：https://www.cnblogs.com/zhoading/p/11763426.html
 RetryLimitHashedCredentialsMatcher的@Autowired用getBean替换写通
-spring项目中获取ApplicationContext对象【注意springboot方式的变化，以及对aware的理解】：
-http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
-https://blog.csdn.net/ex_tang/article/details/82749844
-https://blog.csdn.net/weixin_38361347/article/details/89304414
 @Bean的name用法：https://blog.csdn.net/qq_35981283/article/details/80002611
 @Bean的参数实际上就是@Autowired的
 @Autowired自动装配的三种方式：https://blog.csdn.net/inflaRunAs/article/details/92839204
 
+spring项目中获取ApplicationContext对象【注意springboot方式的变化，以及对aware的理解】：
+http://blog.cangzhitao.com/post/java/springboot-applicationcontext.htm
+https://blog.csdn.net/ex_tang/article/details/82749844
+https://blog.csdn.net/weixin_38361347/article/details/89304414
 3、写一个工具类 比如BaseHolder 实现ApplicationContextAware接口：https://blog.csdn.net/ex_tang/article/details/82749844
-把凯涛shiro教材缓存那一章的aware也搞懂
-
-看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
-看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
+关于TransactionAwareDataSourceProxy：https://summerhome.iteye.com/blog/2383585
+Spring：利用ApplicationContextAware装配Bean：
+https://www.cnblogs.com/tflowingcloud/p/8443010.html
+https://www.jianshu.com/p/22e7fba07ce7
+https://blog.csdn.net/mdq11111/article/details/79050280
+https://blog.csdn.net/bailinbbc/article/details/76446594
+spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
+Spring中的Aware：
+https://www.cnblogs.com/Jarris/p/10125980.html
+https://blog.csdn.net/bailinbbc/article/details/76446594
+https://blog.csdn.net/jinhaijing/article/details/83933573
 
 搞懂这种文化：@Resource(javax.annotation.Resource)这个注解是javax扩展包中注解规范的一种，而spring对这一注解提供了支持
 
@@ -317,7 +349,6 @@ https://www.zhihu.com/question/36486629/answer/68063702
 https://www.zhihu.com/question/272055204/answer/365679479
 https://www.zhihu.com/question/47449512/answer/658228092
 
-
 kafka：思考一下对我的图表大数据系统的帮助？
 https://www.liangzl.com/get-article-detail-38554.html
 https://www.liangzl.com/get-article-detail-134408.html
@@ -408,7 +439,10 @@ ehCache使用注解和不使用注解的2种使用方式【搜一下】
 ehcache的单独使用，看官网：
 http://www.ehcache.org/
 https://www.baeldung.com/ehcache
-ehcache是不是因为3.x更新较大，为了不引起混乱所以jar包的域名变更了？【要搞清楚这些】
+EHCache的3.x版本与2.x版本的使用方式区别还是很大的，类的包名都改了，你说差别能不大吗：https://my.oschina.net/u/2608182/blog/890239?utm_source=debugrun&utm_medium=referral
+超出maxEntriesLocalHeap的保存在哪儿？
+https://stackoverflow.com/questions/22892170/how-to-configure-maxentrieslocalheap-in-ehcache
+https://www.iteye.com/blog/elim-2116749
 
 <groupId>javax.cache</groupId><artifactId>cache-api</artifactId>提供的是“Java缓存新标准（javax.cache）”：
 https://www.ituring.com.cn/article/699
@@ -527,7 +561,6 @@ shiro的授权缓存是默认开启的：https://cloud.tencent.com/developer/art
 还是要看cacheManager用到的地方。跟踪获取角色、获取权限的函数，如果都没用到cachemanager，那么就可以放心大胆的不配置；另一方面，用默认的内存缓存在我的应用中也是够的
 前后分离springboot2.1集成shiro使用redis做权限认证缓存：https://blog.csdn.net/huiyunfei/article/details/103176940
 shiro认证信息和授权信息的缓存【authenticationCachingEnabled，据说认证默认关闭，授权默认打开】【写入是在哪里进行的？】：https://blog.csdn.net/csujiangyu/article/details/49076531
-Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
 shiro 刷新认证以及权限缓存（略坑）：https://blog.csdn.net/qq_37959142/article/details/80020899
 【学习别人分析源码的方式。这个里面提到的本地缓存，能否结合弱引用那些东西看看】https://www.cnblogs.com/nuccch/p/8044226.html
 springboot使用redis缓存【和ehcache比较，单独配置与放入spring配置】：https://www.jianshu.com/p/cde7a812743c
@@ -568,10 +601,6 @@ Apache Shiro 配置 LDAP 验证：
 https://segmentfault.com/a/1190000018960246?utm_source=tag-newest
 https://blog.csdn.net/u011537073/article/details/51777531
 
-Spring中的Aware【shiro里面也有CacheManagerAware，再分析一下】【怎么能灵活运用】：
-https://www.cnblogs.com/Jarris/p/10125980.html
-https://blog.csdn.net/bailinbbc/article/details/76446594
-https://blog.csdn.net/jinhaijing/article/details/83933573
 EnvironmentCapable：
 https://blog.csdn.net/weixin_39165515/article/details/76976685
 面试问烂的 Spring AOP 原理、SpringMVC 过程全解答！https://mp.weixin.qq.com/s/9YyrEC2JqZyIEo8oT7U07g
@@ -632,6 +661,8 @@ https://blog.csdn.net/qq_21492635/article/details/89381204
 HandlerInterceptor是一个很方便的拦截器，可以用来做Token校验。需要配合WebMvcConfigurationSupport使用：https://blog.csdn.net/qq_32768743/article/details/88650567
 
 Springboot 15篇：https://yq.aliyun.com/users/hz3zxsd4wosss?spm=a2c4e.11153940.0.0.1fa660e0yUAIFp
+
+浅谈Apache 安全框架Shiro系列文章：https://www.zhihu.com/people/vincent-62-39
 
 shiro 同一账号多人同时登陆强制下线【默认就是这样的把？用2个浏览器测一下】：
 https://blog.csdn.net/lht931942788/article/details/79179410
@@ -1298,14 +1329,10 @@ Shiro通过注解配置授权：https://www.cnblogs.com/xk920/p/10825706.html
 
 Shiro 登录后跳转到最后一个访问的页面：https://www.sojson.com/shiro
 
-spring源码之Aware：https://www.cnblogs.com/lucas2/p/9432934.html
-Shiro 还提供了 CacheManagerAware 用于注入 CacheManager：
-Shiro 内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如 Realm）是否 实现了 CacheManagerAware 并自动注入相应的 CacheManager。
 动态改变shiro的Principal属性：https://blog.csdn.net/guojing505123/article/details/79224200
 由principal为空引发的几个问题：
 http://www.nutz.cn/yvr/t/sp8m948654hoao89r3p5bq5758
 https://blog.csdn.net/quanaianzj/article/details/83858575
-LogoutAware是啥？
 
 后端拆成2个模块，最简单的分布式无论如何要搭起来
 注册中心和网关这2样可以独立搭建起来
@@ -1619,12 +1646,6 @@ http://www.jq22.com/yanshi4014
 http://www.jq22.com/jquery-info4014
 这种比较专业的，可以在下面评论，把别人引到自己的网站，很容易来流量和转换成下载赚钱。还可以通过咨询服务赚钱
 
-Spring：利用ApplicationContextAware装配Bean：
-https://www.cnblogs.com/tflowingcloud/p/8443010.html
-https://www.jianshu.com/p/22e7fba07ce7
-https://blog.csdn.net/mdq11111/article/details/79050280
-https://blog.csdn.net/bailinbbc/article/details/76446594
-
 这种写法没有autowire，思考为什么可以成功：https://blog.csdn.net/pingweicheng/article/details/80593258
 
 mysql的geometry扩展：
@@ -1743,8 +1764,6 @@ SpringRunner is an alias for the SpringJUnit4ClassRunner.
 
 对比shiro的SecureRandomNumberGenerator与JDK的
 
-关于TransactionAwareDataSourceProxy：https://summerhome.iteye.com/blog/2383585
-
 SpringBoot源码研究之Actuator：https://blog.csdn.net/lqzkcx3/article/details/89737579
 
 前后端分离后续：spring跨域配置、启动多个服务，或者用shiro-redis的方式
@@ -1846,4 +1865,5 @@ Uploading and Downloading Files with Spring Boot：https://www.devglan.com/sprin
 https://blog.csdn.net/gnail_oug/article/details/80324120
 https://blog.csdn.net/magi1201/article/details/82757063
 
+jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/details/82414069
 

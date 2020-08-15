@@ -18,10 +18,6 @@ public class AuthServiceImpl implements AuthService {
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, isRememberMe);
         // 执行认证登陆
         subject.login(token);
-
-        // todo 下面这几行是为了测试 doGetAuthorizationInfo 方法，测完后换个地方
-        subject.hasRole("admin");
-        boolean result = subject.isPermitted("admin");
     }
 
 }

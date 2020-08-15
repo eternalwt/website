@@ -28,13 +28,16 @@
 
 ======================================================================
 
-可以看shiro的启动加载了
+可以看shiro的启动加载了：shiro-spring
+1.要搞清除包里面的bean是怎么被自动扫描的；
+2.找到入口类去分析
+3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
 
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-引入shiro的Permission对象
+近期：
+1.ng-alain；
+2.B站门户网站视频、hugo继续；
 
-继续：搜索如何读代码的文章，再读shiro代码
+继续：搜索如何读代码的文章，再读shiro代码。结合UML图，例如：https://www.cnblogs.com/smilond/p/10490906.html
 
 把redis版的配好，现在从其他方向有点突破不了了
 对比redis和ehcache的配置文件

@@ -1,6 +1,6 @@
 ﻿
 【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
-【我的后端和脚手架没有突破，所以一直没办法接项目】
+【我的后端和脚手架已经突破】
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
@@ -28,9 +28,11 @@
 
 ======================================================================
 
-private RoleMapper roleMapper;// todo 把mapper从controller里面干掉
+可以看shiro的启动加载了
+
 重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
 https://www.jianshu.com/p/d9175f23c22a
+引入shiro的Permission对象
 
 继续：搜索如何读代码的文章，再读shiro代码
 
@@ -369,6 +371,8 @@ StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始�
 shiro的ThreadContext简单介绍：
 https://blog.csdn.net/Entodie/article/details/100526765
 https://blog.csdn.net/zch1990s/article/details/83379483
+
+shiro源码篇 - shiro的session创建，你值得拥有：https://www.cnblogs.com/youzhibing/p/9679134.html
 
 Spring FactoryBean应用：https://www.jianshu.com/p/6f0a59623090
 3.搞懂这个签名：@Bean public ProcessEngineFactoryBean processEngine
@@ -867,6 +871,8 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 两次登录失败则显示验证码
 网上的captcha库：Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 Springboot整合Shiro：集成Kaptcha验证码：https://www.jianshu.com/p/ad0bc0508abd
+
+controller方法参数中的userId可以从subject里面获取。主要是MenuController和UserController。但是这样做之后切换权限系统改动大不大，得看看spring security才知道。而且我目前主要用到权限系统的认证、授权、会话保持，因此这样做到必要性也不是特别大
 
 2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
 

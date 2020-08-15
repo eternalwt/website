@@ -31,8 +31,10 @@ public class MenuController {
 
     @GetMapping(value = "/isPermitted")
     public ResultBean checkPermission(@RequestParam String permission) {
-        // todo 过滤一遍很多地方不需要userId，从subject里面获取
-        // todo 加缓存。具体加在哪一层要细看一下
+        // todo 加缓存
+        /**
+         * 跟缓存相关的2个问题：1.能否用注解；2.切换缓存是否有问题
+         */
         Subject subject = SecurityUtils.getSubject();
         return ResultUtils.success(subject.isPermitted(permission));
     }
@@ -60,7 +62,6 @@ public class MenuController {
     public ResultBean updatePermission(@RequestBody List<Map<String, String>> menuList) {
         if (menuList != null && !menuList.isEmpty()) {
             for (Map<String, String> menu : menuList) {
-                // todo 尝试用updateWrapper重构
                 Role role = roleService.selectByName(menu.get("roleName"));
                 if (role != null) {
                     menuService.updateRole(menu.get("perm"), Boolean.getBoolean(menu.get("checked")), role.getId().toString());

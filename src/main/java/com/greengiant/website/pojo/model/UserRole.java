@@ -70,4 +70,15 @@ public class UserRole {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "UserRole{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", roleId=" + roleId +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

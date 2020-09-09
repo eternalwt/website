@@ -156,4 +156,23 @@ public class Menu {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id=" + id +
+                ", menuName='" + menuName + '\'' +
+                ", number='" + number + '\'' +
+                ", url='" + url + '\'' +
+                ", icon='" + icon + '\'' +
+                ", parentId=" + parentId +
+                ", sort=" + sort +
+                ", inUse=" + inUse +
+                ", openWay=" + openWay +
+                ", role='" + role + '\'' +
+                ", user='" + user + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

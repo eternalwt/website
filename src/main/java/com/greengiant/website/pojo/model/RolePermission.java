@@ -68,4 +68,15 @@ public class RolePermission {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "RolePermission{" +
+                "id=" + id +
+                ", roleId=" + roleId +
+                ", permissionId=" + permissionId +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

@@ -49,7 +49,7 @@ public class ArticleController {
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
         wrapper.allEq(conditionMap);
         IPage<Article> result = articleService.page(page, wrapper);
-
+        
         return ResultUtils.success(result);
     }
 

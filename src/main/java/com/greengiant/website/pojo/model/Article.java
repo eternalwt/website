@@ -43,6 +43,23 @@ public class Article {
         this.content = content;
     }
 
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", columnId=" + columnId +
+                ", published=" + published +
+                ", audited=" + audited +
+                ", readCount=" + readCount +
+                ", creatorId='" + creatorId + '\'' +
+                ", createTime=" + createTime +
+                ", updatorId='" + updatorId + '\'' +
+                ", updateTime=" + updateTime +
+                ", content='" + content + '\'' +
+                '}';
+    }
+
     public Article() {
         super();
     }
@@ -134,4 +151,5 @@ public class Article {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
 }

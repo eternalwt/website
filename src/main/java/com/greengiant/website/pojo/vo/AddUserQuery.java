@@ -30,4 +30,13 @@ public class AddUserQuery {
     public void setRoleIdList(List<Long> roleIdList) {
         this.roleIdList = roleIdList;
     }
+
+    @Override
+    public String toString() {
+        return "AddUserQuery{" +
+                "userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", roleIdList=" + roleIdList +
+                '}';
+    }
 }

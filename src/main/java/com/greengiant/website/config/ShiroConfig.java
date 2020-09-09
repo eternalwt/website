@@ -63,6 +63,7 @@ public class ShiroConfig {
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<>();
         // todo 运维，调试完后应该加上限制
         // todo swagger路径用2个*配置也不行，再思考一下
+        // todo 这里能否拿到数据库管理？
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
         filterChainDefinitionMap.put("/permission/**", "anon");

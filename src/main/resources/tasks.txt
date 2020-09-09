@@ -28,10 +28,115 @@
 
 ======================================================================
 
+自定义一下DAOException和ServiceException
+DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/6996991
+把菜单数据从localStorage、sessionStorage里面拿走，至少可以先放到内存里面，增强安全性
+
+【比较 DefaultWebSessionStorageEvaluator 和 DefaultSessionStorageEvaluator】：https://www.jianshu.com/p/3b48ea215990
+从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
+从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
+createAuthFilter（JwtAuthFilter）、createRolesFilter
+能否不禁session，从filter做文章？
+shiro内置过滤器研究：https://www.cnblogs.com/koal/p/5152671.html
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
+
+【下面这一项太难了，应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
+看ShiroConfig以及
+分析spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/details/87790700
+
+Apache Shiro Java反序列化漏洞分析：
+https://www.cnblogs.com/loong-hon/p/10619616.html
+https://www.cnblogs.com/paperpen/p/11312671.html
+https://zhuanlan.zhihu.com/p/115257685
+
 可以看shiro的启动加载了：shiro-spring
 1.要搞清除包里面的bean是怎么被自动扫描的；
 2.找到入口类去分析
 3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
+
+思考、看runAs
+
+权限之数据权限：
+https://www.jianshu.com/p/1b27d2c8a080
+https://www.cnblogs.com/jpfss/p/11045258.html
+https://www.cnblogs.com/jpfss/p/11677430.html
+https://www.jianshu.com/p/31af99a42658
+
+Shiro中的Session管理
+把redis和ehcache代码统一起来，redis配一遍
+JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
+把session的解析过程搞清楚。自己实现一个权限系统的话，是不是就是session难一点？【其实自己写session也是通过filter或者servlet来获取】其他部分呢？再熟悉之后再回过头来看。
+对比自己写的思路，体会shiro设计的可取之处
+
+学习RabbitTemplate的思路应该是和学习RedisTemplate一样的，除了学习它还要学习Springboot自带的消息队列框架
+
+本地缓存的实现有几种方式：（1）直接存放到JVM堆内存（2）使用NIO存放在堆外内存，自定义实现或者借助于第三方缓存组件。
+shiro缓存管理：https://www.cnblogs.com/deityjian/p/10778501.html
+【跟踪确认一下】从以上分析我们知道：Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义，任选其一即可。
+realm的缓存还是用cacheManager的方式会更加优雅，再看看
+if (realm instanceof CacheManagerAware) {
+    ((CacheManagerAware) realm).setCacheManager(cacheManager);//CacheManagerAware接口主要是用来设置缓存管理器的，它里面只有这一个方法
+}
+我的自定义realm和Matcher能否实现CacheManagerAware来自动获得CacheManager？
+
+“细说shiro”系列
+
+相比于自己实现权限系统
+1.shiro可以使用 @RequiresAuthentication ，@RequiresUser 等注解，但是好像并不实用；
+
+Shiro 中的 Realm：https://www.jianshu.com/p/df8d7c888401
+细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
+Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信息？】：https://blog.csdn.net/J080624/article/details/83788196
+【先看aware接口本身里面有什么方法】spring4.1.8扩展实战之二：Aware接口揭秘：https://blog.csdn.net/boling_cavalry/article/details/81611426
+一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
+
+===========================================================
+
+shiro SSO：
+https://bbs.huaweicloud.com/blogs/154161
+https://www.cnblogs.com/shenyixin/p/11757309.html
+https://blog.csdn.net/ccmedu/article/details/83311624
+https://www.jianshu.com/p/6e99451408ce
+https://www.cnblogs.com/atai/p/11200033.html
+https://my.oschina.net/u/1782542/blog/1925940【这个方法并没有完全用上shiro的能力，思考会有哪些问题，然后再思考怎么用shiro】
+https://blog.csdn.net/fromatozhappy/article/details/100121260
+单点登录的第一个问题：如何多个网站都能发送token？可以使用JWT，并且放入local或者sessionStorage
+第二个问题：JWT和shiro的整合
+
+Shiro + OAuth2（Oltu）：
+https://blog.csdn.net/sJzao/article/details/87721836
+https://github.com/monkeyk/oauth2-shiro
+https://www.cnblogs.com/yuluoxingkong/p/8268094.html
+https://www.cnblogs.com/wxy540843763/p/7675946.html
+scribejava/scribejava：一个简单的 Java 实现的 OAuth/OAuth2 库：https://github.com/scribejava/scribejava
+oltu-oauth2-example：https://github.com/ameizi/oltu-oauth2-example
+
+现在用的比较多的单点登录技术是什么？https://www.zhihu.com/question/342103776/answer/806983636
+面试必问的4种单点登录的实现方式，你知道几个？
+https://zhuanlan.zhihu.com/p/84441372
+https://zhuanlan.zhihu.com/p/94622931
+https://zhuanlan.zhihu.com/p/51040315
+https://zhuanlan.zhihu.com/p/93128956
+https://zhuanlan.zhihu.com/p/122482859
+CAS的细节？CAS与OAuth2（Oltu）?
+CAS SSO With Spring Security：
+https://www.baeldung.com/spring-security-cas-sso#:~:text=%20%20%201%20Overview%0AIn%20this%20tutorial%2C%20we%27ll,It%27ll%20have%20Web%2C%20Security%2C...%204%20Conclusion%20More%20
+
+CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
+【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
+
+shiro的流程：
+https://blog.csdn.net/mine_song/article/details/61616259
+https://blog.csdn.net/YANGYU1079075086/article/details/78969983?utm_source=blogxgwz0
+
+=========================================================================================
+
+使用流水线（pipelined）提高Redis的命令性能：
+http://c.biancheng.net/view/4546.html
+https://blog.csdn.net/weixin_33721427/article/details/94520918
+Redis 的 Java 客户端开发包 Lettuce：https://www.oschina.net/p/lettuce?hmsr=aladdin1e1
+Redis的三个客户端框架比较：Jedis,Redisson,Lettuce：https://www.cnblogs.com/liyan492/p/9858548.html
+关与 @EnableConfigurationProperties 注解：https://www.jianshu.com/p/7f54da1cb2eb
 
 近期：
 1.ng-alain；
@@ -99,12 +204,10 @@ ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（s
 RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
 
-把redis和ehcache代码统一起来
-JWT再看一轮（这次要结合SSO）
-1.把ShiroConfig里面的那行缓存CacheManager调通
 2.把两类缓存整合，只用一类cacheManager；
 shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
 自动装配就是得到对象的引用把？这个过程是怎样的？
+1.看一下每次请求是怎么验证session的；2.看spring session；
 
 // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
@@ -114,6 +217,14 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 1.EhcacheSessionDAO怎么写？
 2.CustomCacheSessionDAO直接使用CacheManager（再思考CacheManager与具体实现的整合）
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
+
+再次思考一下我现在用到的shiro功能，如果自己实现难度有多大
+token的方案要再看一次
+spring security和shiro的异同：
+https://blog.51cto.com/14150615/2356958
+https://www.cnblogs.com/zzpblogs/p/8520818.html
+https://www.jianshu.com/p/0891b2279c65
+https://www.cnblogs.com/zoli/p/11236799.html
 
 一人或者多人登陆的问题
 并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
@@ -197,7 +308,6 @@ https://blog.csdn.net/zknxx/article/details/79572387
 逐个bean看shiro里面的bean的默认值
 看看shiro是如何autowire进去声明的bean的
 
-再次思考jwt
 找几个公司的前端控件看看，应该没那么难
 
 什么时候可以把session清除？
@@ -253,6 +363,27 @@ https://stackoverflow.com/questions/38612704/enable-http2-with-tomcat-in-spring-
 Add Login to Your Spring Boot App in 10 Mins：https://dzone.com/articles/add-login-to-your-spring-boot-app-in-10-mins
 把字符串省略的directive搞过来：stringAbbreviation（把http里面公司的代码干掉）
 把现在封装的大写Post移植到我的代码（this.http.Post()）
+
+第一天：
+ 如何利用反射实现Autowired注解
+ 一招教你如何手撕SpringIOC源码
+ Spring程序是如何启动的？
+ Spring是如何加载配置文件到应用程序的？
+ 掌握核心接口BeanDefinitionReader
+ 掌握核心接口BeanFactory
+ 彻底搞懂Spring的refresh方法
+ BeanPostProcessor接口的作用及实现
+ BeanFactoryPostProcessor接口的作用及实现
+第二天：
+ Spring Bean有没有必要实现Aware接口
+ Spring Bean的实例化过程大揭密
+ Spring Bean的初始化到底干了什么
+ 彻底理解FactoryBean接口
+ 完美解析Spring Bean的生命周期
+ Spring的Environment接口有什么作用？
+ 为什么产生循环依赖问题
+ 循环依赖在Spring中是如何解决的
+
 
 选择excel、word操作库的几个方面：
 1.速度；2.内存；3.代码是否干净（易用性）；4.功能是否强大（支持完善度）；5.生态：例如POI还有ppt的、是否依赖office库（最好选独立的），office的不同版本

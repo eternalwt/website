@@ -23,6 +23,17 @@ public class MenuTreeNode {
         this.children = new ArrayList<>();
     }
 
+    @Override
+    public String toString() {
+        return "MenuTreeNode{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", icon='" + icon + '\'' +
+                ", url='" + url + '\'' +
+                ", children=" + children +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }
@@ -62,4 +73,5 @@ public class MenuTreeNode {
     public void setChildren(List<MenuTreeNode> children) {
         this.children = children;
     }
+
 }

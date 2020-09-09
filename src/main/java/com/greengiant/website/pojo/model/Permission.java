@@ -68,4 +68,15 @@ public class Permission {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+    @Override
+    public String toString() {
+        return "Permission{" +
+                "id=" + id +
+                ", permissionName='" + permissionName + '\'' +
+                ", description='" + description + '\'' +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                '}';
+    }
 }

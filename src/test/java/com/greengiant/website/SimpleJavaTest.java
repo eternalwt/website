@@ -7,6 +7,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -87,6 +88,7 @@ public class SimpleJavaTest {
         // todo 0.考虑泛型相关的问题；1.再看bean的定义；2.异常处理；3.不要返回值也是可以的把，考虑下设计
         Class<T> cls = (Class<T>) bean.getClass();// todo Class<T> 去掉再debug一下
         Field[] allFields = cls.getDeclaredFields();// todo getFields为什么不行？【看源码】
+//        Arrays.stream(allFields).iterator()
         if (allFields != null && allFields.length > 0) {
             for (int i = 0; i < allFields.length; i++) {
                 for (Map.Entry entry : map.entrySet()) {

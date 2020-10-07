@@ -13,36 +13,43 @@
 
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
-======================================================================
+=====================================================================================
 
-【做项目和学知识两条线并行】
+理解JS里面generator的原理
+generator：https://javascript.info/generators
+JS里面的generator可以产生一个无穷数组（Using async generators一节看一下）：https://www.geeksforgeeks.org/javascript-generator/
+generator与async、await的语法糖关系？
+yield和协程的关系是：用yield实现协程
 
-下周工作事项：
-2.以湖北省招标网为例，思考抓取策略。把三十多个省的招标网站都纳入进去；
-3.把门户网站技术思考清楚；
-4.把我以前的简洁模板下载下来；
-5.爬虫做到能抓取文章的程度
-6.爬虫的bloomfilter配起来；
 
-各省市县人民政府网站
-
-======================================================================
-
+【近期推进事项】
+0.session与jwt；
+1.shiro缓存彻底弄好；
+2.mybatis及shiro集成；
 自定义一下DAOException和ServiceException
 DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/6996991
+
+3.前端的几个问题
 把菜单数据从localStorage、sessionStorage里面拿走，至少可以先放到内存里面，增强安全性
+
+=====================================================================================
 
 【比较 DefaultWebSessionStorageEvaluator 和 DefaultSessionStorageEvaluator】：https://www.jianshu.com/p/3b48ea215990
 从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
 从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
 createAuthFilter（JwtAuthFilter）、createRolesFilter
 能否不禁session，从filter做文章？
-shiro内置过滤器研究：https://www.cnblogs.com/koal/p/5152671.html
-SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
+【在springboot下，拦截是如何发挥作用的？】shiro内置过滤器研究：https://www.cnblogs.com/koal/p/5152671.html
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单Authenticator点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
+对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
+非常重要必须要看的一环，从发送请求如何根据session鉴权。既是理解代码，又是彻底搞懂JWT的基础】
 
 【下面这一项太难了，应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
 看ShiroConfig以及
 分析spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/details/87790700
+
+分析，为什么：在程序中任何地方都可以通过SecurityUtils.getSubject()获取到当前的subject
+session有跨域攻击的问题
 
 Apache Shiro Java反序列化漏洞分析：
 https://www.cnblogs.com/loong-hon/p/10619616.html
@@ -55,8 +62,19 @@ https://zhuanlan.zhihu.com/p/115257685
 3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
 
 思考、看runAs
+DelegatingSubject的代码值得读一遍
+【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
+“细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
+这行代码如何定制？@RequiresPermissions(value={"log:manage:*"})
+Subject.login()登录成功后用户的认证信息实际上是保存在HttpSession中的。如果此时Web应用程序部署了多实例，必须要进行Session同步：https://www.cnblogs.com/nuccch/p/7911423.html
+八个类逐一看源码：https://www.cnblogs.com/nuccch/p/6776352.html
+shiro-aspectj这个包是干啥的？
+如果连默认的MemoryConstrainedCacheManager都没传，代码的行为是什么样的？判空确认是否在缓存中存取数据？
+不论是集中式缓存还是本地缓存方案，我们都需要考虑这样一个问题：如果使用了shiro框架的服务端进行了多实例部署，首先需要对session进行同步，
+因为shiro的认证信息是存放在session中的；其次，当前端操作在某个实例上修改了权限时，需要通知后端服务的多个实例重新获取最新的权限数据。
+那么有哪些方案可以实现通知到后端服务的多个实例呢？https://www.cnblogs.com/nuccch/p/8044226.html
 
-权限之数据权限：
+权限之数据权限【字段的配置具体怎么做？】：
 https://www.jianshu.com/p/1b27d2c8a080
 https://www.cnblogs.com/jpfss/p/11045258.html
 https://www.cnblogs.com/jpfss/p/11677430.html
@@ -78,19 +96,21 @@ if (realm instanceof CacheManagerAware) {
     ((CacheManagerAware) realm).setCacheManager(cacheManager);//CacheManagerAware接口主要是用来设置缓存管理器的，它里面只有这一个方法
 }
 我的自定义realm和Matcher能否实现CacheManagerAware来自动获得CacheManager？
+Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信息？】：https://blog.csdn.net/J080624/article/details/83788196
+【先看aware接口本身里面有什么方法】spring4.1.8扩展实战之二：Aware接口揭秘：https://blog.csdn.net/boling_cavalry/article/details/81611426
 
-“细说shiro”系列
 
 相比于自己实现权限系统
 1.shiro可以使用 @RequiresAuthentication ，@RequiresUser 等注解，但是好像并不实用；
 
-Shiro 中的 Realm：https://www.jianshu.com/p/df8d7c888401
 细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
-Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信息？】：https://blog.csdn.net/J080624/article/details/83788196
-【先看aware接口本身里面有什么方法】spring4.1.8扩展实战之二：Aware接口揭秘：https://blog.csdn.net/boling_cavalry/article/details/81611426
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
 
 ===========================================================
+
+Apache Shiro 用户指南：
+https://segmentfault.com/a/1190000010791103
+https://github.com/waylau/apache-shiro-1.2.x-reference
 
 shiro SSO：
 https://bbs.huaweicloud.com/blogs/154161
@@ -164,9 +184,13 @@ public interface EventBus {
     void register(Object var1);
     void unregister(Object var1);
 }
+guava eventbus源码解析：https://my.oschina.net/u/3775437/blog/1841898
+使用Guava RateLimiter限流以及源码解析：https://cloud.tencent.com/developer/article/1625114
 
+为啥我的@Slf4j log标红了？
 ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
 先搞懂realm缓存是咋回事，然后把realm缓存调通【现在的代码怎么看到缓存的值？】
+Shiro 中的 Realm：https://www.jianshu.com/p/df8d7c888401
 
 【下一步】
 为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
@@ -186,6 +210,27 @@ Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/a
 Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
 LogoutAware
 
+【这种代码的类自己可能一个都写不出来，要多学习】
+Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
+Shiro ThreadContext简单介绍：
+https://blog.csdn.net/Entodie/article/details/100526765
+https://www.iteye.com/blog/suichangkele-2276897
+SecurityUtils与ThreadLocal？
+
+======================================================================
+
+【做项目和学知识两条线并行】
+
+下周工作事项：
+2.以湖北省招标网为例，思考抓取策略。把三十多个省的招标网站都纳入进去；
+3.把门户网站技术思考清楚；
+4.把我以前的简洁模板下载下来；
+5.爬虫做到能抓取文章的程度
+6.爬虫的bloomfilter配起来；
+
+各省市县人民政府网站
+
+======================================================================
 
 【周末】
 2.把这段时间的股票疑问梳理一下；
@@ -239,7 +284,6 @@ SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/o
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
 ehcache2没有在xml里面配置的cache会报空指针
 
-看
 自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
 我Matcher里面的EhcacheU相关的几个方法怎么写成可以快速切换缓存的？
@@ -468,6 +512,8 @@ MybatisPlus实现多租户架构(Multi-tenancy)：https://blog.csdn.net/qq_35250
 https://blog.csdn.net/qq_35064246/article/details/80677164
 https://www.it1352.com/1841433.html
 
+嵌套事务、挂起事务，Spring 是怎样给事务又实现传播特性的？https://www.jianshu.com/p/e8d3131ece67
+
 SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM技术。结束各个ORM框架各自为营的局面：https://www.cnblogs.com/wadmwz/p/10313495.html
 
 使用Objects.requireNonNull(h);简化代码
@@ -476,8 +522,7 @@ SpringDataJPA的出现是为了简化现有的持久化开发工作和整合ORM�
 
 每年升级一次pom
 
-传感器如何连局域网？农业传感器是连的公网还是局域网？【这不就是IPv6的初衷吗？】
-安装使用一个时序数据库、图数据库、消息队列（有哪些知识点？）看看IoT数据库别人的选择
+安装使用一个时序数据库、图数据库，看看IoT数据库别人的选择
 考虑使用influxDB、HBase、Kafka【一旦上IoT数据库，就开始拆服务，加gateway和eureke服务】
 IoT实时数据可视化方案：Grafana+InfluxDB+Telegraf+MQTT协议+Windows 10：https://segmentfault.com/a/1190000012514865
 通过消息队列、ES、redis分析这些中间件难在哪儿，分别涉及到哪些技术
@@ -489,9 +534,6 @@ https://www.zhihu.com/question/36486629/answer/68063702
 https://www.zhihu.com/question/272055204/answer/365679479
 https://www.zhihu.com/question/47449512/answer/658228092
 
-kafka：思考一下对我的图表大数据系统的帮助？
-https://www.liangzl.com/get-article-detail-38554.html
-https://www.liangzl.com/get-article-detail-134408.html
 
 网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
 
@@ -818,8 +860,6 @@ https://www.cnblogs.com/zhanying999666/p/8392592.html
 shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂【如果没有资料就看源码，并写博客】。看懂了，就真正提升了：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去
 Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/1203/142550761.shtm
-
-思考并过一遍：@Transactional和BaseException的配合使用
 
 分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 
@@ -1576,7 +1616,7 @@ https://www.jianshu.com/p/f3017479bd30
 https://www.jianshu.com/p/f0662c10ce4f?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
 https://blog.csdn.net/qq_36688143/article/details/82769423
 
-我的@EnableTransactionManagement生效了吗？
+@EnableTransactionManagement
 Spring中的@Transactional(rollbackFor = Exception.class)属性详解：https://www.cnblogs.com/clwydjgs/p/9317849.html
 1.回滚后返回值如何处理？2.如何打日志？
 3.为何“回滚失效”、未生效？可能是没有配置事务管理器，做好单元测试：
@@ -1588,6 +1628,12 @@ https://blog.csdn.net/qq_16605855/article/details/79653282
 搞懂@Transactional注解的实现原理：
     声明式事务管理建立在AOP之上的。其本质是对方法前后进行拦截，然后在目标方法开始之前创建或者加入一个事务，在执行完目标方法之后根据执行情况提交或者回滚事务。
     声明式事务管理也有两种常用的方式，一种是基于tx和aop名字空间的xml配置文件，另一种就是基于@Transactional注解。显然基于注解的方式更简单易用，更清爽。
+@Transactional遇到异常后的返回值处理：
+https://ask.csdn.net/questions/665180
+https://www.cnblogs.com/lemon-flm/p/8064531.html
+透彻的掌握 Spring 中 @transactional 的使用：
+https://developer.ibm.com/zh/articles/j-master-spring-transactional-use/
+https://blog.csdn.net/jiangyu1013/article/details/84397366
 
 【再看看springmvc的线程模型】如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。
 
@@ -1886,6 +1932,14 @@ https://blog.csdn.net/moshowgame/article/details/80275084
 要能快速验证我的哪些方法没有被权限覆盖到，必须要做到这一点【尝试用反射控制】
 重新封装返回值【网上看别人的规范】前后端接口规范
 yml和properties去掉一个：https://www.bejson.com/devtools/properties2yaml/
+
+Spring Aware接口解析【先看一下里面的几个例子】：https://www.jianshu.com/p/5865c5c3d0a3
+spring的Aware列表【搞懂了这些，也就搞懂了生命周期把？】：https://www.jianshu.com/p/c5c61c31080b
+看一下这几个Aware的代码：https://zhuanlan.zhihu.com/p/68877265
+Aware是一个具有标识作用的超级接口，实现该接口的bean是具有被spring 容器通知的能力的，而被通知的方式就是通过回调：https://www.jianshu.com/p/5865c5c3d0a3
+Aware的原理并不难，问题是：
+1.各个aware是在framework哪里被调用的，使用场景是什么【这个分析】；
+2.除了已有的aware，还可以扩展？看看shiro里面的aware
 
 Windows下RabbitMQ安装及配置：
 https://blog.csdn.net/lihua5419/article/details/93006834

@@ -58,6 +58,7 @@ public class CustomRealm extends AuthorizingRealm {
         }
         String salt = user.getPasswordSalt();
 
+        // todo 真正的校验过程还是要看一下
         return new SimpleAuthenticationInfo(username, user.getPassword(), ByteSource.Util.bytes(salt), this.getName());
     }
 

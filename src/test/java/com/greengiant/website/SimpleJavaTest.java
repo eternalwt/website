@@ -1,5 +1,6 @@
 package com.greengiant.website;
 
+import com.google.common.collect.Lists;
 import com.greengiant.website.model.Student;
 import com.greengiant.website.utils.ZipUtil;
 import org.junit.Assert;
@@ -7,16 +8,14 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.Thread.sleep;
 
 public class SimpleJavaTest {
 
-    // todo 开始在我的代码中引入guawa
+    // todo 开始在我的代码中引入guava
 
     @Test
     public void testInteger() {
@@ -113,6 +112,49 @@ public class SimpleJavaTest {
     @Test
     public void testMyZip() throws IOException {
         ZipUtil.zipDirectory("d:\\ziptest", "d:\\a.zip");
+    }
+
+
+    class User{
+        private String addr;
+
+        public String getAddr() {
+            return addr;
+        }
+
+        public void setAddr(String addr) {
+            this.addr = addr;
+        }
+    }
+
+    @Test
+    public void testFlatMap() {
+        List<User> uList = Lists.newArrayList();
+        User u1 = new User();
+        u1.setAddr("a1;a2;a3;a4;a5");
+
+        User u2 = new User();
+        u2.setAddr("b1;b2;b3;b4;b5");
+
+        uList.add(u1);
+        uList.add(u2);
+
+        List<String> addrList = uList.stream().map(x -> x.getAddr())
+                .flatMap(x->Arrays.stream(x.split(";")))
+                .collect(Collectors.toList());
+        //或者
+        List<String> ridStrList = uList.stream().map(x -> x.getAddr()).map(x -> x.split(";"))
+                .flatMap(Arrays::stream)
+                .collect(Collectors.toList());
+
+        System.out.println(addrList);
+        System.out.println(ridStrList);
+    }
+
+    @Test
+    public void testNullPointer() {
+        Integer i = null;
+        System.out.println(i.toString());
     }
 
 }

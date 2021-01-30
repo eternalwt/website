@@ -15,6 +15,17 @@
 
 =====================================================================================
 
+@Autowired实际上是注入，用我的代码再对比看看@Bean的参数注入就可以了。再看看默认注入
+从这个角度思考【结合我的代码】：use @Bean for adding third-party classes to the context. And @Component if it is just inside your single application.
+另外：有一些类可以@Autowired，使用@Bean在注入之前把属性设置好【找一个例子，如果不提前设置好，还能在哪里设置】
+再思考一下：除了框架里面必须要适配的，有些对象可以自己new，看哪些可以自己new（shiro）
+只需要观察到，我引入的@Bean最终是在哪里通过什么方式被autowired的【-spring相关的包里面】。是不是在bean方法的第一行打断点就可以了？
+@Bean修饰的方法参数的注入方式【对象和普通类型】：https://blog.csdn.net/wenwenliuyunabcd/article/details/100291597
+@Component和@Bean的区别：
+https://codeboje.de/difference-spring-bean-component/
+https://springbootdev.com/2017/08/02/spring-framework-component-vs-bean-annotations/
+
+
 理解JS里面generator的原理
 generator：https://javascript.info/generators
 JS里面的generator可以产生一个无穷数组（Using async generators一节看一下）：https://www.geeksforgeeks.org/javascript-generator/
@@ -43,6 +54,8 @@ createAuthFilter（JwtAuthFilter）、createRolesFilter
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单Authenticator点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
 对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
 非常重要必须要看的一环，从发送请求如何根据session鉴权。既是理解代码，又是彻底搞懂JWT的基础】
+
+Shiro权限管理框架详解：https://www.cnblogs.com/jpfss/p/8352031.html
 
 【下面这一项太难了，应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
 看ShiroConfig以及

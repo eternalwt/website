@@ -75,7 +75,7 @@ public class LoginController {
 
     /**
      * 注销
-     * @return
+     * @return ResultBean
      */
     @GetMapping(value = "/logout")
     public ResultBean logout() {

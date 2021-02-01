@@ -1,4 +1,4 @@
-package com.greengiant.website.pojo.vo;
+package com.greengiant.website.pojo.query;
 
 import java.util.List;
 

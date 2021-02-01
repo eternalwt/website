@@ -19,8 +19,8 @@ public class SimpleJavaTest {
 
     @Test
     public void testInteger() {
-        Integer aaa = 1;
-        Assert.assertTrue(aaa == 1);
+        int aaa = 1;
+        Assert.assertEquals(aaa, 1);
     }
 
     @Test
@@ -44,7 +44,7 @@ public class SimpleJavaTest {
         stu.setName("li");
         stu.setAge(18);
         stu.setSex(true);
-        this.beanToMap(stu);
+        Map<String, Object> mp = this.beanToMap(stu);
     }
 
     private <T> Map<String, Object> beanToMap(T bean) {
@@ -52,15 +52,14 @@ public class SimpleJavaTest {
 
         Class<T> cls = (Class<T>) bean.getClass();// todo Class<T> 去掉再debug一下
         Field[] allFields = cls.getDeclaredFields();// todo getFields为什么不行？【看源码】
-        if (allFields != null && allFields.length > 0) {
-            for (int i = 0; i < allFields.length; i++) {
-                allFields[i].setAccessible(true);
+        if (allFields.length > 0) {
+            for (Field field : allFields) {
+                field.setAccessible(true);
                 try {
-                    map.put(allFields[i].getName(), allFields[i].get(bean));
+                    map.put(field.getName(), field.get(bean));
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
-
             }
         }
 
@@ -88,19 +87,20 @@ public class SimpleJavaTest {
         Class<T> cls = (Class<T>) bean.getClass();// todo Class<T> 去掉再debug一下
         Field[] allFields = cls.getDeclaredFields();// todo getFields为什么不行？【看源码】
 //        Arrays.stream(allFields).iterator()
-        if (allFields != null && allFields.length > 0) {
-            for (int i = 0; i < allFields.length; i++) {
-                for (Map.Entry entry : map.entrySet()) {
-                    if (entry.getKey().equals(allFields[i].getName())) {
+        if (allFields.length > 0) {
+            for (Field field : allFields) {
+                for (Map.Entry<String, Object> entry : map.entrySet()) {
+                    if (entry.getKey().equals(field.getName())) {
                         // todo 设置bean的字段
-                        boolean isAccess = allFields[i].isAccessible();
-                        allFields[i].setAccessible(true);
+//                        canAccess
+                        boolean isAccess = field.isAccessible();
+                        field.setAccessible(true);
                         try {
-                            allFields[i].set(bean, entry.getValue());
+                            field.set(bean, entry.getValue());
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }
-                        allFields[i].setAccessible(isAccess);
+                        field.setAccessible(isAccess);
                     }
                 }
             }
@@ -139,11 +139,11 @@ public class SimpleJavaTest {
         uList.add(u1);
         uList.add(u2);
 
-        List<String> addrList = uList.stream().map(x -> x.getAddr())
+        List<String> addrList = uList.stream().map(User::getAddr)
                 .flatMap(x->Arrays.stream(x.split(";")))
                 .collect(Collectors.toList());
         //或者
-        List<String> ridStrList = uList.stream().map(x -> x.getAddr()).map(x -> x.split(";"))
+        List<String> ridStrList = uList.stream().map(User::getAddr).map(x -> x.split(";"))
                 .flatMap(Arrays::stream)
                 .collect(Collectors.toList());
 

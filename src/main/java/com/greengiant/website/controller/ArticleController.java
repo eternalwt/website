@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Article;
-import com.greengiant.website.pojo.vo.PageQuery;
+import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.service.ArticleService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;

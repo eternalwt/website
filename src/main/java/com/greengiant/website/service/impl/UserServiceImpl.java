@@ -6,7 +6,7 @@ import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
-import com.greengiant.website.pojo.vo.AddUserQuery;
+import com.greengiant.website.pojo.query.AddUserQuery;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;

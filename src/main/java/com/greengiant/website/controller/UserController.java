@@ -7,7 +7,7 @@ import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.pojo.model.User;
-import com.greengiant.website.pojo.vo.AddUserQuery;
+import com.greengiant.website.pojo.query.AddUserQuery;
 import com.greengiant.website.service.UserService;
 import com.greengiant.website.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -32,12 +32,30 @@ https://springbootdev.com/2017/08/02/spring-framework-component-vs-bean-annotati
 2.ConcurrentHashMap使用场景？
 https://www.zhihu.com/question/28516433/answer/490921378
 
+当前组织POJO的方式【用在自己的项目和公司的项目，实践几个完整的项目】：
+https://www.zhihu.com/question/39651928/answer/369889819
+兼顾折衷方案：https://zhuanlan.zhihu.com/p/150463059
+1.Query：由前向后传递
+2.Vo：有后向前传递。不要偷懒在某些地方用PO代替
+3.PO：数据库持久化对象
+4.BO：业务逻辑对象。是否封装方法？用好BO是一个难点
+问题：AO怎么用？
+
 【实验一下】也可以反过来弄：
     (1)把@Service在@Configuration里面再@Bean一次；
     (2)@Service注解压根就不加，直接在@Configuration里面配，然后再@Autowired【理论上来说，@Component、@Service可以都不加，都在@Configuration里面配，
     只加@Controller，看看@Controller详解】https://dzone.com/articles/spring-framework-restcontroller-vs-controller
 
-在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，框 架会自动默认分别注入DataSourceTransactionManager
+【花一小时】
+感觉Shiro没用上AutoConfiguration（是不是配置比较麻烦所以用手动？）
+把shiro各包升级到最新版
+Redis AutoConfiguration：https://blog.csdn.net/andy_zhang2007/article/details/96843886
+当使用spring-boot-configuration-processor库时会默认打开RabbitAutoConfiguration,它会自动创建一个 CachingConnectionFactory对象，
+一个RabbitTemplate对象，一个AmqpAdmin对象以及一个RabbitMessageTemplate对象：https://blog.csdn.net/u011126891/article/details/54376179
+了解了AutoConfiguration，可以看SqlSessionTemplate、JdbcTemplate、RedisTemplate等xxxTemplate了，从启动流程分析。
+
+分析一个starter：jdbc-starter
+在Spring Boot中，当我们使用了spring-boot-starter-jdbc或spring-boot-starter-data-jpa依赖的时候，框架会自动默认分别注入DataSourceTransactionManager
 或JpaTransactionManager【看一下是怎么帮我们做的】【这个文档还教了怎么看注入的是某个接口的哪个实现】：https://www.cnblogs.com/weiwuxian-95/p/10429538.html
 分析DataSourceTransactionManager的代码，有了它@Transactional注解才能发挥作用
 多数据源：

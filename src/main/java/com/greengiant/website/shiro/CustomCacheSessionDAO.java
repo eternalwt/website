@@ -1,16 +1,19 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.utils.CacheUtil;
+import com.greengiant.website.utils.CacheManagerWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.Collection;
 
+@Component
 public class CustomCacheSessionDAO extends AbstractSessionDAO {
     // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
 
@@ -23,11 +26,8 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
 
     private static final String cacheName = "sessionCache";
 
-    private CacheManager cacheManager;
-
-    public CustomCacheSessionDAO(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
+    @Autowired
+    private CacheManagerWrapper cacheManagerWrapper;
 
     @Override
     protected Serializable doCreate(Session session) {
@@ -37,7 +37,7 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
         }
         this.assignSessionId(session, sessionId);
 
-        CacheUtil.putItem(cacheManager, cacheName, generateKey(sessionId), session);
+        cacheManagerWrapper.putItem(cacheName, generateKey(sessionId), session);
         return sessionId;
     }
 
@@ -46,7 +46,7 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("shiro redis session read. sessionId={}", sessionId);
         }
-        return (Session) CacheUtil.getItem(cacheManager, cacheName, generateKey(sessionId));
+        return (Session) cacheManagerWrapper.getItem(cacheName, generateKey(sessionId));
     }
 
     @Override
@@ -54,7 +54,7 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("shiro redis session update. sessionId={}", session.getId());
         }
-        CacheUtil.putItem(cacheManager, cacheName, generateKey(session.getId()), session);
+        cacheManagerWrapper.putItem(cacheName, generateKey(session.getId()), session);
     }
 
     @Override
@@ -62,7 +62,7 @@ public class CustomCacheSessionDAO extends AbstractSessionDAO {
         if (LOGGER.isDebugEnabled()) {
             LOGGER.debug("shiro redis session delete. sessionId={}", session.getId());
         }
-        CacheUtil.removeItem(cacheManager, cacheName, generateKey(session.getId()));
+        cacheManagerWrapper.removeItem(cacheName, generateKey(session.getId()));
     }
 
     @Override

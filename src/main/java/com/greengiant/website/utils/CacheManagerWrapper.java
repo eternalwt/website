@@ -1,13 +1,17 @@
 package com.greengiant.website.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
+import org.springframework.stereotype.Component;
 
-public class CacheUtil {
+@Component
+public class CacheManagerWrapper {
 
-    private CacheUtil() {};
+    @Autowired
+    private CacheManager cacheManager;
 
-    public static Object getItem(CacheManager cacheManager, String cacheName, String key) {
+    public Object getItem(String cacheName, String key) {
         Cache cache = cacheManager.getCache(cacheName);
         Cache.ValueWrapper vw = cache.get(key);
         if (vw != null) {
@@ -17,16 +21,16 @@ public class CacheUtil {
         return null;
     }
 
-    public static void putItem(CacheManager cacheManager, String cacheName, String key, Object item) {
+    public void putItem(String cacheName, String key, Object item) {
         Cache cache = cacheManager.getCache(cacheName);
         cache.put(key, item);
     }
 
-    public static void updateItem(CacheManager cacheManager, String cacheName, String key, Object value) {
-        putItem(cacheManager, cacheName, key, value);
+    public void updateItem(String cacheName, String key, Object value) {
+        putItem(cacheName, key, value);
     }
 
-    public static boolean removeItem(CacheManager cacheManager, String cacheName, String key) {
+    public boolean removeItem(String cacheName, String key) {
         Cache cache = cacheManager.getCache(cacheName);
         return cache.evictIfPresent(key);
     }

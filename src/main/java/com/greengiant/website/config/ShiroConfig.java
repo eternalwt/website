@@ -94,6 +94,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
+                                           HashedCredentialsMatcher hashedCredentialsMatcher,
 //                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
                                            EndShiroCacheManager endShiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
@@ -101,6 +102,19 @@ public class ShiroConfig {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
 
         // 注入自定义的realm
+        customRealm.setAuthenticationCacheName("authenticationCache");
+        customRealm.setAuthorizationCacheName("authorizationCache");
+        customRealm.setCachingEnabled(true);
+        customRealm.setAuthenticationCachingEnabled(true);
+        customRealm.setAuthorizationCachingEnabled(true);
+        //hash算法
+        hashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
+        //加密次数
+        hashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
+        //存储散列后的密码是否为16进制
+        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
+        customRealm.setCredentialsMatcher(hashedCredentialsMatcher);
+
         securityManager.setRealms(Arrays.asList(customRealm));
 
         // 注入缓存管理器
@@ -133,35 +147,39 @@ public class ShiroConfig {
      * 自定义身份认证 realm
      *
      */
-    @Bean
-    public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
-        CustomRealm realm = new CustomRealm();
+//    @Bean
+//    public CustomRealm customRealm(HashedCredentialsMatcher hashedCredentialsMatcher) {
+//        CustomRealm realm = new CustomRealm();
+//
+//        realm.setAuthenticationCacheName("authenticationCache");
+//        realm.setAuthorizationCacheName("authorizationCache");
+//        realm.setCachingEnabled(true);
+//        realm.setAuthenticationCachingEnabled(true);
+//        realm.setAuthorizationCachingEnabled(true);
+//
+//        //hash算法
+//        hashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
+//        //加密次数
+//        hashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
+//        //存储散列后的密码是否为16进制
+//        hashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
+//        realm.setCredentialsMatcher(hashedCredentialsMatcher);
+//
+//        return realm;
+//    }
 
-        realm.setAuthenticationCacheName("authenticationCache");
-        realm.setAuthorizationCacheName("authorizationCache");
-        realm.setCachingEnabled(true);
-        realm.setAuthenticationCachingEnabled(true);
-        realm.setAuthorizationCachingEnabled(true);
-
-        realm.setCredentialsMatcher(hashedCredentialsMatcher);
-
-        return realm;
-    }
-
-    @Bean
-    public HashedCredentialsMatcher hashedCredentialsMatcher(CacheManager cacheManager) {
-        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
-        retryLimitHashedCredentialsMatcher.setCacheManager(cacheManager);
-
-        //hash算法
-        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
-        //加密次数
-        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
-        //存储散列后的密码是否为16进制
-        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
-
-        return retryLimitHashedCredentialsMatcher;
-    }
+//    @Bean
+//    public HashedCredentialsMatcher hashedCredentialsMatcher(CacheManager cacheManager) {
+//        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
+//        //hash算法
+//        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
+//        //加密次数
+//        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
+//        //存储散列后的密码是否为16进制
+//        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
+//
+//        return retryLimitHashedCredentialsMatcher;
+//    }
 
 //    /**
 //     * cacheManager 缓存 redis实现
@@ -240,6 +258,8 @@ public class ShiroConfig {
         sessionManager.setDeleteInvalidSessions(true);
 //        sessionManager.setSessionDAO(sessionDao(redisTemplate));
 //        sessionManager.setSessionDAO(sessionDao(cacheManager));// todo 思考这样写存在的问题
+
+        customCacheSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
         sessionManager.setSessionDAO(customCacheSessionDAO);
 
         return sessionManager;
@@ -261,12 +281,12 @@ public class ShiroConfig {
 //        return sessionDao;
 //    }
 
-    @Bean(name = "sessionDao")
-    public CustomCacheSessionDAO sessionDao(CacheManager cacheManager){
-        CustomCacheSessionDAO sessionDAO = new CustomCacheSessionDAO(cacheManager);
-        sessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-        return sessionDAO;
-    }
+//    @Bean(name = "sessionDao")
+//    public CustomCacheSessionDAO sessionDao(CacheManager cacheManager){
+//        CustomCacheSessionDAO sessionDAO = new CustomCacheSessionDAO(cacheManager);
+//        sessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+//        return sessionDAO;
+//    }
 
     /**
      * Shiro生命周期处理器

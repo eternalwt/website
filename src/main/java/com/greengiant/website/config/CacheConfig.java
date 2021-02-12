@@ -24,6 +24,10 @@ public class CacheConfig {
 //        return new EhCacheCacheManager(bean.getObject());
 //    }
 
+    // todo 1.这里把shiro和springboot的CacheManager的实现都配一下，配redis（或者ehcache）
+    //  springboot的我自定义matcher等地方用到
+    //  【流程是从这里一步步往下配，让后面跟这里保持一致】
+
 
 
 }

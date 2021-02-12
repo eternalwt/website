@@ -23,6 +23,7 @@
 
 CacheManager果然可以自定义bean，我的问题解决了:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 Redisson和Jedis、redisTemplate可以再看一次了，可以再看区别了。spring-data-redis
+有一次要升级一个redis的什么包版本？也没做
 
 @Autowired实际上是注入，用我的代码再对比看看@Bean的参数注入就可以了。再看看默认注入
 从这个角度思考【结合我的代码】：use @Bean for adding third-party classes to the context. And @Component if it is just inside your single application.

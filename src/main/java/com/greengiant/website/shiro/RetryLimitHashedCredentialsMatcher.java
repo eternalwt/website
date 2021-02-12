@@ -6,6 +6,7 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -18,12 +19,11 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     private static final String cacheName = "passwordRetryCache";
 
-//    @Autowired // todo 怎么理顺这个告警很重要。为啥这里虽然有告警，但是确实可以autowire？
 //    // todo 在现在的配置下，这里还是用的ehcache。注释掉ehcache后把redis版的写通
 //    // todo 能否作为参数传入？
 //    private CacheManager cacheManager; // todo 类上面没有注解，成员也是可以autowired的。1.搞懂扫描过程；2.这样会不会导致代码混乱不好维护？
 
-    private CacheManager cacheManager;
+    private CacheManager cacheManager;// todo 这个cacheManager等认证、授权搞好后再单独确认
 
     public void setCacheManager(CacheManager cacheManager) {
         this.cacheManager = cacheManager;

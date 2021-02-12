@@ -15,6 +15,15 @@
 
 =====================================================================================
 
+1.Matcher有没有带cache的可供继承？
+2.Ehcache和Redis涉及到cacheManager的代码能不能写的更通用？
+3.如果给我一个shiro，怎么分析哪些需要搞成bean？【用redis做例子思考一下】
+4.把todo都干掉，认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
+5.把jwt、单点登录等搞完，就彻底搞定了
+
+CacheManager果然可以自定义bean，我的问题解决了:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
+Redisson和Jedis、redisTemplate可以再看一次了，可以再看区别了。spring-data-redis
+
 @Autowired实际上是注入，用我的代码再对比看看@Bean的参数注入就可以了。再看看默认注入
 从这个角度思考【结合我的代码】：use @Bean for adding third-party classes to the context. And @Component if it is just inside your single application.
 另外：有一些类可以@Autowired，使用@Bean在注入之前把属性设置好【找一个例子，如果不提前设置好，还能在哪里设置】
@@ -25,31 +34,50 @@
 https://codeboje.de/difference-spring-bean-component/
 https://springbootdev.com/2017/08/02/spring-framework-component-vs-bean-annotations/
 
-把注解和配置TransactionManager再看一遍看懂
+把注解和配置TransactionManager再看一遍看懂：
+    因为没掌握注解，所以对springboot的掌握程度很低
+    How spring boot annotations work? https://springhow.com/how-spring-boot-annotations-work/
+    https://stackoverflow.com/questions/57386896/how-field-injection-in-spring-boot-works-internally
+    https://stackoverflow.com/questions/46224199/how-does-conditional-annotation-works-in-spring-boot
+    Custom Annotation in Spring Boot：https://www.mindbowser.com/custom-annotation-in-spring-boot/
+    How Spring Web MVC Really Works：https://stackify.com/spring-mvc/
+    SpringFramework5.0 @Indexed注解 简单解析(和@Controller同级的注解)：https://www.cnblogs.com/aflyun/p/11992101.html
+    【搜Annotation*Processor】
+    @Conditional、@ConditionalOnBean、@ConditionalOnMissingBean、@ConditionalOnWebApplication、@ConditionalOnClass
+    @Qualifier和@Primary，我的理解一个主动的一个被动的：
+    https://www.cnblogs.com/whhjava/p/10599799.html
+    https://www.cnblogs.com/h-c-g/p/11043716.html
+    mybatis-plus多数据源注解@DS("slave")：
+    	https://mp.baomidou.com/guide/dynamic-datasource.html#%E6%96%87%E6%A1%A3-documentation
+    	https://blog.csdn.net/dawangxiaowang/article/details/105097191
+    	https://blog.csdn.net/wardenjohn/article/details/100134457
+    @KafkaListener注解的实现
+    @OnMessage注解的实现
+    @RabbitListener起作用的原理：https://blog.csdn.net/zidongxiangxi/article/details/100623548
+    @Transactional实现原理（DataSourceTransactionManager）【看别人的分析过程】：https://www.cnblogs.com/wlwl/p/10092494.html
+    spring注解之@Import注解的三种使用方式：
+    https://www.cnblogs.com/yichunguo/p/12122598.html
+    https://blog.csdn.net/mamamalululu00000000/article/details/86711079
+    分析一个场景，搞清楚注解之间的关系，加深理解：@RabbitListener为什么要放在IoC容器的注解里面（@Component等）？
+    分析每一个注解都应该关注的2个问题：
+    	1.谁来扫描；2.与spring容器的关系
 
 再次思考ConcurrentHashMap：public static Map<String, Session> clients = new ConcurrentHashMap<>();
 1.通过代码比较HashMap与ConcurrentHashMap的代表
 2.ConcurrentHashMap使用场景？
 https://www.zhihu.com/question/28516433/answer/490921378
 
-当前组织POJO的方式【用在自己的项目和公司的项目，实践几个完整的项目】：
-https://www.zhihu.com/question/39651928/answer/369889819
-兼顾折衷方案：https://zhuanlan.zhihu.com/p/150463059
-1.Query：由前向后传递
-2.Vo：有后向前传递。不要偷懒在某些地方用PO代替
-3.PO：数据库持久化对象
-4.BO：业务逻辑对象。是否封装方法？用好BO是一个难点
-问题：AO怎么用？
-
 【实验一下】也可以反过来弄：
     (1)把@Service在@Configuration里面再@Bean一次；
     (2)@Service注解压根就不加，直接在@Configuration里面配，然后再@Autowired【理论上来说，@Component、@Service可以都不加，都在@Configuration里面配，
     只加@Controller，看看@Controller详解】https://dzone.com/articles/spring-framework-restcontroller-vs-controller
 
-【花一小时】
+【把config目录下的内容梳理一遍，好多用不上的】
+注意：spring-boot-autoconfigure.jar
 感觉Shiro没用上AutoConfiguration（是不是配置比较麻烦所以用手动？）
 把shiro各包升级到最新版
 Redis AutoConfiguration：https://blog.csdn.net/andy_zhang2007/article/details/96843886
+spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/details/87790700
 当使用spring-boot-configuration-processor库时会默认打开RabbitAutoConfiguration,它会自动创建一个 CachingConnectionFactory对象，
 一个RabbitTemplate对象，一个AmqpAdmin对象以及一个RabbitMessageTemplate对象：https://blog.csdn.net/u011126891/article/details/54376179
 了解了AutoConfiguration，可以看SqlSessionTemplate、JdbcTemplate、RedisTemplate等xxxTemplate了，从启动流程分析。
@@ -72,16 +100,28 @@ JdbcTemplate 和 mybatis 的对比（可以再看一次了）：
 https://www.cnblogs.com/scmath/p/11297006.html
 https://blog.csdn.net/weixin_30662539/article/details/101573061
 
+【202002】再思考shiro的缓存：
+1.要保证ehcache和redis都能配；2.搞清楚哪些模块用缓存，然后设置到一个都可以访问到的地方（认证、授权）
+
 Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
 springboot在Utils工具类中读取配置文件：https://my.oschina.net/lijinzhao/blog/3030144
 SpringBoot中获取spring.profiles.active的值【学习别人的方法】：
 https://www.cnblogs.com/linzhanfly/p/9056722.html
 https://blog.csdn.net/zhangzehai2234/article/details/99187823
 
+当前组织POJO的方式【用在自己的项目和公司的项目，实践几个完整的项目】：
+https://www.zhihu.com/question/39651928/answer/369889819
+兼顾折衷方案：https://zhuanlan.zhihu.com/p/150463059
+1.Query：由前向后传递
+2.Vo：有后向前传递。不要偷懒在某些地方用PO代替
+3.PO：数据库持久化对象
+4.BO：业务逻辑对象。是否封装方法？用好BO是一个难点
+问题：AO怎么用？
 要保存的信息，放在POJO的哪个分类里面？https://blog.csdn.net/haiyoung/article/details/97397073
 感觉最开始分为query、VO、DO 3个类别就够用了，因为业务逻辑不复杂，所以do封装数据够用了
 DTO（ Data Transfer Object）与BO（ Business Object）的区别？AO（ Application Object）的方向？【如果不好分，其他统统放到DTO或者BO里面】
 【后续，直接针对每个表创建DO和操作的方法（这样才好垂直分割业务把？），把我的Mapper层用上，能否抽到MybatisPlus的高度？】是不是压根就不应该传入table名称（抽象程度太低了）？而应该把每个表的信息抽到单个的文件里面去？（思考一下有没有需要动态创建表的场景，有场景才需要保留这种代码）
+
 理解JS里面generator的原理
 generator：https://javascript.info/generators
 JS里面的generator可以产生一个无穷数组（Using async generators一节看一下）：https://www.geeksforgeeks.org/javascript-generator/
@@ -120,19 +160,10 @@ SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单Authentica
 对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
 非常重要必须要看的一环，从发送请求如何根据session鉴权。既是理解代码，又是彻底搞懂JWT的基础】
 
-Shiro权限管理框架详解：https://www.cnblogs.com/jpfss/p/8352031.html
-
-【下面这一项太难了，应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
-看ShiroConfig以及
-分析spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/details/87790700
+【应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
 
 分析，为什么：在程序中任何地方都可以通过SecurityUtils.getSubject()获取到当前的subject
 session有跨域攻击的问题
-
-Apache Shiro Java反序列化漏洞分析：
-https://www.cnblogs.com/loong-hon/p/10619616.html
-https://www.cnblogs.com/paperpen/p/11312671.html
-https://zhuanlan.zhihu.com/p/115257685
 
 可以看shiro的启动加载了：shiro-spring
 1.要搞清除包里面的bean是怎么被自动扫描的；
@@ -166,7 +197,6 @@ JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用�
 
 学习RabbitTemplate的思路应该是和学习RedisTemplate一样的，除了学习它还要学习Springboot自带的消息队列框架
 
-本地缓存的实现有几种方式：（1）直接存放到JVM堆内存（2）使用NIO存放在堆外内存，自定义实现或者借助于第三方缓存组件。
 shiro缓存管理：https://www.cnblogs.com/deityjian/p/10778501.html
 【跟踪确认一下】从以上分析我们知道：Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义，任选其一即可。
 realm的缓存还是用cacheManager的方式会更加优雅，再看看
@@ -507,6 +537,13 @@ Add Login to Your Spring Boot App in 10 Mins：https://dzone.com/articles/add-lo
  循环依赖在Spring中是如何解决的
 
 
+Apache Shiro Java反序列化漏洞分析：
+https://www.cnblogs.com/loong-hon/p/10619616.html
+https://www.cnblogs.com/paperpen/p/11312671.html
+https://zhuanlan.zhihu.com/p/115257685
+Shiro权限管理框架详解：https://www.cnblogs.com/jpfss/p/8352031.html
+
+
 选择excel、word操作库的几个方面：
 1.速度；2.内存；3.代码是否干净（易用性）；4.功能是否强大（支持完善度）；5.生态：例如POI还有ppt的、是否依赖office库（最好选独立的），office的不同版本
 Excel：
@@ -769,7 +806,6 @@ Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/112795
 
 1.从最初的MybatisAutoConfiguration的@Configuration类讲解：https://blog.csdn.net/weixin_34452850/article/details/90544868
 问题1：springboot怎么保证三方库中的@Configuration注解也被扫描到？
-2.SqlSessionTemplate：MyBatis的代理类，将SqlSession与Spring的事务进行了整合【进一步熟悉】
 2.MapperFactoryBean初始化【可以尝试打断点跟踪启动流程，提升能力】【这个流程一定要非常熟，然后其他的整合也就懂了】：
 https://blog.csdn.net/qq_43193797/article/details/85011683
 问题2：MapperFactoryBean初始化是怎么初始化的？是被谁调用的？（mapperInterface是怎么初始化的？）
@@ -1755,10 +1791,11 @@ KickoutSessionControlFilter extends AccessControlFilter
 spring官网文档：https://spring.io/guides
 
 mybatis-spring：
-sqlsessionfactory 注入datasource
 为啥有了@Mapper注解后就不需要@Repository了
 以前只知道双向绑定这个名字，现在可以思考原理了
 Spring与Mybatis三种整合方法：https://www.cnblogs.com/onlymate/p/7865463.html
+mybatis中SqlSession、SqlSessionTemplate、SessionFactory和SqlSessionFactoryBean之间的关系：
+https://www.cnblogs.com/xiaoming0601/p/12166160.html
 
 登录时密码比对过程：realm里面的SimpleAuthenticationInfo代表的是数据库保存的数据的封装，包含加密后的密码。而用户输入的原始密码被封装成UsernamePasswordToken，
 然后在login的过程中根据定义的RetryLimitHashedCredentialsMatcher进行加密。看一下SimpleAuthenticationInfo几个构造函数的区别

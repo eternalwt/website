@@ -94,7 +94,7 @@ public class ShiroConfig {
      */
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
-                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
+//                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
                                            EndShiroCacheManager endShiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
@@ -123,7 +123,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public EndShiroCacheManager endShiroCacheManager(CacheManager cacheManager) {
+    public EndShiroCacheManager endShiroCacheManager(CacheManager cacheManager) {// todo 这个cacheManager没有Autowired把？
         EndShiroCacheManager endShiroCacheManager = new EndShiroCacheManager();
         endShiroCacheManager.setSpringCacheManager(cacheManager);
         return endShiroCacheManager;
@@ -196,7 +196,7 @@ public class ShiroConfig {
 //    }
 
     /**
-     *Cookie
+     * Cookie
      */
     @Bean
     public SimpleCookie rememberMeCookie() {

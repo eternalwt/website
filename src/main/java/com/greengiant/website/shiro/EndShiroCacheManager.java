@@ -6,7 +6,9 @@ import org.apache.shiro.cache.CacheManager;
 
 public class EndShiroCacheManager implements CacheManager {
 
-    //定义spring的CacheManager
+    /**
+     * spring的CacheManager
+     */
     private org.springframework.cache.CacheManager springCacheManager;
 
     /**

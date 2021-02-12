@@ -20,10 +20,8 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
     private static final String cacheName = "passwordRetryCache";
 
 //    // todo 在现在的配置下，这里还是用的ehcache。注释掉ehcache后把redis版的写通
-//    // todo 能否作为参数传入？
-//    private CacheManager cacheManager; // todo 类上面没有注解，成员也是可以autowired的。1.搞懂扫描过程；2.这样会不会导致代码混乱不好维护？
-
     private CacheManager cacheManager;// todo 这个cacheManager等认证、授权搞好后再单独确认
+    // todo 20210212 这里需要CacheManager吗？
 
     public void setCacheManager(CacheManager cacheManager) {
         this.cacheManager = cacheManager;

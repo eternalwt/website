@@ -5,6 +5,7 @@ import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
 
 public class EndShiroCacheManager implements CacheManager {
+    // todo 这个不叫manager，应该叫impl。改名ShiroRedisCacheManagerImpl（两个类合成为一个）
 
     /**
      * spring的CacheManager

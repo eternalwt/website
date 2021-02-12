@@ -21,9 +21,17 @@
 4.把todo都干掉，认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
 5.把jwt、单点登录等搞完，就彻底搞定了
 
-CacheManager果然可以自定义bean，我的问题解决了:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
-Redisson和Jedis、redisTemplate可以再看一次了，可以再看区别了。spring-data-redis
-有一次要升级一个redis的什么包版本？也没做
+springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
+【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
+
+Jedis是Redis官方推荐的面向Java的操作Redis的客户端，而RedisTemplate是SpringDataRedis中对JedisApi的高度封装。
+Spring-data-redis提供了在spring应用中通过简单的配置访问redis服务，对reids底层开发包(Jedis,  JRedis, and RJC)进行了高度封装
+SpringDataRedis相对于Jedis来说可以方便地更换Redis的Java客户端，比Jedis多了自动管理连接池的特性，方便与其他Spring框架进行搭配使用如：SpringCache。
+Spring提供了spring-data-redis对Jedis、lettuce进行封装，提供了一些操作Redis数据库的接口。同时提供了spring-boot-starter-data-redis包，在SpringBoot项目中使用会更加方便。spring-boot-starter-data-redis的2.0底层是基于lettuce的：https://blog.csdn.net/ThirdFloor/article/details/80970311
+Spring-boot-starter-data-Redis的pom.xml。可以清晰的看到，它里面包含了Spring-data-redis，所以两者的关系是包含与被包含的关系：https://blog.csdn.net/qq_38584262/article/details/98114390
+spring-data-redis的基本使用：https://blog.csdn.net/weixin_42333583/article/details/82624169
+springboot整合jedis(utils也搞成@Component没什么大不了)：https://www.cnblogs.com/L-Wirepuller/p/11150742.html
+redisson是“基于Redis的一个分布式锁”，用redisson-spring-boot-starter配置：https://blog.csdn.net/vistaed/article/details/107026758
 
 @Autowired实际上是注入，用我的代码再对比看看@Bean的参数注入就可以了。再看看默认注入
 从这个角度思考【结合我的代码】：use @Bean for adding third-party classes to the context. And @Component if it is just inside your single application.

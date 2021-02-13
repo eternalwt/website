@@ -26,7 +26,8 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 6.ehcache升到3以上的版本也不是什么难事了。遇到报错直接解决
 7.把代码里面数据库相关的依赖整一下
 
-CacheManager的8种实现：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
 【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
 

@@ -1,20 +1,13 @@
 package com.greengiant.website.shiro;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
-//import org.springframework.data.redis.core.RedisTemplate;
-//import org.springframework.data.redis.core.ValueOperations;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * shiro redis session

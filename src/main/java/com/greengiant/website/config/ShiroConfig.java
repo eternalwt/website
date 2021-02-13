@@ -1,9 +1,10 @@
 package com.greengiant.website.config;
 
-import com.greengiant.website.shiro.*;
+import com.greengiant.website.shiro.CustomCachedSessionDAO;
+import com.greengiant.website.shiro.CustomRealm;
+import com.greengiant.website.shiro.EndShiroCacheManager;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
-//import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
@@ -15,14 +16,11 @@ import org.apache.shiro.web.mgt.CookieRememberMeManager;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
-//import org.crazycake.shiro.RedisCacheManager;
-//import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
-//import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.Arrays;
 import java.util.LinkedHashMap;

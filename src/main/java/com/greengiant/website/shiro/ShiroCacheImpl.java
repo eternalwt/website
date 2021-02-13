@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Set;
 
 @Slf4j
-public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> {
+public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V> {
 
     //cache中key的前缀
     private String cachePrefix = "shiro:cache:";
@@ -36,7 +36,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
      * @param name
      * @param springCacheManager
      */
-    public EndShiroCache(String name, CacheManager springCacheManager) {
+    public ShiroCacheImpl(String name, CacheManager springCacheManager) {
         this.springCacheManager = springCacheManager;
         this.cache = springCacheManager.getCache(name);
     }

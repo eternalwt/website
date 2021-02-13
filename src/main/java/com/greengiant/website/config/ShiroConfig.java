@@ -224,7 +224,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(CacheManager cacheManager,
+    public DefaultWebSessionManager sessionManager(org.apache.shiro.cache.CacheManager cacheManager,
                                                    CustomCachedSessionDAO customCachedSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
@@ -238,6 +238,8 @@ public class ShiroConfig {
 
         customCachedSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
         sessionManager.setSessionDAO(customCachedSessionDAO);
+
+        sessionManager.setCacheManager(cacheManager);// todo 调查这里是否还需要设置。sessionDAO也设置了缓存，关系是啥？？
 
         return sessionManager;
     }

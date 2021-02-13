@@ -113,27 +113,11 @@ public class ShiroConfig {
         securityManager.setRealms(Arrays.asList(customRealm));
 
         // 注入缓存管理器
-        /**
-         * EhCacheManager 实现了shiro的 CacheManager，因此只要注入了EhcacheManager（推测是shiro-ehcache里面的），这里就能正常
-         * 但是这样并没有体现依赖注入可以随时替换不同实现类的好处，因此我打算用org.springframework.cache.CacheManager
-         * 由spring的CacheManager来管理具体的缓存，并且类型转换成shiro的CacheManager，供shiro使用
-         */
-        // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
-        // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
-        // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
         securityManager.setCacheManager(shiroCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
         return securityManager;
-    }
-
-    // todo 把下面这里搞成Autowired的，现在写的很不优雅
-    @Bean
-    public org.apache.shiro.cache.CacheManager endShiroCacheManager(CacheManager cacheManager) {
-        ShiroCacheManagerImpl shiroCacheManagerImpl = new ShiroCacheManagerImpl();
-        shiroCacheManagerImpl.setSpringCacheManager(cacheManager);
-        return shiroCacheManagerImpl;
     }
 
     /**

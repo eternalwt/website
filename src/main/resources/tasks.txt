@@ -29,6 +29,16 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
+/**
+ * EhCacheManager 实现了shiro的 CacheManager，因此只要注入了EhcacheManager（推测是shiro-ehcache里面的），这里就能正常
+ * 但是这样并没有体现依赖注入可以随时替换不同实现类的好处，因此我打算用org.springframework.cache.CacheManager
+ * 由spring的CacheManager来管理具体的缓存，并且类型转换成shiro的CacheManager，供shiro使用
+ */
+// todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
+// todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
+// todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
+
+
 【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
 
 Jedis是Redis官方推荐的面向Java的操作Redis的客户端，而RedisTemplate是SpringDataRedis中对JedisApi的高度封装。

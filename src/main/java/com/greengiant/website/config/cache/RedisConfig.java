@@ -1,5 +1,6 @@
 package com.greengiant.website.config.cache;
 
+import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -49,7 +50,5 @@ public class RedisConfig {
         //初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
     }
-
-    // todo 1.这里加一个对Shiro的cacheManager的Bean实现。把ShiroCacheManagerImpl用上
 
 }

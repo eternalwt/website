@@ -25,6 +25,6 @@ public class EhCacheConfig {
 //    }
 
     // todo 1.这里加一个对spring的cacheManager的Bean实现
-    //  2.
+    //  2.然后确认一下是不是就可以无缝切换了
 
 }

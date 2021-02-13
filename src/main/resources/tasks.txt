@@ -19,7 +19,6 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
 1.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
-2.【EndShiroCache、EndShiroCacheManager】的重构（类名字就有问题）
 3.把todo都干掉，认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
 4.把jwt、单点登录等搞完，就彻底搞定了
 5.CustomCachedSessionDAO和ShiroRedisSessionDAO整合到一起，并且要能方便地配置
@@ -28,6 +27,13 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 
 CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
+
+======================================================================================================================
+
+// todo
+    1.EndShiroCache怎么处理？
+    2.再次确认ShiroCacheManagerImpl
+    3.可以升级ehcache3了
 
 /**
  * EhCacheManager 实现了shiro的 CacheManager，因此只要注入了EhcacheManager（推测是shiro-ehcache里面的），这里就能正常
@@ -38,6 +44,7 @@ RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
 // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 
+======================================================================================================================
 
 【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
 

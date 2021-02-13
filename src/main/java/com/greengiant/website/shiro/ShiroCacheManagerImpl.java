@@ -8,7 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ShiroCacheManagerImpl implements CacheManager {
-    // todo "Shiro默认整合了EhCache，来实现缓存"，那么用ehcache的时候这个不需要注入。并且这个方案也是可以通用的【是可以验证的，也可以看EhCacheManager源码】
+    // todo "Shiro默认整合了EhCache，来实现缓存"，那么用ehcache的时候这个不需要注入【升级到ehcache3后需要再次确认】
+    //  并且这个方案也是可以通用的【是可以验证的，也可以看EhCacheManager源码】
 
     /**
      * spring的CacheManager
@@ -33,8 +34,7 @@ public class ShiroCacheManagerImpl implements CacheManager {
     }
 
     /**
-     * 实现shiro的CacheManager中的方法，
-     * 这里返回的Cache当然是shiro的Cache
+     * 实现shiro的CacheManager中的方法，这里返回的Cache是shiro的Cache
      * @param name
      * @param <K>
      * @param <V>
@@ -43,8 +43,6 @@ public class ShiroCacheManagerImpl implements CacheManager {
      */
     @Override
     public <K, V> Cache<K, V> getCache(String name) throws CacheException {
-        //这里EndShiroCache是shiro的Cache的实现类
-        // todo 如果这个类给redis专用，可以用RedisCache
         return new ShiroCacheImpl<K, V>(name, springCacheManager);
     }
 

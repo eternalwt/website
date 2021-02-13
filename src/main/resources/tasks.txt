@@ -19,14 +19,14 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
 【把下面的搞完以后开始测试】
+DefaultWebSessionManager的配置再看一下【主要是结合shiro缓存的配置了解一下shiro缓存需要配几次】
 https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
-DefaultWebSessionManager的配置再看一下
 
-1.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
-3.把todo都干掉，认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
-4.把jwt、单点登录等搞完，就彻底搞定了
-6.ehcache升到3以上的版本也不是什么难事了。遇到报错直接解决
-7.把代码里面数据库相关的依赖整一下
+1.干todo，继续发现问题。认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
+2.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
+3.把jwt、单点登录等搞完，就彻底搞定了
+4.ehcache升到3以上的版本也不是什么难事了。遇到报错直接解决
+5.把代码里面数据库相关的依赖整一下
 
 CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
@@ -34,7 +34,6 @@ RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 ======================================================================================================================
 
 // todo
-    1.EndShiroCache怎么处理？
     2.再次确认ShiroCacheManagerImpl
     3.可以升级ehcache3了
     【这几个问题搞定后测试一遍就搞定了】

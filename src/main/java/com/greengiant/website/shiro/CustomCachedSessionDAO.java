@@ -1,13 +1,12 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.utils.CacheManagerWrapper;
+import com.greengiant.website.cache.CacheManagerWrapper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;

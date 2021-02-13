@@ -1,6 +1,6 @@
 package com.greengiant.website.shiro;
 
-import com.greengiant.website.utils.CacheManagerWrapper;
+import com.greengiant.website.cache.CacheManagerWrapper;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.ExcessiveAttemptsException;
@@ -8,7 +8,6 @@ import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
 @Component

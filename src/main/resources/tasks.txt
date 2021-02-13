@@ -15,9 +15,7 @@
 
 =====================================================================================
 
-0.考虑把CacheUtil搞成@Component，里面直接@Autowired CacheManager。CacheUtil这个类名字有问题，我的CacheUtil应该是CacheManagerWrapper或者CacheManagerDecorator
-1.Matcher有没有带cache的可供继承？里面的cacheManager用法有问题把？
-2.Ehcache和Redis涉及到cacheManager的代码能不能写的更通用？【EndShiroCache、EndShiroCacheManager】的重构（类名字就有问题）
+2.【EndShiroCache、EndShiroCacheManager】的重构（类名字就有问题）
 4.把todo都干掉，认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
 5.把jwt、单点登录等搞完，就彻底搞定了
 

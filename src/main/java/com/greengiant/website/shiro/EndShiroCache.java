@@ -18,6 +18,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
 
     //定义spring的缓存管理器
     private CacheManager springCacheManager;
+
     //定义spring的缓存
     private Cache cache;
 
@@ -27,7 +28,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
      * @return
      */
     private K getKey(K k) {
-        return (K) (cachePrefix + (k==null?"*":k));
+        return (K) (cachePrefix + (k == null ? "*" : k));
     }
 
     /**
@@ -54,6 +55,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
         if (valueWrapper == null) {
             return null;
         }
+
         return (V) valueWrapper.get();
     }
 
@@ -69,6 +71,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
         log.warn("将key：{}存入缓存", k);
         //调用spring的Cache的put方法
         cache.put(getKey(k), v);
+
         return v;
     }
 
@@ -84,6 +87,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
         V v = get(k);
         //调用spring的Cache的evict方法
         cache.evict(getKey(k));
+
         return v;
     }
 
@@ -106,6 +110,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
     public int size() {
         int size = keys().size();
         log.warn("获取name：{}的cache的size：{}", cache.getName(), size);
+
         return size;
     }
 
@@ -130,6 +135,7 @@ public class EndShiroCache<K, V>  implements org.apache.shiro.cache.Cache<K, V> 
         for(K k : keys) {
             list.add(get(k));
         }
+
         return list;
     }
 }

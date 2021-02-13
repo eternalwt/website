@@ -15,8 +15,8 @@ import java.util.Collection;
 
 @Component
 public class CustomCachedSessionDAO extends AbstractSessionDAO {
-    // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
-
+    // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样
+    //  直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
     private static Logger LOGGER = LogManager.getLogger(ShiroRedisSessionDAO.class);
 
     /**

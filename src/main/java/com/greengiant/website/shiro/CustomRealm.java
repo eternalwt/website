@@ -79,7 +79,6 @@ public class CustomRealm extends AuthorizingRealm {
         Set<String> roleSet = new HashSet<>();
         //获得该用户角色
         List<Role> roleList = roleService.getRoleListByUserName(username);
-        // todo 这里是否需要双重判断？
         if (roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {
                 roleSet.add(role.getRoleName());

@@ -5,7 +5,6 @@ import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 //import net.sf.ehcache.CacheManager;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
-import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -19,7 +18,6 @@ import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 //import org.crazycake.shiro.RedisCacheManager;
 //import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -248,7 +246,7 @@ public class ShiroConfig {
 
     @Bean
     public DefaultWebSessionManager sessionManager(CacheManager cacheManager,
-                                                   CustomCacheSessionDAO customCacheSessionDAO) {
+                                                   CustomCachedSessionDAO customCachedSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
@@ -259,8 +257,8 @@ public class ShiroConfig {
 //        sessionManager.setSessionDAO(sessionDao(redisTemplate));
 //        sessionManager.setSessionDAO(sessionDao(cacheManager));// todo 思考这样写存在的问题
 
-        customCacheSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-        sessionManager.setSessionDAO(customCacheSessionDAO);
+        customCachedSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
+        sessionManager.setSessionDAO(customCachedSessionDAO);
 
         return sessionManager;
     }

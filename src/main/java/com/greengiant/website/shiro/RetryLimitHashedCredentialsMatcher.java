@@ -21,7 +21,6 @@ public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher
 
     @Autowired
     private CacheManagerWrapper cacheManagerWrapper;
-    // todo 20210212 这里需要CacheManager吗？
 
     @Override
     public boolean doCredentialsMatch(AuthenticationToken token, AuthenticationInfo info) {

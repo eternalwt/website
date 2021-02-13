@@ -49,4 +49,7 @@ public class RedisConfig {
         //初始化RedisCacheManager
         return new RedisCacheManager(redisCacheWriter, defaultCacheConfig);
     }
+
+    // todo 1.这里加一个对Shiro的cacheManager的Bean实现。把ShiroCacheManagerImpl用上
+
 }

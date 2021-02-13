@@ -24,5 +24,7 @@ public class EhCacheConfig {
 //        return new EhCacheCacheManager(bean.getObject());
 //    }
 
+    // todo 1.这里加一个对spring的cacheManager的Bean实现
+    //  2.
 
 }

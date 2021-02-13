@@ -2,7 +2,7 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
-import com.greengiant.website.shiro.EndShiroCacheManager;
+import com.greengiant.website.shiro.ShiroCacheManagerImpl;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
@@ -91,8 +91,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
                                            HashedCredentialsMatcher hashedCredentialsMatcher,
-//                                           CacheManager cacheManager,// todo 现在最关键的就是这里的写法了
-                                           EndShiroCacheManager endShiroCacheManager,
+                                           org.apache.shiro.cache.CacheManager shiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -122,21 +121,19 @@ public class ShiroConfig {
         // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
         // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
         // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
-        // todo 3.看spring与ehcache、redis的整合
-        // todo 4.把下面注释掉的redis代码再看一下
-//        securityManager.setCacheManager(cacheManager);
-        securityManager.setCacheManager(endShiroCacheManager);
+        securityManager.setCacheManager(shiroCacheManager);
         securityManager.setRememberMeManager(rememberMeManager);
         securityManager.setSessionManager(sessionManager);
 
         return securityManager;
     }
 
+    // todo 把下面这里搞成Autowired的，现在写的很不优雅
     @Bean
-    public EndShiroCacheManager endShiroCacheManager(CacheManager cacheManager) {// todo 这个cacheManager没有Autowired把？
-        EndShiroCacheManager endShiroCacheManager = new EndShiroCacheManager();
-        endShiroCacheManager.setSpringCacheManager(cacheManager);
-        return endShiroCacheManager;
+    public org.apache.shiro.cache.CacheManager endShiroCacheManager(CacheManager cacheManager) {
+        ShiroCacheManagerImpl shiroCacheManagerImpl = new ShiroCacheManagerImpl();
+        shiroCacheManagerImpl.setSpringCacheManager(cacheManager);
+        return shiroCacheManagerImpl;
     }
 
     /**

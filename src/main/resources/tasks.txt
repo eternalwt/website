@@ -18,7 +18,7 @@
 springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
-5.CustomCachedSessionDAO和ShiroRedisSessionDAO整合到一起，并且要能方便地配置【把这个和下面的搞完以后开始测试】
+【把下面的搞完以后开始测试】
 https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 DefaultWebSessionManager的配置再看一下
 

@@ -16,12 +16,12 @@ import java.util.Collection;
 public class CustomCachedSessionDAO extends AbstractSessionDAO {
     // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样
     //  直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
-    private static Logger LOGGER = LogManager.getLogger(ShiroRedisSessionDAO.class);
+    private static Logger LOGGER = LogManager.getLogger(CustomCachedSessionDAO.class);
 
     /**
      * key前缀
      */
-    private static final String SHIRO_REDIS_SESSION_KEY_PREFIX = "shiro.redis.session_";
+    private static final String SHIRO_SESSION_CACHE_KEY_PREFIX = "shiro.session_";
 
     private static final String cacheName = "sessionCache";
 
@@ -92,6 +92,6 @@ public class CustomCachedSessionDAO extends AbstractSessionDAO {
      */
     private String generateKey(Object key) {
 //        return SHIRO_REDIS_SESSION_KEY_PREFIX + this.getClass().getName() + "_" + key;
-        return SHIRO_REDIS_SESSION_KEY_PREFIX + "_" + key;
+        return SHIRO_SESSION_CACHE_KEY_PREFIX + "_" + key;
     }
 }

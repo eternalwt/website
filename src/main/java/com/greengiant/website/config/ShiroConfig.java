@@ -2,10 +2,10 @@ package com.greengiant.website.config;
 
 import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
-import com.greengiant.website.shiro.ShiroCacheManagerImpl;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
@@ -17,7 +17,6 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
@@ -91,7 +90,7 @@ public class ShiroConfig {
     @Bean
     public SecurityManager securityManager(CustomRealm customRealm,
                                            HashedCredentialsMatcher hashedCredentialsMatcher,
-                                           org.apache.shiro.cache.CacheManager shiroCacheManager,
+                                           CacheManager shiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -224,7 +223,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(org.apache.shiro.cache.CacheManager cacheManager,
+    public DefaultWebSessionManager sessionManager(CacheManager cacheManager,
                                                    CustomCachedSessionDAO customCachedSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
@@ -233,13 +232,12 @@ public class ShiroConfig {
         sessionManager.setSessionValidationInterval(1000 * 60 * 15);
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
-//        sessionManager.setSessionDAO(sessionDao(redisTemplate));
-//        sessionManager.setSessionDAO(sessionDao(cacheManager));// todo 思考这样写存在的问题
 
         customCachedSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
         sessionManager.setSessionDAO(customCachedSessionDAO);
 
-        sessionManager.setCacheManager(cacheManager);// todo 调查这里是否还需要设置。sessionDAO也设置了缓存，关系是啥？？
+        // todo 调查这里是否还需要设置。sessionDAO也设置了缓存，关系是啥？？不是说只设置一个地方就可以了吗？
+        sessionManager.setCacheManager(cacheManager);
 
         return sessionManager;
     }
@@ -250,21 +248,6 @@ public class ShiroConfig {
 ////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
 //        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
 //        return sessionDao;
-//    }
-
-//    @Bean(name = "sessionDao")
-//    public ShiroRedisSessionDAO sessionDao(RedisTemplate redisTemplate){
-//        ShiroRedisSessionDAO sessionDao = new ShiroRedisSessionDAO(redisTemplate);
-////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
-//        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-//        return sessionDao;
-//    }
-
-//    @Bean(name = "sessionDao")
-//    public CustomCacheSessionDAO sessionDao(CacheManager cacheManager){
-//        CustomCacheSessionDAO sessionDAO = new CustomCacheSessionDAO(cacheManager);
-//        sessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-//        return sessionDAO;
 //    }
 
     /**

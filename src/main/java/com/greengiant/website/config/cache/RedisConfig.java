@@ -1,5 +1,6 @@
 package com.greengiant.website.config.cache;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,9 +17,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 import java.net.UnknownHostException;
 import java.time.Duration;
 
-@Configuration
+//@Configuration
+@Slf4j
 public class RedisConfig {
-
+    // todo 加一点日志
     @Bean
     public RedisTemplate<Object, Object> testRedisTemplate(
             RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {

@@ -22,6 +22,14 @@ springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles
 DefaultWebSessionManager的配置再看一下【主要是结合shiro缓存的配置了解一下shiro缓存需要配几次】
 https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 
+【重要】1.既然我的CustomRealm实现了CachingRealm接口，那么那个接口里面缓存是如何使用的呢？
+2.几个方面逐个确认缓存配置：认证、授权、session(严格来说不算缓存)、CredentialsMatcher(严格来说也不算缓存)
+【观察EhCacheManager是怎么实现shiro的CacheManager接口的，对比我写的】spring-ehcache可以简化ehcache缓存配置，但是：
+    1.如何升版本？
+    2.会破坏整体缓存配置结构，不利于切换
+    3.自己完全看懂后确定是否把这个包删掉
+    4.彻底搞定shiro-spring的功能
+
 1.干todo，继续发现问题。认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
 2.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
 3.把jwt、单点登录等搞完，就彻底搞定了。SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
@@ -37,17 +45,13 @@ RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
 
 EhCacheManager与EhCacheCacheManager
-【观察EhCacheManager是怎么实现shiro的CacheManager接口的，对比我写的】
-EhCacheManager已经配好，整个shiro里cache的使用？
-shiro-ehcache这种桥梁类包的思路很简单【再看看实现细节】：实现shiro留出的接口，把ehcache的功能塞进实现类，然后用@Bean把实现类引进来。
-完全可以参考shiro-ehcache1.5.3很快实现出ehcache3的版本
+完全可以参考shiro-ehcache1.7.0很快实现出ehcache3的版本
 看shiro-ehcache、shiro-redis
 对shiro-ehcache包的理解：
 1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
 对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
-2.把两类缓存整合，只用一类cacheManager；
 shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
-自动装配就是得到对象的引用把？这个过程是怎样的？
+自动装配细节
 1.看一下每次请求是怎么验证session的；2.看spring session；
 
 // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
@@ -55,11 +59,13 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 // todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 // todo 3.看spring与ehcache、redis的整合
 
-1.EhcacheSessionDAO怎么写？
-2.CustomCacheSessionDAO直接使用CacheManager（再思考CacheManager与具体实现的整合）
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
 
-// todo 2.沿1的思考考虑如何写redis对应的RedisCacheManager(shiro-redis)：https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
+我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看
+
+【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】
+看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？
+Filter与Session有什么联系？应该是Filter使用Session。看看BasicHttpAuthenticationFilter怎么用Session，JwtFilter用不用/怎么用Session
 
 ======================================================================================================================
 

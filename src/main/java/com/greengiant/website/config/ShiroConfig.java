@@ -159,18 +159,6 @@ public class ShiroConfig {
 //    }
 
 //    /**
-//     * cacheManager 缓存 redis实现
-//     * 使用的是shiro-redis开源插件
-//     *
-//     * @return
-//     */
-//    public RedisCacheManager cacheManager() {
-//        RedisCacheManager redisCacheManager = new RedisCacheManager();
-//        redisCacheManager.setRedisManager(redisManager());
-//        return redisCacheManager;
-//    }
-//
-//    /**
 //     * 配置shiro redisManager
 //     * 使用的是shiro-redis开源插件
 //     *

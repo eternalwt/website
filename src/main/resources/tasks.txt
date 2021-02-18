@@ -61,11 +61,16 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
 
-我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看
+我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看里面有些什么东西
 
+先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
 【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】
-看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？
+看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？(搞清楚有token、没有token的两条路径)
 Filter与Session有什么联系？应该是Filter使用Session。看看BasicHttpAuthenticationFilter怎么用Session，JwtFilter用不用/怎么用Session
+session应用--采用filter和session实现简单用户权限控制：http://www.cuiyongzhi.com/post/33.html
+jwt应该也可以和session结合（有没有必要？）
+
+针对shiro的每个方面设计测试套
 
 ======================================================================================================================
 
@@ -203,20 +208,61 @@ DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/
 
 =====================================================================================
 
+【怎么配置多filter？】
 【比较 DefaultWebSessionStorageEvaluator 和 DefaultSessionStorageEvaluator】：https://www.jianshu.com/p/3b48ea215990
 从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
 从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
 createAuthFilter（JwtAuthFilter）、createRolesFilter
-能否不禁session，从filter做文章？
-【在springboot下，拦截是如何发挥作用的？】shiro内置过滤器研究：https://www.cnblogs.com/koal/p/5152671.html
+JwtFilter使用的时候不禁session会怎么样？
+【在springboot下，拦截是如何发挥作用的？】shiro内置过滤器研究：
+https://www.cnblogs.com/koal/p/5152671.html
+https://www.cnblogs.com/modyuan/p/12403605.html
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单Authenticator点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
 对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
 非常重要必须要看的一环，从发送请求如何根据session鉴权。既是理解代码，又是彻底搞懂JWT的基础】
-
-【应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
-
+LogoutFilter是怎么起作用的：https://www.cnblogs.com/vieta/p/11140164.html
+shiro 自定义过滤器，拦截过期session的请求，并且以ajax形式返回：https://www.cnblogs.com/leechenxiang/p/7070229.html
+Shiro中的Session管理，如何把Session放入redis？
+使用JWT后为什么要关闭Session？
+JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
+把session的解析过程搞清楚。自己实现一个权限系统的话，是不是就是session难一点？【其实自己写session也是通过filter或者servlet来获取】其他部分呢？再熟悉之后再回过头来看。
+ShiroFilter为什么要用FactoryBean的方式加载？
+看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
+private static final class SpringShiroFilter extends AbstractShiroFilter
+从SpringShiroFilter到AbstractShiroFilter到Filter，看整个继承关系。别人分析的是返回了【要能调试看清楚这个过程】：
+https://blog.csdn.net/wangjun5159/article/details/89873842
+https://blog.csdn.net/u013995395/article/details/90715272
+StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
+Filter过滤器：
+https://www.jianshu.com/p/054c925cd45d
+https://cloud.tencent.com/developer/article/1376558
+http://www.360doc.com/content/17/1227/15/16915_716741886.shtml
+https://www.cnblogs.com/ljdblog/p/6237683.html
+看代码确认：如果是 Web 应用，每次进入 ShiroFilter 都会自动调用 session.touch()来更新最后访问时间。
+BasicHttpAuthenticationFilter 与 FormAuthenticationFilter 等的区别
+DefaultFilter 枚举类原理值得仔细分析
+Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：https://blog.csdn.net/u010361786/article/details/80138201
+cookie和session的关系：
+https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客户端再发送请求给服务器的时候，就会在请求request中携带cookie”。
+如果不携带呢？cookie机制的根基就被动摇了？携带后，shiro的filter是怎么解析和检查cookie的？】
+https://www.jianshu.com/p/2bb0f368f631
+https://www.cnblogs.com/jing99/p/7826550.html
+Filter从这个入口看：DefaultFilter
+Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
+看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
+表单拦截器FormAuthenticationFilter：
+https://blog.csdn.net/u014203449/article/details/80689268
+https://blog.csdn.net/u014695188/article/details/52357379
+DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
+Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
+https://www.cnblogs.com/nick-huang/p/9509004.html
+shirFilter，注意这个filter与SpringMVC Filter的关联和区别
+Shiro中自定义Realm的作用(FormAuthenticationFilter和PermissionAuthorizationFilter)以及源码解析：
+https://www.geek-share.com/detail/2698157954.html
 分析，为什么：在程序中任何地方都可以通过SecurityUtils.getSubject()获取到当前的subject
 session有跨域攻击的问题
+
+【应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
 
 可以看shiro的启动加载了：shiro-spring
 1.要搞清除包里面的bean是怎么被自动扫描的；
@@ -241,12 +287,6 @@ https://www.jianshu.com/p/1b27d2c8a080
 https://www.cnblogs.com/jpfss/p/11045258.html
 https://www.cnblogs.com/jpfss/p/11677430.html
 https://www.jianshu.com/p/31af99a42658
-
-Shiro中的Session管理
-把redis和ehcache代码统一起来，redis配一遍
-JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
-把session的解析过程搞清楚。自己实现一个权限系统的话，是不是就是session难一点？【其实自己写session也是通过filter或者servlet来获取】其他部分呢？再熟悉之后再回过头来看。
-对比自己写的思路，体会shiro设计的可取之处
 
 学习RabbitTemplate的思路应该是和学习RedisTemplate一样的，除了学习它还要学习Springboot自带的消息队列框架
 
@@ -479,7 +519,6 @@ https://gitee.com/xieke90/common-admin/blob/SpringBoot2.X_EhCache/src/main/java/
 （4）再看一次token的方案
 
 【先配好缓存，再看原理】
-ShiroFilter为什么要用FactoryBean的方式加载？
 shiro的启动过程【现在的知识结构来说最关键的一步需要理解的。能否打断点跟踪？】：
 https://blog.csdn.net/weixin_41920291/article/details/94916369
 https://blog.csdn.net/weixin_38312719/article/details/95936994
@@ -682,15 +721,7 @@ https://www.zhihu.com/question/36486629/answer/68063702
 https://www.zhihu.com/question/272055204/answer/365679479
 https://www.zhihu.com/question/47449512/answer/658228092
 
-
 网页如何实现session过期前端自动跳转？https://www.zhihu.com/question/356798836
-
-看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
-private static final class SpringShiroFilter extends AbstractShiroFilter
-从SpringShiroFilter到AbstractShiroFilter到Filter，看整个继承关系。别人分析的是返回了【要能调试看清楚这个过程】：
-https://blog.csdn.net/wangjun5159/article/details/89873842
-https://blog.csdn.net/u013995395/article/details/90715272
-StatelessAuthcFilter extends AccessControlFilter：从哪一级、哪里开始继承是我需要思考的。2.怎么从源码知道要改这里呢？
 
 shiro的ThreadContext简单介绍：
 https://blog.csdn.net/Entodie/article/details/100526765
@@ -722,9 +753,6 @@ http://www.cnblogs.com/aspirant/p/9082858.html
 https://blog.csdn.net/baidu_19473529/article/details/80558996
 为什么有的Bean带参数有的又直接在函数内部里面弄对象？
 如何知道引入的一个组件要加载哪些bean？怎样看定义了哪些bean？例如mybatis。当然idea下面的spring标签有了名字可以查询。
-
-读代码：
-AdviceFilter：https://www.jianshu.com/p/054c925cd45d
 
 多种鉴权方式（如数据库、OpenID、LDAP、OAuth、REMOTE_USER 等）
 
@@ -1243,19 +1271,12 @@ springboot整合微软的ad域，采用ldap的api来整合，实现用户登录�
 
 如何打开trace信息？例如ShiroFilterFactoryBean里面就有
 
-Filter过滤器：
-https://www.jianshu.com/p/054c925cd45d
-https://cloud.tencent.com/developer/article/1376558
-http://www.360doc.com/content/17/1227/15/16915_716741886.shtml
-https://www.cnblogs.com/ljdblog/p/6237683.html
-
 张开涛的shiro再看一遍，然后源码分析一次
 
 如果自己返回set-Cookie字段，需要理解cookie结构
 1.shiro的DefaultWebSessionManager设置了httponly为true，导致客户端不能使用document.cookie获取值：https://www.cnblogs.com/onlymate/p/9151010.html
 调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
 session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
-看代码：如果是 Web 应用，每次进入 ShiroFilter 都会自动调用 session.touch()来更新最后访问时间。
 当 Subject.logout()时会自动调用 stop 方法来销毁会话
 DefaultSessionManager里面默认用的是MemorySessionDAO
 【重要，层级@Autowired】实现SessionDAO接口的类的注入？
@@ -1323,8 +1344,6 @@ Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394
 
 再思考一次包的组织，如果包太多是不是再加一个层级
 按照阿里的文档，至少应该有Vo和Query两类（两个方向）数据传输对象
-
-BasicHttpAuthenticationFilter 与 FormAuthenticationFilter 等的区别
 
 Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
 Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
@@ -1396,10 +1415,8 @@ github能完成DevOps中的多少工作量？
 要有把service独立出来，maven多module打包的能力
 搭架子要把阿里那些最佳实践都包含进来
 OAuth2要做好
-DefaultFilter 枚举类原理值得仔细分析
 
 密码前端传给后端之前就应该加密
-
 
 mybatis配置（除了模板以外怎么知道还能加哪些标签？）【generator和plus功能有重复？】：
 1.搞清楚mybatis加载时对application.properties（或者yml文件）和mybatis-config.xml的读取流程
@@ -1534,8 +1551,6 @@ https://www.xttblog.com/?p=1270
 https://blog.csdn.net/jinnianshilongnian/article/details/84545363
 shiro实现动态权限管理：https://blog.csdn.net/hxm_code/article/details/50083843
 动态菜单/权限管理的实现：https://blog.csdn.net/qq_25652949/article/details/81067004
-Spring Boot Shiro权限管理--扩展FormAuthenticationFilter实现动态改变LoginUrl：
-https://blog.csdn.net/u010361786/article/details/80138201
 
 Shiro四种权限控制方式：
 https://blog.csdn.net/qq_39659876/article/details/81838651
@@ -1598,23 +1613,6 @@ Shiro session和Spring session一样吗？https://www.cnblogs.com/onlymate/p/839
 如果没有logout，session的过期策略是什么？【和cookie的过期问题对比考虑】
 看看shiro默认是怎么拦截的
 
-cookie和session的关系：
-https://www.cnblogs.com/joean/p/4609253.html【这个文章说：“以后此客户端再发送请求给服务器的时候，就会在请求request中携带cookie”。
-如果不携带呢？cookie机制的根基就被动摇了？携带后，shiro的filter是怎么解析和检查cookie的？】
-https://www.jianshu.com/p/2bb0f368f631
-https://www.cnblogs.com/jing99/p/7826550.html
-
-Filter从这个入口看：DefaultFilter
-Shiro 内置了很多默认的拦截器，比如身份验证、授权等相关的。默认拦截器可以参考 org.apache.shiro.web.filter.mgt.DefaultFilter 中的枚举拦截器
-看看默认拦截器列表，拦截器的包名：org.apache.shiro.web.filter
-表单拦截器FormAuthenticationFilter：
-https://blog.csdn.net/u014203449/article/details/80689268
-https://blog.csdn.net/u014695188/article/details/52357379
-DefaultFilter：package org.apache.shiro.web.filter.mgt.DefaultFilter
-Shiro几大拦截器：https://blog.csdn.net/fenglixiong123/article/details/77119857
-https://www.cnblogs.com/nick-huang/p/9509004.html
-
-shirFilter，注意这个filter与SpringMVC Filter的关联和区别
 Tkmybatis是在mybatis框架的基础上提供了很多工具，让开发更加高效：https://blog.csdn.net/wang_snake/article/details/80705583https://blog.csdn.net/wang_snake/article/details/80705583
 
 【单独击破1】

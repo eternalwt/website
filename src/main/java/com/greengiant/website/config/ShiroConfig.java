@@ -47,6 +47,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
         // 设置无权限时跳转的 url;
         // todo 下面的用法是不是错了，是不是应该结合后端方法（例如notLogin）来处理？
+        //  自定义logoutfilter来跳转到登录页：https://www.cnblogs.com/ningheshutong/p/8134008.html
         shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");
         // 设置拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
@@ -60,6 +61,7 @@ public class ShiroConfig {
         // todo 运维，调试完后应该加上限制
         // todo swagger路径用2个*配置也不行，再思考一下
         // todo 这里能否拿到数据库管理？
+        // 默认过滤器见DefaultFilter
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
         filterChainDefinitionMap.put("/permission/**", "anon");
@@ -79,6 +81,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/role/**", "anon");
         // 管理员，需要角色权限 “admin”
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
+        // todo AuthorizationFilter怎么用上？
+        //  todo 试一下自定义过滤器
+//        filterChainDefinitionMap.put("/logout", "logout"); // todo logout过滤器有什么作用？jwt是不是可以用上？
         // 其余接口一律拦截（这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截）
         filterChainDefinitionMap.put("/**", "user");
 

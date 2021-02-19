@@ -15,6 +15,71 @@
 
 ======================================================================================================================
 
+【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）
+Subject类与Session的关系？（涉及到与jwt的关联）
+shiro源码分析（二）Subject和Session：https://blog.csdn.net/hxpjava1/article/details/77917106
+shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
+Subject.login()登录成功后用户的认证信息实际上是保存在HttpSession中的。如果此时Web应用程序部署了多实例，必须要进行Session同步：https://www.cnblogs.com/nuccch/p/7911423.html
+Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
+更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
+使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
+shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
+controller方法参数中的userId可以从subject里面获取。主要是MenuController和UserController。但是这样做之后切换权限系统改动大不大，得看看spring security才知道。而且我目前主要用到权限系统的认证、授权、会话保持，因此这样做到必要性也不是特别大
+SubjectDAO那些代码还是要看
+如果自己返回set-Cookie字段，需要理解cookie结构
+1.shiro的DefaultWebSessionManager设置了httponly为true，导致客户端不能使用document.cookie获取值：https://www.cnblogs.com/onlymate/p/9151010.html
+调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
+session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
+当 Subject.logout()时会自动调用 stop 方法来销毁会话
+Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
+DefaultSessionManager里面默认用的是MemorySessionDAO
+MemorySessionDAO用到concurrentMap，看看这个数据结构
+SessionListener用法？
+SessionDAO【是怎么存储管理session的】与Session共享：
+https://blog.csdn.net/changudeng1992/article/details/81914628
+（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？看使用方式）
+https://blog.csdn.net/acmman/article/details/78955730
+https://www.jianshu.com/p/f7d5a9ecfd3a
+https://www.jianshu.com/p/f85e50f41100
+https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
+https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
+EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
+RedisSessionDAO：https://blog.csdn.net/njpkhuan/article/details/100563389?depth_1.utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
+Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
+Token的接口及实现类族、Subject的接口及实现类族
+3.Subject.login方法的全流程需要好好看几遍，里面对RememberMe、Cache、Session等都有涉及
+KickoutSessionControlFilter extends AccessControlFilter
+如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
+流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
+接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
+Authentication说明文档：http://shiro.apache.org/authentication.html
+
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
+3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
+https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：
+https://blog.csdn.net/weixin_33724046/article/details/93057613
+https://blog.csdn.net/tragedyxd/article/details/52958008
+isPermitted看懂后，再看permission的写法：system:role:add：
+https://blog.csdn.net/tragedyxd/article/details/52958008
+试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
+PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+https://blog.csdn.net/weixin_38121659/article/details/78715454
+和doGetAuthorizationInfo是什么关系？
+
+【看到Advice，很自然想到切面环绕编程，一般有pre、post、after几个方法】
+把AdviceFilter和Spring中的通知（Advice）和顾问（Advisor）的概念对比学习：
+https://www.cnblogs.com/zhangzongle/p/5944906.html
+https://www.cnblogs.com/cslgzl/p/10533335.html
+如何继承AdviceFilter并控制切面行为？
+Spring中的5种通知（advice）
+Spring @ControllerAdvice与@RestControllerAdvice注解：
+https://blog.csdn.net/fang_qiming/article/details/79907979
+https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
+
 springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
@@ -208,7 +273,11 @@ DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/
 
 =====================================================================================
 
-【怎么配置多filter？】
+理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
+Filter代码中2个很NB的细节：
+    1.DefaultFilter枚举中用到反射；
+    2.OncePerRequestFilter中doFilterInternal抽象方法的使用第一次见识
+【怎么自定义filter并加入FilterChain？】
 【比较 DefaultWebSessionStorageEvaluator 和 DefaultSessionStorageEvaluator】：https://www.jianshu.com/p/3b48ea215990
 从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
 从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
@@ -274,7 +343,6 @@ DelegatingSubject的代码值得读一遍
 【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
 “细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
 这行代码如何定制？@RequiresPermissions(value={"log:manage:*"})
-Subject.login()登录成功后用户的认证信息实际上是保存在HttpSession中的。如果此时Web应用程序部署了多实例，必须要进行Session同步：https://www.cnblogs.com/nuccch/p/7911423.html
 八个类逐一看源码：https://www.cnblogs.com/nuccch/p/6776352.html
 shiro-aspectj这个包是干啥的？
 如果连默认的MemoryConstrainedCacheManager都没传，代码的行为是什么样的？判空确认是否在缓存中存取数据？
@@ -412,7 +480,6 @@ Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了
 LogoutAware
 
 【这种代码的类自己可能一个都写不出来，要多学习】
-Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 Shiro ThreadContext简单介绍：
 https://blog.csdn.net/Entodie/article/details/100526765
 https://www.iteye.com/blog/suichangkele-2276897
@@ -995,10 +1062,6 @@ https://zhuanlan.zhihu.com/p/22456973
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
 用github或者码云带的功能做DevOps，如果不够的话考虑自己搭建持续继承环境
 
-更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
-使用shiro拦截器链实现权限管理：https://blog.csdn.net/Ybt_c_index/article/details/78707531
-shiro 自定义拦截器配置多个权限实现：https://blog.csdn.net/why154285/article/details/82223689
-
 看看别人怎么评价注解的易用性可读性
 《深入浅出MyBatis技术原理与实战》用桌面上的这本书来学习源码阅读
 ShiroConfig里面的aop配置需要继续看
@@ -1220,8 +1283,6 @@ https://blog.csdn.net/haoxin1805487180/article/details/82778991
 网上的captcha库：Spring Boot Starter SimpleCaptcha。Patchca、Kaptcha，jcaptcha太老了
 Springboot整合Shiro：集成Kaptcha验证码：https://www.jianshu.com/p/ad0bc0508abd
 
-controller方法参数中的userId可以从subject里面获取。主要是MenuController和UserController。但是这样做之后切换权限系统改动大不大，得看看spring security才知道。而且我目前主要用到权限系统的认证、授权、会话保持，因此这样做到必要性也不是特别大
-
 2.把mock建立起来【先搞自己熟悉的mockito，有空再搞jmockit】；
 
 DAO和POJO包的命名有问题
@@ -1273,27 +1334,6 @@ springboot整合微软的ad域，采用ldap的api来整合，实现用户登录�
 
 张开涛的shiro再看一遍，然后源码分析一次
 
-如果自己返回set-Cookie字段，需要理解cookie结构
-1.shiro的DefaultWebSessionManager设置了httponly为true，导致客户端不能使用document.cookie获取值：https://www.cnblogs.com/onlymate/p/9151010.html
-调试Session session = subject.getSession();是怎么获取session的。对比session.getId();和返回的session
-session.getTimeout();session.setTimeout(毫秒); // 只要调用这些方法，动态调试观察就方便了
-当 Subject.logout()时会自动调用 stop 方法来销毁会话
-DefaultSessionManager里面默认用的是MemorySessionDAO
-【重要，层级@Autowired】实现SessionDAO接口的类的注入？
-MemorySessionDAO用到concurrentMap，看看这个数据结构
-SessionListener用法？
-SessionDAO【是怎么存储管理session的】与Session共享：
-https://blog.csdn.net/changudeng1992/article/details/81914628
-（为什么EnterpriseCacheSessionDAO里面的4个方法要声明为protected？看使用方式）
-https://blog.csdn.net/acmman/article/details/78955730
-https://www.jianshu.com/p/f7d5a9ecfd3a
-https://www.jianshu.com/p/f85e50f41100
-https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
-https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
-EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
-RedisSessionDAO：https://blog.csdn.net/njpkhuan/article/details/100563389?depth_1.utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
-shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
-
 SpringMVC整合shiro、自定义sessionManager实现前后端分离：
 https://blog.csdn.net/ch18255112191/article/details/88710610（这个里面bean的配置是最全的，还有sessionValidationScheduler）
 https://blog.csdn.net/u011456867/article/details/80484559
@@ -1307,10 +1347,7 @@ Http协议中Cookie详细介绍：https://www.cnblogs.com/bq-med/p/8603664.html
 https://www.jianshu.com/p/5b99c0ef6fb7
 https://www.cnblogs.com/sunruntheway/articles/4447806.html
 
-SubjectDAO那些代码还是要看
-
 Shiro之CredentialsMatcher详解：https://blog.csdn.net/dh554112075/article/details/90760318
-
 
 学习框架彻底体会了组装的感觉
 
@@ -1346,7 +1383,6 @@ Druid SqlParser理解及使用入门：https://www.cnblogs.com/lay2017/p/9840394
 按照阿里的文档，至少应该有Vo和Query两类（两个方向）数据传输对象
 
 Shiro之用户名密码或手机号短信登录（多realm认证）：http://code520.net/archives/1153
-Subject.login()的时序图：https://www.cnblogs.com/nuccch/p/7911423.html
 
 // todo API前后端restful改造
 
@@ -1471,21 +1507,6 @@ springboot的包扫描顺序再研究一下
 shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看。shiro源码分析的几个方面：1.跟别人的文档；2.建立主题意识，按主题分析；3.建立问题意识
 
 如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
-
-经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
-3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：
-https://blog.csdn.net/weixin_33724046/article/details/93057613
-https://blog.csdn.net/tragedyxd/article/details/52958008
-isPermitted看懂后，再看permission的写法：system:role:add：
-https://blog.csdn.net/tragedyxd/article/details/52958008
-试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
-PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-https://blog.csdn.net/weixin_38121659/article/details/78715454
-和doGetAuthorizationInfo是什么关系？
 
 该清这个文档里面的内容了【花一个周末清理】
 
@@ -1709,10 +1730,7 @@ shiro里面的permission是怎么跟表、API关联起来的？（其实资源�
 IniSecurityManagerFactory过时了，怎么找到没过时的替代类？
 JndiLdapRealm、AbstractLdapRealm、ActiveDirectoryRealm
 JdbcRealm、AuthorizingRealm源码阅读：1.搞清楚用的那个类实现；
-JdbcRealm里面最终连接数据库读取数据是在JdbcRealm的getPasswordForUser方法里面。看如果Reaml在读配置那一步是怎么被插入进去的
-Token的接口及实现类族、Subject的接口及实现类族
-3.Subject.login方法的全流程需要好好看几遍，里面对RememberMe、Cache、Session等都有涉及
-继续写代码、跟代码：第5章（加密怎么无缝集成的？用ini文件尝试）、第6章、第10章、第11章。直接看开涛的代码。然后再翻译成Springboot的
+JdbcRealm里面最终连接数据库读取数据是在JdbcRealm的getPasswordForUser方法里面。看如果Reaml在读配置那一步是怎么被插入进去的继续写代码、跟代码：第5章（加密怎么无缝集成的？用ini文件尝试）、第6章、第10章、第11章。直接看开涛的代码。然后再翻译成Springboot的
 基于url配置权限【另一个教程】：http://how2j.cn/k/shiro/shiro-plan/1732.html?tid=129
 
 mybatis打印debug日志【原理得继续熟悉，并且让生产环境不打。能否不同的环境加载不同的配置文件？】：https://www.cnblogs.com/blacksonny/p/6956949.html
@@ -1728,8 +1746,6 @@ https://blog.csdn.net/xiaolyuh123/article/details/73281522/
 https://blog.csdn.net/sinat_32481295/article/details/79764749
 
 IDEA diagram里面有一项叫Spring beans Dependencies，这正是我需要的。eclipse里面有没有spring的框架专用插件？
-
-shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
 
 功能写好后，再搭建eureka server和spring cloud gateway
 搭建Eureka注册中心：
@@ -1802,21 +1818,9 @@ CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提
 自定义Matcher：CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
 Shiro自定义Realm时用注解的方式注入父类的credentialsMatcher：https://www.cnblogs.com/foxting/p/6790331.html
 
-流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
-接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
-Authentication说明文档：http://shiro.apache.org/authentication.html
-
-Spring @ControllerAdvice与@RestControllerAdvice注解：
-https://blog.csdn.net/fang_qiming/article/details/79907979
-https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
-
 Spring mvc 之 AbstractHttpMessageConverter 自定义Http消息转化器：https://blog.csdn.net/fang_qiming/article/details/79927708
 
 看一下UsernamePasswordToken实现的2个接口里面都有什么方法
-
-Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
-KickoutSessionControlFilter extends AccessControlFilter
-如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
 
 spring官网文档：https://spring.io/guides
 

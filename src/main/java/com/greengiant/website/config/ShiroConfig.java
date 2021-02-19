@@ -1,6 +1,5 @@
 package com.greengiant.website.config;
 
-import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -80,8 +79,9 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/user/**", "anon");
         filterChainDefinitionMap.put("/role/**", "anon");
         // 管理员，需要角色权限 “admin”
+        // todo RolesAuthorizationFilter怎么起作用的其实我并不知道。与CustomRealm的关系？
         filterChainDefinitionMap.put("/admin/**", "roles[admin]");
-        // todo AuthorizationFilter怎么用上？
+        // todo AuthorizationFilter怎么用上？ PermissionsAuthorizationFilter
         //  todo 试一下自定义过滤器
 //        filterChainDefinitionMap.put("/logout", "logout"); // todo logout过滤器有什么作用？jwt是不是可以用上？
         // 其余接口一律拦截（这行代码必须放在所有权限设置的最后，不然会导致所有 url 都被拦截）

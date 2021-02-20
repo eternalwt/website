@@ -94,7 +94,7 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm,
+    public SecurityManager securityManager(CustomRealm customRealm,// todo 过一遍，把参数写的尽可能具体，以便看出哪些是@Component
                                            HashedCredentialsMatcher hashedCredentialsMatcher,
                                            CacheManager shiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,

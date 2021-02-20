@@ -16,9 +16,7 @@
 ======================================================================================================================
 
 【第一个问题：如何自定义SessionManager，把session放入缓存管理？从DefaultWebSecurityManager作为突破口（先看怎么继承实现，然后看SessionManager文章。从这个过程中提升能力）】
-【第二个问题：对比用户名密码认证流程，搞清楚jwt的方式为什么不需要使用session（要关闭一个选项）】
-Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
-    https://www.jianshu.com/p/9cb19bc2057a
+
 
 jwt、Subject、Session、SessionManager、Realm、缓存
 Subject类与Session的关系？（涉及到与jwt的关联）
@@ -29,6 +27,7 @@ Shiro源码分析之两种Session的方式：https://blog.csdn.net/xh199110/arti
 Subject.login()登录成功后用户的认证信息实际上是保存在HttpSession中的。如果此时Web应用程序部署了多实例，必须要进行Session同步【重要的应该不是有没有用jwt把，而是各种情况都要能Session同步】
 Session共享、Spring Session与jwt【Session是下一个难点】DefaultWebSecurityManager值得好好研究
 细说shiro之六：session管理【对着把时序图完全理解，能讲解时序图。尝试用时序图分析代码，并理解时序图的力量】：https://www.cnblogs.com/nuccch/p/7911423.html
+细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
 
 【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
@@ -138,14 +137,6 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
 
 我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看里面有些什么东西
-
-先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
-【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】
-看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？(搞清楚有token、没有token的两条路径)
-Filter与Session有什么联系？应该是Filter使用Session。看看BasicHttpAuthenticationFilter怎么用Session，JwtFilter用不用/怎么用Session
-session应用--采用filter和session实现简单用户权限控制：http://www.cuiyongzhi.com/post/33.html
-jwt应该也可以和session结合（有没有必要？）
-shiro的会话管理器SessionManager：http://www.voidcn.com/article/p-difpzhuc-bpq.html
 
 针对shiro的每个方面设计测试套
 
@@ -285,26 +276,33 @@ DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/
 =====================================================================================
 【jwt配置应该关注的是以下几点】
     1.返回jwt token（已做）；
-    2.对带过来的token进行验证（替代cookie的验证，如果带了token的话）；【保证了这2点，后端session等保存方式一致，才能保证Subject等对象行为正确（我的推测，验证）】
-    3.再看SessionStorageEvaluator的作用；
+    2.对带过来的token进行验证（替代原有cookie的验证，如果带了token的话，或者两者共存）
+    [1.每请求一次登录一次(这种方式确实不需要session。与问题6过期问题协同思考)，见：https://www.jianshu.com/p/3c51832f1051 https://www.jianshu.com/p/3b48ea215990；2.直接从jwt token中获取有用信息：怎么做？安全性如何？]；
+    【保证了上面2点，后端session等保存方式一致，才能保证Subject等对象行为正确（我的推测，待验证）】
+    3.再看SessionStorageEvaluator的作用；看session与subject的关系
     4.原有的cookie是怎么验证的？
     5.两者兼容，多个realm；
     6.jwt过期等的策略怎么做？
+【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
+             https://www.jianshu.com/p/9cb19bc2057a
+先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
+【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】
+看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？(搞清楚有token、没有token的两条路径)
+Filter与Session有什么联系？应该是Filter使用Session。看看BasicHttpAuthenticationFilter怎么用Session，JwtFilter用不用/怎么用Session
+session应用--采用filter和session实现简单用户权限控制：http://www.cuiyongzhi.com/post/33.html
+jwt应该也可以和session结合（有没有必要？）
+shiro的会话管理器SessionManager：http://www.voidcn.com/article/p-difpzhuc-bpq.html
 
 理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
 Filter代码中2个很NB的细节：
     1.DefaultFilter枚举中用到反射；
     2.OncePerRequestFilter中doFilterInternal抽象方法的使用第一次见识
 【怎么自定义filter并加入FilterChain？】
-【比较 DefaultWebSessionStorageEvaluator 和 DefaultSessionStorageEvaluator】：https://www.jianshu.com/p/3b48ea215990
+Shiro 中的 SessionStorageEvaluator【验证：即使不存Subject到Session中，刚刚登录也是可以用Subject的】：https://www.jianshu.com/p/3b48ea215990
 从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
 从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
-SessionStorageEvaluator【代码其实很简单，看代码】：
-https://www.jianshu.com/p/3b48ea215990
-https://blog.csdn.net/iteye_10899/article/details/82675611
 对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
 createAuthFilter（JwtAuthFilter）、createRolesFilter
-Shiro 中的 SessionStorageEvaluator：https://www.jianshu.com/p/3b48ea215990
 根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf
 JwtFilter使用的时候不禁session会怎么样？
 SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
@@ -398,7 +396,6 @@ Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信�
 相比于自己实现权限系统
 1.shiro可以使用 @RequiresAuthentication ，@RequiresUser 等注解，但是好像并不实用；
 
-细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
 
 ===========================================================
@@ -416,7 +413,6 @@ https://www.cnblogs.com/atai/p/11200033.html
 https://my.oschina.net/u/1782542/blog/1925940【这个方法并没有完全用上shiro的能力，思考会有哪些问题，然后再思考怎么用shiro】
 https://blog.csdn.net/fromatozhappy/article/details/100121260
 单点登录的第一个问题：如何多个网站都能发送token？可以使用JWT，并且放入local或者sessionStorage
-第二个问题：JWT和shiro的整合
 
 Shiro + OAuth2（Oltu）：
 https://blog.csdn.net/sJzao/article/details/87721836

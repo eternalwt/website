@@ -236,14 +236,6 @@ public class ShiroConfig {
         return sessionManager;
     }
 
-//    @Bean(name = "sessionDao")
-//    public EnterpriseCacheSessionDAO sessionDao(){
-//        EnterpriseCacheSessionDAO sessionDao = new EnterpriseCacheSessionDAO();
-////        sessionDao.setActiveSessionsCacheName("shiro-activeSessionCache");
-//        sessionDao.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
-//        return sessionDao;
-//    }
-
     /**
      * Shiro生命周期处理器
      * @return

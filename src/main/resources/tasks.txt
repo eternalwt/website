@@ -17,7 +17,6 @@
 
 【第一个问题：如何自定义SessionManager，把session放入缓存管理？从DefaultWebSecurityManager作为突破口（先看怎么继承实现，然后看SessionManager文章。从这个过程中提升能力）】
 
-
 jwt、Subject、Session、SessionManager、Realm、缓存
 Subject类与Session的关系？（涉及到与jwt的关联）
 shiro里面的Session是否需要与Tomcat的Session互转？
@@ -28,6 +27,10 @@ Subject.login()登录成功后用户的认证信息实际上是保存在HttpSess
 Session共享、Spring Session与jwt【Session是下一个难点】DefaultWebSecurityManager值得好好研究
 细说shiro之六：session管理【对着把时序图完全理解，能讲解时序图。尝试用时序图分析代码，并理解时序图的力量】：https://www.cnblogs.com/nuccch/p/7911423.html
 细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
+
+DelegatingSubject的代码值得读一遍
+【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
+“细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
 
 【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
@@ -53,8 +56,7 @@ https://www.jianshu.com/p/f7d5a9ecfd3a
 https://www.jianshu.com/p/f85e50f41100
 https://baijiahao.baidu.com/s?id=1618275433856874538&wfr=spider&for=pc
 https://www.cnblogs.com/youzhibing/archive/2018/10/30/9749427.html
-EnterpriseCacheSessionDAO搭配ehcache或者redis缓存
-RedisSessionDAO：https://blog.csdn.net/njpkhuan/article/details/100563389?depth_1.utm_source=distribute.pc_relevant.none-task&utm_source=distribute.pc_relevant.none-task
+记一下Shiro重构之RedisSessionDAO（继承EnterpriseCacheSessionDAO）：https://blog.csdn.net/njpkhuan/article/details/100563389
 shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/10392268.html
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
 Token的接口及实现类族、Subject的接口及实现类族
@@ -226,7 +228,7 @@ https://www.cnblogs.com/scmath/p/11297006.html
 https://blog.csdn.net/weixin_30662539/article/details/101573061
 
 【202002】再思考shiro的缓存：
-1.要保证ehcache和redis都能配；2.搞清楚哪些模块用缓存，然后设置到一个都可以访问到的地方（认证、授权）
+2.搞清楚哪些模块用缓存，然后设置到一个都可以访问到的地方（认证、授权）
 
 Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
 springboot在Utils工具类中读取配置文件：https://my.oschina.net/lijinzhao/blog/3030144
@@ -273,16 +275,31 @@ DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/
 3.前端的几个问题
 把菜单数据从localStorage、sessionStorage里面拿走，至少可以先放到内存里面，增强安全性
 
+FEBS-Shiro是一款简单高效的后台权限管理系统，使用Spring Boot，Shiro和Layui构建【更有信心了】：https://github.com/febsteam/FEBS-Shiro
+
 =====================================================================================
-【jwt配置应该关注的是以下几点】
+
+下一抓手：通过彻底搞清楚Filter运作机制，来搞清楚和session的关系
+【欲速则不达】上述搞完后五一到十一搞搞解释器
+然后搞数据库那个项目，搞基础知识
+
+【jwt配置应该关注的是以下几点】【3月应该可以把jwt搞好，把现有代码的测试完成】
     1.返回jwt token（已做）；
     2.对带过来的token进行验证（替代原有cookie的验证，如果带了token的话，或者两者共存）
     [1.每请求一次登录一次(这种方式确实不需要session。与问题6过期问题协同思考)，见：https://www.jianshu.com/p/3c51832f1051 https://www.jianshu.com/p/3b48ea215990；2.直接从jwt token中获取有用信息：怎么做？安全性如何？]；
     【保证了上面2点，后端session等保存方式一致，才能保证Subject等对象行为正确（我的推测，待验证）】
-    3.再看SessionStorageEvaluator的作用；看session与subject的关系
+    3.再看SessionStorageEvaluator的作用；看session与subject的关系(Subject是如何保存到Session中的）
     4.原有的cookie是怎么验证的？
     5.两者兼容，多个realm；
     6.jwt过期等的策略怎么做？
+
+可以看英文的jwt文章了：
+https://www.novatec-gmbh.de/en/blog/json-web-token-apache-shiro/(这个里面只简单比对了用户名，不会有伪造问题吗？)（可以用这个策略，再看一下jwt过期策略就OK了，勾选和不勾选保存密码选项）
+http://www.andrew-programming.com/2019/01/23/springboot-integrate-with-jwt-and-apache-shiro/
+https://github.com/Smith-Cruise/Spring-Boot-Shiro
+
+Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
+
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a
 先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
@@ -294,6 +311,7 @@ jwt应该也可以和session结合（有没有必要？）
 shiro的会话管理器SessionManager：http://www.voidcn.com/article/p-difpzhuc-bpq.html
 
 理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
+再看一下UserFilter，对比使用JwtFilter
 Filter代码中2个很NB的细节：
     1.DefaultFilter枚举中用到反射；
     2.OncePerRequestFilter中doFilterInternal抽象方法的使用第一次见识
@@ -362,10 +380,7 @@ session有跨域攻击的问题
 2.找到入口类去分析
 3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
 
-思考、看runAs
-DelegatingSubject的代码值得读一遍
-【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
-“细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
+思考、看runAs原理
 这行代码如何定制？@RequiresPermissions(value={"log:manage:*"})
 八个类逐一看源码：https://www.cnblogs.com/nuccch/p/6776352.html
 shiro-aspectj这个包是干啥的？

@@ -1,13 +1,14 @@
 package com.greengiant.website.config;
 
+import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
+import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
+import com.greengiant.website.shiro.ShiroCacheManagerImpl;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.eis.AbstractSessionDAO;
 import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -94,9 +95,9 @@ public class ShiroConfig {
      * 注入 securityManager
      */
     @Bean
-    public SecurityManager securityManager(CustomRealm customRealm,// todo 过一遍，把参数写的尽可能具体，以便看出哪些是@Component
-                                           HashedCredentialsMatcher hashedCredentialsMatcher,
-                                           CacheManager shiroCacheManager,
+    public SecurityManager securityManager(CustomRealm customRealm,
+                                           RetryLimitHashedCredentialsMatcher hashedCredentialsMatcher,
+                                           ShiroCacheManagerImpl shiroCacheManager,
                                            CookieRememberMeManager rememberMeManager,
                                            DefaultWebSessionManager sessionManager) {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
@@ -217,8 +218,7 @@ public class ShiroConfig {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(CacheManager cacheManager,
-                                                   AbstractSessionDAO customCachedSessionDAO) {
+    public DefaultWebSessionManager sessionManager(CustomCachedSessionDAO customCachedSessionDAO) {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         //单位毫秒，1小时后失效
         sessionManager.setGlobalSessionTimeout(1000 * 60 * 60);
@@ -227,11 +227,8 @@ public class ShiroConfig {
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
 
-//        customCachedSessionDAO.setSessionIdGenerator(new JavaUuidSessionIdGenerator());
         sessionManager.setSessionDAO(customCachedSessionDAO);
-
-        // todo 调查这里是否还需要设置。sessionDAO也设置了缓存，关系是啥？？不是说只设置一个地方就可以了吗？
-        sessionManager.setCacheManager(cacheManager);
+//        sessionManager.setCacheManager(shiroCacheManager);// todo 搞清楚最终用哪个SessionDAO后，再看这行代码
 
         return sessionManager;
     }

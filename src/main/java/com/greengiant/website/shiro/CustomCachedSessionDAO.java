@@ -16,6 +16,11 @@ import java.util.Collection;
 public class CustomCachedSessionDAO extends AbstractSessionDAO {
     // todo 看EnterpriseCacheSessionDAO代码，为啥CustomCacheSessionDAO不像EnterpriseCacheSessionDAO一样
     //  直接 extends CachingSessionDAO。是因为CachingSessionDAO里面的内容太过冗余？
+
+    // todo 这段抄过来的代码有很大的问题。
+    //  1.能否直接用CachingSessionDAO？
+    //  2.如果要继承也直接继承CachingSessionDAO，否则ShiroConfig里面的（虽然是多余的）是有问题的（看代码发现）；
+    //  3.这个类如果保留，CacheManagerWrapper是否可以干掉？
     private static Logger LOGGER = LogManager.getLogger(CustomCachedSessionDAO.class);
 
     /**

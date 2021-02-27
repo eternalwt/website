@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RetryLimitHashedCredentialsMatcher extends HashedCredentialsMatcher {
-    // todo 把AtomicInteger写进去，看AtomicInteger源码
     @Value("${password.max-retry-count}")
     private int MAX_RETRY_COUNT;
 

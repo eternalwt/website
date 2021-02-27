@@ -15,12 +15,11 @@
 
 ======================================================================================================================
 
-CacheManagerWrapper还需要吗？
 EhCacheManager的整合原理再看一下
 
 【下一个可以搞的】
     2.把ShiroConfig里面的无用代码过一遍后干掉
-    CustomRealm的缓存完善并测试(CacheManagerAware怎么把CacheManager注入进去再看一遍)
+    CustomRealm的缓存测试(CacheManagerAware怎么把CacheManager注入进去再看一遍)
     CacheManagerAware（Shiro内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如Realm）是否实现了CacheManagerAware并自动注入相应的CacheManager）：
         https://www.vxzsk.com/1172.html
         https://shiro.apache.org/static/1.7.1/apidocs/org/apache/shiro/cache/CacheManagerAware.html

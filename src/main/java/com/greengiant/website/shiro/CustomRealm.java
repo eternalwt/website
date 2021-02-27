@@ -36,7 +36,7 @@ public class CustomRealm extends AuthorizingRealm {
     @Autowired
     private MenuService menuService;
 
-    private static final String cacheName = "authCache";
+    private static final String cacheName = "roleCache";
 
     /**
      * 获取身份验证信息
@@ -74,21 +74,24 @@ public class CustomRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+
         log.info("获取角色信息");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
         // todo 其实这里可以直接在方法上加注解做缓存，这样是不是好的实践值得商榷一下
-        this.getCacheManager().getCache(cacheName).get(username);
-
         log.info("authorization for: [{}]" + username);
-        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-        Set<String> roleSet = new HashSet<>();
         //获得该用户角色
-        List<Role> roleList = roleService.getRoleListByUserName(username);
+        List<Role> roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
         if (roleList != null && !roleList.isEmpty()) {
+            // do nothing
+        } else {
+            roleList = roleService.getRoleListByUserName(username);
+        }
+        if (roleList != null && !roleList.isEmpty()) {
+            Set<String> roleSet = new HashSet<>();
             for (Role role : roleList) {
                 roleSet.add(role.getRoleName());
             }
-            //设置该用户拥有的角色
             authorizationInfo.setRoles(roleSet);
         }
 
@@ -106,10 +109,13 @@ public class CustomRealm extends AuthorizingRealm {
             return false;
         }
 
-        // todo 这里加缓存意义重大
-//        this.getCacheManager()// cacheManagerAware里面设置的
-
-        List<Role> roleList = roleService.getRoleListByUserName(username);
+        List<Role> roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
+        if (roleList != null && !roleList.isEmpty()) {
+            // do nothing
+        } else {
+            // todo 更新角色的時候也要更新role信息
+            roleList = roleService.getRoleListByUserName(username);
+        }
         if (roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {
                 if (menu.getRole() != null && menu.getRole().contains(role.getId().toString())) {
@@ -121,9 +127,4 @@ public class CustomRealm extends AuthorizingRealm {
         return false;
     }
 
-//    @Override
-//    public boolean hasRole(PrincipalCollection principals, String roleIdentifier) {
-//        SecurityUser user = (SecurityUser)principals.getPrimaryPrincipal();
-//        return user.isAdmin()||super.hasRole(principals,roleIdentifier);
-//    }
 }

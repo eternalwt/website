@@ -5,6 +5,9 @@ import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Component;
 
+/**
+ * springboot CacheManager的包装类
+ */
 @Component
 public class CacheManagerWrapper {
 
@@ -23,7 +26,9 @@ public class CacheManagerWrapper {
 
     public void putItem(String cacheName, String key, Object item) {
         Cache cache = cacheManager.getCache(cacheName);
-        cache.put(key, item);
+        if (cache != null) {
+            cache.put(key, item);
+        }
     }
 
     public void updateItem(String cacheName, String key, Object value) {
@@ -32,11 +37,10 @@ public class CacheManagerWrapper {
 
     public boolean removeItem(String cacheName, String key) {
         Cache cache = cacheManager.getCache(cacheName);
-        return cache.evictIfPresent(key);
+        if (cache != null) {
+            return cache.evictIfPresent(key);
+        }
+        return false;
     }
-
-//    void getKeys(CacheManager cacheManager, String cacheName) {
-//        Cache cache = cacheManager.getCache(cacheName);
-//    }
 
 }

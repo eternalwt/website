@@ -15,6 +15,16 @@
 
 ======================================================================================================================
 
+CacheManagerWrapper还需要吗？
+
+【下一个可以搞的】
+    2.把ShiroConfig里面的无用代码过一遍后干掉
+    CustomRealm的缓存可以搞了(CacheManagerAware怎么把CacheManager注入进去？)
+    CacheManagerAware（Shiro内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如Realm）是否实现了CacheManagerAware并自动注入相应的CacheManager）：
+        https://www.vxzsk.com/1172.html
+        https://shiro.apache.org/static/1.7.1/apidocs/org/apache/shiro/cache/CacheManagerAware.html
+        http://shiro.apache.org/static/1.2.4/apidocs/org/apache/shiro/cache/class-use/CacheManagerAware.html
+
 【第一个问题：如何自定义SessionManager，把session放入缓存管理？从DefaultWebSecurityManager作为突破口（先看怎么继承实现，然后看SessionManager文章。从这个过程中提升能力）】
 
 jwt、Subject、Session、SessionManager、Realm、缓存
@@ -66,6 +76,8 @@ KickoutSessionControlFilter extends AccessControlFilter
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
 接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
 Authentication说明文档：http://shiro.apache.org/authentication.html
+AbstractSessionDAO implements SessionDAO：从这段代码来看，抽象类可以不完全实现接口中的方法
+【ValidatingSession】是个啥？https://blog.csdn.net/javarrr/article/details/83188163
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
@@ -277,6 +289,8 @@ DAOException 和ServiceException：https://blog.csdn.net/ymyss4/article/details/
 
 FEBS-Shiro是一款简单高效的后台权限管理系统，使用Spring Boot，Shiro和Layui构建【更有信心了】：https://github.com/febsteam/FEBS-Shiro
 
+SpringBoot设置debug=true
+
 =====================================================================================
 
 下一抓手：通过彻底搞清楚Filter运作机制，来搞清楚和session的关系
@@ -297,8 +311,6 @@ FEBS-Shiro是一款简单高效的后台权限管理系统，使用Spring Boot�
 https://www.novatec-gmbh.de/en/blog/json-web-token-apache-shiro/(这个里面只简单比对了用户名，不会有伪造问题吗？)（可以用这个策略，再看一下jwt过期策略就OK了，勾选和不勾选保存密码选项）
 http://www.andrew-programming.com/2019/01/23/springboot-integrate-with-jwt-and-apache-shiro/
 https://github.com/Smith-Cruise/Spring-Boot-Shiro
-
-Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
 
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a
@@ -373,7 +385,17 @@ https://www.geek-share.com/detail/2698157954.html
 分析，为什么：在程序中任何地方都可以通过SecurityUtils.getSubject()获取到当前的subject
 session有跨域攻击的问题
 
+shiro 同一账号多人同时登陆强制下线【默认就是这样的把？用2个浏览器测一下】：
+https://blog.csdn.net/lht931942788/article/details/79179410
+https://blog.csdn.net/qq_39069111/article/details/81156527
+https://www.cnblogs.com/wang-qiang/p/9470527.html
+shiro的重复登录问题：
+https://blog.csdn.net/sunsgne_ac/article/details/79289770
+https://blog.csdn.net/wdsafmy468619/article/details/47041467
+https://www.cnblogs.com/zhanying999666/p/8392592.html
+
 【应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
+shiro-redis插件包还有必要看吗？
 
 可以看shiro的启动加载了：shiro-spring
 1.要搞清除包里面的bean是怎么被自动扫描的；
@@ -414,6 +436,11 @@ Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信�
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
 
 ===========================================================
+
+jwt与token+redis，哪种方案更好用？【先自己思考】：https://www.zhihu.com/question/274566992/answer/1696761067
+
+Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：
+https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
 
 Apache Shiro 用户指南：
 https://segmentfault.com/a/1190000010791103
@@ -1119,15 +1146,6 @@ HandlerInterceptor是一个很方便的拦截器，可以用来做Token校验。
 Springboot 15篇：https://yq.aliyun.com/users/hz3zxsd4wosss?spm=a2c4e.11153940.0.0.1fa660e0yUAIFp
 
 浅谈Apache 安全框架Shiro系列文章：https://www.zhihu.com/people/vincent-62-39
-
-shiro 同一账号多人同时登陆强制下线【默认就是这样的把？用2个浏览器测一下】：
-https://blog.csdn.net/lht931942788/article/details/79179410
-https://blog.csdn.net/qq_39069111/article/details/81156527
-https://www.cnblogs.com/wang-qiang/p/9470527.html
-shiro的重复登录问题：
-https://blog.csdn.net/sunsgne_ac/article/details/79289770
-https://blog.csdn.net/wdsafmy468619/article/details/47041467
-https://www.cnblogs.com/zhanying999666/p/8392592.html
 
 shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂【如果没有资料就看源码，并写博客】。看懂了，就真正提升了：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去

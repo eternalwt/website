@@ -6,10 +6,8 @@ import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.shiro.ShiroCacheManagerImpl;
 import com.greengiant.website.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;
-import org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
@@ -151,39 +149,6 @@ public class ShiroConfig {
 //        return realm;
 //    }
 
-//    @Bean
-//    public HashedCredentialsMatcher hashedCredentialsMatcher(CacheManager cacheManager) {
-//        RetryLimitHashedCredentialsMatcher retryLimitHashedCredentialsMatcher = new RetryLimitHashedCredentialsMatcher();
-//        //hash算法
-//        retryLimitHashedCredentialsMatcher.setHashAlgorithmName(PasswordUtil.ALGORITHM_NAME);
-//        //加密次数
-//        retryLimitHashedCredentialsMatcher.setHashIterations(PasswordUtil.HASH_ITERATION_COUNT);
-//        //存储散列后的密码是否为16进制
-//        retryLimitHashedCredentialsMatcher.setStoredCredentialsHexEncoded(PasswordUtil.STORED_CREDENTIALS_HEX_ENCODED);
-//
-//        return retryLimitHashedCredentialsMatcher;
-//    }
-
-//    /**
-//     * 配置shiro redisManager
-//     * 使用的是shiro-redis开源插件
-//     *
-//     * @return
-//     */
-//    @Bean
-//    public RedisManager redisManager() {
-////        RedisManager redisManager = new MyRedisManager();
-//        RedisManager redisManager = new RedisManager();
-//        redisManager.setHost("localhost:6379");
-////        redisManager.set
-////        redisManager.setPort(6379);
-////        // 配置缓存过期时间
-////        redisManager.setExpire(expireTime);
-////        redisManager.setTimeout(timeOut);
-//        // redisManager.setPassword(password);
-//        return redisManager;
-//    }
-
     /**
      * Cookie
      */
@@ -228,7 +193,7 @@ public class ShiroConfig {
         sessionManager.setDeleteInvalidSessions(true);
 
         sessionManager.setSessionDAO(customCachedSessionDAO);
-//        sessionManager.setCacheManager(shiroCacheManager);// todo 搞清楚最终用哪个SessionDAO后，再看这行代码
+//        sessionManager.setCacheManager(shiroCacheManager);// todo 搞清楚最终用哪个SessionDAO后，再确认一遍这行代码
 
         return sessionManager;
     }

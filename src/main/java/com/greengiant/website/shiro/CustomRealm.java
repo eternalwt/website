@@ -101,8 +101,8 @@ public class CustomRealm extends AuthorizingRealm {
             return false;
         }
 
-        CacheManager cacheManager = this.getCacheManager();
         // todo 这里加缓存意义重大
+//        this.getCacheManager()// cacheManagerAware里面设置的
 
         List<Role> roleList = roleService.getRoleListByUserName(username);
         if (roleList != null && !roleList.isEmpty()) {

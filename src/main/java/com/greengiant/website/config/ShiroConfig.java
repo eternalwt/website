@@ -191,9 +191,7 @@ public class ShiroConfig {
         sessionManager.setSessionValidationInterval(1000 * 60 * 15);
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
-
-        sessionManager.setSessionDAO(customCachedSessionDAO);
-//        sessionManager.setCacheManager(shiroCacheManager);// todo 搞清楚最终用哪个SessionDAO后，再确认一遍这行代码
+        sessionManager.setSessionDAO(customCachedSessionDAO);// 可以不要，CustomCachedSessionDAO实现了CacheManagerAware接口
 
         return sessionManager;
     }

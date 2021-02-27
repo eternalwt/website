@@ -36,6 +36,8 @@ public class CustomRealm extends AuthorizingRealm {
     @Autowired
     private MenuService menuService;
 
+    private static final String cacheName = "authCache";
+
     /**
      * 获取身份验证信息
      * Shiro中，最终是通过 Realm 来获取应用程序中的用户、角色及权限信息的。
@@ -74,6 +76,9 @@ public class CustomRealm extends AuthorizingRealm {
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         log.info("获取角色信息");
         String username = (String) SecurityUtils.getSubject().getPrincipal();
+        // todo 其实这里可以直接在方法上加注解做缓存，这样是不是好的实践值得商榷一下
+        this.getCacheManager().getCache(cacheName).get(username);
+
         log.info("authorization for: [{}]" + username);
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         Set<String> roleSet = new HashSet<>();

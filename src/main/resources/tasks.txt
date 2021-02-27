@@ -16,10 +16,11 @@
 ======================================================================================================================
 
 CacheManagerWrapper还需要吗？
+EhCacheManager的整合原理再看一下
 
 【下一个可以搞的】
     2.把ShiroConfig里面的无用代码过一遍后干掉
-    CustomRealm的缓存可以搞了(CacheManagerAware怎么把CacheManager注入进去？)
+    CustomRealm的缓存完善并测试(CacheManagerAware怎么把CacheManager注入进去再看一遍)
     CacheManagerAware（Shiro内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如Realm）是否实现了CacheManagerAware并自动注入相应的CacheManager）：
         https://www.vxzsk.com/1172.html
         https://shiro.apache.org/static/1.7.1/apidocs/org/apache/shiro/cache/CacheManagerAware.html
@@ -429,7 +430,6 @@ if (realm instanceof CacheManagerAware) {
 Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信息？】：https://blog.csdn.net/J080624/article/details/83788196
 【先看aware接口本身里面有什么方法】spring4.1.8扩展实战之二：Aware接口揭秘：https://blog.csdn.net/boling_cavalry/article/details/81611426
 
-
 相比于自己实现权限系统
 1.shiro可以使用 @RequiresAuthentication ，@RequiresUser 等注解，但是好像并不实用；
 
@@ -474,7 +474,7 @@ https://zhuanlan.zhihu.com/p/122482859
 CAS的细节？CAS与OAuth2（Oltu）?
 CAS SSO With Spring Security：
 https://www.baeldung.com/spring-security-cas-sso#:~:text=%20%20%201%20Overview%0AIn%20this%20tutorial%2C%20we%27ll,It%27ll%20have%20Web%2C%20Security%2C...%204%20Conclusion%20More%20
-
+shiro-cas：https://shiro.apache.org/cas.html
 CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
 【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
 

@@ -15,7 +15,22 @@
 
 ======================================================================================================================
 
+基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
+
+【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
+【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】
+MIT 6.824：https://www.zhihu.com/question/29597104
+网站：https://pdos.csail.mit.edu/6.824/schedule.html
+视频：
+作业完成：
+
 EhCacheManager的整合原理再看一下
+加jwt代码
+
+阅读mybatis-plus-boot-starter代码
+深入SpringBoot注解原理及使用【一个现实的问题，我的mybatis-plus、Kafka注解是怎么发挥作用的】：https://www.cnblogs.com/jing99/p/11504113.html
+
+还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
 
 【下一个可以搞的】
     2.把ShiroConfig里面的无用代码过一遍后干掉
@@ -311,6 +326,14 @@ SpringBoot设置debug=true
 https://www.novatec-gmbh.de/en/blog/json-web-token-apache-shiro/(这个里面只简单比对了用户名，不会有伪造问题吗？)（可以用这个策略，再看一下jwt过期策略就OK了，勾选和不勾选保存密码选项）
 http://www.andrew-programming.com/2019/01/23/springboot-integrate-with-jwt-and-apache-shiro/
 https://github.com/Smith-Cruise/Spring-Boot-Shiro
+Shiro 中的 SessionStorageEvaluator【验证：即使不存Subject到Session中，刚刚登录也是可以用Subject的】：https://www.jianshu.com/p/3b48ea215990
+从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
+从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
+对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
+createAuthFilter（JwtAuthFilter）、createRolesFilter
+根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf
+SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
+Shiro步步为营--如何优雅地与JWT集成【这种方法配置会不会导致Subject用不了？】：https://blog.csdn.net/pengjunlee/article/details/95600843
 
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a
@@ -319,7 +342,6 @@ https://github.com/Smith-Cruise/Spring-Boot-Shiro
 看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？(搞清楚有token、没有token的两条路径)
 Filter与Session有什么联系？应该是Filter使用Session。看看BasicHttpAuthenticationFilter怎么用Session，JwtFilter用不用/怎么用Session
 session应用--采用filter和session实现简单用户权限控制：http://www.cuiyongzhi.com/post/33.html
-jwt应该也可以和session结合（有没有必要？）
 shiro的会话管理器SessionManager：http://www.voidcn.com/article/p-difpzhuc-bpq.html
 
 理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
@@ -327,17 +349,7 @@ shiro的会话管理器SessionManager：http://www.voidcn.com/article/p-difpzhuc
 Filter代码中2个很NB的细节：
     1.DefaultFilter枚举中用到反射；
     2.OncePerRequestFilter中doFilterInternal抽象方法的使用第一次见识
-【怎么自定义filter并加入FilterChain？】
-Shiro 中的 SessionStorageEvaluator【验证：即使不存Subject到Session中，刚刚登录也是可以用Subject的】：https://www.jianshu.com/p/3b48ea215990
-从Authenticator、SessionStorageEvaluator的角度来做shiro集成JWT（禁session）：https://www.jianshu.com/p/0b1131be7ace
-从代码层面分析这一句对流程的影响：sessionStorageEvaluator.setSessionStorageEnabled(false);
-对sessionStorageEvaluator.setSessionStorageEnabled(false);的理解：我的理解是如果不设为false，会自动走鉴权那一套，当然还是以代码为准【这是
-createAuthFilter（JwtAuthFilter）、createRolesFilter
-根据开涛的第20章“无状态Web应用集成”应该是可以自己写出来的：file:///D:/gao/%E7%94%B5%E5%AD%90%E4%B9%A6/%E8%B7%9F%E6%88%91%E5%AD%A6shiro.pdf
-JwtFilter使用的时候不禁session会怎么样？
-SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
-Shiro步步为营--如何优雅地与JWT集成【这种方法配置会不会导致Subject用不了？】：https://blog.csdn.net/pengjunlee/article/details/95600843
-【在springboot下，拦截是如何发挥作用的？】shiro内置过滤器研究：
+【怎么自定义filter并加入FilterChain？】【在springboot下，拦截是如何发挥作用的？】shiro内置过滤器研究：
 https://www.cnblogs.com/koal/p/5152671.html
 https://www.cnblogs.com/modyuan/p/12403605.html
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单Authenticator点登录【看一下单点登录部分】：https://zhuanlan.zhihu.com/p/171516210
@@ -402,6 +414,8 @@ shiro-redis插件包还有必要看吗？
 2.找到入口类去分析
 3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
 
+把run as看了：
+runas一个不优雅的实现方式：将被代理者的用户名、密码放在数据库中，一旦发现有runas关系，可以读取到自动登录一次。
 思考、看runAs原理
 这行代码如何定制？@RequiresPermissions(value={"log:manage:*"})
 八个类逐一看源码：https://www.cnblogs.com/nuccch/p/6776352.html
@@ -1118,6 +1132,7 @@ https://zhuanlan.zhihu.com/p/22456973
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
+shiro-all可以把shiro包一次备齐：https://www.cnblogs.com/jackydapeng/p/10093852.html
 
 【过年期间有空建立起来】
 用敏捷的方法来做更精细有效的计划（一定要有时间计划和时间成本估算），使用更好的计划文档。用更严肃的态度去思考计划的定制
@@ -1749,9 +1764,6 @@ druid开启日志
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 
 再对比阿里巴巴手册看AddUserVo定义是否有问题
-升级springboot 2.1.5后启动报错
-
-搜shiro与SSO
 
 把有道笔记里面shiro的东西整理一下
 JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
@@ -2259,4 +2271,6 @@ https://blog.csdn.net/gnail_oug/article/details/80324120
 https://blog.csdn.net/magi1201/article/details/82757063
 
 jar包里面的META-INF目录：https://blog.csdn.net/qq_38449518/article/details/82414069
+
+@ConditionalOn...注解，条件组合你知道吗？https://blog.csdn.net/yusimiao/article/details/99301346
 

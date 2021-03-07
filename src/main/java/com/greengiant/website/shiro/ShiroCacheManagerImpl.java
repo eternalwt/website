@@ -49,7 +49,9 @@ public class ShiroCacheManagerImpl implements CacheManager {
         if (cacheMap.get(name) != null) {
             return cacheMap.get(name);
         } else {
-            return new ShiroCacheImpl<K, V>(name, springCacheManager);
+            Cache cache = new ShiroCacheImpl<K, V>(name, springCacheManager);
+            cacheMap.put(name, cache);
+            return cache;
         }
     }
 

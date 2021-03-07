@@ -51,12 +51,16 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
     public V get(K k) throws CacheException {
         log.warn("从缓存中获取key：{}", k);
         //调用spring的Cache的get方法
-        Cache.ValueWrapper valueWrapper = cache.get(getKey(k));
-        if (valueWrapper == null) {
-            return null;
+        if (getKey(k) != null) {
+            Cache.ValueWrapper valueWrapper = cache.get(getKey(k));
+            if (valueWrapper != null) {
+                return (V) valueWrapper.get();
+            }
+        } else {
+            log.warn("getKey(k) is null, key is: " + k);
         }
 
-        return (V) valueWrapper.get();
+        return null;
     }
 
     /**

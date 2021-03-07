@@ -19,6 +19,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -81,13 +82,15 @@ public class CustomRealm extends AuthorizingRealm {
         // todo 其实这里可以直接在方法上加注解做缓存，这样是不是好的实践值得商榷一下
         log.info("authorization for: [{}]" + username);
         //获得该用户角色
-        List<Role> roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
-        if (roleList != null && !roleList.isEmpty()) {
-            // do nothing
-        } else {
+        List<Role> roleList = null;
+        if (this.getCacheManager().getCache(cacheName) != null) {
+            roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
+        }
+        if (roleList == null) {
             roleList = roleService.getRoleListByUserName(username);
             this.getCacheManager().getCache(cacheName).put(username, roleList);
         }
+
         if (roleList != null && !roleList.isEmpty()) {
             Set<String> roleSet = new HashSet<>();
             for (Role role : roleList) {
@@ -110,14 +113,14 @@ public class CustomRealm extends AuthorizingRealm {
             return false;
         }
 
-        List<Role> roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
-        if (roleList != null && !roleList.isEmpty()) {
-            // do nothing
-        } else {
+        List<Role> roleList = null;
+        roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
+        if (roleList == null) {
             // todo 更新角色的時候也要更新role信息
             roleList = roleService.getRoleListByUserName(username);
             this.getCacheManager().getCache(cacheName).put(username, roleList);
         }
+
         if (roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {
                 if (menu.getRole() != null && menu.getRole().contains(role.getId().toString())) {

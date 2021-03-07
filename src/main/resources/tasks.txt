@@ -15,17 +15,22 @@
 
 ======================================================================================================================
 
-isPermitted重载的有问题，应该是权限而不是角色相关的
+isPermitted重载的有问题，应该是权限而不是角色相关的。什么时候调用的？
 Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
     <V> V execute(Callable<V> var1) throws ExecutionException;
     void execute(Runnable var1);
     <V> Callable<V> associateWith(Callable<V> var1);
+        https://blog.csdn.net/xuanfeng623/article/details/40892469/
+        https://www.cnblogs.com/telwanggs/p/7608242.html
+        浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
     Runnable associateWith(Runnable var1);
 DelegatingSubject的代码值得读一遍:
     https://blog.csdn.net/qq_21046665/article/details/79735922
 【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
 “细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
 CreadentialsMatcher和subject结合学习【有什么关联？】
+
+看 spring-boot-starter-test
 
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
@@ -101,6 +106,7 @@ KickoutSessionControlFilter extends AccessControlFilter
 Authentication说明文档：http://shiro.apache.org/authentication.html
 AbstractSessionDAO implements SessionDAO：从这段代码来看，抽象类可以不完全实现接口中的方法
 【ValidatingSession】是个啥？https://blog.csdn.net/javarrr/article/details/83188163
+【如何切换的？】（在非web、非EJB的情况下，Shiro自动使用自带session；如果是web或者EJB应用，则Shiro自动使用HttpSession，不需要人为改变。）
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
 3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
@@ -130,6 +136,11 @@ https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
 springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
+Ehcache Configuration Guide：https://www.ehcache.org/generated/2.9.0/pdf/Ehcache_Configuration_Guide.pdf
+Spring Boot Ehcache Example(ehcache 3)：https://www.baeldung.com/spring-boot-ehcache
+EhCache集群方案（RMI等）：
+    https://www.cnblogs.com/duwanjiang/p/6230113.html
+    https://blog.csdn.net/wangshijie1234567/article/details/47724853
 【先用ehcache、ehcache3测，配置简单一些，并且也是必须的】
 DefaultWebSessionManager的配置再看一下【主要是结合shiro缓存的配置了解一下shiro缓存需要配几次】
 https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
@@ -141,15 +152,6 @@ https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz
     2.会破坏整体缓存配置结构，不利于切换
     3.自己完全看懂后确定是否把这个包删掉
     4.彻底搞定shiro-spring的功能
-
-1.干todo，继续发现问题。认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
-2.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
-3.把jwt、单点登录等搞完，就彻底搞定了。
-5.把代码里面数据库相关的依赖整一下
-
-CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
-RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
-
 // todo
     2.再次确认ShiroCacheManagerImpl
     【这几个问题搞定后测试一遍就搞定了】
@@ -172,6 +174,28 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 // todo 3.看spring与ehcache、redis的整合
 
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
+对比redis和ehcache的配置文件
+ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
+依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
+ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
+并且ehcache、redis分别都要尝试用spring的CacheManager和自己的CacheManager两种方式
+到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
+SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+现在我有的地方用的redis，有的地方用的ehcache
+ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
+ehcache2没有在xml里面配置的cache会报空指针
+自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
+用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
+我Matcher里面的EhcacheU相关的几个方法怎么写成可以快速切换缓存的？
+CacheManager之间的转换
+
+1.干todo，继续发现问题。认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
+2.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
+3.把jwt、单点登录等搞完，就彻底搞定了。
+5.把代码里面数据库相关的依赖整一下
+
+CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
 我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看里面有些什么东西
 
@@ -519,7 +543,6 @@ Redis的三个客户端框架比较：Jedis,Redisson,Lettuce：https://www.cnblo
 继续：搜索如何读代码的文章，再读shiro代码。结合UML图，例如：https://www.cnblogs.com/smilond/p/10490906.html
 
 把redis版的配好，现在从其他方向有点突破不了了
-对比redis和ehcache的配置文件
 
 看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
 看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
@@ -542,7 +565,6 @@ guava eventbus源码解析：https://my.oschina.net/u/3775437/blog/1841898
 使用Guava RateLimiter限流以及源码解析：https://cloud.tencent.com/developer/article/1625114
 
 为啥我的@Slf4j log标红了？
-ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
 先搞懂realm缓存是咋回事，然后把realm缓存调通【现在的代码怎么看到缓存的值？】
 Shiro 中的 Realm：https://www.jianshu.com/p/df8d7c888401
 【下一步】
@@ -586,11 +608,6 @@ SecurityUtils与ThreadLocal？
 【周末】
 2.把这段时间的股票疑问梳理一下；
 
-
-依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
-ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
-并且ehcache、redis分别都要尝试用spring的CacheManager和自己的CacheManager两种方式
-
 RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
 
@@ -608,17 +625,6 @@ https://www.cnblogs.com/zoli/p/11236799.html
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站
 3.开始写通知模块，前端继续进入
-
-到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
-SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
-现在我有的地方用的redis，有的地方用的ehcache
-ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
-ehcache2没有在xml里面配置的cache会报空指针
-
-自己实现一个ShiroEhcacheSessionDAO（对比redis那个）
-用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
-我Matcher里面的EhcacheU相关的几个方法怎么写成可以快速切换缓存的？
-CacheManager之间的转换
 
 进一步深入：
 1.把ShiriConfig里面每一个配置点都看一下是如何切换的；
@@ -646,19 +652,12 @@ https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
 3.由EhCacheManager的setCacheManager方法参数是net.sf.ehcache.CacheManager类型来看，shiro-ehcache只能配合ehcache2版本；
 4.由3可知，shiro-ehcache应该对ehcache进行了provided的依赖，思考这样设计的理由，想想是怎么打包的；看一下它的pom里面<relativePath>../pom.xml</relativePath>是什么意思
 只有看源码，才能看出别人是怎么编译的。除了看spring-redis、spring-ehcache、mybatis整合外，可以在mvnrepository里面找spring开头的包
-
-彻底搞懂mybatis、redis等与spring的整合至关重要，要能打断点观察启动过程
-
-根据下面两句话看代码，在代码中断点调试：”Shiro的用户认证是没有提供缓冲机制的，shiro的授权缓存是默认开启的“：https://www.jianshu.com/p/94028ce76efb
-
-1.把session放入ehcache，进一步理解shiro配置缓存；2.把ShiroConfig里面多余的缓存配置干掉
+2.把ShiroConfig里面多余的缓存配置干掉
 3.把EhcacheUtil搞成component（不用读取配置文件位置，直接autowire）；https://blog.csdn.net/dreamhai/article/details/80642010
 还是得花时间从根本上搞懂ehcache和springboot的集成，这是首要的
-
 springboot②最正确的集成shiro并使用ehcache缓存：
 https://blog.csdn.net/tanleijin/java/article/details/81118963
 https://gitee.com/xieke90/common-admin/blob/SpringBoot2.X_EhCache/src/main/java/com/xieke/admin/config/ShiroConfig.java
-
 1.先把ehcache彻底搞懂，包括session
 （1）springboot里面的ehcacheUtil已经调通了，下一步配通shiro的cache、配通session的cache，搞懂两个cacheManager的异同
 关于Ehcache缓存中timeToLiveSeconds和timeToIdleSeconds区别：https://blog.csdn.net/fiwrc/article/details/54909868
@@ -667,6 +666,10 @@ https://gitee.com/xieke90/common-admin/blob/SpringBoot2.X_EhCache/src/main/java/
 （2）把session缓存搞好
 （3）整站的缓存
 （4）再看一次token的方案
+
+彻底搞懂mybatis、redis等与spring的整合至关重要，要能打断点观察启动过程
+
+根据下面两句话看代码，在代码中断点调试：”Shiro的用户认证是没有提供缓冲机制的，shiro的授权缓存是默认开启的“：https://www.jianshu.com/p/94028ce76efb
 
 【先配好缓存，再看原理】
 shiro的启动过程【现在的知识结构来说最关键的一步需要理解的。能否打断点跟踪？】：

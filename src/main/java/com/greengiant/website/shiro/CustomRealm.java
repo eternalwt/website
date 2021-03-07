@@ -86,6 +86,7 @@ public class CustomRealm extends AuthorizingRealm {
             // do nothing
         } else {
             roleList = roleService.getRoleListByUserName(username);
+            this.getCacheManager().getCache(cacheName).put(username, roleList);
         }
         if (roleList != null && !roleList.isEmpty()) {
             Set<String> roleSet = new HashSet<>();
@@ -115,6 +116,7 @@ public class CustomRealm extends AuthorizingRealm {
         } else {
             // todo 更新角色的時候也要更新role信息
             roleList = roleService.getRoleListByUserName(username);
+            this.getCacheManager().getCache(cacheName).put(username, roleList);
         }
         if (roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {

@@ -15,6 +15,18 @@
 
 ======================================================================================================================
 
+isPermitted重载的有问题，应该是权限而不是角色相关的
+Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
+    <V> V execute(Callable<V> var1) throws ExecutionException;
+    void execute(Runnable var1);
+    <V> Callable<V> associateWith(Callable<V> var1);
+    Runnable associateWith(Runnable var1);
+DelegatingSubject的代码值得读一遍:
+    https://blog.csdn.net/qq_21046665/article/details/79735922
+【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
+“细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
+CreadentialsMatcher和subject结合学习【有什么关联？】
+
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
@@ -43,7 +55,7 @@ EhCacheManager的整合原理再看一下
 【第一个问题：如何自定义SessionManager，把session放入缓存管理？从DefaultWebSecurityManager作为突破口（先看怎么继承实现，然后看SessionManager文章。从这个过程中提升能力）】
 
 jwt、Subject、Session、SessionManager、Realm、缓存
-Subject类与Session的关系？（涉及到与jwt的关联）
+Subject有获取Session的接口
 shiro里面的Session是否需要与Tomcat的Session互转？
 shiro源码分析（二）Subject和Session：https://blog.csdn.net/hxpjava1/article/details/77917106
 shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
@@ -52,10 +64,6 @@ Subject.login()登录成功后用户的认证信息实际上是保存在HttpSess
 Session共享、Spring Session与jwt【Session是下一个难点】DefaultWebSecurityManager值得好好研究
 细说shiro之六：session管理【对着把时序图完全理解，能讲解时序图。尝试用时序图分析代码，并理解时序图的力量】：https://www.cnblogs.com/nuccch/p/7911423.html
 细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
-
-DelegatingSubject的代码值得读一遍
-【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
-“细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
 
 【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
@@ -1875,7 +1883,6 @@ activiti生产的图片如何做缓存？
 不懂的地方可以多借助调试来观察，把spring的调试配起来
 
 加密：哪怕用md5实现，后面再优化：https://blog.csdn.net/hxm_Code/article/details/50136173
-CreadentialsMatcher和subject结合学习【有意识训练自己，才会有提升】
 自定义Matcher：CredentialsMatcher只有doCredentialsMatch一个方法，因此自定义主要是重载这个方法
 Shiro自定义Realm时用注解的方式注入父类的credentialsMatcher：https://www.cnblogs.com/foxting/p/6790331.html
 

@@ -8,6 +8,7 @@ import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.RoleService;
 import com.greengiant.website.utils.ResultUtils;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class RoleController {
 
     @GetMapping(value = "/getById")
     public ResultBean getById(@RequestParam Long id) {
+        SecurityUtils.getSubject().checkRole("aaa");
         return ResultUtils.success(roleService.getById(id));
     }
 
@@ -51,6 +53,12 @@ public class RoleController {
     public ResultBean delRole(@RequestParam Long roleId) {
         roleService.delRole(roleId);
         return ResultUtils.success();
+    }
+
+    @GetMapping(value = "/hasRole")
+    public ResultBean hasRole(@RequestParam Long roleId) {
+        boolean result = SecurityUtils.getSubject().hasRole("aaa");
+        return ResultUtils.success(result);
     }
 
 }

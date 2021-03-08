@@ -15,7 +15,23 @@
 
 ======================================================================================================================
 
-isPermitted重载的有问题，应该是权限而不是角色相关的。什么时候调用的？
+看 spring-boot-starter-test
+
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
+用户授权isPermitted过程：https://blog.csdn.net/weixin_33724046/article/details/93057613
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
+https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：
+https://blog.csdn.net/weixin_33724046/article/details/93057613
+https://blog.csdn.net/tragedyxd/article/details/52958008
+isPermitted看懂后，再看permission的写法：system:role:add：
+https://blog.csdn.net/tragedyxd/article/details/52958008
+试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
+PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+https://blog.csdn.net/weixin_38121659/article/details/78715454
+和doGetAuthorizationInfo是什么关系？
+isPermitted重载的有问题，应该是权限而不是角色相关的【可以先debug一下】
 Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
     <V> V execute(Callable<V> var1) throws ExecutionException;
     void execute(Runnable var1);
@@ -28,9 +44,13 @@ DelegatingSubject的代码值得读一遍:
     https://blog.csdn.net/qq_21046665/article/details/79735922
 【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
 “细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
-CreadentialsMatcher和subject结合学习【有什么关联？】
+Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
+加一个user_permission表即可实现用户级授权
 
-看 spring-boot-starter-test
+自定义权限解析器和角色解析器(PermissionResolver、RolePermissionResolver)等：
+    https://blog.csdn.net/lw_power/article/details/52562754
+    https://blog.csdn.net/Jack_Yin/article/details/84569443
+【我的代码应该是用得上RolePermissionResolver的】该RolePermissionResolver用于将角色字符串转换成该角色所包含的Permission的集合。
 
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
@@ -108,21 +128,6 @@ AbstractSessionDAO implements SessionDAO：从这段代码来看，抽象类可�
 【ValidatingSession】是个啥？https://blog.csdn.net/javarrr/article/details/83188163
 【如何切换的？】（在非web、非EJB的情况下，Shiro自动使用自带session；如果是web或者EJB应用，则Shiro自动使用HttpSession，不需要人为改变。）
 
-经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
-3.看看isPermitted咋用，也尽量把这个调通【F7跟进去】。是不是要重载另外的方法？
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：
-https://blog.csdn.net/weixin_33724046/article/details/93057613
-https://blog.csdn.net/tragedyxd/article/details/52958008
-isPermitted看懂后，再看permission的写法：system:role:add：
-https://blog.csdn.net/tragedyxd/article/details/52958008
-试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
-PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-https://blog.csdn.net/weixin_38121659/article/details/78715454
-和doGetAuthorizationInfo是什么关系？
-
 【看到Advice，很自然想到切面环绕编程，一般有pre、post、after几个方法】
 把AdviceFilter和Spring中的通知（Advice）和顾问（Advisor）的概念对比学习：
 https://www.cnblogs.com/zhangzongle/p/5944906.html
@@ -136,6 +141,8 @@ https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
 springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
+ehcache2：在代码中用到的cache名字必须都在ehcache.xml里面配置name相同的cache节点，否则会报空指针
+Spring boot ehcache 2 example：https://howtodoinjava.com/spring-boot/ehcache2-config-example/
 Ehcache Configuration Guide：https://www.ehcache.org/generated/2.9.0/pdf/Ehcache_Configuration_Guide.pdf
 Spring Boot Ehcache Example(ehcache 3)：https://www.baeldung.com/spring-boot-ehcache
 EhCache集群方案（RMI等）：

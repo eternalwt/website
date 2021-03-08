@@ -18,6 +18,9 @@ public class ShiroCacheManagerImpl implements CacheManager {
     @Autowired
     private org.springframework.cache.CacheManager springCacheManager;
 
+//    @Autowired
+//    private org.springframework.cache.Cache cache;
+
     private final ConcurrentMap<String, Cache> cacheMap = new ConcurrentHashMap(16);
 
     /**
@@ -49,9 +52,9 @@ public class ShiroCacheManagerImpl implements CacheManager {
         if (cacheMap.get(name) != null) {
             return cacheMap.get(name);
         } else {
-            Cache cache = new ShiroCacheImpl<K, V>(name, springCacheManager);
-            cacheMap.put(name, cache);
-            return cache;
+            Cache shiroCache = new ShiroCacheImpl<K, V>(name, springCacheManager);
+            cacheMap.put(name, shiroCache);
+            return shiroCache;
         }
     }
 

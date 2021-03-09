@@ -107,17 +107,17 @@
 <!--			<artifactId>ehcache</artifactId>-->
 <!--			<version>3.9.0</version>-->
 <!--		</dependency>-->
-		<dependency>
-			<groupId>org.apache.shiro</groupId>
-			<artifactId>shiro-ehcache</artifactId>
-			<version>${shiro.version}</version>
-			<exclusions>
-				<exclusion>
-					<artifactId>slf4j-api</artifactId>
-					<groupId>org.slf4j</groupId>
-				</exclusion>
-			</exclusions>
-		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.apache.shiro</groupId>-->
+<!--			<artifactId>shiro-ehcache</artifactId>-->
+<!--			<version>${shiro.version}</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<artifactId>slf4j-api</artifactId>-->
+<!--					<groupId>org.slf4j</groupId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>

@@ -15,6 +15,40 @@
 
 ======================================================================================================================
 
+shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？
+看slf4j。搜“jar包，预留日志接口”
+
+shiro的cookie再复述一遍【搞大数据的这几个月linux、shiro等东西都需要学而时习之】
+CachingRealm 抽象类是Shiro中唯一一个直接实现Realm接口的类。同时它还实现了LogoutAware接口：https://www.jianshu.com/p/df8d7c888401
+shiro Authorizer权限校验：
+	https://www.jianshu.com/p/35b89d5502b8
+	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
+	https://www.cnblogs.com/nuccch/p/6776352.html
+Shiro 中的 AuthenticationToken：https://www.jianshu.com/p/9ac577427b44
+
+ehcache涉及到offheap memory、bigmemory等概念
+springboot缓存框架是如何既支持ehcache2又支持ehcache3的？
+slf4j的使用(shiro是怎么适配slf4j接口的？)：https://www.tutorialspoint.com/slf4j/index.htm
+怎么把shiro的鉴权移到网关？再思考网关功能
+keyclock、sa-token
+ehcache 2 vs. ehcache 3：
+	1.JSR-107标准（这些标准是不是只提供接口？通过看javax.cache:cache-api:1.0.0把JSR的解决问题方式彻底理解）：
+		https://dzone.com/articles/introduction-jcache-jsr-107
+		https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
+		https://howtodoinjava.com/spring-boot2/ehcache3-config-example/
+		https://www.jfokus.se/jfokus12/preso/jf12_JSR107-TheNewJavaCachingStandard.pdf
+	2.ehcache3本身的文档：https://www.ehcache.org/
+	3.比较ehcache 2和ehcache 3：version 3 was missing some features, including clustering. This is why Spring-Boot embed both. It should in fact be faster. It is also type-safe and JSR107 (JCache) compatible.
+https://myshittycode.com/2017/04/11/spring-ehcache-xml-less-spring-configuration-for-ehcache-2-x-vs-ehcache-3-x/
+
+ehcache3里面的listener
+
+深入探讨在集群环境中使用 EhCache 缓存系统：https://developer.ibm.com/zh/articles/j-lo-ehcache/
+defaultCache:默认的缓存配置信息，cache:为指定名称的对象进行缓存的特殊配置（最简配置只要有defaultCache就够了）：https://www.cnblogs.com/sdream/p/5966668.html
+Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/2017/04/11/spring-ehcache-xml-less-spring-configuration-for-ehcache-2-x-vs-ehcache-3-x/
+
+=================================================================================================
+
 看 spring-boot-starter-test
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
@@ -141,7 +175,8 @@ https://baijiahao.baidu.com/s?id=1613899474131869768&wfr=spider&for=pc
 springboot的CacheManager接口实现的自定义bean:https://dzone.com/articles/quickstart-how-to-use-spring-cache-on-redis
 【我最终关心的问题是shiro的CacheManager接口底层使用redis的缓存实现，甚至springboot的CacheManager接口都可以绕开】
 
-ehcache2：在代码中用到的cache名字必须都在ehcache.xml里面配置name相同的cache节点，否则会报空指针
+ehcache2：在代码中用到的cache名字必须都在ehcache.xml里面配置name相同的cache节点，否则会报空指针。在定位空指针时发现，
+EhCacheCacheManager和AbstractCacheManager的继承关系也很有意思，例如getMissingCache被调用的方式
 Spring boot ehcache 2 example：https://howtodoinjava.com/spring-boot/ehcache2-config-example/
 Ehcache Configuration Guide：https://www.ehcache.org/generated/2.9.0/pdf/Ehcache_Configuration_Guide.pdf
 Spring Boot Ehcache Example(ehcache 3)：https://www.baeldung.com/spring-boot-ehcache
@@ -165,14 +200,6 @@ https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz
 // todo 0.使用如下方式解决cache问题：https://blog.csdn.net/lianjie_c/article/details/100584843
 // todo 1.看EhCachemanager 源码验证上述结论，要分析怎么读取配置怎么autowired的
 
-EhCacheManager与EhCacheCacheManager
-完全可以参考shiro-ehcache1.7.0很快实现出ehcache3的版本
-看shiro-ehcache、shiro-redis
-对shiro-ehcache包的理解：
-1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
-对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
-shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
-自动装配细节
 1.看一下每次请求是怎么验证session的；2.看spring session；
 
 // todo 0.使用如下方式解决问题：https://blog.csdn.net/lianjie_c/article/details/100584843
@@ -183,10 +210,7 @@ shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lian
 3.ShiroConfig可以仿造现有的redis的写法，升到EhCache 3.0【先把ehcache看懂】
 对比redis和ehcache的配置文件
 ehcache：如何观察CacheManager中的值？【必须把这个搞懂，然后再切换redis。ehcache3可以先不管】
-依次搞通【每类配法可以对应一个ShiroConfig和多个自定义的类、配置文件】：
-ehcache、ehcache3（相当于shiro-ehcache和非shiro-ehcache版）、redis（shiro-redis和非shiro-redis版）
-并且ehcache、redis分别都要尝试用spring的CacheManager和自己的CacheManager两种方式
-到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合，然后学习ehcache教程
+到了搞清楚spring的cache体系的时候了，看看与ehcache、redis的整合(看那个starter)，然后学习ehcache教程
 SpringBoot | 第三十六章：集成多CacheManager：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
 现在我有的地方用的redis，有的地方用的ehcache
 ehcache2支持java的cache规范吗？（不要稀里糊涂使用）
@@ -655,6 +679,16 @@ Shiro在Spring session管理：https://www.cnblogs.com/jtlgb/p/9577617.html
 https://blog.csdn.net/nainaiqiuwencun/article/details/92445127
 https://springframework.guru/using-ehcache-3-in-spring-boot/
 https://dzone.com/articles/spring-boot-with-ehcache-3-and-jsr-107
+EhCacheManager与EhCacheCacheManager
+在我的缓存配置策略下，可以删掉shiro-ehcache依赖。看完shiro-ehcache后（再确认有没有ehcache 3版本，并且还是要把代码逐个文件阅读一下），注解升级到ehcahce3
+1.pom里的shiro-ehcache可以注释掉；2.还得看看ehcache怎么跟spring cache整合的
+完全可以参考shiro-ehcache1.7.0很快实现出ehcache3的版本
+看shiro-ehcache、shiro-redis
+对shiro-ehcache包的理解：
+1.EhCacheManager类是shiro-core包里面CacheManager接口的实现：EhCacheManager implements CacheManager, Initializable, Destroyable
+对shiro-ehcache包的理解：这个包用ehcache这种具体的缓存实现了shiro里面缓存相关的接口。类似的实现还有shiro-redis。
+shiro与spring共用一个CacheManger，使用redis：https://blog.csdn.net/lianjie_c/article/details/100584843
+自动装配细节
 2.搞清楚shiro-cache和shiro-ehcache的关系；
 3.由EhCacheManager的setCacheManager方法参数是net.sf.ehcache.CacheManager类型来看，shiro-ehcache只能配合ehcache2版本；
 4.由3可知，shiro-ehcache应该对ehcache进行了provided的依赖，思考这样设计的理由，想想是怎么打包的；看一下它的pom里面<relativePath>../pom.xml</relativePath>是什么意思
@@ -1880,7 +1914,7 @@ https://blog.csdn.net/jiangyu1013/article/details/84397366
 再看ModelAndView的用法，和return "anth/login";这种比较一下
 
 shiro源码分析，搞透
-再看一下shiro相关的包一共有多少个：shiro-core、shiro-spring、shiro-web、shiro-redis、shiro-ehcache、shiro-quartz、shiro-cas、shiro-guice
+再看一下shiro相关的包一共有多少个：shiro-core、shiro-spring、shiro-web、shiro-redis、shiro-quartz、shiro-cas、shiro-guice
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？
 

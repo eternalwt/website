@@ -98,6 +98,12 @@ public class CustomRealm extends AuthorizingRealm {
             }
             authorizationInfo.setRoles(roleSet);
         }
+//        authorizationInfo.addStringPermission();// todo 把添加权限放这里怎么样？怎么使用？【确认】是不是这里加了filter就自动过滤了？
+
+        // 更新登录IP和时间
+
+        // 记录登录日志
+        log.info(username + "系统登录");
 
         return authorizationInfo;
     }
@@ -116,6 +122,9 @@ public class CustomRealm extends AuthorizingRealm {
         List<Role> roleList = null;
         roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
         if (roleList == null) {
+
+            // todo 应该是直接用menuService搞定，不需要roleService把？然后把menuService的东西缓存一下
+
             // todo 更新角色的時候也要更新role信息
             roleList = roleService.getRoleListByUserName(username);
             this.getCacheManager().getCache(cacheName).put(username, roleList);

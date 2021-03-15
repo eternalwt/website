@@ -1,12 +1,9 @@
 ﻿
-【目标：做成一个完整的脚手架，中间件和存储层也要能快速配好】
-【我的后端和脚手架已经突破】
 【前端应该和后端一样的思路，自己完整搭建一次，把每个细节搞清楚】
 【一旦突破后，最重要的问题立马转换为：如何接项目、2个demo项目、深度学习。只要做5个高质量的项目，市场立马能永久打开】
 
 用敏捷的方式来提升计划性和成功率
 用软件工程的DevOps方法来提升效率和规范性
-
 了解华为云的持续集成
 
 【周末】开涛的书不能停
@@ -15,20 +12,63 @@
 
 ======================================================================================================================
 
-shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？
-看slf4j。搜“jar包，预留日志接口”
+【最大的问题已经变成】如何挣到更多的钱
+
+看mybatis源码，然后是日志框架源码，然后是guava源码
+
+shiro不适合于网关？（无稽之谈）
+
+把前端的checkPermission多调用一次后端方法干掉，这个可以filter里面实现
+
+isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一下】：
+    1.进入ModularRealmAuthorizer的public boolean isPermitted(PrincipalCollection principals, String permission) 方法；
+    2.最终进入了CustomRealm里面的isPermitted方法；
+    3.根据AuthorizingRealm和SimpleAccountRealm里面的isPermitted方法确认是否由必要自定义PermissionResolver？
+    4.【重点】先看怎么把字符串解析成Permission对象(AuthorizingRealm里面的isPermitted方法)，然后再看WildcardPermission中的isPermitted(Permission permission, AuthorizationInfo info)方法，
+    从这个里面得知，如果要直接使用WildcardPermission及对应的默认implies、isPermitted方法，需要在CustomRealm里面的AuthorizationInfo里面需要把permission先set；
+    5.默认的是怎么比较的？
+    6.在对比CustomRealm里面的其他方法和AuthorizingRealm、SimpleAccountRealm里面同名方法的实现；
+
+看AllPermission、WildcardPermission、WildcardPermissionResolver【如何与前端写通形成一个完美的设计？】
+    https://blog.csdn.net/sharetop/article/details/50250651
+    https://www.baeldung.com/apache-shiro-access-control
+PermissionResolver用于解析权限字符串到Permission实例，RolePermissionResolver用于根据角色解析相应的权限集合：
+    https://blog.csdn.net/yifanSJ/article/details/77344427（根据这篇文章的分析：1.可以自定义PermissionResolver和RolePermissionResolver，然后注入Authrizor）
+Shiro WildCardPermission 扩展实现自定义权限校验：http://www.huzd.info/article/3
+自定义RolePermissionResolver：https://blog.csdn.net/weixin_45492007/article/details/101986790
+
+把SecurityManager相关的笔记都搞完
+shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？自行分析这个包的代码
+
+首先：如果把权限精确到CRUD，前端如何设计？如何保持一致性？（网页各元素与“资源”的对应关系）
+是否把网址和资源解耦？
+
+1.【继续看桥接】slf4j中有典型适配器模式，不看一看？https://hello.blog.csdn.net/article/details/110676556
+2.再看mybatis是怎么打日志的，它自己实现了一套，用的接口呢？
+	https://zhuanlan.zhihu.com/p/88103007
+	https://www.cnblogs.com/yinjw/p/11757433.html
+	https://www.yisu.com/zixun/199958.html
+	https://blog.csdn.net/qq_29860591/article/details/113875476
+	https://www.cnblogs.com/lys-lyy/p/11497591.html
+3.slf4j-api 的源码解析与一个简单实现：https://zhuanlan.zhihu.com/p/42685877
+1.slf4j-api LoggerFactory类里面先引入了StaticLoggerBinder（org.slf4j.impl.StaticLoggerBinder），这个是在slf4j-api打包的时候用了一个假的，可以在slf4j-api的pom里面看到Removing slf4j-api's dummy StaticLoggerBinder and StaticMarkerBinder：https://blog.csdn.net/zheng0518/article/details/75528398
+2.slf4j-log4j里面真正的StaticMarkerBinder通过classLoader动态加载：https://blog.csdn.net/jpf254/article/details/80757041
+引入多个包，有相同的package，编译的时候会分门别类一起存放吗？
+slf4j的使用(shiro是怎么适配slf4j接口的？)：https://www.tutorialspoint.com/slf4j/index.htm
 
 shiro的cookie再复述一遍【搞大数据的这几个月linux、shiro等东西都需要学而时习之】
 CachingRealm 抽象类是Shiro中唯一一个直接实现Realm接口的类。同时它还实现了LogoutAware接口：https://www.jianshu.com/p/df8d7c888401
-shiro Authorizer权限校验：
-	https://www.jianshu.com/p/35b89d5502b8
+（CustomRealm是不是里面的逻辑是不是应该再次封装到RolePermissionResolver里面去？）
+shiro Authorizer权限校验【（前端没必要单独发一次请求鉴权，把checkPermission做到filter里面去，调用isPermitted方法）。这一点懂了之后，随之而来一个新问题：】：
+	https://www.jianshu.com/p/35b89d5502b8（里面提到了授权流程以及Permission等类）
 	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
 	https://www.cnblogs.com/nuccch/p/6776352.html
 Shiro 中的 AuthenticationToken：https://www.jianshu.com/p/9ac577427b44
 
+myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
+
 ehcache涉及到offheap memory、bigmemory等概念
 springboot缓存框架是如何既支持ehcache2又支持ehcache3的？
-slf4j的使用(shiro是怎么适配slf4j接口的？)：https://www.tutorialspoint.com/slf4j/index.htm
 怎么把shiro的鉴权移到网关？再思考网关功能
 keyclock、sa-token
 ehcache 2 vs. ehcache 3：
@@ -52,18 +92,21 @@ Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/
 看 spring-boot-starter-test
 
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
-用户授权isPermitted过程：https://blog.csdn.net/weixin_33724046/article/details/93057613
 重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
 https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：
-https://blog.csdn.net/weixin_33724046/article/details/93057613
-https://blog.csdn.net/tragedyxd/article/details/52958008
+用户授权isPermitted过程：https://blog.51cto.com/luchunli/1830643(https://blog.csdn.net/weixin_33724046/article/details/93057613)
+shiro:hasPermission 标签 ：验证当前用户是否拥有指定权限【人家这个里面还对菜单设置了parentId】：https://blog.csdn.net/dxyzhbb/article/details/102500997
 isPermitted看懂后，再看permission的写法：system:role:add：
 https://blog.csdn.net/tragedyxd/article/details/52958008
 试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
 PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
 https://blog.csdn.net/weixin_38121659/article/details/78715454
+自定义权限解析器和角色解析器(PermissionResolver、RolePermissionResolver)等：
+    https://blog.csdn.net/lw_power/article/details/52562754
+    https://blog.csdn.net/Jack_Yin/article/details/84569443
+【我的代码应该是用得上RolePermissionResolver的】该RolePermissionResolver用于将角色字符串转换成该角色所包含的Permission的集合。
+
 和doGetAuthorizationInfo是什么关系？
 isPermitted重载的有问题，应该是权限而不是角色相关的【可以先debug一下】
 Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
@@ -80,11 +123,6 @@ DelegatingSubject的代码值得读一遍:
 “细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
 Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
 加一个user_permission表即可实现用户级授权
-
-自定义权限解析器和角色解析器(PermissionResolver、RolePermissionResolver)等：
-    https://blog.csdn.net/lw_power/article/details/52562754
-    https://blog.csdn.net/Jack_Yin/article/details/84569443
-【我的代码应该是用得上RolePermissionResolver的】该RolePermissionResolver用于将角色字符串转换成该角色所包含的Permission的集合。
 
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
@@ -123,6 +161,13 @@ Subject.login()登录成功后用户的认证信息实际上是保存在HttpSess
 Session共享、Spring Session与jwt【Session是下一个难点】DefaultWebSecurityManager值得好好研究
 细说shiro之六：session管理【对着把时序图完全理解，能讲解时序图。尝试用时序图分析代码，并理解时序图的力量】：https://www.cnblogs.com/nuccch/p/7911423.html
 细说shiro之六：session管理：http://www.mamicode.com/info-detail-2105821.html
+session的缓存和sessionDAO：
+https://blog.csdn.net/river472242652/article/details/79182008
+https://blog.csdn.net/dgh112233/article/details/100019711
+可以开始对缓存接口打断点了，从ShiroConfig里面的东西开始摸索
+现在我加的EnterpriseCacheSessionDAO还是没有找到一个好的验证方式。怎么验证默认用的是什么sessionDao（MemorySessionDAO？），怎么注入的？
+CachingSessionDAO、EnterpriseCacheSessionDAO
+目标：要能看到ehcache里面的session
 
 【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
@@ -153,7 +198,6 @@ shiro-redis实现session存储到redis：https://www.cnblogs.com/qlqwjy/p/103922
 Subject的方法好好看一下。包括login方法【直接调试跟踪代码】
 Token的接口及实现类族、Subject的接口及实现类族
 3.Subject.login方法的全流程需要好好看几遍，里面对RememberMe、Cache、Session等都有涉及
-KickoutSessionControlFilter extends AccessControlFilter
 如：当前类路径下有 Mybatis 这个 JAR 包，MybatisAutoConfiguration 注解就能根据相关参数来配置 Mybatis 的各个 Spring Bean
 流程的理解：：当我们调用subject.login(token)的时候，首先这次身份认证会委托给Security Manager，而Security Manager又会委托给Authenticator，
 接着Authenticator会把传过来的token再交给我们自己注入的Realm进行数据匹配从而完成整个认证。如果不太了解这个流程建议再仔细读一下官方提供的
@@ -162,6 +206,7 @@ AbstractSessionDAO implements SessionDAO：从这段代码来看，抽象类可�
 【ValidatingSession】是个啥？https://blog.csdn.net/javarrr/article/details/83188163
 【如何切换的？】（在非web、非EJB的情况下，Shiro自动使用自带session；如果是web或者EJB应用，则Shiro自动使用HttpSession，不需要人为改变。）
 
+KickoutSessionControlFilter extends AccessControlFilter
 【看到Advice，很自然想到切面环绕编程，一般有pre、post、after几个方法】
 把AdviceFilter和Spring中的通知（Advice）和顾问（Advisor）的概念对比学习：
 https://www.cnblogs.com/zhangzongle/p/5944906.html
@@ -398,6 +443,8 @@ createAuthFilter（JwtAuthFilter）、createRolesFilter
 SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1131be7ace
 Shiro步步为营--如何优雅地与JWT集成【这种方法配置会不会导致Subject用不了？】：https://blog.csdn.net/pengjunlee/article/details/95600843
 
+网络应用中session和token本质是一样的吗，有什么区别？【再思考一遍】：https://www.zhihu.com/question/51759560/answer/1774829688
+
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a
 先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
@@ -496,8 +543,8 @@ https://www.jianshu.com/p/31af99a42658
 
 学习RabbitTemplate的思路应该是和学习RedisTemplate一样的，除了学习它还要学习Springboot自带的消息队列框架
 
+规范：在SecurityManager中定义缓存管理器，方便SessionDAO等多个地方使用
 shiro缓存管理：https://www.cnblogs.com/deityjian/p/10778501.html
-【跟踪确认一下】从以上分析我们知道：Shiro支持在2个地方定义缓存管理器，既可以在SecurityManager中定义，也可以在Realm中定义，任选其一即可。
 realm的缓存还是用cacheManager的方式会更加优雅，再看看
 if (realm instanceof CacheManagerAware) {
     ((CacheManagerAware) realm).setCacheManager(cacheManager);//CacheManagerAware接口主要是用来设置缓存管理器的，它里面只有这一个方法
@@ -506,10 +553,33 @@ if (realm instanceof CacheManagerAware) {
 Shiro - 缓存管理与CacheManagerAware接口【为啥我没看到缓存的信息？】：https://blog.csdn.net/J080624/article/details/83788196
 【先看aware接口本身里面有什么方法】spring4.1.8扩展实战之二：Aware接口揭秘：https://blog.csdn.net/boling_cavalry/article/details/81611426
 
-相比于自己实现权限系统
-1.shiro可以使用 @RequiresAuthentication ，@RequiresUser 等注解，但是好像并不实用；
+SessionsSecurityManager（是啥？）里面的代码：
+protected void applyEventBusToSessionManager() {
+    EventBus eventBus = this.getEventBus();
+    if (eventBus != null && this.sessionManager instanceof EventBusAware) {
+        ((EventBusAware)this.sessionManager).setEventBus(eventBus);
+    }
+}
+
+CachingSecurityManager、CachingReam，注意这些类的协同关系
+shiro + memcached实现session共享：https://blog.csdn.net/weixin_42396189/article/details/89713065
+
+看懂从DefaultWebSecurityManager到CachingSecurityManager的继承关系，看懂这种抽象的合理性和每一层加了什么功能（或许应该从上往下看）
+shiro动态授权：https://my.oschina.net/jiansin/blog/3024398
+再次思考整合的问题之一：要保证所有需要的class都被初始化出来【不一定所有的框架都满足这一点把，思考shiro和mybatis为何满足，满足这一要求会不会给框架的开发带来很大限制和困难】
+多种注入方式，正是保证了代码灵活性把？例如ShiroConfig某些对象依赖的对象既可以注入也可以在@Bean方法里面set进去
+既然securityManager指定了CustomRealm，realm里面有doGetAuthorizationInfo，那么SecurityManager里面再指定authrizer会重复吗，他们之间的关系是什么？
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
+// getfilterChainDefinitionMap()也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
+securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关联？
 
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
+
+Spring boot CommandLineRunner接口使用例子：
+https://blog.csdn.net/weixin_34320724/article/details/93707657
+https://www.cnblogs.com/harrychinese/p/SpringBoot_CommandLineRunner.html
+https://www.cnblogs.com/chenpi/p/9696310.html
+https://www.ucloud.cn/yun/7401.html
 
 ===========================================================
 
@@ -578,14 +648,6 @@ Redis的三个客户端框架比较：Jedis,Redisson,Lettuce：https://www.cnblo
 看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
 看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
 
-SessionsSecurityManager里面的代码：
-protected void applyEventBusToSessionManager() {
-    EventBus eventBus = this.getEventBus();
-    if (eventBus != null && this.sessionManager instanceof EventBusAware) {
-        ((EventBusAware)this.sessionManager).setEventBus(eventBus);
-    }
-}
-
 体会EventBus的抽象【可以先对比guava。现在还看不懂这个，证明我没理解】：
 public interface EventBus {
     void publish(Object var1);
@@ -643,7 +705,6 @@ RedisTemplate是spring-redis相关的东西。怎么注入的？
 CacheManager与cache@注解的关系
 
 再次思考一下我现在用到的shiro功能，如果自己实现难度有多大
-token的方案要再看一次
 spring security和shiro的异同：
 https://blog.51cto.com/14150615/2356958
 https://www.cnblogs.com/zzpblogs/p/8520818.html
@@ -660,16 +721,6 @@ https://www.cnblogs.com/zoli/p/11236799.html
 进一步深入：
 1.把ShiriConfig里面每一个配置点都看一下是如何切换的；
 2.shiro的分析分两部分：1.shiro本身的源码（再次结合开涛的书）；2.整合spring的原理
-
-customRealm里面应该可以自行对需要的信息进行缓存
-session的缓存和sessionDAO：
-https://blog.csdn.net/river472242652/article/details/79182008
-https://blog.csdn.net/dgh112233/article/details/100019711
-可以开始对缓存接口打断点了，从ShiroConfig里面的东西开始摸索
-现在我加的EnterpriseCacheSessionDAO还是没有找到一个好的验证方式。怎么验证默认用的是什么sessionDao（MemorySessionDAO？），怎么注入的？
-CachingSessionDAO、EnterpriseCacheSessionDAO
-目标：要能看到ehcache里面的session
-【要读代码】
 
 【上面一个搞完后，继续从集成的入口往下进一步深入】
 Shiro在Spring session管理：https://www.cnblogs.com/jtlgb/p/9577617.html
@@ -869,10 +920,6 @@ Java项目构建基础：统一结果，统一异常，统一日志：https://zh
 
 再加上缓存、ES、RabbitMQ，一个系统雏形不就有了嘛？【为什么我的redis还没配和测试？】
 
-Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视图解析器：https://blog.csdn.net/blueboz/article/details/81840593
-【再思考一下同时使用ViewResolver和httpResponse，代码到底是什么样的？】
-根据ViewResolver这个文章的讲解，最终的写入还是用的response。另一个问题是：response是怎么传给controller方法的？
-
 读、写、预览、上传、下载
 
 【mybatis配置有所突破，可以继续搞一轮】
@@ -952,20 +999,6 @@ https://blog.csdn.net/baidu_19473529/article/details/80558996
 
 【shiro配置文章大集合】
 看属性注入，学会判断哪些是可以注入（定制）的
-看懂从DefaultWebSecurityManager到CachingSecurityManager的继承关系，看懂这种抽象的合理性和每一层加了什么功能（或许应该从上往下看）
-shiro动态授权：https://my.oschina.net/jiansin/blog/3024398
-再次思考整合的问题之一：要保证所有需要的class都被初始化出来【不一定所有的框架都满足这一点把，思考shiro和mybatis为何满足，满足这一要求会不会给框架的开发带来很大限制和困难】
-多种注入方式，正是保证了代码灵活性把？例如ShiroConfig某些对象依赖的对象既可以注入也可以在@Bean方法里面set进去
-既然securityManager指定了CustomRealm，realm里面有doGetAuthorizationInfo，那么SecurityManager里面再指定authrizer会重复吗，他们之间的关系是什么？
-SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
-// getfilterChainDefinitionMap()也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
-securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关联？
-
-Spring boot CommandLineRunner接口使用例子：
-https://blog.csdn.net/weixin_34320724/article/details/93707657
-https://www.cnblogs.com/harrychinese/p/SpringBoot_CommandLineRunner.html
-https://www.cnblogs.com/chenpi/p/9696310.html
-https://www.ucloud.cn/yun/7401.html
 
 shiro、spring整合原理：
 https://blog.csdn.net/wangjun5159/article/details/89873842
@@ -1157,9 +1190,6 @@ EnvironmentCapable：
 https://blog.csdn.net/weixin_39165515/article/details/76976685
 面试问烂的 Spring AOP 原理、SpringMVC 过程全解答！https://mp.weixin.qq.com/s/9YyrEC2JqZyIEo8oT7U07g
 经过过年这段时间的精进，todo应该能搞定一大部分了
-
-CachingSecurityManager、CachingReam，注意这些类的协同关系
-shiro + memcached：https://blog.csdn.net/weixin_42396189/article/details/89713065
 
 shiro的使用2 灵活使用shiro的密码服务模块：https://www.cnblogs.com/imsoft/p/5895905.html
 搞Realm和CacheManager的关系【可以通过分析代码、观察数据库日志的方式，判断缓存是否起效】（authorizationCache、authenticationCache）：
@@ -1423,7 +1453,6 @@ shiro框架中，各个模块的重要性是不同的，授权模块就没那么
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 
-现在理解更深了，再看我是怎么加密的
 看了认证的源码，现在应该知道realm从哪个继承比较合适的问题了把？现在用的是：CustomRealm extends AuthorizingRealm
 public boolean supports(AuthenticationToken token) {
     return token != null && this.getAuthenticationTokenClass().isAssignableFrom(token.getClass());
@@ -1477,7 +1506,6 @@ https://blog.csdn.net/liiuijkiuu/article/details/53945062
 多realm【自定义ModularRealmAuthenticator并且在SecirityManager里面设置进去。搞懂下一个问题，securityManager没设置时，默认的是怎么初始化的】：
 https://www.cnblogs.com/nfcm/p/9889969.html
 https://blog.csdn.net/cckevincyh/article/details/79629022
-
 SecurityManager可以setRealms，也可以通过setAuthenticator来设置多realm，分析一下代码？
 
 0.把我的CustomRealm里面的todo再搞一次
@@ -2018,16 +2046,16 @@ Spring事务配置的五种方式：https://www.cnblogs.com/onlymate/p/7805369.h
 controller方法的执行：把抛出异常、HttpServletRequest/HttpServletResponse两个问题解决掉。看一下HttpMessageConverter在流程中的哪个位置起作用
 HttpServletResponseWrapper
 @RequestBody、@RequestParam、MultipartFile等是怎么封装的，还有@CookieValue、@ExceptionHandler等
-一网打尽 @ExceptionHandler、HandlerExceptionResolver、@controlleradvice 三兄弟：https://www.xttblog.com/?p=3586
-@ControllerAdvice的实现：https://blog.csdn.net/wangpeng322/article/details/81912353
-ContentNegotiatingViewResolver，内容协商规图解析器，它迓是规图解析器，只是它支
-持根据请求信息将同一模型数据以丌同的规图方式展示（如json、xml、html等），RESTful
-架构风格中很重要的概念（同一资源，多种表现形式）
 @RequestPart：提供对“multipart/form-data”请求的全面支持，支持Servlet 3.0文件
 上传（javax.servlet.http.Part）、支持内容的HttpMessageConverter（即根据请求头的
 Content-Type，来判断内容匙数据是什么类型，如 JSON、XML，能自劢转换为命令对象），
 比@RequestParam更强大（只能对请求参数数据绊定，key-alue格式），而@RequestPart
 支持如JSON、XML内容匙数据的绊定；详见本章的第×××节；
+一网打尽 @ExceptionHandler、HandlerExceptionResolver、@controlleradvice 三兄弟：https://www.xttblog.com/?p=3586
+@ControllerAdvice的实现：https://blog.csdn.net/wangpeng322/article/details/81912353
+ContentNegotiatingViewResolver，内容协商规图解析器，它迓是规图解析器，只是它支
+持根据请求信息将同一模型数据以丌同的规图方式展示（如json、xml、html等），RESTful
+架构风格中很重要的概念（同一资源，多种表现形式）
 
 Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当迕入另一个
 请求时作为该请求的输入，典型场景如重定向（POST-REDIRECT-GET模式，1、POST时
@@ -2046,6 +2074,10 @@ DispatcherServlet主要用作职责调度工作，本身主要用亍控制流程
 5、本地化解析；
 6、渲染具体的规图等；
 7、如果执行过程中遇到异常将交给HandlerExceptionResolver 来解析
+
+Spring教程:ViewResolver 视图解析器以及视图View详解，自定义视图解析器：https://blog.csdn.net/blueboz/article/details/81840593
+【再思考一下同时使用ViewResolver和httpResponse，代码到底是什么样的？】
+根据ViewResolver这个文章的讲解，最终的写入还是用的response。另一个问题是：response是怎么传给controller方法的？
 
 springboot使用shiro和pac4j-cas 实现cas单点登录：https://blog.csdn.net/hsp1990/article/details/83621817
 

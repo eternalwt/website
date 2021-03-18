@@ -15,6 +15,8 @@
 【最大的问题已经变成】如何挣到更多的钱
 
 看mybatis源码，然后是日志框架源码，然后是guava源码
+阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
+myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 shiro不适合于网关？（无稽之谈）
 
@@ -55,6 +57,12 @@ shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的�
 2.slf4j-log4j里面真正的StaticMarkerBinder通过classLoader动态加载：https://blog.csdn.net/jpf254/article/details/80757041
 引入多个包，有相同的package，编译的时候会分门别类一起存放吗？
 slf4j的使用(shiro是怎么适配slf4j接口的？)：https://www.tutorialspoint.com/slf4j/index.htm
+【下一步尝试直接看代码看懂，Slf4jLoggerImpl】：https://blog.csdn.net/qq_29860591/article/details/113875476
+log4j源码学习---加载Logger：https://www.cnblogs.com/zeng-wei/archive/2012/08/28/2660363.html
+logger(二)logback简介及其实现原理：https://www.cnblogs.com/pjfmeng/p/11274436.html
+spring-jcl 日志源码分析：
+	https://blog.csdn.net/small_to_large/article/details/86668346
+	https://www.jianshu.com/p/e254c4783a5d
 
 shiro的cookie再复述一遍【搞大数据的这几个月linux、shiro等东西都需要学而时习之】
 CachingRealm 抽象类是Shiro中唯一一个直接实现Realm接口的类。同时它还实现了LogoutAware接口：https://www.jianshu.com/p/df8d7c888401
@@ -64,8 +72,6 @@ shiro Authorizer权限校验【（前端没必要单独发一次请求鉴权，�
 	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
 	https://www.cnblogs.com/nuccch/p/6776352.html
 Shiro 中的 AuthenticationToken：https://www.jianshu.com/p/9ac577427b44
-
-myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 ehcache涉及到offheap memory、bigmemory等概念
 springboot缓存框架是如何既支持ehcache2又支持ehcache3的？

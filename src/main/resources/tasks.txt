@@ -14,9 +14,24 @@
 
 【最大的问题已经变成】如何挣到更多的钱
 
+再看一下我的DAO层代码
+
 看mybatis源码，然后是日志框架源码，然后是guava源码
 阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
 myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
+
+读懂Slf4jImpl的代码，然后就清楚了【LoggerFactory.getLogger(clazz);在使用mybatis-plus时传进来的参数是字符串：“com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils”；Slf4jLocationAwareLoggerImpl】：https://blog.csdn.net/hou_ge/article/details/100556022
+哪里是找真正实现类的代码？
+GlobalConfigUtils传入：
+    public static Logger getLogger(String name) {
+        ILoggerFactory iLoggerFactory = getILoggerFactory();
+        return iLoggerFactory.getLogger(name);
+    }
+最终搞懂，为什么传的是GlobalConfigUtils
+反射不仅用于框架，在日志模块里面也发挥了重要作用
+
+Mybatis中的一级缓存、二级缓存【读代码】：https://segmentfault.com/a/1190000024469451?utm_source=sf-related
+具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的，如果一个都未找到，日志功能就会被禁用：https://www.cnblogs.com/aoshicangqiong/p/7651569.html
 
 shiro不适合于网关？（无稽之谈）
 

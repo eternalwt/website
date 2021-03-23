@@ -12,6 +12,8 @@
 
 ======================================================================================================================
 
+继续看配置文件：spring-boot-configuration-processor、数据库
+
 【最大的问题已经变成】如何挣到更多的钱
 
 再看一下我的DAO层代码
@@ -1566,6 +1568,7 @@ shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点�
 程序员直播还是要继续
 
 @Primary 和 @Qualifier的实现值得一看，搞清楚从接口找类的过程
+Spring下的Util - InstanceFilter：https://blog.csdn.net/weixin_42245133/article/details/105409459
 
 springboot基于spring task实现动态定时任务(@Scheduled)
 springboot自带定时器实现定时任务的开启关闭以及定时时间可以配置：

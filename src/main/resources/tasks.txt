@@ -14,6 +14,57 @@
 
 【最大的问题已经变成】如何挣到更多的钱
 
+【推进不动了，找20个问题，搞完后转PL】
+    把SecurityManager相关的笔记都搞完
+    怎么把shiro的鉴权移到网关？再思考网关功能
+    加jwt代码
+    2.把ShiroConfig里面的无用代码过一遍后干掉
+    理解JS里面generator的原理
+    generator：https://javascript.info/generators
+    JS里面的generator可以产生一个无穷数组（Using async generators一节看一下）：https://www.geeksforgeeks.org/javascript-generator/
+    generator与async、await的语法糖关系？
+    yield和协程的关系是：用yield实现协程
+    看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
+    看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
+    体会EventBus的抽象【可以先对比guava。现在还看不懂这个，证明我没理解】：
+    public interface EventBus {
+        void publish(Object var1);
+        void register(Object var1);
+        void unregister(Object var1);
+    }
+    guava eventbus源码解析：https://my.oschina.net/u/3775437/blog/1841898
+    使用Guava RateLimiter限流以及源码解析：https://cloud.tencent.com/developer/article/1625114
+    shiro里面有CacheManagerAware和EventBusAware、PermissionResolverAware、RolePermissionResolverAware
+    把凯涛shiro教材缓存那一章的aware也搞懂
+    CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
+    3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
+    Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
+    Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
+    LogoutAware
+    【这种代码的类自己可能一个都写不出来，要多学习】
+    Shiro ThreadContext简单介绍：
+    https://blog.csdn.net/Entodie/article/details/100526765
+    https://www.iteye.com/blog/suichangkele-2276897
+    SecurityUtils与ThreadLocal？
+    一人或者多人登陆的问题
+    并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
+    【自己写 MultiRequestBody】
+
+【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
+【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】
+MIT 6.824：https://www.zhihu.com/question/29597104
+网站：https://pdos.csail.mit.edu/6.824/schedule.html
+视频：
+作业完成：
+
+
+一般继承 AuthorizingRealm（授权）即 可 ；其 继承了 AuthenticatingRealm（即身份验证）， 而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
+Shiro里面有AdviceFilter，看看spring里面Advice相关的类，是不是都跟AOP有关？
+1.分析SqlSession和shiro、servlet的session接口有没有相似的地方和设计思路；
+https://blog.csdn.net/zhangbohun/article/details/85123523
+shiro根据是否登录确认能否评论
+【shiro到1.7.0了，看看有没有新的文档】有没有增加SSO、OAuth 2等新功能？
+
 【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
 分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 我的ResultUtils应该改名，这个严格来说不能叫工具类
@@ -36,8 +87,6 @@ myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 shiro不适合于网关？（无稽之谈）
 
-把前端的checkPermission多调用一次后端方法干掉，这个可以filter里面实现
-
 isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一下】：
     1.进入ModularRealmAuthorizer的public boolean isPermitted(PrincipalCollection principals, String permission) 方法；
     2.最终进入了CustomRealm里面的isPermitted方法；
@@ -55,9 +104,9 @@ PermissionResolver用于解析权限字符串到Permission实例，RolePermissio
 Shiro WildCardPermission 扩展实现自定义权限校验：http://www.huzd.info/article/3
 自定义RolePermissionResolver：https://blog.csdn.net/weixin_45492007/article/details/101986790
 
-把SecurityManager相关的笔记都搞完
 shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？自行分析这个包的代码
 
+把前端的checkPermission多调用一次后端方法干掉，这个可以filter里面实现
 首先：如果把权限精确到CRUD，前端如何设计？如何保持一致性？（网页各元素与“资源”的对应关系）
 是否把网址和资源解耦？
 
@@ -91,7 +140,6 @@ Shiro 中的 AuthenticationToken：https://www.jianshu.com/p/9ac577427b44
 
 ehcache涉及到offheap memory、bigmemory等概念
 springboot缓存框架是如何既支持ehcache2又支持ehcache3的？
-怎么把shiro的鉴权移到网关？再思考网关功能
 keyclock、sa-token
 ehcache 2 vs. ehcache 3：
 	1.JSR-107标准（这些标准是不是只提供接口？通过看javax.cache:cache-api:1.0.0把JSR的解决问题方式彻底理解）：
@@ -148,18 +196,9 @@ Shiro实现授权，在应用中用户可以访问的任何东西都称为资源
 
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
-【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
-【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】
-MIT 6.824：https://www.zhihu.com/question/29597104
-网站：https://pdos.csail.mit.edu/6.824/schedule.html
-视频：
-作业完成：
-
 EhCacheManager的整合原理再看一下
-加jwt代码
 
 【下一个可以搞的】
-    2.把ShiroConfig里面的无用代码过一遍后干掉
     CustomRealm的缓存测试(CacheManagerAware怎么把CacheManager注入进去再看一遍)
     CacheManagerAware（Shiro内部相应的组件（DefaultSecurityManager）会自动检测相应的对象（如Realm）是否实现了CacheManagerAware并自动注入相应的CacheManager）：
         https://www.vxzsk.com/1172.html
@@ -249,7 +288,6 @@ EhCache集群方案（RMI等）：
 DefaultWebSessionManager的配置再看一下【主要是结合shiro缓存的配置了解一下shiro缓存需要配几次】
 https://blog.csdn.net/liuchuanhong1/article/details/76638911?utm_source=blogxgwz0
 
-【重要】1.既然我的CustomRealm实现了CachingRealm接口，那么那个接口里面缓存是如何使用的呢？
 2.几个方面逐个确认缓存配置：认证、授权、session(严格来说不算缓存)、CredentialsMatcher(严格来说也不算缓存)
 【观察EhCacheManager是怎么实现shiro的CacheManager接口的，对比我写的】spring-ehcache可以简化ehcache缓存配置，但是：
     1.如何升版本？
@@ -407,10 +445,6 @@ mybatis-spring-boot-starter：
 mybatis二级缓存的实现（看Configuration类）：https://blog.csdn.net/qq_36118179/article/details/114004183
 还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
 
-
-【202002】再思考shiro的缓存：
-2.搞清楚哪些模块用缓存，然后设置到一个都可以访问到的地方（认证、授权）
-
 Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
 springboot在Utils工具类中读取配置文件：https://my.oschina.net/lijinzhao/blog/3030144
 SpringBoot中获取spring.profiles.active的值【学习别人的方法】：
@@ -429,12 +463,6 @@ https://www.zhihu.com/question/39651928/answer/369889819
 感觉最开始分为query、VO、DO 3个类别就够用了，因为业务逻辑不复杂，所以do封装数据够用了
 DTO（ Data Transfer Object）与BO（ Business Object）的区别？AO（ Application Object）的方向？【如果不好分，其他统统放到DTO或者BO里面】
 【后续，直接针对每个表创建DO和操作的方法（这样才好垂直分割业务把？），把我的Mapper层用上，能否抽到MybatisPlus的高度？】是不是压根就不应该传入table名称（抽象程度太低了）？而应该把每个表的信息抽到单个的文件里面去？（思考一下有没有需要动态创建表的场景，有场景才需要保留这种代码）
-
-理解JS里面generator的原理
-generator：https://javascript.info/generators
-JS里面的generator可以产生一个无穷数组（Using async generators一节看一下）：https://www.geeksforgeeks.org/javascript-generator/
-generator与async、await的语法糖关系？
-yield和协程的关系是：用yield实现协程
 
 1.webSocket；【既利用http双工又tcp长连接，值得从这个角度对比学习】：
 https://www.cnblogs.com/h--d/p/11492437.html
@@ -621,12 +649,6 @@ securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关
 
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
 
-Spring boot CommandLineRunner接口使用例子：
-https://blog.csdn.net/weixin_34320724/article/details/93707657
-https://www.cnblogs.com/harrychinese/p/SpringBoot_CommandLineRunner.html
-https://www.cnblogs.com/chenpi/p/9696310.html
-https://www.ucloud.cn/yun/7401.html
-
 ===========================================================
 
 jwt与token+redis，哪种方案更好用？【先自己思考】：https://www.zhihu.com/question/274566992/answer/1696761067
@@ -691,18 +713,6 @@ Redis的三个客户端框架比较：Jedis,Redisson,Lettuce：https://www.cnblo
 
 把redis版的配好，现在从其他方向有点突破不了了
 
-看公司代码的RedisConfig，看看默认的RedisTemplate是怎么被覆盖的。怎么去找到和发现这些扩展点
-看公司代码用到的@Bean，主要是朱昌炳和黄学山RabbitMQ的代码
-
-体会EventBus的抽象【可以先对比guava。现在还看不懂这个，证明我没理解】：
-public interface EventBus {
-    void publish(Object var1);
-    void register(Object var1);
-    void unregister(Object var1);
-}
-guava eventbus源码解析：https://my.oschina.net/u/3775437/blog/1841898
-使用Guava RateLimiter限流以及源码解析：https://cloud.tencent.com/developer/article/1625114
-
 为啥我的@Slf4j log标红了？
 先搞懂realm缓存是咋回事，然后把realm缓存调通【现在的代码怎么看到缓存的值？】
 Shiro 中的 Realm：https://www.jianshu.com/p/df8d7c888401
@@ -714,20 +724,6 @@ EnterpriseCacheSessionDAO是默认注入的吗？（1）调试；（2）看代�
 https://blog.csdn.net/acmman/article/details/78955730
 https://www.cnblogs.com/sunshine-2015/p/5686750.html
 5.我对MemorySessionDAO和CachingSessionDAO的理解：前者用的是ConcurrentMap，后者用的是cache结构。再看一下实现细节
-
-shiro里面有CacheManagerAware和EventBusAware、PermissionResolverAware、RolePermissionResolverAware
-把凯涛shiro教材缓存那一章的aware也搞懂
-CachingSessionDAO extends AbstractSessionDAO implements CacheManagerAware
-3.aware的问题[shiro里面的几个aware是怎么获取到容器相关信息的？]
-Shiro - 缓存管理与CacheManagerAware接口：https://blog.csdn.net/J080624/article/details/83788196
-Shiro 提供了 CachingRealm，其实现了 CacheManagerAware 接口，提供了缓存的一些基础 实现；另外 AuthenticatingRealm 及 AuthorizingRealm 分别提供了对 AuthenticationInfo 和 AuthorizationInfo 信息的缓存。
-LogoutAware
-
-【这种代码的类自己可能一个都写不出来，要多学习】
-Shiro ThreadContext简单介绍：
-https://blog.csdn.net/Entodie/article/details/100526765
-https://www.iteye.com/blog/suichangkele-2276897
-SecurityUtils与ThreadLocal？
 
 ======================================================================
 
@@ -756,9 +752,6 @@ https://blog.51cto.com/14150615/2356958
 https://www.cnblogs.com/zzpblogs/p/8520818.html
 https://www.jianshu.com/p/0891b2279c65
 https://www.cnblogs.com/zoli/p/11236799.html
-
-一人或者多人登陆的问题
-并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
 
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站
@@ -865,7 +858,6 @@ https://blog.csdn.net/jinhaijing/article/details/83933573
 3.把doc、excel的utils弄好
 4.图片预览
 
-【自己写 MultiRequestBody】
 1.https及http/2的配置（nginx、springcloud gateway的配置。前后端分离的单体服务又是不一样的，要考虑清楚）；
 https://zhuanlan.zhihu.com/p/95038188
 https://cloud.spring.io/spring-cloud-gateway/multi/multi__tls_ssl.html
@@ -2021,6 +2013,7 @@ https://www.cnblogs.com/xiaoming0601/p/12166160.html
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
 
+写框架的时候，有时候需要开放接口给用户，例如shiro的CacheManager（当然也会自带一个默认的）。要熟悉这种设计思路
 尝试使用rest接口，可以更简洁同时也能暴露更少信息
 
 sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
@@ -2046,6 +2039,11 @@ CommandLineRunner（源码）：
 https://blog.csdn.net/qq_26323323/article/details/80856973
 https://www.jianshu.com/p/5d4ffe267596
 https://www.cnblogs.com/chenpi/p/9696310.html
+Spring boot CommandLineRunner接口使用例子：
+https://blog.csdn.net/weixin_34320724/article/details/93707657
+https://www.cnblogs.com/harrychinese/p/SpringBoot_CommandLineRunner.html
+https://www.cnblogs.com/chenpi/p/9696310.html
+https://www.ucloud.cn/yun/7401.html
 
 看mybatis实现PlatformTransactionManager这个接口的代码在哪个包里面
 mybatis的 useGeneratedKeys 是怎样实现的？ https://blog.csdn.net/tt50335971/article/details/53487260

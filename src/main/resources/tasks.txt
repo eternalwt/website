@@ -12,15 +12,11 @@
 
 ======================================================================================================================
 
-继续看配置文件：spring-boot-configuration-processor、数据库
-
 【最大的问题已经变成】如何挣到更多的钱
 
-再看一下我的DAO层代码
-
-看mybatis源码，然后是日志框架源码，然后是guava源码
-阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
-myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
+【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
+分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
+我的ResultUtils应该改名，这个严格来说不能叫工具类
 
 读懂Slf4jImpl的代码，然后就清楚了【LoggerFactory.getLogger(clazz);在使用mybatis-plus时传进来的参数是字符串：“com.baomidou.mybatisplus.core.toolkit.GlobalConfigUtils”；Slf4jLocationAwareLoggerImpl】：https://blog.csdn.net/hou_ge/article/details/100556022
 哪里是找真正实现类的代码？
@@ -32,8 +28,11 @@ GlobalConfigUtils传入：
 最终搞懂，为什么传的是GlobalConfigUtils
 反射不仅用于框架，在日志模块里面也发挥了重要作用
 
-Mybatis中的一级缓存、二级缓存【读代码】：https://segmentfault.com/a/1190000024469451?utm_source=sf-related
-具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的，如果一个都未找到，日志功能就会被禁用：https://www.cnblogs.com/aoshicangqiong/p/7651569.html
+调试任务：1.把mysql-connector-java注掉，找到报错地方的DataSource代码；2.自己思考（Druid）注册DataSource原理
+
+看mybatis源码，然后是日志框架源码，然后是guava源码
+阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
+myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 shiro不适合于网关？（无稽之谈）
 
@@ -158,11 +157,6 @@ MIT 6.824：https://www.zhihu.com/question/29597104
 
 EhCacheManager的整合原理再看一下
 加jwt代码
-
-阅读mybatis-plus-boot-starter代码
-深入SpringBoot注解原理及使用【一个现实的问题，我的mybatis-plus、Kafka注解是怎么发挥作用的】：https://www.cnblogs.com/jing99/p/11504113.html
-
-还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
 
 【下一个可以搞的】
     2.把ShiroConfig里面的无用代码过一遍后干掉
@@ -302,8 +296,6 @@ RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
 ======================================================================================================================
 
-【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
-
 Jedis是Redis官方推荐的面向Java的操作Redis的客户端，而RedisTemplate是SpringDataRedis中对JedisApi的高度封装。
 Spring-data-redis提供了在spring应用中通过简单的配置访问redis服务，对reids底层开发包(Jedis,  JRedis, and RJC)进行了高度封装
 SpringDataRedis相对于Jedis来说可以方便地更换Redis的Java客户端，比Jedis多了自动管理连接池的特性，方便与其他Spring框架进行搭配使用如：SpringCache。
@@ -384,6 +376,37 @@ What is spring-boot-starter-parent in Spring-Boot pom.xml file? http://www.java2
 JdbcTemplate 和 mybatis 的对比（可以再看一次了）：
 https://www.cnblogs.com/scmath/p/11297006.html
 https://blog.csdn.net/weixin_30662539/article/details/101573061
+阅读mybatis-plus-boot-starter代码
+深入SpringBoot注解原理及使用【一个现实的问题，我的mybatis-plus、Kafka注解是怎么发挥作用的】：https://www.cnblogs.com/jing99/p/11504113.html
+Mybatis中的一级缓存、二级缓存【读代码】：
+    https://tech.meituan.com/2018/01/19/mybatis-cache.html
+    https://blog.csdn.net/luanlouis/article/details/41280959
+    https://blog.csdn.net/weixin_37139197/article/details/82908377
+    https://segmentfault.com/a/1190000024469451?utm_source=sf-related
+具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的，如果一个都未找到，日志功能就会被禁用：https://www.cnblogs.com/aoshicangqiong/p/7651569.html
+看看mybatis的SqlSession的生命周期，这个涉及到一级缓存
+mysql-connector-java的版本是怎么指定8.0.22的？
+Mybatis源码解析——Executor：
+    https://www.pianshen.com/article/79411165391/
+    https://artisan.blog.csdn.net/article/details/106560762
+    https://www.jianshu.com/p/53cc886067b1
+我写的Mapper也是可以兼容用上的，确认一下
+mybatis看mapper里面具体缓存写法/用法
+MyBatis 通用 Mapper 实现原理：
+	https://blog.csdn.net/isea533/article/details/78493852
+	https://www.jb51.net/article/149170.htm
+mysql-connector-java 为什么scope是runtime：
+	https://blog.csdn.net/jupiter_888/article/details/103853023
+	https://www.jianshu.com/p/50015526460a
+Mybatis-Redis二级缓存分布式实现：https://blog.csdn.net/luo15242208310/article/details/88634095
+Mybatis二级缓存的槽点和亮点：https://blog.csdn.net/weixin_43832689/article/details/106968135
+看mapper里面缓存写法【搞完后再把pom还原，mybatis-spring-boot-starter注掉。官方也有mysql starter把，这个starter与spingboot官方的mysql starter对比呢？】
+mybatis-redis：redis做二级缓存
+mybatis-spring-boot-starter：
+    http://www.mybatis.cn/archives/861.html
+mybatis二级缓存的实现（看Configuration类）：https://blog.csdn.net/qq_36118179/article/details/114004183
+还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
+
 
 【202002】再思考shiro的缓存：
 2.搞清楚哪些模块用缓存，然后设置到一个都可以访问到的地方（认证、授权）
@@ -1100,10 +1123,7 @@ https://blog.csdn.net/u011263417/article/details/79781686
 https://blog.csdn.net/ztx114/article/details/82665544
 http://www.cnblogs.com/shamo89/p/8051350.html
 
-
 ================================================================================================
-
-我的ResultUtils应该改名，这个严格来说不能叫工具类
 
 【mybatis的配置】
 1.必须要在application文件里面配spring.datasource；
@@ -1129,13 +1149,11 @@ https://blog.csdn.net/qq_43193797/article/details/85011683
 https://blog.csdn.net/smonkeyking/article/details/82661814
 
 Mybatis十八连环问：https://zhuanlan.zhihu.com/p/108895550
-
 【是不是我用的是mybatis-plus，应该直接配置mybatis-plus的配置文件】
 mybatis和mybatis-plus的配置要玩的非常熟：
 https://mp.baomidou.com/config/#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE
 https://mybatis.org/mybatis-3/zh/configuration.html
 有没有一种可能，是两部分都要配置？（但是又没测通）：https://www.cnblogs.com/bangpenggao/articles/11328923.html
-
 Mybatis使用的设计模式：
 https://blog.csdn.net/u014401141/article/details/86920900【1.比较装饰模式与继承；2.再思考一下filter的责任链模式；3.其他的再看】
 https://blog.csdn.net/emprere/article/details/100190638
@@ -1146,7 +1164,6 @@ https://blog.csdn.net/tanqidong1992/article/details/48026491
 https://www.cnblogs.com/to-be-continue/p/8260080.html
 https://www.cnblogs.com/handsomeBoys/p/7602084.html
 https://www.cnblogs.com/grasp/p/11813674.html
-
 用的是mybatisplus的IPage/Page，看一下mybatis分页插件PageHelper
 下一步搞懂3个问题：
 3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
@@ -1269,8 +1286,6 @@ Springboot 15篇：https://yq.aliyun.com/users/hz3zxsd4wosss?spm=a2c4e.11153940.
 shiro的concurrency只有一句话描述，是一个底层机制，这个需要自己去想办法把它看懂【如果没有资料就看源码，并写博客】。看懂了，就真正提升了：
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去
 Apache Shiro开发文档精华版.pdf 92页：https://max.book118.com/html/2017/1203/142550761.shtm
-
-分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 
 HostAuthenticationToken 的 host 可以用于主机认证或者把用户IP装入保存
 要有条理：
@@ -1965,10 +1980,17 @@ https://blog.csdn.net/jiangyu1013/article/details/84397366
 //@RequiresPermissions("+user1+100")【一旦这样使用，底层就要按照shiro要求的方式重载了】
 再看ModelAndView的用法，和return "anth/login";这种比较一下
 
-shiro源码分析，搞透
 再看一下shiro相关的包一共有多少个：shiro-core、shiro-spring、shiro-web、shiro-redis、shiro-quartz、shiro-cas、shiro-guice
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？
+
+shiro的下面两大功能：
+Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
+<V> V execute(Callable<V> callable) throws ExecutionException;
+void execute(Runnable runnable);
+<V> Callable<V> associateWith(Callable<V> callable);
+Runnable associateWith(Runnable runnable);
+Testing：提供测试支持；
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/
 
@@ -1984,9 +2006,8 @@ Shiro自定义Realm时用注解的方式注入父类的credentialsMatcher：http
 
 Spring mvc 之 AbstractHttpMessageConverter 自定义Http消息转化器：https://blog.csdn.net/fang_qiming/article/details/79927708
 
-看一下UsernamePasswordToken实现的2个接口里面都有什么方法
-
 spring官网文档：https://spring.io/guides
+spring AOP再搞一遍
 
 mybatis-spring：
 为啥有了@Mapper注解后就不需要@Repository了
@@ -2000,7 +2021,6 @@ https://www.cnblogs.com/xiaoming0601/p/12166160.html
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
 
-spring AOP再搞一遍
 尝试使用rest接口，可以更简洁同时也能暴露更少信息
 
 sessionListener：https://www.cnblogs.com/qsymg/p/9836122.html
@@ -2010,6 +2030,10 @@ ServletContainerSessionManager：DefaultWebSecurityManager 使用的默认实现
 
 用配置文件配DataSource【还有参数问题，怎么传入】，这一块还是没有搞明白（@Configuration、properties文件、xml三种配置方式的代码分析）
 能看到logback启动打的日志吗？我看公司项目有
+观察日志里面对中间件的日志打的是不是全，把这一块彻底搞明白
+动态修改日志级别
+通过org.springframework.boot.logging.LoggingSystem提供的api即可
+针对某一个包修改日志级别
 
 lucene相关的再看一下
 
@@ -2026,7 +2050,7 @@ https://www.cnblogs.com/chenpi/p/9696310.html
 看mybatis实现PlatformTransactionManager这个接口的代码在哪个包里面
 mybatis的 useGeneratedKeys 是怎样实现的？ https://blog.csdn.net/tt50335971/article/details/53487260
 
-spring-boot-starter-web
+spring-boot-starter-web：https://blog.csdn.net/qq_25453181/article/details/106041337
 要有一种引领的意识，赚钱在其后，否则永远无法成事
 
 @Service("activityService")注解参数有帮助吗？
@@ -2040,8 +2064,6 @@ activiti从6.0上面的版本开始搞
 【观察】配置了数据源和activiti后，启动项目，activiti 的各个服务组件就已经被加入到spring容器中了
 run菜单里的Endpoints
 
-观察日志里面对中间件的日志打的是不是全，把这一块彻底搞明白
-
 泛型的问号适合放在返回值里面吗？Response<?>
 
 ts里面的Observable<T> implements Subscribable<T>。涉及到RxJS的概念
@@ -2054,14 +2076,6 @@ https://www.cnblogs.com/parry/p/vscode_top_ten_plugins.html
 python也可以用VSCode、sublimeText来搞
 2.sublimeText、node、angular、typescript；
 对比VSCode和sublimeText
-
-shiro的下面两大功能：
-Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
-<V> V execute(Callable<V> callable) throws ExecutionException;
-void execute(Runnable runnable);
-<V> Callable<V> associateWith(Callable<V> callable);
-Runnable associateWith(Runnable runnable);
-Testing：提供测试支持；
 
 把shiro官方教程也看一遍，思考：开涛到底是根据那个写的还是自己读代码理解后写的教程
 spring transaction源码分析--事务架构：https://www.cnblogs.com/davidwang456/p/4309038.html
@@ -2107,10 +2121,6 @@ springboot使用shiro和pac4j-cas 实现cas单点登录：https://blog.csdn.net/
 
 eureka.instance.appname 与 spring.application.name 的区别：https://blog.csdn.net/ezreal_king/article/details/72930401/
 springboot新特性
-
-动态修改日志级别
-通过org.springframework.boot.logging.LoggingSystem提供的api即可
-针对某一个包修改日志级别
 
 【验证】用@Lazy应该能解决我在@Configuration里面@Autowired Mapper的问题，用于改变加载顺序
 【或者试一下@DependsOn】https://blog.csdn.net/neweastsun/article/details/78775371

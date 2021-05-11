@@ -159,7 +159,7 @@ ehcache3里面的listener
 defaultCache:默认的缓存配置信息，cache:为指定名称的对象进行缓存的特殊配置（最简配置只要有defaultCache就够了）：https://www.cnblogs.com/sdream/p/5966668.html
 Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/2017/04/11/spring-ehcache-xml-less-spring-configuration-for-ehcache-2-x-vs-ehcache-3-x/
 
-为了加MultiRequestBodyResolver，引入了fastjson和commons-io两个包，想办法删掉
+为了加MultiRequestBodyResolver，引入了fastjson和commons-io两个包，想办法删掉。一定要在大量使用，并且不能绕开的时候再引入包。
 
 =================================================================================================
 

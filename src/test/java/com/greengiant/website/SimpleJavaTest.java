@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -35,6 +37,13 @@ public class SimpleJavaTest {
         int compareTo = dt1.compareTo(dt2);
         System.out.println(compareTo);
         System.out.println(dt1.before(dt2));
+    }
+
+    @Test
+    public void testDateStrToMills() throws ParseException {
+        SimpleDateFormat sdf =   new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = sdf.parse("2008-07-10 19:20:00");
+        long tm = date.getTime();
     }
 
     @Test

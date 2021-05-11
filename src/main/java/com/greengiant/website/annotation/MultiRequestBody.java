@@ -6,12 +6,9 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface MultiRequestBody {
-    boolean required() default true;
+    boolean required() default false;
 
-    // 下面是在使用的
-//    boolean required() default false;
-//
-//    boolean parseAllFields() default true;
-//
-//    String value() default "";
+    boolean parseAllFields() default true;
+
+    String value() default "";
 }

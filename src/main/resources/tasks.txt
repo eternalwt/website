@@ -14,6 +14,12 @@
 
 【最大的问题已经变成】如何挣到更多的钱
 
+Spring Boot 2 + Angular 11 + Preview PDF File：https://frontbackend.com/spring-boot/spring-boot-2-angular-11-preview-pdf-file
+把D3.js、three.js搞懂，把pdf预览、word/excel导出及预览搞熟，这些才是赚钱的核心
+傅里叶分析一定要看
+The Role of Software in Business(站在很高的视角来看待这一问题)：https://www.internetvibes.net/2021/05/03/the-role-of-software-in-business/
+【物联网要看2天，这是吃饭的家伙】
+
 【推进不动了，找20个问题，搞完后转PL】
     把SecurityManager相关的笔记都搞完
     怎么把shiro的鉴权移到网关？再思考网关功能
@@ -54,6 +60,8 @@ MIT 6.824：https://www.zhihu.com/question/29597104
 网站：https://pdos.csail.mit.edu/6.824/schedule.html
 视频：
 作业完成：
+
+shiro isPermitted再写一版
 
 Shiro与spring session
 Spring web

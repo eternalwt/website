@@ -50,7 +50,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
      */
     @Override
     public V get(K k) throws CacheException {
-        log.warn("从缓存中获取key：{}", k);
+//        log.warn("从缓存中获取key：{}", k);
         //调用spring的Cache的get方法
         if (cache != null && getKey(k) != null) {
             Cache.ValueWrapper valueWrapper = cache.get(getKey(k));
@@ -58,7 +58,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
                 return (V) valueWrapper.get();
             }
         } else {
-            log.warn("getKey(k) is null, key is: " + k);
+//            log.warn("getKey(k) is null, key is: " + k);
         }
 
         return null;
@@ -73,7 +73,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
      */
     @Override
     public V put(K k, V v) throws CacheException {
-        log.warn("将key：{}存入缓存", k);
+//        log.warn("将key：{}存入缓存", k);
         //调用spring的Cache的put方法
         cache.put(getKey(k), v);
 
@@ -88,7 +88,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
      */
     @Override
     public V remove(K k) throws CacheException {
-        log.warn("将key：{}从缓存中删除", k);
+//        log.warn("将key：{}从缓存中删除", k);
         V v = get(k);
         //调用spring的Cache的evict方法
         cache.evict(getKey(k));
@@ -102,7 +102,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
      */
     @Override
     public void clear() throws CacheException {
-        log.warn("清空name:{}的缓存", cache.getName());
+//        log.warn("清空name:{}的缓存", cache.getName());
         //调用spring的Cache的clear方法
         cache.clear();
     }
@@ -114,7 +114,7 @@ public class ShiroCacheImpl<K, V>  implements org.apache.shiro.cache.Cache<K, V>
     @Override
     public int size() {
         int size = keys().size();
-        log.warn("获取name：{}的cache的size：{}", cache.getName(), size);
+//        log.warn("获取name：{}的cache的size：{}", cache.getName(), size);
 
         return size;
     }

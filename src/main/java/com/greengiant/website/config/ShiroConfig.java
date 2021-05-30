@@ -49,7 +49,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");
         // 设置拦截器
         shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
-        log.info("Shiro拦截器工厂类注入成功");
+//        log.info("Shiro拦截器工厂类注入成功");
 
         return shiroFilterFactoryBean;
     }
@@ -60,6 +60,9 @@ public class ShiroConfig {
         // todo swagger路径用2个*配置也不行，再思考一下
         // todo 这里能否拿到数据库管理？
         // 默认过滤器见DefaultFilter
+        filterChainDefinitionMap.put("/test/**", "anon");
+
+
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
         filterChainDefinitionMap.put("/permission/**", "anon");

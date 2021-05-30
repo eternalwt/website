@@ -8,6 +8,7 @@
 		<version>2.3.8.RELEASE</version>
 		<relativePath/>
 	</parent>
+
 	<groupId>com.greengiant</groupId>
 	<artifactId>website</artifactId>
 	<version>1.0.0-SNAPSHOT</version>

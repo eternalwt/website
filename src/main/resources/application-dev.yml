@@ -25,6 +25,7 @@ spring:
     port: 6379
     password: Swkj1001!@#$
 #    database: 0
+#    pool:
     lettuce:
       pool2:
         max-active: 32

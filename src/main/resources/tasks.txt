@@ -14,7 +14,7 @@
 
 【不再用java8，以后只下载java 14，从11开始用起】
 
-新问题：1.登录会报错；
+新问题：1.登录会报错；redis连接池过时的配置先在自己的机器上修改
 
 【最大的问题已经变成】如何挣到更多的钱
 
@@ -721,13 +721,6 @@ https://blog.csdn.net/YANGYU1079075086/article/details/78969983?utm_source=blogx
 把mybatis-plus升到最高的3.4.3会报错，要么直接解决报错，要么先把spring-boot-starter-parent升到最高版
 
 =========================================================================================
-
-使用流水线（pipelined）提高Redis的命令性能：
-http://c.biancheng.net/view/4546.html
-https://blog.csdn.net/weixin_33721427/article/details/94520918
-Redis 的 Java 客户端开发包 Lettuce：https://www.oschina.net/p/lettuce?hmsr=aladdin1e1
-Redis的三个客户端框架比较：Jedis,Redisson,Lettuce：https://www.cnblogs.com/liyan492/p/9858548.html
-关与 @EnableConfigurationProperties 注解：https://www.jianshu.com/p/7f54da1cb2eb
 
 近期：
 1.ng-alain；

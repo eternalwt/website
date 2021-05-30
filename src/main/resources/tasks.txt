@@ -12,6 +12,9 @@
 
 ======================================================================================================================
 
+【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
+新问题：1.登录会报错；2.mybatis-plus以及升到2.4.0了，升一下spring-boot-starter-parent；如果能升再把mybatis-plus升到最高的3.4.3
+
 【最大的问题已经变成】如何挣到更多的钱
 
 Spring Boot 2 + Angular 11 + Preview PDF File：https://frontbackend.com/spring-boot/spring-boot-2-angular-11-preview-pdf-file
@@ -70,17 +73,18 @@ Spring web
 Spring batch提供了什么抽象？
 Spring XD是大数据相关的
 
+引用的log（lombok、@slf4j）对象标红了，是因为java 14的影响吗？
+
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
 首先看一下poi等库的英文对比文章
 
-一般继承 AuthorizingRealm（授权）即 可 ；其 继承了 AuthenticatingRealm（即身份验证）， 而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
+一般继承 AuthorizingRealm（授权）即可 ；其 继承了 AuthenticatingRealm（即身份验证）， 而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
 Shiro里面有AdviceFilter，看看spring里面Advice相关的类，是不是都跟AOP有关？
 1.分析SqlSession和shiro、servlet的session接口有没有相似的地方和设计思路；
 https://blog.csdn.net/zhangbohun/article/details/85123523
 shiro根据是否登录确认能否评论
 【shiro到1.7.0了，看看有没有新的文档】有没有增加SSO、OAuth 2等新功能？
 
-【spring-boot-starter-parent版本升到2.3.8.RELEASE后，mybatis-plus的版本跟不上，会有报错。分析一下这个问题】
 分析@RequestBody原理，把MultiRequestBody搞清楚（正是实战分析源码、提升的机会）【基础设置】（先用map实现功能，后续搜Map<String, Object>再改造@MultiRequestBody）
 我的ResultUtils应该改名，这个严格来说不能叫工具类
 

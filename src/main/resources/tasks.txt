@@ -12,7 +12,15 @@
 
 ======================================================================================================================
 
-【不再用java8，以后只下载java 14，从11开始用起】
+看看还有哪些点缺失：OAuth 2.0等
+
+在家里面把sonarcube和jenkins弄好
+家里代码swagger以及权限配好
+家里的代码可以先把ES和消息队列接进来
+
+京东猎户座发布开源，配置化一键生成cms系统【看看会对我的项目造成什么冲击。或许是我多虑了，思考有没有冲击的可能】：https://tianyalei.blog.csdn.net/article/details/115752780
+
+【不再用java8，以后只下载java 17，从11开始特性用起】
 
 新问题：1.登录会报错；redis连接池过时的配置先在自己的机器上修改
 
@@ -74,12 +82,15 @@ Spring web
 Spring batch提供了什么抽象？
 Spring XD是大数据相关的
 
+把二维码的代码，移植到我自己的项目中(前端二维码)
+mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
+
 引用的log（lombok、@slf4j）对象标红了，是因为java 14的影响吗？
 
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
-首先看一下poi等库的英文对比文章
+首先看一下poi等office库的英文对比文章
 
-一般继承 AuthorizingRealm（授权）即可 ；其 继承了 AuthenticatingRealm（即身份验证）， 而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
+一般继承AuthorizingRealm（授权）即可；其继承了AuthenticatingRealm（即身份验证），而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
 Shiro里面有AdviceFilter，看看spring里面Advice相关的类，是不是都跟AOP有关？
 1.分析SqlSession和shiro、servlet的session接口有没有相似的地方和设计思路；
 https://blog.csdn.net/zhangbohun/article/details/85123523

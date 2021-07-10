@@ -1,7 +1,7 @@
 package com.greengiant.website.controller;
 
 import com.greengiant.website.pojo.ResultBean;
-import com.greengiant.website.utils.ResultUtils;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PostMapping;

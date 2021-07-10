@@ -7,7 +7,7 @@ import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.RoleService;
-import com.greengiant.website.utils.ResultUtils;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

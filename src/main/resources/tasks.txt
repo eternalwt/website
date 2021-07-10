@@ -16,7 +16,11 @@
 
 在家里面把sonarcube和jenkins弄好
 家里代码swagger以及权限配好
-家里的代码可以先把ES和消息队列接进来
+家里的代码可以先把ES和消息队列接进来【在公司2周时间就搞懂了，真好】
+Spring封装RabbitAdmin，RabbitTemplate，SimpleMessageListenerContainer
+凡是遇到template的地方，思考2个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
+
+2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器。

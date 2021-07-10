@@ -1,4 +1,4 @@
-package com.greengiant.website.utils;
+package com.greengiant.infrastructure.utils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;

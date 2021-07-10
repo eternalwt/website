@@ -1,7 +1,7 @@
 package com.greengiant.website.controller;
 
-import com.greengiant.website.utils.CaptchaUtil;
-import com.greengiant.website.utils.FileUtil;
+import com.greengiant.infrastructure.utils.CaptchaUtil;
+import com.greengiant.infrastructure.utils.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;

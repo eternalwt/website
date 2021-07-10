@@ -1,4 +1,4 @@
-package com.greengiant.website.utils;
+package com.greengiant.infrastructure.utils;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

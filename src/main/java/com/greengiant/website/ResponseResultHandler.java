@@ -1,6 +1,6 @@
 package com.greengiant.website;
 
-import com.greengiant.website.utils.ResultUtils;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

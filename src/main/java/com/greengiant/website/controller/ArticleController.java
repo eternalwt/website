@@ -8,7 +8,7 @@ import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Article;
 import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.service.ArticleService;
-import com.greengiant.website.utils.ResultUtils;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

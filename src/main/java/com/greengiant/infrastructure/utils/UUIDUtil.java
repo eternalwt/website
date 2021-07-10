@@ -1,4 +1,4 @@
-package com.greengiant.website.utils;
+package com.greengiant.infrastructure.utils;
 
 import java.util.UUID;
 

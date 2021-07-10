@@ -6,7 +6,7 @@ import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.RoleService;
-import com.greengiant.website.utils.ResultUtils;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

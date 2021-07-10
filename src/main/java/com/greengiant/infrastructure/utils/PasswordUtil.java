@@ -1,4 +1,4 @@
-package com.greengiant.website.utils;
+package com.greengiant.infrastructure.utils;
 
 import org.apache.shiro.crypto.RandomNumberGenerator;
 import org.apache.shiro.crypto.SecureRandomNumberGenerator;

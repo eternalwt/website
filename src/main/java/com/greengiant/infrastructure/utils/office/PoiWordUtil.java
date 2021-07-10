@@ -1,4 +1,4 @@
-package com.greengiant.website.utils.office;
+package com.greengiant.infrastructure.utils.office;
 
 public class PoiWordUtil {
 

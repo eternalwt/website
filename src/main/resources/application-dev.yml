@@ -20,10 +20,10 @@ spring:
     static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/templates/
 
   redis:
-#    host: 127.0.0.1
-    host: 10.7.2.24
+    host: 127.0.0.1
+#    host: 10.7.2.24
     port: 6379
-    password: Swkj1001!@#$
+#    password: Swkj1001!@#$
 #    database: 0
 #    pool:
     lettuce:

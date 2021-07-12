@@ -52,21 +52,20 @@ public class RedisTest {
         });
 
         // todo 3.webUploader怎么测试？
-        List<Object> sessionCallback = stringRedisTemplate.executePipelined(new SessionCallback<Object>() {
-            @Override
-            public Object execute(RedisOperations redisOperations) throws DataAccessException {
-                redisOperations.boundSetOps("ttt3").add("kkk4");
-                redisOperations.boundSetOps("ttt3").size();
-                redisOperations.
-                return null;
-            }
-        });
-
-        if (sessionCallback.size() == 2) {
-            Long count = Long.parseLong(sessionCallback.get(1).toString());
-            System.out.println(count);
-            System.out.println(sessionCallback.size());
-        }
+//        List<Object> sessionCallback = stringRedisTemplate.executePipelined(new SessionCallback<Object>() {
+//            @Override
+//            public Object execute(RedisOperations redisOperations) throws DataAccessException {
+//                redisOperations.boundSetOps("ttt3").add("kkk4");
+//                redisOperations.boundSetOps("ttt3").size();
+//                return null;
+//            }
+//        });
+//
+//        if (sessionCallback.size() == 2) {
+//            Long count = Long.parseLong(sessionCallback.get(1).toString());
+//            System.out.println(count);
+//            System.out.println(sessionCallback.size());
+//        }
 
         List<Object> results = stringRedisTemplate.executePipelined((RedisCallback<Object>) connection -> {
             StringRedisConnection stringRedisConn = (StringRedisConnection)connection;

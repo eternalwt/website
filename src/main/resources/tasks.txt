@@ -13,12 +13,17 @@
 ======================================================================================================================
 
 看看还有哪些点缺失：OAuth 2.0等
+把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 
-在家里面把sonarcube和jenkins弄好
+连接elasticsearch用esclientrhl（RestHighLevelClient）：
+    https://blog.csdn.net/weixin_30736301/article/details/94941441
+    https://blog.csdn.net/u014532775/article/details/93335827
+    https://zhuanlan.zhihu.com/p/143786937
+
+在家里面把sonarcube和jenkins弄好。jenkins与powershell？支持吗？
 家里代码swagger以及权限配好
-家里的代码可以先把ES和消息队列接进来【在公司2周时间就搞懂了，真好】
 Spring封装RabbitAdmin，RabbitTemplate，SimpleMessageListenerContainer
-凡是遇到template的地方，思考2个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
+凡是遇到template的地方，思考3个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 

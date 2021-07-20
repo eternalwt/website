@@ -13,6 +13,7 @@
 ======================================================================================================================
 
 看看还有哪些点缺失：OAuth 2.0等
+二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 
 【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
@@ -20,23 +21,23 @@
 	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
 	https://www.cnblogs.com/MrSaver/p/11567997.html
 
-目标：mq先写通test，channel相关的，不要污染业务逻辑
-
 【ES】把多条件查询、判断index是否存在等继续写通
 【虽然没有使用这种方式，也先看一下】连接elasticsearch用esclientrhl（RestHighLevelClient）：
     https://blog.csdn.net/weixin_30736301/article/details/94941441
     https://blog.csdn.net/u014532775/article/details/93335827
     https://zhuanlan.zhihu.com/p/143786937
+elasticsearch查看所有index：https://blog.csdn.net/u012307002/article/details/52837724
 
-在家里面把sonarcube和jenkins弄好。jenkins与powershell？支持吗？
-家里代码swagger以及权限配好
+目标：mq先写通test，channel相关的，不要污染业务逻辑
 Spring封装RabbitAdmin，RabbitTemplate，SimpleMessageListenerContainer
 凡是遇到template的地方，思考3个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 
-二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
-家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器。
+家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
+
+在家里面把sonarcube和jenkins弄好。jenkins与powershell？支持吗？
+家里代码swagger以及权限配好
 
 对比我的代码返回值有没有泛型：ResultBean<T>。公司代码的Result.error等没有具体化，导致产生了一堆告警
 【要能显示部门、部门主要负责人/职位、虚拟组织，就可以了】我的代码里面还差个机构信息，以及用户和机构/部门的关联【这一块得思考一下，然后到人人都是产品经理里面搜一下】。有管理层的时候，表怎么设计？

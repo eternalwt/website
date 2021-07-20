@@ -20,8 +20,10 @@
 	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
 	https://www.cnblogs.com/MrSaver/p/11567997.html
 
-目标：写通一个test，mq也先写test把，不要污染业务逻辑
-连接elasticsearch用esclientrhl（RestHighLevelClient）：
+目标：mq先写通test，channel相关的，不要污染业务逻辑
+
+【ES】把多条件查询、判断index是否存在等继续写通
+【虽然没有使用这种方式，也先看一下】连接elasticsearch用esclientrhl（RestHighLevelClient）：
     https://blog.csdn.net/weixin_30736301/article/details/94941441
     https://blog.csdn.net/u014532775/article/details/93335827
     https://zhuanlan.zhihu.com/p/143786937

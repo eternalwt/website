@@ -6,7 +6,7 @@ import java.util.Date;
 
 import static java.lang.Thread.sleep;
 
-public class NIOTest {
+public class NIOTests {
 
     // https://www.tutorialspoint.com/java_nio/java_nio_channels.htm
     // https://javapapers.com/java/java-nio-channel/

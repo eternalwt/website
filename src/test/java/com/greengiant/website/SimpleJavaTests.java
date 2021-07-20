@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.Thread.sleep;
 
-public class SimpleJavaTest {
+public class SimpleJavaTests {
 
     // todo 开始在我的代码中引入guava
 

@@ -4,7 +4,7 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
-public class EhcacheTest {
+public class Ehcache {
     private static final CacheManager cacheManager = CacheManager.create("src/main/resources/ehcache.xml");
 
     /**

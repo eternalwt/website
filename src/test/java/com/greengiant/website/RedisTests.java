@@ -13,7 +13,7 @@ import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class RedisTest {
+public class RedisTests {
 
     @Autowired
     RedisTemplate<String, String> redisTemplate;

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
-public class GuavaTest {
+public class GuavaTests {
 
     public static final Cache<String, String> cacheBuilder =
             CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.SECONDS).build();

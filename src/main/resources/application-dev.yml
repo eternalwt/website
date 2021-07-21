@@ -38,6 +38,9 @@ spring:
     port: 5672
     username: guest
     password: guest
+#    virtual-host: /
+#    publisher-returns: false
+#    publisher-confirm-type: none
 
   elasticsearch:
     rest:

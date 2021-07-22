@@ -16,7 +16,7 @@ public class RabbitMQTests {
 
     // todo 把Channel那些测一下
 
-    // todo 1.我用的时候怎么用？2.怎么灵活绑定、怎么搞多个topic、queue的应用？
+    // todo 1.我用的时候怎么用？2.如何监听多个queue？（例如公司里面那种代码）3.怎么灵活绑定、怎么搞多个topic、queue的应用？
 
     @Autowired
     private Producer producer;

@@ -3,6 +3,7 @@ package com.greengiant.website;
 import com.greengiant.website.pojo.model.Article;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
@@ -71,8 +72,8 @@ public class ElasticSearchTests {
     }
 
     @Test
-    public void testInsert() {
-        IndexRequest indexRequest = new IndexRequest("index");
+    public void testInsertDoc() {
+        IndexRequest indexRequest = new IndexRequest("cat");
         indexRequest.id("1"); //文档id
         String jsonString = "{" +
                 "\"user\":\"kimchy\"," +
@@ -80,16 +81,26 @@ public class ElasticSearchTests {
                 "\"message\":\"trying out Elasticsearch\"" +
                 "}";
         indexRequest.source(jsonString, XContentType.JSON);
-        RequestOptions requestOptions = new RequestOptions();
+//        RequestOptions requestOptions = new RequestOptions();
         try {
-            restHighLevelClient.index(indexRequest, );
+            IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     @Test
+    public void testGetDoc() {
+        // todo 获取上面插入的那一条
+    }
+
+    @Test
     public void testPageQuery() {
+        // todo
+    }
+
+    @Test
+    public void testConditionalQuery() {
         // todo
     }
 

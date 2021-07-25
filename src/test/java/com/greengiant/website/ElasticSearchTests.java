@@ -2,6 +2,8 @@ package com.greengiant.website;
 
 import com.greengiant.website.pojo.model.Article;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.GetAliasesResponse;
@@ -11,7 +13,9 @@ import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.cluster.metadata.AliasMetaData;
+import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentType;
+import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,24 +78,38 @@ public class ElasticSearchTests {
     @Test
     public void testInsertDoc() {
         IndexRequest indexRequest = new IndexRequest("cat");
-        indexRequest.id("1"); //文档id
+        indexRequest.id("2"); //文档id
         String jsonString = "{" +
-                "\"user\":\"kimchy\"," +
-                "\"postDate\":\"2013-01-30\"," +
-                "\"message\":\"trying out Elasticsearch\"" +
+                "\"user\":\"gao\"," +
+                "\"postDate\":\"2013-01-31\"," +
+                "\"message\":\"trying out Elasticsearch 2\"" +
                 "}";
         indexRequest.source(jsonString, XContentType.JSON);
 //        RequestOptions requestOptions = new RequestOptions();
         try {
             IndexResponse indexResponse = restHighLevelClient.index(indexRequest, RequestOptions.DEFAULT);
-        } catch (IOException e) {
-            System.out.println(e);
+            System.out.println(indexResponse.getIndex());
+        } catch (IOException ex) {
+            System.out.println(ex);
         }
     }
 
+    // todo 搞清楚RequestOptions
+
     @Test
-    public void testGetDoc() {
-        // todo 获取上面插入的那一条
+    public void testGetDoc() throws IOException {
+        // todo 1.搞清楚incldes、excludes；2.多条件、模糊查询；3.如何反序列化成方便使用的对象？
+        GetRequest getRequest = new GetRequest("cat");
+        getRequest.id("1");
+//        String[] includes = new String[]{"*", "birthday"};
+        String[] includes = new String[]{"*"};
+        String[] excludes = Strings.EMPTY_ARRAY;
+        FetchSourceContext fetchSourceContext = new FetchSourceContext(true, includes, excludes);
+        getRequest.fetchSourceContext(fetchSourceContext);
+        GetResponse response = restHighLevelClient.get(getRequest, RequestOptions.DEFAULT);
+
+        System.out.println(response.getSource().keySet().toString());
+        System.out.println(response.getSource().values().toString());
     }
 
     @Test

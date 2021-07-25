@@ -1,10 +1,16 @@
 package com.greengiant.website;
 
 import com.greengiant.website.pojo.model.Article;
+import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.CreateIndexRequest;
 import org.elasticsearch.client.indices.CreateIndexResponse;
+import org.elasticsearch.client.indices.GetIndexRequest;
+import org.elasticsearch.cluster.metadata.AliasMetaData;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +21,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Set;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -23,11 +31,66 @@ public class ElasticSearchTests {
     @Autowired
     private RestHighLevelClient restHighLevelClient;
 
+    /**
+     * 根据索引列表名称创建索引
+     * @throws IOException
+     */
     @Test
     public void testCreateIndex() throws IOException {
-        CreateIndexRequest request = new CreateIndexRequest("cat");//创建一个cat空索引
-        CreateIndexResponse createIndexResponse = restHighLevelClient.indices().create(request, RequestOptions.DEFAULT);
-        System.out.println(createIndexResponse.toString());
+        String[] indices = new String[]{"cat", "article"};
+        try {
+            for (int i = 0; i < indices.length; i++) {
+                GetIndexRequest request = new GetIndexRequest(indices[i]);
+                if (!restHighLevelClient.indices().exists(request, RequestOptions.DEFAULT)) {
+                    CreateIndexRequest createIndexRequest = new CreateIndexRequest(indices[i]); //创建一个空索引
+                    CreateIndexResponse createIndexResponse = restHighLevelClient.indices().create(createIndexRequest, RequestOptions.DEFAULT);
+                    System.out.println(createIndexResponse.toString());
+                }
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    /**
+     * 获取所有索引名称
+     */
+    @Test
+    public void testGetAllIndices() {
+        try {
+            GetAliasesRequest request = new GetAliasesRequest();
+            GetAliasesResponse getAliasesResponse =  restHighLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
+            Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
+            Set<String> indices = map.keySet();
+            for (String key : indices) {
+                System.out.println(key);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void testInsert() {
+        IndexRequest indexRequest = new IndexRequest("index");
+        indexRequest.id("1"); //文档id
+        String jsonString = "{" +
+                "\"user\":\"kimchy\"," +
+                "\"postDate\":\"2013-01-30\"," +
+                "\"message\":\"trying out Elasticsearch\"" +
+                "}";
+        indexRequest.source(jsonString, XContentType.JSON);
+        RequestOptions requestOptions = new RequestOptions();
+        try {
+            restHighLevelClient.index(indexRequest, );
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
+
+    @Test
+    public void testPageQuery() {
+        // todo
     }
 
     // todo 看官网，搞清楚版本对应关系，后续升级心里有底

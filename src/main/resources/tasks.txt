@@ -12,14 +12,21 @@
 
 ======================================================================================================================
 
-部门信息department是基础设施，花2个小时加一下
+我的model上为啥没有注解？
+
+【可以分解一步步来】
+    部门信息department是基础设施，花2个小时加一下。通过这个搞清楚主管的设置，如果设置了主管，如何在工作流中使用主管信息达到一级级审批？
+    user表里面加departmentId以及主管id。目标：要能看清组织结构及所有人员的管理结构
+    职位以及如何看清楚某个人管理哪几个部门？是不是要加新的表？
 
 【ES】把多条件查询、判断index是否存在等继续写通。测一下关掉后数据还在不在（应该是在的）
 【虽然没有使用这种方式，也看一下】连接elasticsearch用esclientrhl（RestHighLevelClient）：
-    https://blog.csdn.net/weixin_30736301/article/details/94941441
-    https://blog.csdn.net/u014532775/article/details/93335827
-    https://zhuanlan.zhihu.com/p/143786937
 elasticsearch查看所有index：https://blog.csdn.net/u012307002/article/details/52837724
+RestHighLevelClient 使用方法及封装工具：https://blog.csdn.net/weixin_30736301/article/details/94941441
+springboot elasticsearch整合实践（RestHighLevelClient）：https://blog.csdn.net/u014532775/article/details/93335827
+SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhuanlan.zhihu.com/p/143786937
+Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
+Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
 
 目标：mq先写通test，channel相关的，不要污染业务逻辑：https://www.cnblogs.com/cord/p/9403364.html【把这个博客移植过来，就能推进很多】
 Spring封装RabbitAdmin，RabbitTemplate，SimpleMessageListenerContainer
@@ -41,16 +48,17 @@ eureka和gateway是基础设施：
         https://www.cnblogs.com/april-chen/p/10617066.html
     gateway里面可以配动态路由
     gateway的文章（gateway还是很强大的，有Hystrix断路器集成、请求速率限制等，可以通过filter完成很多功能）：
+        https://spring.io/guides/gs/gateway/
         https://www.cnblogs.com/h--d/p/12733498.html
         https://www.cnblogs.com/h--d/p/12735381.html
         https://blog.csdn.net/ifrozen/article/details/80016566
     gateway在uri的schema协议部分为自定义的lb:类型，表示从微服务注册中心（如Eureka）订阅服务：https://www.cnblogs.com/crazymakercircle/p/11704077.html
 
-https是基础设施，现在对https的理解：
+https是基础设施，现在对https的理解【那这样看来nginx也是基础设施】：
     1.前端nginx需要配置，读取静态资源文件；
     2.前端调用的后端服务要用到，否则从客户浏览器将是http协议发请求给后端；
     3.证书：生产的证书是crt和key文件（前端nginx配置这2个），用openssl生成p12文件给后端用。
-pdf、office是基础设施
+pdf、office是基础设施。首先看一下poi等office库的英文对比文章
 
 【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
 分布式锁的知识：
@@ -60,6 +68,7 @@ pdf、office是基础设施
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
+我的model的注释不全
 
 在家里面把sonarcube和jenkins弄好。jenkins与powershell？支持吗？
 家里代码swagger以及权限配好
@@ -138,7 +147,8 @@ mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 引用的log（lombok、@slf4j）对象标红了，是因为java 14的影响吗？
 
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
-首先看一下poi等office库的英文对比文章
+
+当前有些表没有字段注释，没有creator_id和updator_id
 
 一般继承AuthorizingRealm（授权）即可；其继承了AuthenticatingRealm（即身份验证），而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
 Shiro里面有AdviceFilter，看看spring里面Advice相关的类，是不是都跟AOP有关？

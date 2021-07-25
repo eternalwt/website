@@ -3,6 +3,9 @@ create database website default character set utf8mb4 collate utf8mb4_unicode_ci
 set global time_zone='+8:00';
 use website;
 
+-- todo Integer display width is deprecated and will be removed in a future release：https://www.cnblogs.com/kukufan/p/12485609.html
+-- todo 表上没有collate，要么2个都有，要么2个都没有（用数据库的)
+
 drop table if exists auth_user;
 create table auth_user(
   id bigint(64) auto_increment primary key,
@@ -53,6 +56,18 @@ create table auth_role_permission(
   create_time timestamp DEFAULT CURRENT_TIMESTAMP,
   update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
+
+drop table if exists sys_department;
+create table `sys_department`(
+	`id` bigint(64) not null  auto_increment primary key comment '部门id',
+	`dept_name` VARCHAR(200) not null DEFAULT '' comment '部门名称',
+	`parent_id` bigint(64) not null DEFAULT 0  comment  '上级部门id' ,
+	`level` int DEFAULT 0 comment '部门层级',
+	`sort` int DEFAULT 0 comment '部门在当前层级下的顺序，由小到大',
+	`remark` VARCHAR(200) DEFAULT '' comment '备注',
+	`create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
 drop table if exists menu;
 create table menu(

@@ -45,6 +45,8 @@ spring:
   elasticsearch:
     rest:
       uris: localhost:9200
+#      username: aaa
+#      password: bbb
 #      connection-timeout: 1s
 #      read-timeout: 30s
 #      username:

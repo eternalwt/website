@@ -27,7 +27,9 @@ Elasticsearch 配置用户名和密码：
     https://blog.csdn.net/qq_35349114/article/details/100096115
 得花2个小时把用到的类都看一遍，这才是最关键的
 把es的场景和底层数据结构关联起来，彻底搞清楚
-ES性能调优
+ES性能调优、ES与大数据
+RestHighLevelClient批量删除满足某些条件的数据：https://blog.csdn.net/john1337/article/details/103146692
+es-RestHighLevelClient增删改查：https://www.cnblogs.com/javallh/p/13790486.html
 基于SpringBoot通过RestHighLevelClient进行CRUD：https://blog.csdn.net/hellow0rd/article/details/107963453
 RestHighLevelClient查询es【CRUD都搞一遍】：https://www.cnblogs.com/wangrudong003/p/10959525.html
 elasticsearch查看所有index：https://blog.csdn.net/u012307002/article/details/52837724
@@ -36,9 +38,29 @@ springboot elasticsearch整合实践（RestHighLevelClient）：https://blog.csd
 SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhuanlan.zhihu.com/p/143786937
 Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
+Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 
-目标：mq先写通test，channel相关的，不要污染业务逻辑：https://www.cnblogs.com/cord/p/9403364.html【把这个博客移植过来，就能推进很多】
-Spring封装RabbitAdmin，RabbitTemplate，SimpleMessageListenerContainer
+Headers Exchanges需要写代码实验一下
+目标：mq在test里面继续写通channel等逻辑，不要污染业务逻辑
+Spring封装AmqpAdmin、AmqpTemplate，RabbitAdmin、RabbitTemplate，SimpleMessageListenerContainer
+对于延迟队列不管是 AMQP 协议或者 RabbitMQ 本身是不支持的，之前有介绍过如何使用 RabbitMQ 死信队列（DLX） + TTL 的方式来模拟实现延迟队列：https://www.imooc.com/article/302628
+一文带你搞定RabbitMQ延迟队列：https://www.cnblogs.com/mfrank/p/11260355.html
+ rabbitmq实现延迟队列用了rabbitmq-delayed-message-exchange插件,需要提前安装,并启用：https://www.cnblogs.com/chrischennx/p/7274556.html
+RabbitMQ的ChannelAwareMessageListener与MessageListener：https://blog.csdn.net/zhousenshan/article/details/78798088
+spring-rabbit消费过程解析及AcknowledgeMode选择【很复杂】：https://blog.csdn.net/weixin_38380858/article/details/84963944
+
+RabbitMQ arguments中可以设置的队列的常见参数如下：https://os.51cto.com/art/202001/609404.htm?pc
+RabbitMQ的消息确认ACK机制：
+	https://www.cnblogs.com/gyjx2016/p/13704504.html
+	https://www.cnblogs.com/biehongli/p/11789098.html
+	https://blog.csdn.net/weixin_43689480/article/details/98031003
+手动ack模式下，还能否丢弃消息？如何丢弃？多次（重复）ack会不会有问题？
+RabbitMQ：消息发送确认 与 消息接收确认（ACK）：https://www.jianshu.com/p/2c5eebfd0e95
+rabbitmq中的consumerTag和deliveryTag分别是干啥的，有什么用？https://blog.csdn.net/weixin_34185364/article/details/91931926
+RabbitMQ中channel.basicAck的第二参数代表是否为多消息
+rabbitMQ basicQos和basicAck作用和关系：https://blog.csdn.net/irabbit0708/article/details/88693435
+vhost的配置
+
 凡是遇到template的地方，思考3个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
 
 看看还有哪些点缺失：OAuth 2.0等【先自己搭建server，然后自己连接认证】 spring gateway OAuth2

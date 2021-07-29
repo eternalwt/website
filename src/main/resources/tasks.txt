@@ -21,7 +21,7 @@
     user表里面加departmentId以及主管id。目标：要能看清组织结构及所有人员的管理结构
     职位以及如何看清楚某个人管理哪几个部门？是不是要加新的表？
 
-【ES】把多条件查询、文本模糊匹配、判断index是否存在等继续写通。测一下关掉后数据还在不在（应该是在的）
+【ES】把多条件查询、文本模糊匹配等继续写通。测一下关掉后数据还在不在（应该是在的）
 Elasticsearch 配置用户名和密码：
     https://blog.csdn.net/weixin_43315211/article/details/99677072
     https://blog.csdn.net/qq_35349114/article/details/100096115
@@ -41,6 +41,11 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 
 Headers Exchanges需要写代码实验一下
+RabbitMQ channel【代码层面】：
+	https://juejin.cn/post/6844904015508029453
+	https://blog.csdn.net/weixin_38380858/article/details/84258507
+	https://www.likecs.com/show-68586.html
+自定义交换机类型是什么操作？场景合适吗？
 目标：mq在test里面继续写通channel等逻辑，不要污染业务逻辑
 Spring封装AmqpAdmin、AmqpTemplate，RabbitAdmin、RabbitTemplate，SimpleMessageListenerContainer
 对于延迟队列不管是 AMQP 协议或者 RabbitMQ 本身是不支持的，之前有介绍过如何使用 RabbitMQ 死信队列（DLX） + TTL 的方式来模拟实现延迟队列：https://www.imooc.com/article/302628

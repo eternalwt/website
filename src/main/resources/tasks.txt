@@ -78,7 +78,6 @@ vhost的配置
 channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871e3dbb27
 深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html
 
-
 OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
 OAuth 2.0单元测试解决方案：
@@ -92,6 +91,7 @@ OAuth 2.0单元测试解决方案：
 
 质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
 sonarcube：
+    https://www.sonarqube.org/downloads/
     https://www.zhihu.com/question/277480517/answer/394089344
 
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
@@ -123,7 +123,13 @@ https是基础设施，现在对https的理解【那这样看来nginx也是基�
     1.前端nginx需要配置，读取静态资源文件；
     2.前端调用的后端服务要用到，否则从客户浏览器将是http协议发请求给后端；
     3.证书：生产的证书是crt和key文件（前端nginx配置这2个），用openssl生成p12文件给后端用。
+
 pdf、office是基础设施。首先看一下poi等office库的英文对比文章
+springboot与pdf：
+    https://www.codejava.net/frameworks/spring-boot/pdf-export-example
+    https://zetcode.com/articles/springbootpdfreport/
+    https://kreepcode.com/spring-boot-and-angular-open-pdf-link-browser/
+    https://zetcode.com/springboot/servepdf/
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 

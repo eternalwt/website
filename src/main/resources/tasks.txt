@@ -12,6 +12,8 @@
 
 ======================================================================================================================
 
+shiro isPermitted再写一版
+
 看看还有哪些基础设施缺失
 
 我的model上为啥没有注解？
@@ -88,7 +90,13 @@ OAuth 2.0单元测试解决方案：
 	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
 	https://www.cnblogs.com/MrSaver/p/11567997.html
 
+质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
+sonarcube：
+    https://www.zhihu.com/question/277480517/answer/394089344
+
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
+把二维码的代码，移植到我自己的项目中(前端二维码)
+
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 【规则引擎和scheduler是否搞成基础设施需要再调研】
 
@@ -122,7 +130,6 @@ pdf、office是基础设施。首先看一下poi等office库的英文对比文�
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
 我的model的注释不全
 
-在家里面把sonarcube和jenkins弄好。jenkins与powershell？支持吗？
 家里代码swagger以及权限配好
 
 对比我的代码返回值有没有泛型：ResultBean<T>。公司代码的Result.error等没有具体化，导致产生了一堆告警
@@ -181,19 +188,17 @@ The Role of Software in Business(站在很高的视角来看待这一问题)：h
 
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
 【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】
-MIT 6.824：https://www.zhihu.com/question/29597104
-网站：https://pdos.csail.mit.edu/6.824/schedule.html
-视频：
-作业完成：
-
-shiro isPermitted再写一版
+MIT 6.824：
+    https://www.zhihu.com/question/29597104
+    网站：https://pdos.csail.mit.edu/6.824/schedule.html
+    视频：
+    作业完成：
 
 Shiro与spring session
 Spring web
 Spring batch提供了什么抽象？
 Spring XD是大数据相关的
 
-把二维码的代码，移植到我自己的项目中(前端二维码)
 mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 
 引用的log（lombok、@slf4j）对象标红了，是因为java 14的影响吗？

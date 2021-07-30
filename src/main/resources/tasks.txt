@@ -12,6 +12,8 @@
 
 ======================================================================================================================
 
+看看还有哪些基础设施缺失
+
 我的model上为啥没有注解？
 
 【可以分解一步步来】
@@ -72,14 +74,19 @@ rabbitMQ basicQos和basicAck作用和关系：https://blog.csdn.net/irabbit0708/
 vhost的配置
 1.fanout测试【用家里的代码测把，积累一些代码】；
 channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871e3dbb27
+深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html
 
-凡是遇到template的地方，思考3个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
 
-看看还有哪些点缺失：OAuth 2.0等【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
+OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
 OAuth 2.0单元测试解决方案：
 	https://zhuanlan.zhihu.com/p/264371358
 	https://zhuanlan.zhihu.com/p/265015515
+
+【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
+分布式锁的知识：
+	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
+	https://www.cnblogs.com/MrSaver/p/11567997.html
 
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
@@ -102,16 +109,13 @@ eureka和gateway是基础设施：
         https://blog.csdn.net/ifrozen/article/details/80016566
     gateway在uri的schema协议部分为自定义的lb:类型，表示从微服务注册中心（如Eureka）订阅服务：https://www.cnblogs.com/crazymakercircle/p/11704077.html
 
+凡是遇到template的地方，思考3个问题：1.是否有对应的注解；2.是否需要2次封装；3.可以用Bean的方式设置一些属性：https://www.cnblogs.com/zheaven/p/11906416.html
+
 https是基础设施，现在对https的理解【那这样看来nginx也是基础设施】：
     1.前端nginx需要配置，读取静态资源文件；
     2.前端调用的后端服务要用到，否则从客户浏览器将是http协议发请求给后端；
     3.证书：生产的证书是crt和key文件（前端nginx配置这2个），用openssl生成p12文件给后端用。
 pdf、office是基础设施。首先看一下poi等office库的英文对比文章
-
-【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
-分布式锁的知识：
-	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
-	https://www.cnblogs.com/MrSaver/p/11567997.html
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 

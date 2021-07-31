@@ -3,16 +3,26 @@ package com.greengiant.infrastructure.messaging;
 import org.springframework.amqp.core.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *
+ */
 @Configuration
+@Order(100)
 public class RabbitMQConfig {
 
     private static final String topicExchangeName = "topic-exchange";
     private static final String fanoutExchange = "fanout-exchange";
     private static final String headersExchange = "headers-exchange";
+
+    @Bean
+    public void init() {
+        // todo 用返回void的bean的方式初始化交换机、队列、绑定关系
+    }
 
     /**
      * 声明队列
@@ -20,7 +30,6 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue helloQueue() {
-        //Queue(String name, boolean durable, boolean exclusive, boolean autoDelete)
         return new Queue("cord", false, true, true);
 //        Queue queue = new Queue("hello");
 //        return queue;

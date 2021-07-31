@@ -17,6 +17,11 @@ public class Producer {
     @Autowired
     private AmqpAdmin admin;// todo 有哪些方法、各有什么作用？
 
+
+    public void send(Object message){
+        template.convertAndSend("HEADER_NAME", null, message);
+    }
+
     /**
      * @param routingKey 路由关键字
      * @param msg 消息体

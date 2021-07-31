@@ -61,7 +61,6 @@ Spring封装AmqpAdmin、AmqpTemplate，RabbitAdmin、RabbitTemplate，SimpleMess
  rabbitmq实现延迟队列用了rabbitmq-delayed-message-exchange插件,需要提前安装,并启用：https://www.cnblogs.com/chrischennx/p/7274556.html
 RabbitMQ的ChannelAwareMessageListener与MessageListener：https://blog.csdn.net/zhousenshan/article/details/78798088
 spring-rabbit消费过程解析及AcknowledgeMode选择【很复杂】：https://blog.csdn.net/weixin_38380858/article/details/84963944
-ChannelAwareMessageListener
 
 RabbitMQ arguments中可以设置的队列的常见参数如下：https://os.51cto.com/art/202001/609404.htm?pc
 RabbitMQ的消息确认ACK机制：
@@ -77,6 +76,8 @@ vhost的配置
 1.fanout测试【用家里的代码测把，积累一些代码】；
 channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871e3dbb27
 深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html
+黄学山的能力：对于一些东西研究的更广，例如MQ还用到ConnectionFactory、ChannelAwareMessageListener、DirectMessageListenerContainer。
+我首先要举一反三，对应到kafka等，搞懂这些基础结构，然后再思考学习一门这样的技术时怎么入手看清全貌
 
 OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/

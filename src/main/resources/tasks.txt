@@ -12,7 +12,7 @@
 
 ======================================================================================================================
 
-shiro isPermitted再写一版
+shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
 
 看看还有哪些基础设施缺失
 
@@ -48,26 +48,43 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 analyzer、search_analyzer
 
-Headers Exchanges需要写代码实验一下
-RabbitMQ channel【代码层面】：
+【把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，请让别的消费者处理
+channel的basicRecover方法是啥？
+rabbitMQTemplate.setConfirmCallback、rabbitMQTemplate.setReturnCallback：https://www.jianshu.com/p/3d746fd110e3
+7.rabbitmq-消息的拒绝：https://www.jianshu.com/p/49f7c25f6d4d
+rabbitmq-死信交换机和死信队列【自己实现延时队列】：https://www.jianshu.com/p/3c90a6d1cdb7
+目标：mq在test里面继续写通channel等逻辑，不要污染业务逻辑
+RabbitMQ channel【代码层面】(com.rabbitmq.client.Channel)：
 	https://juejin.cn/post/6844904015508029453
 	https://blog.csdn.net/weixin_38380858/article/details/84258507
 	https://www.likecs.com/show-68586.html
+Spring RabbitMQ Channel理解：https://juejin.cn/post/6844904015508029453
+Springboot Rabbitmq UML图：https://blog.csdn.net/qq_39470742/article/details/87973487
+MessageListenerAdapter：https://www.jianshu.com/p/d21bafe3b9fd
 自定义交换机类型是什么操作？场景合适吗？
-目标：mq在test里面继续写通channel等逻辑，不要污染业务逻辑
 Spring封装AmqpAdmin、AmqpTemplate，RabbitAdmin、RabbitTemplate，SimpleMessageListenerContainer
+一个RabbitTemplate对象，一个AmqpAdmin对象以及一个RabbitMessageTemplate对象：https://blog.csdn.net/u011126891/article/details/54376179
+AmqpAdmin管理组件的使用：https://blog.csdn.net/Leon_Jinhai_Sun/article/details/99692190
 对于延迟队列不管是 AMQP 协议或者 RabbitMQ 本身是不支持的，之前有介绍过如何使用 RabbitMQ 死信队列（DLX） + TTL 的方式来模拟实现延迟队列：https://www.imooc.com/article/302628
 一文带你搞定RabbitMQ延迟队列：https://www.cnblogs.com/mfrank/p/11260355.html
  rabbitmq实现延迟队列用了rabbitmq-delayed-message-exchange插件,需要提前安装,并启用：https://www.cnblogs.com/chrischennx/p/7274556.html
+RabbitMQ arguments中可以设置的队列的常见参数如下：https://os.51cto.com/art/202001/609404.htm?pc
+经过我们的封装后，Message设置contentType那些都被隐藏了【看看我们封装的contentType】
+RabbitMQ with Spring AMQP and Spring Boot：https://jstobigdata.com/rabbitmq/rabbitmq-with-spring-amqp-and-spring-boot/
+发布端、消费端、消息路由、消息生命周期和身份认证标识等模块参数的设置
+RabbitMQ队列（queue）的各个参数：https://www.cnblogs.com/leeego-123/p/11240201.html
+Headers Exchanges：性能差，基本不会用
 RabbitMQ的ChannelAwareMessageListener与MessageListener：https://blog.csdn.net/zhousenshan/article/details/78798088
+我的理解：ChannelAwareMessageListener可以感知到channel然后进行basicAck和basicNAck、basicReject
 spring-rabbit消费过程解析及AcknowledgeMode选择【很复杂】：https://blog.csdn.net/weixin_38380858/article/details/84963944
 
-RabbitMQ arguments中可以设置的队列的常见参数如下：https://os.51cto.com/art/202001/609404.htm?pc
 RabbitMQ的消息确认ACK机制：
 	https://www.cnblogs.com/gyjx2016/p/13704504.html
 	https://www.cnblogs.com/biehongli/p/11789098.html
 	https://blog.csdn.net/weixin_43689480/article/details/98031003
-手动ack模式下，还能否丢弃消息？如何丢弃？多次（重复）ack会不会有问题？
+A message MUST NOT be acknowledged more than once：
+    https://www.pianshen.com/article/43811532214/
+    https://blog.csdn.net/sbin456/article/details/109237192
 RabbitMQ：消息发送确认 与 消息接收确认（ACK）：https://www.jianshu.com/p/2c5eebfd0e95
 rabbitmq中的consumerTag和deliveryTag分别是干啥的，有什么用？https://blog.csdn.net/weixin_34185364/article/details/91931926
 RabbitMQ中channel.basicAck的第二参数代表是否为多消息
@@ -76,12 +93,12 @@ vhost的配置
 1.fanout测试【用家里的代码测把，积累一些代码】；
 channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871e3dbb27
 深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html
-黄学山的能力：对于一些东西研究的更广，例如MQ还用到ConnectionFactory、ChannelAwareMessageListener、DirectMessageListenerContainer。
+黄学山的能力：对于一些东西研究的更广，例如MQ还用到ConnectionFactory、ChannelAwareMessageListener、DirectMessageListenerContainer、containerFactory。
 我首先要举一反三，对应到kafka等，搞懂这些基础结构，然后再思考学习一门这样的技术时怎么入手看清全貌
 
 OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
-OAuth 2.0单元测试解决方案：
+OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到单元测试，所以三方登录一直没做起来】：
 	https://zhuanlan.zhihu.com/p/264371358
 	https://zhuanlan.zhihu.com/p/265015515
 
@@ -94,6 +111,10 @@ OAuth 2.0单元测试解决方案：
 sonarcube：
     https://www.sonarqube.org/downloads/
     https://www.zhihu.com/question/277480517/answer/394089344
+（4）idea安装checkstyle
+https://note.youdao.com/ynoteshare1/index.html?id=9e352092ab2e17c7c095b9c46e67bf48&type=note#/
+（5）idea安装pmd
+https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405d5&type=note#/
 
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把二维码的代码，移植到我自己的项目中(前端二维码)
@@ -551,7 +572,6 @@ https://www.zhihu.com/question/28516433/answer/490921378
 Redis AutoConfiguration：https://blog.csdn.net/andy_zhang2007/article/details/96843886
 spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/details/87790700
 当使用spring-boot-configuration-processor库时会默认打开RabbitAutoConfiguration,它会自动创建一个 CachingConnectionFactory对象，
-一个RabbitTemplate对象，一个AmqpAdmin对象以及一个RabbitMessageTemplate对象：https://blog.csdn.net/u011126891/article/details/54376179
 了解了AutoConfiguration，可以看SqlSessionTemplate、JdbcTemplate、RedisTemplate等xxxTemplate了，从启动流程分析。
 
 分析一个starter：jdbc-starter
@@ -1777,7 +1797,6 @@ github能完成DevOps中的多少工作量？
 写数据库升级脚本要注意啥？怎么写？搜一下
 要有把service独立出来，maven多module打包的能力
 搭架子要把阿里那些最佳实践都包含进来
-OAuth2要做好
 
 密码前端传给后端之前就应该加密
 

@@ -2,6 +2,7 @@ package com.greengiant.infrastructure.messaging;
 
 import org.springframework.amqp.core.AmqpAdmin;
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,14 +13,18 @@ public class Producer {
     // https://blog.csdn.net/cs_hnu_scw/article/details/81040834
 
     @Autowired
-    private AmqpTemplate template;// todo 有哪些方法、各有什么作用？
+    private AmqpTemplate amqpTemplate;// todo 有哪些方法、各有什么作用？
 
     @Autowired
     private AmqpAdmin admin;// todo 有哪些方法、各有什么作用？
 
 
     public void send(Object message){
-        template.convertAndSend("HEADER_NAME", null, message);
+        amqpTemplate.convertAndSend("HEADER_NAME", null, message);
+    }
+
+    public void send(Message message){
+        amqpTemplate.convertAndSend("HEADER_NAME", null, message);
     }
 
     /**
@@ -27,7 +32,7 @@ public class Producer {
      * @param msg 消息体
      */
     public void sendDirectMsg(String routingKey, String msg) {
-        template.convertAndSend(routingKey, msg);
+        amqpTemplate.convertAndSend(routingKey, msg);
     }
 
     /**
@@ -36,7 +41,7 @@ public class Producer {
      * @param exchange 交换机
      */
     public void sendExchangeMsg(String exchange, String routingKey, String msg) {
-        template.convertAndSend(exchange, routingKey, msg);
+        amqpTemplate.convertAndSend(exchange, routingKey, msg);
     }
 
     /**
@@ -45,7 +50,7 @@ public class Producer {
      * @param msg 消息体
      */
     public void sendHeadersMsg(String exchange, String msg, Map<String, Object> map) {
-        template.convertAndSend(exchange, null, msg, message -> {
+        amqpTemplate.convertAndSend(exchange, null, msg, message -> {
             message.getMessageProperties().getHeaders().putAll(map);
             return message;
         });

@@ -13,6 +13,8 @@
 ======================================================================================================================
 
 shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
+新问题：1.登录会报错
+【最大的问题已经变成】如何挣到更多的钱
 
 看看还有哪些基础设施缺失
 
@@ -48,10 +50,34 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 analyzer、search_analyzer
 
-【把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，请让别的消费者处理
-channel的basicRecover方法是啥？
-rabbitMQTemplate.setConfirmCallback、rabbitMQTemplate.setReturnCallback：https://www.jianshu.com/p/3d746fd110e3
+【极度重要，这个是打通企业各应用的关键】OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
+Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
+OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到单元测试，所以三方登录一直没做起来】：
+	https://zhuanlan.zhihu.com/p/264371358
+	https://zhuanlan.zhihu.com/p/265015515
+
+【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
+分布式锁的知识：
+	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
+	https://www.cnblogs.com/MrSaver/p/11567997.html
+
+质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
+sonarcube：
+    https://www.sonarqube.org/downloads/
+    https://www.zhihu.com/question/277480517/answer/394089344
+（4）idea安装checkstyle
+https://note.youdao.com/ynoteshare1/index.html?id=9e352092ab2e17c7c095b9c46e67bf48&type=note#/
+（5）idea安装pmd
+https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405d5&type=note#/
+
+二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
+把二维码的代码，移植到我自己的项目中(前端二维码)
+
+【在我的代码中把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，丢弃或者请让别的消费者处理
 7.rabbitmq-消息的拒绝：https://www.jianshu.com/p/49f7c25f6d4d
+channel的basicRecover：https://blog.csdn.net/fly_leopard/article/details/102821776
+rabbitMQTemplate.setConfirmCallback、rabbitMQTemplate.setReturnCallback：https://www.jianshu.com/p/3d746fd110e3
+RabbitMQ提供了transaction、confirm两种消息确认机制：https://blog.csdn.net/azhegps/article/details/53815201
 rabbitmq-死信交换机和死信队列【自己实现延时队列】：https://www.jianshu.com/p/3c90a6d1cdb7
 目标：mq在test里面继续写通channel等逻辑，不要污染业务逻辑
 RabbitMQ channel【代码层面】(com.rabbitmq.client.Channel)：
@@ -77,7 +103,6 @@ Headers Exchanges：性能差，基本不会用
 RabbitMQ的ChannelAwareMessageListener与MessageListener：https://blog.csdn.net/zhousenshan/article/details/78798088
 我的理解：ChannelAwareMessageListener可以感知到channel然后进行basicAck和basicNAck、basicReject
 spring-rabbit消费过程解析及AcknowledgeMode选择【很复杂】：https://blog.csdn.net/weixin_38380858/article/details/84963944
-
 RabbitMQ的消息确认ACK机制：
 	https://www.cnblogs.com/gyjx2016/p/13704504.html
 	https://www.cnblogs.com/biehongli/p/11789098.html
@@ -96,28 +121,21 @@ channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871
 黄学山的能力：对于一些东西研究的更广，例如MQ还用到ConnectionFactory、ChannelAwareMessageListener、DirectMessageListenerContainer、containerFactory。
 我首先要举一反三，对应到kafka等，搞懂这些基础结构，然后再思考学习一门这样的技术时怎么入手看清全貌
 
-OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
-Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
-OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到单元测试，所以三方登录一直没做起来】：
-	https://zhuanlan.zhihu.com/p/264371358
-	https://zhuanlan.zhihu.com/p/265015515
+RequestOptions直接看
+@LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972
+为何一个@LoadBalanced注解就让RestTemplate拥有负载均衡的能力？https://fangshixiang.blog.csdn.net/article/details/100788040
+延迟消费写出来
 
-【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
-分布式锁的知识：
-	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
-	https://www.cnblogs.com/MrSaver/p/11567997.html
-
-质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
-sonarcube：
-    https://www.sonarqube.org/downloads/
-    https://www.zhihu.com/question/277480517/answer/394089344
-（4）idea安装checkstyle
-https://note.youdao.com/ynoteshare1/index.html?id=9e352092ab2e17c7c095b9c46e67bf48&type=note#/
-（5）idea安装pmd
-https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405d5&type=note#/
-
-二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
-把二维码的代码，移植到我自己的项目中(前端二维码)
+【非常重要】每个 CS 模式程序，尤其是高并发的网络服务端程序都有自己的网络异步事件处理库，Redis不例外。Redis 基于 Reactor 模型 封装了自己的事件驱动模型库。
+为什么作者不使用已有的成熟的相关库，比如 Libevent 或 Libev？下面从源码入手介绍下 Redis 中封装的 ae 库：https://segmentfault.com/a/1190000016062999
+Redis 事件机制详解：
+    https://blog.csdn.net/Dome_/article/details/99713312
+    https://www.cnblogs.com/tangxuliang/p/10659439.html
+    https://blog.csdn.net/qq_37334135/article/details/77717248
+RedisExpiredListener：
+    https://www.cnblogs.com/owenma/p/10419896.html
+    https://blog.csdn.net/cainiao1412/article/details/98881997
+    https://blog.csdn.net/oeSeven/article/details/106359816
 
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 【规则引擎和scheduler是否搞成基础设施需要再调研】
@@ -166,11 +184,7 @@ springboot与pdf：
 
 京东猎户座发布开源，配置化一键生成cms系统【看看会对我的项目造成什么冲击。或许是我多虑了，思考有没有冲击的可能】：https://tianyalei.blog.csdn.net/article/details/115752780
 
-【不再用java8，以后只下载java 17，从11开始特性用起】
-
-新问题：1.登录会报错；redis连接池过时的配置先在自己的机器上修改
-
-【最大的问题已经变成】如何挣到更多的钱
+【家里机器不再用java8，以后只下载java 17，从11开始特性用起】
 
 Spring Boot 2 + Angular 11 + Preview PDF File：https://frontbackend.com/spring-boot/spring-boot-2-angular-11-preview-pdf-file
 把D3.js、three.js搞懂，把pdf预览、word/excel导出及预览搞熟，这些才是赚钱的核心

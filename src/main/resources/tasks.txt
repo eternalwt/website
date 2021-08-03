@@ -51,6 +51,7 @@ Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 analyzer、search_analyzer
 
 【极度重要，这个是打通企业各应用的关键】OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
+Spring Cloud Gateway+Oauth2 实现统一认证和鉴权【nimbus】：https://blog.csdn.net/weixin_33716865/article/details/112339860
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
 OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到单元测试，所以三方登录一直没做起来】：
 	https://zhuanlan.zhihu.com/p/264371358
@@ -163,6 +164,7 @@ https是基础设施，现在对https的理解【那这样看来nginx也是基�
     1.前端nginx需要配置，读取静态资源文件；
     2.前端调用的后端服务要用到，否则从客户浏览器将是http协议发请求给后端；
     3.证书：生产的证书是crt和key文件（前端nginx配置这2个），用openssl生成p12文件给后端用。
+瑞鹿云之所以nginx中配了https，微服务里面还配，是因为相当于有多个项目，没有统一走网关。考虑在nginx中统一配置。
 
 pdf、office是基础设施。首先看一下poi等office库的英文对比文章
 springboot与pdf：

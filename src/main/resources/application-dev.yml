@@ -91,6 +91,9 @@ spring:
 #    #打印SQL信息
 #    com.hehe.mapper: debug
 
+scheduling:
+  enabled: false
+
 file:
   upload-path: d:/website-file/
 

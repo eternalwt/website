@@ -12,11 +12,23 @@
 
 ======================================================================================================================
 
+webSocket需要再完整搞一轮
+// todo 把 synchronized 和CopyOnWriteArraySet再看一下
+// todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
+// todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
+
+看看还有哪些基础设施缺失
+
 shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
 新问题：1.登录会报错
 【最大的问题已经变成】如何挣到更多的钱
 
-看看还有哪些基础设施缺失
+getPageList这种方法，适合写在xml里面吗？在家试一下
+
+动态配置springboot定时任务的开关(@ConditionalOnProperty)【还应该更进一步，如何在程序中动态控制？可以考虑用反射来实现吗？】：
+	https://blog.csdn.net/love4amanda/article/details/111692405
+	https://blog.csdn.net/enthan809882/article/details/104172856
+动态修改定时规则：https://blog.csdn.net/wuyongde_0922/article/details/82790149
 
 我的model上为啥没有注解？
 
@@ -121,11 +133,15 @@ channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871
 深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html
 黄学山的能力：对于一些东西研究的更广，例如MQ还用到ConnectionFactory、ChannelAwareMessageListener、DirectMessageListenerContainer、containerFactory。
 我首先要举一反三，对应到kafka等，搞懂这些基础结构，然后再思考学习一门这样的技术时怎么入手看清全貌
+RabbitMQ 3.9.0 正式发布，该版本主要围绕 Streams、支持 Erlang 24、Kubernetes、JOSN 日志记录、包获取、Erlang/OTP 兼容笔记这几大方面进行了更新与完善。
+RabbitMQ 3.9.0 节点可以与 3.8.x 节点一起运行。然而，3.8.16+以及 3.9.x 两者都需要 Erlang 23.2 或更高版本支持（和支持24）。3.9.x 系列只有当集群中的所有节点都升级到 3.9.0 或该系列中的任何其他补丁版本时，才能使特定功能可用。更多详情可以查看发布说明：https://github.com/rabbitmq/rabbitmq-server/releases/tag/v3.9.0
+Rabbitmq插件下载：
+	https://www.rabbitmq.com/community-plugins.html
+	https://blog.csdn.net/youjin/article/details/82586888
+延迟消费写出来
 
-RequestOptions直接看
 @LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972
 为何一个@LoadBalanced注解就让RestTemplate拥有负载均衡的能力？https://fangshixiang.blog.csdn.net/article/details/100788040
-延迟消费写出来
 
 【非常重要】每个 CS 模式程序，尤其是高并发的网络服务端程序都有自己的网络异步事件处理库，Redis不例外。Redis 基于 Reactor 模型 封装了自己的事件驱动模型库。
 为什么作者不使用已有的成熟的相关库，比如 Libevent 或 Libev？下面从源码入手介绍下 Redis 中封装的 ae 库：https://segmentfault.com/a/1190000016062999

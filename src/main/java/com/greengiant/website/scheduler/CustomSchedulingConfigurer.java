@@ -1,7 +1,10 @@
 package com.greengiant.website.scheduler;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.support.CronTrigger;
@@ -9,8 +12,9 @@ import org.springframework.scheduling.support.CronTrigger;
 import java.util.Date;
 
 //@Lazy(false)
-//@Configuration
-//@EnableScheduling
+@Configuration
+@EnableScheduling
+@ConditionalOnProperty(prefix = "scheduling", name = "enabled", havingValue = "true")
 public class CustomSchedulingConfigurer implements SchedulingConfigurer {
 
     private static String cron = "0 0/15 * * * ?";

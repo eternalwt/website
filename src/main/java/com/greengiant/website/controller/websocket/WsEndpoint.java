@@ -18,8 +18,7 @@ import java.util.concurrent.CopyOnWriteArraySet;
 @ServerEndpoint("/websocket/{businessType}")
 public class WsEndpoint {
     // todo 把 synchronized 和CopyOnWriteArraySet再看一下
-    // todo 写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
-
+    // todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
     // todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
 
     /**
@@ -90,6 +89,7 @@ public class WsEndpoint {
     /**
      * 实现服务器主动推送
      */
+    // todo 这个方法应该搞成static的把？
     public void sendMessage(String message, Session session) throws IOException {
         session.getBasicRemote().sendText(message);
     }

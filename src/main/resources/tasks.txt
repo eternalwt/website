@@ -12,6 +12,8 @@
 
 ======================================================================================================================
 
+【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
+
 webSocket需要再完整搞一轮
 // todo 把 synchronized 和CopyOnWriteArraySet再看一下
 // todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
@@ -29,6 +31,8 @@ getPageList这种方法，适合写在xml里面吗？在家试一下
 	https://blog.csdn.net/love4amanda/article/details/111692405
 	https://blog.csdn.net/enthan809882/article/details/104172856
 动态修改定时规则：https://blog.csdn.net/wuyongde_0922/article/details/82790149
+springboot中使用quartz进行定时任务操作【先把每一个配置读懂】：https://blog.csdn.net/qq_37804737/article/details/84335880
+quartz的原理及源码分析才是重要的，定时任务的重要性可能超过我的想象，需要进一步理解
 
 我的model上为啥没有注解？
 

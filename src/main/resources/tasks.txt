@@ -13,6 +13,7 @@
 ======================================================================================================================
 
 【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
+NIO是基础设施
 
 webSocket需要再完整搞一轮
 // todo 把 synchronized 和CopyOnWriteArraySet再看一下
@@ -20,6 +21,8 @@ webSocket需要再完整搞一轮
 // todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
 
 看看还有哪些基础设施缺失
+前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
+【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
 
 shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
 新问题：1.登录会报错
@@ -27,12 +30,29 @@ shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处�
 
 getPageList这种方法，适合写在xml里面吗？在家试一下
 
+【公司里面的FileStream NIO要看】
+【公司里面的Scheduler的流程要看一遍】
+QUARTZ流程
+sw_sched_job与syncJob的流程搞清楚
+几种trigger及区别搞清楚
+misfiredtrigger
+限信息表（qrtz_locks）：CALENDAR_ACCESS JOB_ACCESS MISFIRE_ACCESS STATE_ACCESS TRIGGER_ACCESS
+job_data：一个blob字段，存放持久化job对象
+【注意一下线程策略】#线程数量 org.quartz.threadPool.threadCount = 10
+分布式定时任务调度系统技术选型(elastic-job\xxl-job\quartz\Saturn\opencron\antares):https://zhuanlan.zhihu.com/p/129055463
 动态配置springboot定时任务的开关(@ConditionalOnProperty)【还应该更进一步，如何在程序中动态控制？可以考虑用反射来实现吗？】：
 	https://blog.csdn.net/love4amanda/article/details/111692405
 	https://blog.csdn.net/enthan809882/article/details/104172856
 动态修改定时规则：https://blog.csdn.net/wuyongde_0922/article/details/82790149
-springboot中使用quartz进行定时任务操作【先把每一个配置读懂】：https://blog.csdn.net/qq_37804737/article/details/84335880
 quartz的原理及源码分析才是重要的，定时任务的重要性可能超过我的想象，需要进一步理解
+springboot中使用quartz进行定时任务操作【先把每一个配置读懂】：https://blog.csdn.net/qq_37804737/article/details/84335880
+@Scheduled只适合处理简单的计划任务，不能处理分布式计划任务：https://www.cnblogs.com/jing99/p/11546559.html
+SpringBoot集成Quartz动态定时任务：https://blog.csdn.net/l18848956739/article/details/86597709
+Quartz数据库表分析：https://www.jianshu.com/p/36329ed4a085
+quartz原理揭秘和源码解读：https://www.jianshu.com/p/bab8e4e32952
+quartz的基础你真的了解吗：https://zhuanlan.zhihu.com/p/359957139
+Quartz集群原理以及配置应用的方法详解：https://zhuanlan.zhihu.com/p/90590154
+Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.com/p/687a7b7e5954
 
 我的model上为啥没有注解？
 

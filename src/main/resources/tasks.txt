@@ -12,6 +12,10 @@
 
 ======================================================================================================================
 
+【十一升Java 17】
+
+【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
+
 【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
 NIO是基础设施
 
@@ -163,6 +167,8 @@ Rabbitmq插件下载：
 	https://www.rabbitmq.com/community-plugins.html
 	https://blog.csdn.net/youjin/article/details/82586888
 延迟消费写出来
+
+做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
 
 @LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972
 为何一个@LoadBalanced注解就让RestTemplate拥有负载均衡的能力？https://fangshixiang.blog.csdn.net/article/details/100788040

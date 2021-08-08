@@ -69,6 +69,18 @@ create table `sys_department`(
     `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
+create table `sys_user_department`(
+-- todo
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户部门关联表';
+
+create table `sys_position`(
+-- todo
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表';
+
+create table `sys_user_position`(
+-- todo
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户职位关联表';
+
 drop table if exists menu;
 create table menu(
      id bigint(64) auto_increment primary key,

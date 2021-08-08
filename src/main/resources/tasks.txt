@@ -12,19 +12,18 @@
 
 ======================================================================================================================
 
-【十一升Java 17】
-
+【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
 【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
-NIO是基础设施
+NIO是基础设施(和epoll一起学习，潜龙勿用)
 
 webSocket需要再完整搞一轮
 // todo 把 synchronized 和CopyOnWriteArraySet再看一下
 // todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
 // todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
 
-看看还有哪些基础设施缺失
+看看还有哪些基础设施缺失【你必须得有自己的一套逻辑】
 前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
 【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
 
@@ -60,16 +59,11 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 
 我的model上为啥没有注解？
 
-【可以分解一步步来】
-    `dep_id` int(11) NOT NULL DEFAULT '0' COMMENT '用户部门表',
-    `status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
-    部门信息department是基础设施，花2个小时加一下。通过这个搞清楚主管的设置，如果设置了主管，如何在工作流中使用主管信息达到一级级审批？
-    user表里面加departmentId以及主管id。目标：要能看清组织结构及所有人员的管理结构
-    职位以及如何看清楚某个人管理哪几个部门？是不是要加新的表？
-部门人员职位权限表设计【是否引入角色来完成？】：https://blog.csdn.net/qq_23013625/article/details/53508501
-像有振这种多部门任职的，并且在不同的层级的，表怎么设计？工作流怎么走？：
-	好古科技-研发中心-SWSeeker组
-	好古科技-产品中心
+【一步步来】
+    （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
+    加3个表的DAO、Service、controller层：sys_user_department、sys_position、sys_user_position
+    目标：要能看清组织结构及所有人员的管理结构。最后再看哪些关联表可以依附到已有的表中（不用独立出来）
+    通过这个搞清楚主管的设置，如果设置了主管，如何在工作流中使用主管信息达到一级级审批？
 
 【ES】把多条件查询、文本模糊匹配等继续写通。测一下关掉后数据还在不在（应该是在的）
 Elasticsearch 配置用户名和密码：
@@ -102,8 +96,9 @@ OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到�
 	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
 	https://www.cnblogs.com/MrSaver/p/11567997.html
 
+Grafana和Prometheus是基础设施
 质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
-sonarcube：
+sonarcube【sonarcube和jenkins有可比性吗？】：
     https://www.sonarqube.org/downloads/
     https://www.zhihu.com/question/277480517/answer/394089344
 （4）idea安装checkstyle

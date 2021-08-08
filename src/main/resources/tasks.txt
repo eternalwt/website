@@ -15,6 +15,13 @@
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
+【一步步来】
+    （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
+    【一个重要的问题：sys_user_department和sys_position之间的关联。每一个level的部门对应的职位的级别是有限的，要设计好精妙的关联防止出错】
+    加3个表的DAO、Service、controller层：sys_user_department、sys_position、sys_user_position
+    目标：要能看清组织结构及所有人员的管理结构。最后再看哪些关联表可以依附到已有的表中（不用独立出来）
+    通过这个搞清楚主管的设置，如果设置了主管，如何在工作流中使用主管信息达到一级级审批？
+
 【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
 NIO是基础设施(和epoll一起学习，潜龙勿用)
 
@@ -58,12 +65,6 @@ Quartz集群原理以及配置应用的方法详解：https://zhuanlan.zhihu.com
 Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.com/p/687a7b7e5954
 
 我的model上为啥没有注解？
-
-【一步步来】
-    （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
-    加3个表的DAO、Service、controller层：sys_user_department、sys_position、sys_user_position
-    目标：要能看清组织结构及所有人员的管理结构。最后再看哪些关联表可以依附到已有的表中（不用独立出来）
-    通过这个搞清楚主管的设置，如果设置了主管，如何在工作流中使用主管信息达到一级级审批？
 
 【ES】把多条件查询、文本模糊匹配等继续写通。测一下关掉后数据还在不在（应该是在的）
 Elasticsearch 配置用户名和密码：
@@ -109,6 +110,7 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把二维码的代码，移植到我自己的项目中(前端二维码)
 
+RabbitMq：SimpleMessageListenerContainer和ChannelAwareMessageListener的配合使用：https://www.cnblogs.com/lyd447113735/p/14808758.html
 【在我的代码中把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，丢弃或者请让别的消费者处理
 7.rabbitmq-消息的拒绝：https://www.jianshu.com/p/49f7c25f6d4d
 channel的basicRecover：https://blog.csdn.net/fly_leopard/article/details/102821776

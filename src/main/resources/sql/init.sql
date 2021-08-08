@@ -70,11 +70,22 @@ create table `sys_department`(
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
 create table `sys_user_department`(
--- todo
+  id bigint(64) auto_increment primary key,
+  user_id bigint(64) not null,
+  department_id bigint(64) not null,
+  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户部门关联表';
 
 create table `sys_position`(
--- todo
+	`id` bigint(64) not null  auto_increment primary key comment '职务id',
+	`position_name` VARCHAR(200) not null DEFAULT '' comment '职务名称',
+	`parent_id` bigint(64) not null DEFAULT 0  comment  '上级职务id' ,
+-- 	`level` int DEFAULT 0 comment '职务层级',
+	`sort` int DEFAULT 0 comment '职务在当前层级下的顺序，由小到大',
+	`remark` VARCHAR(200) DEFAULT '' comment '备注',
+	`create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
+    `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表';
 
 create table `sys_user_position`(

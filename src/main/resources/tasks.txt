@@ -15,6 +15,12 @@
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
+【基础设施还差一个sys_dictionary表，晚上搞一下建表、DAO层】：
+	https://blog.csdn.net/chengjing5728/article/details/100832639
+	https://blog.csdn.net/weixin_39520869/article/details/113600272
+
+级别的那个问题：部门最高级别以及对应的职务级别之间可以松耦合。考虑这样一个问题如何解决：如何获取每个部门的leader？（不用考虑复杂，就先假设有10个平级部门，并且老大的部门有和老大一样级别的员工）
+
 【一步步来】
     （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
     【一个重要的问题：sys_user_department和sys_position之间的关联。每一个level的部门对应的职位的级别是有限的，要设计好精妙的关联防止出错】
@@ -110,6 +116,12 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把二维码的代码，移植到我自己的项目中(前端二维码)
 
+做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
+    https://dzone.com/articles/capture-iot-sensors-data-mqtt-protocol-rabbitmq-as
+    https://funprojects.blog/2018/12/07/rabbitmq-for-iot/
+MQTT Plugin：https://www.rabbitmq.com/mqtt.html
+RabbitMQ Web MQTT Plugin：https://www.rabbitmq.com/web-mqtt.html
+
 RabbitMq：SimpleMessageListenerContainer和ChannelAwareMessageListener的配合使用：https://www.cnblogs.com/lyd447113735/p/14808758.html
 【在我的代码中把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，丢弃或者请让别的消费者处理
 7.rabbitmq-消息的拒绝：https://www.jianshu.com/p/49f7c25f6d4d
@@ -165,7 +177,6 @@ Rabbitmq插件下载：
 	https://blog.csdn.net/youjin/article/details/82586888
 延迟消费写出来
 
-做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
 
 @LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972
 为何一个@LoadBalanced注解就让RestTemplate拥有负载均衡的能力？https://fangshixiang.blog.csdn.net/article/details/100788040

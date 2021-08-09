@@ -3,22 +3,23 @@ create database website default character set utf8mb4 collate utf8mb4_unicode_ci
 set global time_zone='+8:00';
 use website;
 
+-- todo 字段注释补完善。并且有一些很简陋，没有default之类的
 -- todo Integer display width is deprecated and will be removed in a future release：https://www.cnblogs.com/kukufan/p/12485609.html
 -- todo 表上没有collate，要么2个都有，要么2个都没有（用数据库的)
 
 drop table if exists auth_user;
 create table auth_user(
-  id bigint(64) auto_increment primary key,
-  user_name varchar(64),
-  password varchar(128),
-  password_salt varchar(128),
-  avatar varchar(256),
-  phone varchar(32),
-  email varchar(128),
-  qq varchar(32),
-  locked tinyint(1) DEFAULT 0 COMMENT '是否锁定',
-  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    user_name varchar(64),
+    password varchar(128),
+    password_salt varchar(128),
+    avatar varchar(256),
+    phone varchar(32),
+    email varchar(128),
+    qq varchar(32),
+    status tinyint(1) DEFAULT 0 COMMENT '状态：0正常，1锁定',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户（账号）表';
 
 drop table if exists auth_role;
@@ -41,20 +42,20 @@ create table auth_permission(
 
 drop table if exists auth_user_role;
 create table auth_user_role(
-  id bigint(64) auto_increment primary key,
-  user_id bigint(64) not null,
-  role_id bigint(64) not null,
-  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    user_id bigint(64) not null,
+    role_id bigint(64) not null,
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户角色关联表';
 
 drop table if exists auth_role_permission;
 create table auth_role_permission(
-  id bigint(64) auto_increment primary key,
-  role_id bigint(64) not null,
-  permission_id bigint(64) not null,
-  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    role_id bigint(64) not null,
+    permission_id bigint(64) not null,
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
 drop table if exists sys_department;
@@ -69,14 +70,16 @@ create table `sys_department`(
     `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='部门表';
 
+drop table if exists sys_user_department;
 create table `sys_user_department`(
-  id bigint(64) auto_increment primary key,
-  user_id bigint(64) not null,
-  department_id bigint(64) not null,
-  create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-  update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    user_id bigint(64) not null,
+    department_id bigint(64) not null,
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户部门关联表';
 
+drop table if exists sys_position;
 create table `sys_position`(
 	`id` bigint(64) not null  auto_increment primary key comment '职务id',
 	`position_name` VARCHAR(200) not null DEFAULT '' comment '职务名称',
@@ -88,9 +91,26 @@ create table `sys_position`(
     `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表';
 
+drop table if exists sys_dictionary;
 create table `sys_user_position`(
--- todo
+    id bigint(64) auto_increment primary key,
+    user_id bigint(64) not null,
+    position_id bigint(64) not null,
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户职位关联表';
+
+drop table if exists sys_dictionary;
+create table `sys_dictionary`(
+    id bigint(64) auto_increment primary key,
+    type varchar(64),
+    key varchar(64),
+    value varchar(64),
+    parent_id bigint(64) not null,
+    level int DEFAULT 0 comment '层级',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
 
 drop table if exists menu;
 create table menu(

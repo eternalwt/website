@@ -25,14 +25,14 @@ public class User {
 
     private String qq;
 
-    private Integer locked;
+    private Integer status;
 
     private Date createTime;
 
     private Date updateTime;
 
     public User(Long id, String userName, String password, String passwordSalt, String avatar, String phone, String email,
-                String qq, Integer locked, Date createTime, Date updateTime) {
+                String qq, Integer status, Date createTime, Date updateTime) {
         this.id = id;
         this.userName = userName;
         this.password = password;
@@ -41,7 +41,7 @@ public class User {
         this.phone = phone;
         this.email = email;
         this.qq = qq;
-        this.locked = locked;
+        this.status = status;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -114,12 +114,12 @@ public class User {
         this.qq = qq;
     }
 
-    public Integer getLocked() {
-        return locked;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setLocked(Integer locked) {
-        this.locked = locked;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getCreateTime() {
@@ -149,7 +149,7 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
                 ", qq='" + qq + '\'' +
-                ", locked=" + locked +
+                ", locked=" + status +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

@@ -6,7 +6,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(value="com.greengiant.infrastructure")
+@ComponentScan(value={"com.greengiant.infrastructure", "com.greengiant.website"})
 @EnableCaching
 public class WebsiteApplication {
 

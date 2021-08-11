@@ -12,6 +12,11 @@
 
 ======================================================================================================================
 
+【晚上】把OAuth2.0授权服务器看一下，了解一下
+今天看一下NIO，再确认/重构我的上传功能
+
+现在不启动es，为啥还跑不起来了？
+
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
@@ -121,6 +126,9 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
     https://funprojects.blog/2018/12/07/rabbitmq-for-iot/
 MQTT Plugin：https://www.rabbitmq.com/mqtt.html
 RabbitMQ Web MQTT Plugin：https://www.rabbitmq.com/web-mqtt.html
+MQTTBOX使用：https://www.jianshu.com/p/055c0e35c7f6
+RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.html
+消息协议（MQTT、AMQP、XMPP、WAMP、STOMP）之间的区别和应用：https://blog.csdn.net/gyshun/article/details/83036987
 
 RabbitMq：SimpleMessageListenerContainer和ChannelAwareMessageListener的配合使用：https://www.cnblogs.com/lyd447113735/p/14808758.html
 【在我的代码中把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，丢弃或者请让别的消费者处理
@@ -283,6 +291,10 @@ The Role of Software in Business(站在很高的视角来看待这一问题)：h
     一人或者多人登陆的问题
     并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
     【自己写 MultiRequestBody】
+
+1.加了ComponentScan后，没有加的可能扫描不到，有坑，例如我的@ServerEndpoint；
+2.@ComponentScan包名加.*和不加的区别：https://blog.csdn.net/weixin_43950568/article/details/104196017
+
 
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
 【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】

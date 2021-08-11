@@ -14,8 +14,8 @@ import java.util.concurrent.CopyOnWriteArraySet;
  * 2.如果如要msgType，放在各个业务类里面处理
  */
 @Slf4j
+@ServerEndpoint(value = "/websocket")
 @Component
-@ServerEndpoint("/websocket/{businessType}")
 public class WsEndpoint {
     // todo 把 synchronized 和CopyOnWriteArraySet再看一下
     // todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
@@ -30,7 +30,8 @@ public class WsEndpoint {
      * 连接建立成功调用的方法
      */
     @OnOpen
-    public void onOpen(Session session, @PathParam("businessType") Long businessType) {
+    public void onOpen(Session session) {
+//        public void onOpen(Session session, @PathParam("businessType") Long businessType) {// todo 为啥能有多个签名？
         // todo 测试businessType是否需要类型转换
         // 1.根据类型创建对象放入保存所有连接的List/Set里面
         // todo 需要根据sessionId对比然后再添加吗？应该是没必要，再check一遍
@@ -70,7 +71,7 @@ public class WsEndpoint {
      * @param message 客户端发送过来的消息*/
     @OnMessage
     public void onMessage(String message, Session session) {
-        log.info("收到来自连接sessionId:" + session.getId() + "的信息:" + message);
+//        log.info("收到来自连接sessionId:" + session.getId() + "的信息:" + message);
         // todo 响应消息的动作
     }
 
@@ -83,7 +84,8 @@ public class WsEndpoint {
     public void onError(Session session, Throwable error) {// todo 为啥有的文章没写第一个参数？是不是测一下就知道了
         // todo 尝试重连
         // todo 是否需要把session从set里面干掉？
-        log.error("发生错误，sessionId" + session.getId() + ", " + error.getMessage());
+//        log.error("发生错误，sessionId" + session.getId() + ", " + error.getMessage());
+        System.out.println("error");
     }
 
     /**

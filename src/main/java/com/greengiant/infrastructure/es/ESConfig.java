@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 
-@Configuration
+//@Configuration
 public class ESConfig {
 
     @Value("${spring.elasticsearch.rest.uris}")

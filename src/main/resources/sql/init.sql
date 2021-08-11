@@ -4,6 +4,7 @@ set global time_zone='+8:00';
 use website;
 
 -- todo 字段注释补完善。并且有一些很简陋，没有default之类的
+-- todo 再过一遍creator、updator
 -- todo Integer display width is deprecated and will be removed in a future release：https://www.cnblogs.com/kukufan/p/12485609.html
 -- todo 表上没有collate，要么2个都有，要么2个都没有（用数据库的)
 

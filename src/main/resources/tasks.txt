@@ -78,6 +78,14 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 我的model上为啥没有注解？
 
 【ES】把多条件查询、文本模糊匹配等继续写通。测一下关掉后数据还在不在（应该是在的）
+ElasticSearch原理：
+	https://zhuanlan.zhihu.com/p/336889554
+	https://zhuanlan.zhihu.com/p/94915597
+	https://zhuanlan.zhihu.com/p/74234766
+	https://zhuanlan.zhihu.com/p/62892586
+ElasticSearch 亿级数据检索深度优化：https://mp.weixin.qq.com/s/w7BdHMynblwUsTGsKiZ3Mw
+ElasticSearch的plugin以及分词器还得再看看
+Elasticsearch6.x和7.x版本常用插件汇总：https://www.cnblogs.com/yobit/p/11376453.html
 Elasticsearch 配置用户名和密码：
     https://blog.csdn.net/weixin_43315211/article/details/99677072
     https://blog.csdn.net/qq_35349114/article/details/100096115
@@ -102,6 +110,16 @@ Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-ap
 OAuth 2.0单元测试解决方案【之前既没想到搭server，又没想到单元测试，所以三方登录一直没做起来】：
 	https://zhuanlan.zhihu.com/p/264371358
 	https://zhuanlan.zhihu.com/p/265015515
+OAuth 2：
+	https://www.digitalocean.com/community/tutorials/an-introduction-to-oauth-2
+	https://www.tutorialspoint.com/oauth2.0/index.htm
+Spring Authorization Server：https://blog.csdn.net/qq_16063307/article/details/113972486
+10张流程图+部署图，讲透单点登录原理与简单实现！https://mp.weixin.qq.com/s/a7FIvU98jOP6OLiue78qug
+Spring Authorization Server：https://blog.csdn.net/qq_16063307/article/details/113972486
+3月已至，请问spring security oauth2停止维护后，需要不需要什么替代方案呢？https://www.zhihu.com/question/376047683/answer/1304840967
+Spring官方宣布：新的Spring OAuth2.0授权服务器已经来了：https://zhuanlan.zhihu.com/p/195069540
+OAuth2.0认证和授权机制讲解：https://zhuanlan.zhihu.com/p/20913727
+
 
 【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
 分布式锁的知识：
@@ -121,6 +139,7 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把二维码的代码，移植到我自己的项目中(前端二维码)
 
+
 做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
     https://dzone.com/articles/capture-iot-sensors-data-mqtt-protocol-rabbitmq-as
     https://funprojects.blog/2018/12/07/rabbitmq-for-iot/
@@ -129,7 +148,13 @@ RabbitMQ Web MQTT Plugin：https://www.rabbitmq.com/web-mqtt.html
 MQTTBOX使用：https://www.jianshu.com/p/055c0e35c7f6
 RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.html
 消息协议（MQTT、AMQP、XMPP、WAMP、STOMP）之间的区别和应用：https://blog.csdn.net/gyshun/article/details/83036987
+MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
+Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
 
+
+RabbitMQ 服务的SimpleMessageListenerContainer和DirectMessageListenerContainer：
+	https://cn-blogs.cn/archives/9341.html
+	https://blog.csdn.net/yingziisme/article/details/86418580
 RabbitMq：SimpleMessageListenerContainer和ChannelAwareMessageListener的配合使用：https://www.cnblogs.com/lyd447113735/p/14808758.html
 【在我的代码中把手动的basicAck和basicNack写通】Nack的语义是：这个消息，我无法处理，丢弃或者请让别的消费者处理
 7.rabbitmq-消息的拒绝：https://www.jianshu.com/p/49f7c25f6d4d
@@ -184,6 +209,7 @@ Rabbitmq插件下载：
 	https://www.rabbitmq.com/community-plugins.html
 	https://blog.csdn.net/youjin/article/details/82586888
 延迟消费写出来
+Kafka vs. RabbitMQ: Architecture, Performance & Use Cases：https://www.upsolver.com/blog/kafka-versus-rabbitmq-architecture-performance-use-case
 
 
 @LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972

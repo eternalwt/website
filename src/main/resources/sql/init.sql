@@ -92,7 +92,7 @@ create table `sys_position`(
     `update_time` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='职位表';
 
-drop table if exists sys_dictionary;
+drop table if exists sys_user_position;
 create table `sys_user_position`(
     id bigint(64) auto_increment primary key,
     user_id bigint(64) not null,
@@ -105,7 +105,7 @@ drop table if exists sys_dictionary;
 create table `sys_dictionary`(
     id bigint(64) auto_increment primary key,
     type varchar(64),
-    key varchar(64),
+    code varchar(64),
     value varchar(64),
     parent_id bigint(64) not null,
     level int DEFAULT 0 comment '层级',

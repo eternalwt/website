@@ -14,17 +14,20 @@
 
 【晚上】把OAuth2.0授权服务器看一下，了解一下
 今天看一下NIO，再确认/重构我的上传功能
+【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 
-现在不启动es，为啥还跑不起来了？
+现在为啥不启动es，程序还跑不起来了？
 
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
-【如果对自己的技术有信息】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
+【如果对自己的技术有信心】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
 【基础设施还差一个sys_dictionary表，晚上搞一下建表、DAO层】：
 	https://blog.csdn.net/chengjing5728/article/details/100832639
 	https://blog.csdn.net/weixin_39520869/article/details/113600272
 
-级别的那个问题：部门最高级别以及对应的职务级别之间可以松耦合。考虑这样一个问题如何解决：如何获取每个部门的leader？（不用考虑复杂，就先假设有10个平级部门，并且老大的部门有和老大一样级别的员工）
+级别的那个问题：部门最高级别以及对应的职务级别之间可以松耦合。
+考虑这样一个问题如何解决：如何获取每个部门的leader？（不用考虑复杂，就先假设有10个平级部门，并且老大的部门有和老大一样级别的员工）可以加一个字段。如何获取部门的
+一把手、二把手？
 
 【一步步来】
     （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
@@ -104,6 +107,9 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 analyzer、search_analyzer
 
+Spring Authorization Server：
+    https://blog.csdn.net/qq_16063307/article/details/113972486
+    https://www.baeldung.com/spring-security-oauth-auth-server
 【极度重要，这个是打通企业各应用的关键】OAuth 2.0【先自己搭建server，然后自己连接认证】 spring gateway OAuth2
 Spring Cloud Gateway+Oauth2 实现统一认证和鉴权【nimbus】：https://blog.csdn.net/weixin_33716865/article/details/112339860
 Run your own OAuth2 Server：https://www.ory.sh/run-oauth2-server-open-source-api-security/
@@ -119,7 +125,7 @@ Spring Authorization Server：https://blog.csdn.net/qq_16063307/article/details/
 3月已至，请问spring security oauth2停止维护后，需要不需要什么替代方案呢？https://www.zhihu.com/question/376047683/answer/1304840967
 Spring官方宣布：新的Spring OAuth2.0授权服务器已经来了：https://zhuanlan.zhihu.com/p/195069540
 OAuth2.0认证和授权机制讲解：https://zhuanlan.zhihu.com/p/20913727
-
+shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
 
 【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
 分布式锁的知识：
@@ -150,7 +156,6 @@ RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.ht
 消息协议（MQTT、AMQP、XMPP、WAMP、STOMP）之间的区别和应用：https://blog.csdn.net/gyshun/article/details/83036987
 MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
 Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
-
 
 RabbitMQ 服务的SimpleMessageListenerContainer和DirectMessageListenerContainer：
 	https://cn-blogs.cn/archives/9341.html
@@ -210,10 +215,6 @@ Rabbitmq插件下载：
 	https://blog.csdn.net/youjin/article/details/82586888
 延迟消费写出来
 Kafka vs. RabbitMQ: Architecture, Performance & Use Cases：https://www.upsolver.com/blog/kafka-versus-rabbitmq-architecture-performance-use-case
-
-
-@LoadBalanced注解使用的理解：https://blog.csdn.net/zero__007/article/details/83720972
-为何一个@LoadBalanced注解就让RestTemplate拥有负载均衡的能力？https://fangshixiang.blog.csdn.net/article/details/100788040
 
 【非常重要】每个 CS 模式程序，尤其是高并发的网络服务端程序都有自己的网络异步事件处理库，Redis不例外。Redis 基于 Reactor 模型 封装了自己的事件驱动模型库。
 为什么作者不使用已有的成熟的相关库，比如 Libevent 或 Libev？下面从源码入手介绍下 Redis 中封装的 ae 库：https://segmentfault.com/a/1190000016062999
@@ -962,7 +963,6 @@ https://www.cnblogs.com/yuluoxingkong/p/8268094.html
 https://www.cnblogs.com/wxy540843763/p/7675946.html
 scribejava/scribejava：一个简单的 Java 实现的 OAuth/OAuth2 库：https://github.com/scribejava/scribejava
 oltu-oauth2-example：https://github.com/ameizi/oltu-oauth2-example
-
 现在用的比较多的单点登录技术是什么？https://www.zhihu.com/question/342103776/answer/806983636
 面试必问的4种单点登录的实现方式，你知道几个？
 https://zhuanlan.zhihu.com/p/84441372
@@ -1525,7 +1525,6 @@ https://zhuanlan.zhihu.com/p/22456973
 
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 
-【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 shiro-all可以把shiro包一次备齐：https://www.cnblogs.com/jackydapeng/p/10093852.html
 
 【过年期间有空建立起来】
@@ -1847,10 +1846,6 @@ ModularRealmAuthenticator：
 https://blog.csdn.net/iteye_10899/article/details/82675363
 
 AuthenticationStrategy的继承关系图（注意三种策略返回值的不同）：https://www.lmlphp.com/user/255/article/item/23154/
-
-shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
-
-由索引进化到 ElasticSearch ，这也是我们的项目需要的
 
 程序员直播还是要继续
 

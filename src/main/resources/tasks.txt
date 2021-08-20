@@ -13,10 +13,14 @@
 ======================================================================================================================
 
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
+技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了
 
 【晚上】把OAuth2.0授权服务器看一下，了解一下
 今天看一下NIO，再确认/重构我的上传功能
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
+shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
+新问题：1.登录会报错
+【最大的问题已经变成】如何挣到更多的钱
 
 现在为啥不启动es，程序还跑不起来了？
 
@@ -28,7 +32,6 @@
 一把手、二把手？
 
 【一步步来】
-    （把现在auth_user表的locked字段改成status字段）`status` tinyint(3) NOT NULL DEFAULT '1' COMMENT '用户的状态 1 ：正常  0：冻结 2：删除',
     【一个重要的问题：sys_user_department和sys_position之间的关联。每一个level的部门对应的职位的级别是有限的，要设计好精妙的关联防止出错】
     加3个表的DAO、Service、controller层：sys_user_department、sys_position、sys_user_position
     目标：要能看清组织结构及所有人员的管理结构。最后再看哪些关联表可以依附到已有的表中（不用独立出来）
@@ -45,10 +48,6 @@ webSocket需要再完整搞一轮
 看看还有哪些基础设施缺失【你必须得有自己的一套逻辑】
 前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
 【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
-
-shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
-新问题：1.登录会报错
-【最大的问题已经变成】如何挣到更多的钱
 
 getPageList这种方法，适合写在xml里面吗？在家试一下
 
@@ -78,7 +77,7 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 
 我的model上为啥没有注解？
 
-【ES】把多条件查询、文本模糊匹配等继续写通。测一下关掉后数据还在不在（应该是在的）
+【ES】把多条件查询、文本模糊匹配（分词）等继续写通。测一下关掉后数据还在不在（应该是在的）
 ElasticSearch原理：
 	https://zhuanlan.zhihu.com/p/336889554
 	https://zhuanlan.zhihu.com/p/94915597
@@ -2098,8 +2097,6 @@ realm继承关系彻底搞清楚（看看用不同的realm会怎么用）
 参数为啥还是不能灵活运用：
 public String loginjudge(HttpServletRequest request)
 
-特别想把ribbon和feign搞清楚
-
 Mybatis-config.xml 详细配置：https://blog.csdn.net/weixin_41910059/article/details/82659238
 
 BlockJUnit4ClassRunner源码分析：https://blog.csdn.net/hello_worldee/article/details/76110828
@@ -2243,9 +2240,17 @@ https://blog.csdn.net/jiangyu1013/article/details/84397366
 
 【再看看springmvc的线程模型】如果不对运行时异常进行处理，那么出现运行时异常之后，要么是线程中止，要么是主程序终止。
 
-//@RequiresPermissions("+user1+100")【一旦这样使用，底层就要按照shiro要求的方式重载了】
+Client Side Load Balancing原理（eureka、DiscoveryClient）：https://dzone.com/articles/microservices-tutorial-ribbon-as-a-load-balancer-1
+搞清楚ribbon封装Load Balance的机制，跟其他负载均衡的知识连起来
+@LoadBalanced注解使用的理解（看看怎么用到ribbon的）：
+    https://blog.csdn.net/zero__007/article/details/83720972
+    https://blog.csdn.net/u011063112/article/details/81295376
+@RibbonClient
+
+MQTT Client Load Balancing With RabbitMQ and Spring Cloud：https://dzone.com/articles/mqtt-client-load-balancing-with-rabbitmq-and-sprin
 再看ModelAndView的用法，和return "anth/login";这种比较一下
 
+//@RequiresPermissions("+user1+100")【一旦这样使用，底层就要按照shiro要求的方式重载了】
 再看一下shiro相关的包一共有多少个：shiro-core、shiro-spring、shiro-web、shiro-redis、shiro-quartz、shiro-cas、shiro-guice
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？

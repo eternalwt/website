@@ -67,7 +67,7 @@ public class WsEndpoint {
      */
     @OnError
     public void onError(Session session, Throwable error) {
-        log.error("发生错误，sessionId" + session.getId() + ", " + error.getMessage());
+        log.error("发生错误，sessionId" + session.getId(), error);
     }
 
     /**

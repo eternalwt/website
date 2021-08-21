@@ -12,6 +12,15 @@
 
 ======================================================================================================================
 
+清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
+
+先搞file_config（文件配置/类型表）、file_info（文件记录）两个表
+良好的文件表结构设计：
+    https://blog.csdn.net/zhouyonggo/article/details/101548715
+    https://blog.csdn.net/u013174523/article/details/84816167
+    https://www.shuijingwanwq.com/2019/10/16/3568/
+
+
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
 技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了
 
@@ -21,8 +30,6 @@
 shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
 新问题：1.登录会报错
 【最大的问题已经变成】如何挣到更多的钱
-
-现在为啥不启动es，程序还跑不起来了？
 
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信心】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
@@ -52,6 +59,8 @@ QUARTZ流程
 sw_sched_job与syncJob的流程搞清楚
 几种trigger及区别搞清楚
 misfiredtrigger
+Quartz recovery 及misfired机制的源码分析：https://blog.csdn.net/pml18710973036/article/details/72271428
+quartz-misfire 错失、补偿执行：https://www.cnblogs.com/skyLogin/p/6927629.html
 限信息表（qrtz_locks）：CALENDAR_ACCESS JOB_ACCESS MISFIRE_ACCESS STATE_ACCESS TRIGGER_ACCESS
 job_data：一个blob字段，存放持久化job对象
 【注意一下线程策略】#线程数量 org.quartz.threadPool.threadCount = 10

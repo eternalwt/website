@@ -2,11 +2,11 @@ package com.greengiant.website.controller;
 
 import com.greengiant.infrastructure.utils.CaptchaUtil;
 import com.greengiant.infrastructure.utils.FileUtil;
+import com.greengiant.website.pojo.ResultBean;
+import com.greengiant.website.pojo.query.PageQuery;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,5 +46,10 @@ public class TestController {
 //
 //        wb.write(response.getOutputStream());
 //    }
+
+    @PostMapping(value = "/list")
+    public ResultBean getPageList(@RequestBody PageQuery pageQuery) {
+        return null;
+    }
 
 }

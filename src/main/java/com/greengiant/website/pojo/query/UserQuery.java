@@ -2,7 +2,7 @@ package com.greengiant.website.pojo.query;
 
 import java.util.List;
 
-public class AddUserQuery {
+public class UserQuery {
     private String userName;
     private String password;
     private List<Long> roleIdList;

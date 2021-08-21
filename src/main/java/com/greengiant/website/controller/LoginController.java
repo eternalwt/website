@@ -45,7 +45,6 @@ public class LoginController {
     public ResultBean login(@RequestParam String username,
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
-        // todo 判空与异常处理
         // todo 判断是否有密码输入次数锁定、账号锁定
         // 从SecurityUtils里边创建一个 subject
         loginService.login(username, password, isRememberMe);
@@ -54,23 +53,6 @@ public class LoginController {
 
         return ResultUtils.success(user);
     }
-
-    // todo 启用拦截器需同步修改GlobalExceptionHandler里的返回值
-//    @PostMapping(value = "/login")
-//    @ResponseResult
-//    public User login(@RequestParam String username,
-//                            @RequestParam String password,
-//                            @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
-//        // todo 判空与异常处理
-//
-//        // 从SecurityUtils里边创建一个 subject
-//        loginService.login(username, password, isRememberMe);
-//        //根据权限，指定返回数据
-//        User user = userService.getByName(username);
-//
-//        return user;
-//    }
-
 
     /**
      * 注销

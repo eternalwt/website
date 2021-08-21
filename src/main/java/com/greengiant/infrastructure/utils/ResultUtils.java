@@ -21,6 +21,11 @@ public class ResultUtils {
         return result;
     }
 
+    public static ResultBean paramError() {
+        ResultBean result = new ResultBean(StatusCodeEnum.PARAM_ERROR.getCode(), StatusCodeEnum.PARAM_ERROR.getMsg(), null);
+        return result;
+    }
+
     public static ResultBean fail(int code, String msg) {
         ResultBean result = new ResultBean(code, msg, null);
         return result;

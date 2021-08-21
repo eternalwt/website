@@ -120,15 +120,16 @@ public interface MenuMapper extends BaseMapper<Menu> {
     int updateByPrimaryKey(Menu record);
 
     @Update({
-        "update Menu ",
-         "set role = concat(replace(role, concat(',', #{roleId}), ''), concat(',', #{roleId})) where menu_name= #{menuName}"
-    }) // todo 测试
+        "update Menu " +
+        "set role = concat(replace(role, concat(',', #{roleId}), ''), concat(',', #{roleId})) " +
+        "where menu_name= #{menuName}"
+    }) // todo 经测试，这2个方法有bug，无法处理 1 这种，从MenuController里面的updatePermission改起
     int updateRoleAdd(@Param("menuName") String menuName, @Param("roleId") String roleId);
 
     @Update({
             "update Menu ",
             "set role = replace(role, concat(',', #{roleId}), '') where menu_name= #{menuName}"
-    }) // todo 测试
+    })
     int updateRoleDel(@Param("menuName") String menuName, @Param("roleId") String roleId);
 
 }

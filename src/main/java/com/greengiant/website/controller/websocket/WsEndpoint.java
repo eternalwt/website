@@ -36,6 +36,15 @@ public class WsEndpoint {
     }
 
     /**
+     * 收到客户端消息后调用的方法
+     *
+     * @param message 客户端发送过来的消息*/
+    @OnMessage
+    public void onMessage(String message, Session session) {
+//        log.info("收到来自连接sessionId:" + session.getId() + "的信息:" + message);
+    }
+
+    /**
      * 连接关闭调用的方法
      */
     @OnClose
@@ -48,15 +57,6 @@ public class WsEndpoint {
                 break;
             }
         }
-    }
-
-    /**
-     * 收到客户端消息后调用的方法
-     *
-     * @param message 客户端发送过来的消息*/
-    @OnMessage
-    public void onMessage(String message, Session session) {
-//        log.info("收到来自连接sessionId:" + session.getId() + "的信息:" + message);
     }
 
     /**

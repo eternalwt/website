@@ -40,11 +40,6 @@ shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处�
 【文件上传以及分片上传也是基础设施】分片上传中，NIO是一个非常好的场景。看看曾亮宇这个文件拷贝应该怎么做。自带的大文件上传，如何保证上传不失败及进度、续传？
 NIO是基础设施(和epoll一起学习，潜龙勿用)
 
-webSocket需要再完整搞一轮
-// todo 把 synchronized 和CopyOnWriteArraySet再看一下
-// todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
-// todo 需要一个注册机制，需要一段对消息类型进行统一管理的代码
-
 看看还有哪些基础设施缺失【你必须得有自己的一套逻辑】
 前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
 【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
@@ -756,6 +751,8 @@ https://www.cnblogs.com/xuwenjin/p/12664650.html
 https://docs.spring.io/spring-session/docs/current/reference/html5/guides/boot-websocket.html
 【webSocket抓包学习】
 webSocket的session和http session的异同？
+// todo WebSocket写好后确认要能实现下列3项功能：1.聊天；2.定时推送数据；3.消息中心
+只允许一个连接
 
 【近期推进事项】
 0.session与jwt；

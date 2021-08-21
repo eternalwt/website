@@ -1,6 +1,7 @@
-package com.greengiant.website;
+package com.greengiant.website.component;
 
 import com.greengiant.infrastructure.messaging.Producer;
+import com.greengiant.website.WebsiteApplication;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

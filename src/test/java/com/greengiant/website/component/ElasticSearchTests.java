@@ -1,5 +1,6 @@
-package com.greengiant.website;
+package com.greengiant.website.component;
 
+import com.greengiant.website.WebsiteApplication;
 import com.greengiant.website.pojo.model.Article;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.get.*;

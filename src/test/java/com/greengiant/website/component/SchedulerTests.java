@@ -1,5 +1,6 @@
-package com.greengiant.website;
+package com.greengiant.website.component;
 
+import com.greengiant.website.WebsiteApplication;
 import com.greengiant.website.scheduler.CustomSchedulingConfigurer;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,4 +1,4 @@
-package com.greengiant.website;
+package com.greengiant.website.lib;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

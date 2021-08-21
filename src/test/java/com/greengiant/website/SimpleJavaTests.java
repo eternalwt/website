@@ -17,8 +17,6 @@ import static java.lang.Thread.sleep;
 
 public class SimpleJavaTests {
 
-    // todo 开始在我的代码中引入guava
-
     @Test
     public void testInteger() {
         int aaa = 1;
@@ -48,7 +46,6 @@ public class SimpleJavaTests {
 
     @Test
     public void beanToMap() {
-        // todo
         Student stu = new Student();
         stu.setName("li");
         stu.setAge(18);

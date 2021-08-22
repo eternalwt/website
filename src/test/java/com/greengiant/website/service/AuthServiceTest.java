@@ -16,6 +16,9 @@ class AuthServiceTest {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private UserService userService;
+
     @BeforeEach
     void setUp() {
     }
@@ -32,4 +35,12 @@ class AuthServiceTest {
     @Test
     void jwtLogin() {
     }
+
+    @Test
+    void testDelUser() {
+        long userId = 100l;
+        userService.delUser(userId);
+        System.out.println("delUser success");
+    }
+
 }

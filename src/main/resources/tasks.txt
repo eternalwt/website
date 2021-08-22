@@ -16,6 +16,8 @@
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
 
+uuid是基础设施，再研究一下到底是用自增long id还是uuid
+
 先搞file_config（文件配置/类型表）、file_info（文件记录）两个表
 良好的文件表结构设计：
     https://blog.csdn.net/zhouyonggo/article/details/101548715
@@ -2156,8 +2158,6 @@ https://blog.csdn.net/lpw_cn/article/details/84779387
 druid开启日志
 
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
-
-再对比阿里巴巴手册看AddUserVo定义是否有问题
 
 把有道笔记里面shiro的东西整理一下
 JAVA安全框架Apache Shiro浅析：https://www.jianshu.com/p/dc5c49f5101e?utm_campaign=maleskine&utm_content=note&utm_medium=seo_notes&utm_source=recommendation

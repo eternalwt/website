@@ -7,7 +7,7 @@ import com.greengiant.website.pojo.query.UserQuery;
 public interface UserService extends IService<User> {
     //todo 这里也用vo，从设计上有没有问题？
 
-    void addUser(UserQuery userVo);
+    void addUser(UserQuery userQuery);
 
     void delUser(Long userId);
 

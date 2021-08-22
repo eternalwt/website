@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
+//    @Autowired
+//    UserRoleService userRoleService;
+
     @Autowired
     private UserRoleMapper userRoleMapper;
 
@@ -31,26 +35,25 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void addUser(UserQuery userVo) {
+    public void addUser(UserQuery userQuery) {
         //todo 考虑返回值
         //todo 考虑是否链式赋值
         User user = new User();
-        user.setUserName(userVo.getUserName());
+        user.setUserName(userQuery.getUserName());
         String salt = PasswordUtil.getSalt();
         user.setPasswordSalt(salt);
         // 密码加盐加密
-        user.setPassword(PasswordUtil.encrypt(userVo.getPassword(), salt));
+        user.setPassword(PasswordUtil.encrypt(userQuery.getPassword(), salt));
         userMapper.insert(user);
 
-        // todo 如何批量插入
-        List<Long> roleIdList = userVo.getRoleIdList();
+        // todo 批量插入需要添加UserRoleService，然后调用saveBatch
+        List<Long> roleIdList = userQuery.getRoleIdList();
+//        List<UserRole> roleList = new ArrayList<>();
         if (roleIdList != null && !roleIdList.isEmpty()) {
-            for (Long roleId : roleIdList) {
+            for (Long roleId : roleIdList) {// todo 用stream来写
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(roleId);
                 userRole.setUserId(user.getId());
-                // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
-                // todo 确认抛异常后返回值显示正确
                 userRoleMapper.insert(userRole);
             }
         }
@@ -58,10 +61,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void delUser(Long userId) {
+    public void delUser(Long userId) {// todo 返回值与rollback的关系？确认下，然后尽量改成boolean的返回值
         this.removeById(userId);
 
-        // todo 测试
         Map<String, Object> map = new HashMap<>(16);
         map.put("user_id", userId);
         userRoleMapper.deleteByMap(map);

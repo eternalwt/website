@@ -3,13 +3,13 @@ package com.greengiant.website.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.query.UserQuery;
 import com.greengiant.website.service.UserService;
-import com.greengiant.infrastructure.utils.ResultUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,9 +1,9 @@
 package com.greengiant.website.component;
 
 import com.greengiant.website.WebsiteApplication;
-import com.greengiant.website.pojo.model.Article;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.elasticsearch.action.get.*;
+import org.elasticsearch.action.get.GetRequest;
+import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequest;
@@ -27,13 +27,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-//import org.zxp.esclientrhl.index.ElasticsearchIndex;
-//import org.zxp.esclientrhl.repository.ElasticsearchTemplate;
 
-import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
+
+//import org.zxp.esclientrhl.index.ElasticsearchIndex;
+//import org.zxp.esclientrhl.repository.ElasticsearchTemplate;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)

@@ -1,8 +1,8 @@
 package com.greengiant.website;
 
 import com.google.common.collect.Lists;
-import com.greengiant.website.model.Student;
 import com.greengiant.infrastructure.utils.ZipUtil;
+import com.greengiant.website.model.Student;
 import org.junit.Assert;
 import org.junit.Test;
 

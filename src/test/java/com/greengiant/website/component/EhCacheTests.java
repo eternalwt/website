@@ -1,9 +1,6 @@
 package com.greengiant.website.component;
 
 import com.greengiant.website.WebsiteApplication;
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

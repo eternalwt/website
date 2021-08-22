@@ -2,13 +2,13 @@ package com.greengiant.website.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.greengiant.infrastructure.utils.PasswordUtil;
 import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
 import com.greengiant.website.pojo.query.UserQuery;
 import com.greengiant.website.service.UserService;
-import com.greengiant.infrastructure.utils.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

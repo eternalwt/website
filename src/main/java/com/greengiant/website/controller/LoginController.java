@@ -1,10 +1,10 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.AuthService;
 import com.greengiant.website.service.UserService;
-import com.greengiant.infrastructure.utils.ResultUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;

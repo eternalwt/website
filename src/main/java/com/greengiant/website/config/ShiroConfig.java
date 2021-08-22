@@ -1,10 +1,10 @@
 package com.greengiant.website.config;
 
+import com.greengiant.infrastructure.utils.PasswordUtil;
 import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.greengiant.website.shiro.CustomRealm;
 import com.greengiant.website.shiro.RetryLimitHashedCredentialsMatcher;
 import com.greengiant.website.shiro.ShiroCacheManagerImpl;
-import com.greengiant.infrastructure.utils.PasswordUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.codec.Base64;
 import org.apache.shiro.mgt.SecurityManager;

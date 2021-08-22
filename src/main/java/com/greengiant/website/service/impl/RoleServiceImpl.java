@@ -51,9 +51,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public int editRole(Role role) {
         UpdateWrapper<Role> roleUpdateWrapper = new UpdateWrapper<>();
         roleUpdateWrapper.eq("id", role.getId());
-        // todo 测试一下，是否是更新部分字段
-        int update = roleMapper.update(role, roleUpdateWrapper);
-        return update;
+
+        return roleMapper.update(role, roleUpdateWrapper);
     }
 
     @Override

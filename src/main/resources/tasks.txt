@@ -15,6 +15,7 @@
 清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
+2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
 
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 
@@ -2060,7 +2061,6 @@ https://blog.csdn.net/youni808/article/details/25612271
 4.再看RBAC 5个表怎么跟shiro对应起来？
 关于RBAC权限控制：
 1.我只实现了最简单的，后续需要加字段，例如用户会有头像、名字、手机号、住址等字段；
-2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
 3.当年微软的那一套表好像很复杂？有空再找一下；
 4.复杂应用可能不止这5个表，例如还需要分用户组和角色继承关系：https://blog.csdn.net/yangxuesong5555/article/details/79417210
 这5个表怎么跟shiro对应起来？
@@ -2072,6 +2072,10 @@ Mybatis #和$区别以及原理：
 https://blog.csdn.net/zhangyong01245/article/details/90768156
 https://www.jianshu.com/p/0a70f957c750
 https://www.cnblogs.com/skyislimit/articles/10469873.html
+mybatis开启日志：
+https://blog.csdn.net/leocolee/article/details/80398406
+https://blog.csdn.net/lpw_cn/article/details/84779387
+druid开启日志
 
 2.把cookie那个文章里面的request和response的调用链搞清楚
 3.读代码的时候，先自己读一下，然后跟别人读的做对比和校正（防止读别人的没感觉，并验证自己读的对不对）
@@ -2152,10 +2156,7 @@ passwordservice的写法写通
 注解式shiro的原理以及配置
 把登录那几个页面的跳转配置好
 
-mybatis开启日志：
-https://blog.csdn.net/leocolee/article/details/80398406
-https://blog.csdn.net/lpw_cn/article/details/84779387
-druid开启日志
+异常处理：公司的代码是在controller层接住异常，并返回给前端code和msg；我使用GlobalExceptionHandler，给前端的返回也是一样的，但是可以自动把checked exception/runtimeException(?确认)处理掉，代码更简洁。【多服务的时候/场景呢？】
 
 3.在一个项目中，怎么观察容器中和容器外的bean(结合JVM 调试器学习)？是尽可能多的把对象放入容器还是尽可能少？还是无所谓？
 
@@ -2385,6 +2386,7 @@ Content-Type，来判断内容匙数据是什么类型，如 JSON、XML，能自
 ContentNegotiatingViewResolver，内容协商规图解析器，它迓是规图解析器，只是它支
 持根据请求信息将同一模型数据以丌同的规图方式展示（如json、xml、html等），RESTful
 架构风格中很重要的概念（同一资源，多种表现形式）
+RequestParam对应的参数请求类型content-type一般是application/x-www-form-urlencoded或者multipart/form-data，所以上传文件用@RequestParam：https://zhuanlan.zhihu.com/p/288434161
 
 Flash 属性 和 RedirectAttribute：通过FlashMap存储一个请求的输出，当迕入另一个
 请求时作为该请求的输入，典型场景如重定向（POST-REDIRECT-GET模式，1、POST时

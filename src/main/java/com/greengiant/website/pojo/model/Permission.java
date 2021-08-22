@@ -2,9 +2,11 @@ package com.greengiant.website.pojo.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
+@TableName("auth_permission")// 如果没有这个注解BaseMapper里面的方法无法使用
 public class Permission {
     @TableId(type= IdType.AUTO)
     private Long id;

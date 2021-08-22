@@ -14,6 +14,7 @@
 
 清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
+把我的mybatis配置测试、精简
 
 先搞file_config（文件配置/类型表）、file_info（文件记录）两个表
 良好的文件表结构设计：
@@ -265,11 +266,15 @@ springboot与pdf：
     https://zetcode.com/springboot/servepdf/
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
+前端：把模板和组件整合这2点单独搞一下
 
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
 我的model的注释不全
 
 家里代码swagger以及权限配好
+
+SSO服务是基础设施
+OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
 
 对比我的代码返回值有没有泛型：ResultBean<T>。公司代码的Result.error等没有具体化，导致产生了一堆告警
 【要能显示部门、部门主要负责人/职位、虚拟组织，就可以了】我的代码里面还差个机构信息，以及用户和机构/部门的关联【这一块得思考一下，然后到人人都是产品经理里面搜一下】。有管理层的时候，表怎么设计？
@@ -1398,6 +1403,8 @@ ApplicationContext也能autowire？https://www.cnblogs.com/trekxu/p/9094860.html
 https://blog.csdn.net/u011263417/article/details/79781686
 https://blog.csdn.net/ztx114/article/details/82665544
 http://www.cnblogs.com/shamo89/p/8051350.html
+
+@TableId注解原理
 
 ================================================================================================
 

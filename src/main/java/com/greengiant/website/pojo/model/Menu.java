@@ -2,9 +2,11 @@ package com.greengiant.website.pojo.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
+@TableName("busi_menu")
 public class Menu {
     @TableId(type= IdType.AUTO)
     private Long id;

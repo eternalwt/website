@@ -2,10 +2,11 @@ package com.greengiant.website.pojo.model;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-// todo 1.搞清楚注解；2.写完后提交一版代码
+@TableName("sys_article")
 public class Department {
     @TableId(type= IdType.AUTO)
     private Long id;

@@ -113,8 +113,8 @@ create table `sys_dictionary`(
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
 
-drop table if exists menu;
-create table menu(
+drop table if exists busi_menu;
+create table busi_menu(
      id bigint(64) auto_increment primary key,
      menu_name varchar(64) COMMENT '菜单名称',
      number varchar(64) COMMENT '菜单编号',
@@ -130,8 +130,8 @@ create table menu(
      update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
-drop table if exists article;
-create table article(
+drop table if exists busi_article;
+create table busi_article(
      id bigint(64) auto_increment primary key,
      title varchar(128) COMMENT '标题',
      content text COMMENT '内容',
@@ -153,17 +153,17 @@ insert into auth_user(user_name, password, password_salt)
     values('admin','7262db0dd9c3865016dac3227a3fbfb4', '83061e526dff50fff56d4ff587d7f581');
 insert into auth_user_role("user_id", "role_id") values(1,1);
 
-insert into menu(menu_name, url, sort, in_use, role) values('控制台', '/home/main', 1, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('添加用户', '/home/adduser', 2, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('用户列表', '/home/userlist', 3, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('添加角色', '/home/addrole', 4, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('角色列表', '/home/rolelist', 5, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('发表文章', '/home/addarticle', 6, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('文章列表', '/home/articlelist', 7, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('添加菜单', '/home/addmenu', 8, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('权限配置', '/home/permassign', 9, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('仪表盘', '/home/dashboard', 10, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('material组件', '/home/components', 11, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 12, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
-insert into menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, role) values('控制台', '/home/main', 1, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加用户', '/home/adduser', 2, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('用户列表', '/home/userlist', 3, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加角色', '/home/addrole', 4, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('角色列表', '/home/rolelist', 5, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('发表文章', '/home/addarticle', 6, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('文章列表', '/home/articlelist', 7, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加菜单', '/home/addmenu', 8, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('权限配置', '/home/permassign', 9, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('仪表盘', '/home/dashboard', 10, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('material组件', '/home/components', 11, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 12, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
+insert into busi_menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');

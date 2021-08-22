@@ -2,6 +2,8 @@ package com.greengiant.website.pojo.query;
 
 import com.greengiant.website.pojo.PageParam;
 
+import java.util.Map;
+
 public class PageQuery {
     /*
     * 相比使用entity和ParamBean两个后端参数来做分页，封装成一个PageQuery语义更清晰（不用把whereSql封装到ParamBean中）
@@ -16,15 +18,18 @@ public class PageQuery {
     // todo 分页搞成自动添加、拼接（所有mapper共用的常量）
     // todo 排序、分页如何进一步提高抽象程度？(让代码写的更简洁)【自动生成这段语句，类似whereSql】
     // todo 同时还要结合mybatis-plus
-    private Object condition;
+
+//    private T entity;
+
+    private Map<String, Object> condition;
 
     private PageParam pageParam;
 
-    public Object getCondition() {
+    public Map<String, Object> getCondition() {
         return condition;
     }
 
-    public void setCondition(Object condition) {
+    public void setCondition(Map<String, Object> condition) {
         this.condition = condition;
     }
 
@@ -38,7 +43,7 @@ public class PageQuery {
 
     public PageQuery() {}
 
-    public PageQuery(Object condition, PageParam pageParam) {
+    public PageQuery(Map<String, Object> condition, PageParam pageParam) {
         this.condition = condition;
         this.pageParam = pageParam;
     }

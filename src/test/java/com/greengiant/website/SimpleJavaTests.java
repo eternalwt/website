@@ -18,12 +18,6 @@ import static java.lang.Thread.sleep;
 public class SimpleJavaTests {
 
     @Test
-    public void testInteger() {
-        int aaa = 1;
-        Assert.assertEquals(aaa, 1);
-    }
-
-    @Test
     public void testDate() {
         Date dt1 = new Date();
         try {
@@ -56,8 +50,9 @@ public class SimpleJavaTests {
     private <T> Map<String, Object> beanToMap(T bean) {
         Map<String, Object> map = new HashMap<>();
 
-        Class<T> cls = (Class<T>) bean.getClass();// todo Class<T> 去掉再debug一下
-        Field[] allFields = cls.getDeclaredFields();// todo getFields为什么不行？【看源码】
+        Class<?> cls = bean.getClass();
+        // getDeclaredFields()返回Class中所有的字段，包括私有字段；getFields()只返回公有字段
+        Field[] allFields = cls.getDeclaredFields();
         if (allFields.length > 0) {
             for (Field field : allFields) {
                 field.setAccessible(true);
@@ -74,7 +69,6 @@ public class SimpleJavaTests {
 
     @Test
     public void testMapToBean() {
-        // todo 0.考虑泛型相关的问题；1.再看bean的定义；2.异常处理；3.
         Map<String, Object> map = new HashMap<>();
         map.put("name", "aaa");
         map.put("age", 2);
@@ -82,6 +76,7 @@ public class SimpleJavaTests {
 
         Student stu = new Student();
         stu = this.mapToBean(map, stu);
+        System.out.println(stu == null);
     }
 
     private <T> T mapToBean(Map<String, Object> map, T bean) {
@@ -89,17 +84,15 @@ public class SimpleJavaTests {
             return null;
         }
 
-        // todo 0.考虑泛型相关的问题；1.再看bean的定义；2.异常处理；3.不要返回值也是可以的把，考虑下设计
-        Class<T> cls = (Class<T>) bean.getClass();// todo Class<T> 去掉再debug一下
-        Field[] allFields = cls.getDeclaredFields();// todo getFields为什么不行？【看源码】
-//        Arrays.stream(allFields).iterator()
+        Class<?> cls = bean.getClass();
+        Field[] allFields = cls.getDeclaredFields();
         if (allFields.length > 0) {
             for (Field field : allFields) {
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     if (entry.getKey().equals(field.getName())) {
-                        // todo 设置bean的字段
-//                        canAccess
-                        boolean isAccess = field.isAccessible();
+                        // 设置bean的字段
+                        boolean isAccess = field.isAccessible();// todo 把canAccess调通
+//                        boolean isAccess = field.canAccess(bean);
                         field.setAccessible(true);
                         try {
                             field.set(bean, entry.getValue());

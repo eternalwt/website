@@ -2,13 +2,14 @@ package com.greengiant.website.controller;
 
 import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.ResultBean;
+import com.greengiant.website.pojo.model.FileInfo;
+import com.greengiant.website.service.FileConfigService;
+import com.greengiant.website.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -27,8 +28,15 @@ public class FileController {
     @Value("${file.upload-path}")
     private String fileBasePath;
 
+    @Autowired
+    private FileConfigService fileConfigService;
+
+    @Autowired
+    private FileInfoService fileInfoService;
+
     @PostMapping("/upload")
-    public ResultBean handleFileUpload(@RequestParam("file") MultipartFile file) {// todo 上传者/文件信息，加一个对象
+    public ResultBean handleFileUpload(@RequestParam("file") MultipartFile file,
+                                        @RequestBody FileInfo fileInfo) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Path path = Paths.get(fileBasePath + fileName);
         try {
@@ -46,6 +54,10 @@ public class FileController {
             return ResultUtils.fail();
         }
     }
+
+    // todo SpringBoot实现文件的上传和下载：https://www.jianshu.com/p/be1af489551c
+    // todo SpringBoot 文件上传(带进度条)与下载：https://www.cnblogs.com/ruhuanxingyun/p/10868243.html
+    // todo 在浏览器中异步下载文件监听下载进度：https://www.cnblogs.com/kevinblandy/p/13669904.html
 
     // todo 上传单个和多个文件：https://www.devglan.com/spring-boot/spring-boot-file-upload-download
     // todo 下载：1.进度【下载完后消息中心提示】；2.打包zip 断点续传

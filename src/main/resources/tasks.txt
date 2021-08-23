@@ -12,6 +12,7 @@
 
 ======================================================================================================================
 
+
 清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
@@ -19,7 +20,7 @@
 
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 
-先搞file_config（文件配置/类型表）、file_info（文件记录）两个表
+【见表】先搞file_config（文件配置/类型表）、file_info（文件记录）
 良好的文件表结构设计：
     https://blog.csdn.net/zhouyonggo/article/details/101548715
     https://blog.csdn.net/u013174523/article/details/84816167

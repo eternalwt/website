@@ -19,16 +19,16 @@ public class RolePermission {
 
     private Date updateTime;
 
+    public RolePermission() {
+        super();
+    }
+
     public RolePermission(Long id, Long roleId, Long permissionId, Date createTime, Date updateTime) {
         this.id = id;
         this.roleId = roleId;
         this.permissionId = permissionId;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public RolePermission() {
-        super();
     }
 
     public Long getId() {

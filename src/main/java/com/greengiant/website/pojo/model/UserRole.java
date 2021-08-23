@@ -19,16 +19,16 @@ public class UserRole {
 
     private Date updateTime;
 
+    public UserRole() {
+        super();
+    }
+
     public UserRole(Long id, Long userId, Long roleId, Date createTime, Date updateTime) {
         this.id = id;
         this.userId = userId;
         this.roleId = roleId;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public UserRole() {
-        super();
     }
 
     public Long getId() {

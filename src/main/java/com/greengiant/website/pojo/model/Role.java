@@ -19,16 +19,16 @@ public class Role {
 
     private Date updateTime;
 
+    public Role() {
+        super();
+    }
+
     public Role(Long id, String roleName, String description, Date createTime, Date updateTime) {
         this.id = id;
         this.roleName = roleName;
         this.description = description;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public Role() {
-        super();
     }
 
     public Long getId() {

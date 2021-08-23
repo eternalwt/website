@@ -31,6 +31,10 @@ public class User {
 
     private Date updateTime;
 
+    public User() {
+        super();
+    }
+
     public User(Long id, String userName, String password, String passwordSalt, String avatar, String phone, String email,
                 String qq, Integer status, Date createTime, Date updateTime) {
         this.id = id;
@@ -44,10 +48,6 @@ public class User {
         this.status = status;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public User() {
-        super();
     }
 
     public Long getId() {

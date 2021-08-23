@@ -13,7 +13,9 @@ public class Article {
 
     private String title;
 
-    private Long columnId;
+    private String content;
+
+    private Long columnId;// todo 添加类别或者字典
 
     private Boolean published;
 
@@ -29,11 +31,14 @@ public class Article {
 
     private Date updateTime;
 
-    private String content;
+    public Article() {
+        super();
+    }
 
-    public Article(Long id, String title, Long columnId, Boolean published, Boolean audited, Integer readCount, String creatorId, Date createTime, String updatorId, Date updateTime, String content) {
+    public Article(Long id, String title, String content, Long columnId, Boolean published, Boolean audited, Integer readCount, String creatorId, Date createTime, String updatorId, Date updateTime) {
         this.id = id;
         this.title = title;
+        this.content = content;
         this.columnId = columnId;
         this.published = published;
         this.audited = audited;
@@ -42,28 +47,6 @@ public class Article {
         this.createTime = createTime;
         this.updatorId = updatorId;
         this.updateTime = updateTime;
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", columnId=" + columnId +
-                ", published=" + published +
-                ", audited=" + audited +
-                ", readCount=" + readCount +
-                ", creatorId='" + creatorId + '\'' +
-                ", createTime=" + createTime +
-                ", updatorId='" + updatorId + '\'' +
-                ", updateTime=" + updateTime +
-                ", content='" + content + '\'' +
-                '}';
-    }
-
-    public Article() {
-        super();
     }
 
     public Long getId() {
@@ -80,6 +63,14 @@ public class Article {
 
     public void setTitle(String title) {
         this.title = title == null ? null : title.trim();
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 
     public Long getColumnId() {
@@ -146,12 +137,21 @@ public class Article {
         this.updateTime = updateTime;
     }
 
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    @Override
+    public String toString() {
+        return "Article{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", columnId=" + columnId +
+                ", published=" + published +
+                ", audited=" + audited +
+                ", readCount=" + readCount +
+                ", creatorId='" + creatorId + '\'' +
+                ", createTime=" + createTime +
+                ", updatorId='" + updatorId + '\'' +
+                ", updateTime=" + updateTime +
+                '}';
     }
 
 }

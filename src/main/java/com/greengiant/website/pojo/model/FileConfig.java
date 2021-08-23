@@ -6,28 +6,34 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.util.Date;
 
-@TableName("auth_permission")// 如果没有这个注解BaseMapper里面的方法无法使用
-public class Permission {
+@TableName("file_config")
+public class FileConfig {
+
     @TableId(type= IdType.AUTO)
     private Long id;
 
-    private String permissionName;
+    private String config_name;
 
     private String description;
 
+    private String creatorId;
+
     private Date createTime;
+
+    private String updatorId;
 
     private Date updateTime;
 
-    public Permission() {
-        super();
+    public FileConfig() {
     }
 
-    public Permission(Long id, String permissionName, String description, Date createTime, Date updateTime) {
+    public FileConfig(Long id, String config_name, String description, String creatorId, Date createTime, String updatorId, Date updateTime) {
         this.id = id;
-        this.permissionName = permissionName;
+        this.config_name = config_name;
         this.description = description;
+        this.creatorId = creatorId;
         this.createTime = createTime;
+        this.updatorId = updatorId;
         this.updateTime = updateTime;
     }
 
@@ -39,12 +45,12 @@ public class Permission {
         this.id = id;
     }
 
-    public String getPermissionName() {
-        return permissionName;
+    public String getConfig_name() {
+        return config_name;
     }
 
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName == null ? null : permissionName.trim();
+    public void setConfig_name(String config_name) {
+        this.config_name = config_name;
     }
 
     public String getDescription() {
@@ -52,7 +58,15 @@ public class Permission {
     }
 
     public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+        this.description = description;
+    }
+
+    public String getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(String creatorId) {
+        this.creatorId = creatorId;
     }
 
     public Date getCreateTime() {
@@ -61,6 +75,14 @@ public class Permission {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getUpdatorId() {
+        return updatorId;
+    }
+
+    public void setUpdatorId(String updatorId) {
+        this.updatorId = updatorId;
     }
 
     public Date getUpdateTime() {
@@ -73,11 +95,13 @@ public class Permission {
 
     @Override
     public String toString() {
-        return "Permission{" +
+        return "FileConfig{" +
                 "id=" + id +
-                ", permissionName='" + permissionName + '\'' +
+                ", config_name='" + config_name + '\'' +
                 ", description='" + description + '\'' +
+                ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +
+                ", updatorId='" + updatorId + '\'' +
                 ", updateTime=" + updateTime +
                 '}';
     }

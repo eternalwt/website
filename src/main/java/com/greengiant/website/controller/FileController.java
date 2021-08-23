@@ -51,7 +51,16 @@ public class FileController {
     // todo 下载：1.进度【下载完后消息中心提示】；2.打包zip 断点续传
     // todo 再看：https://spring.io/guides/gs/uploading-files/。
     //  从这个文章也看出，我的单元测试技能是不够的。把这个做了就能提升一截
-
+    /**
+    *
+        断点续传的原理（自己先想想怎么写）：https://blog.csdn.net/lu1024188315/article/details/51803471#comments
+        断点续传原理【自己先思考一下】：
+        https://blog.csdn.net/weixin_38055381/article/details/82753480
+        https://www.cnblogs.com/luozhixiang/p/9306240.html
+        http://www.woshipm.com/pd/891969.html
+        https://www.cnblogs.com/wangzehuaw/p/5610851.html
+        https://www.jianshu.com/p/012c8a4dc661
+    * */
     
 
 }

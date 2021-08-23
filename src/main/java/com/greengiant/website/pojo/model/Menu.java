@@ -35,6 +35,10 @@ public class Menu {
 
     private Date updateTime;
 
+    public Menu() {
+        super();
+    }
+
     public Menu(Long id, String menuName, String number, String url, String icon, Long parentId, Integer sort, Byte inUse, Byte openWay, String role, String user, Date createTime, Date updateTime) {
         this.id = id;
         this.menuName = menuName;
@@ -49,10 +53,6 @@ public class Menu {
         this.user = user;
         this.createTime = createTime;
         this.updateTime = updateTime;
-    }
-
-    public Menu() {
-        super();
     }
 
     public Long getId() {

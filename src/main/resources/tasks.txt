@@ -24,13 +24,12 @@ uuid是基础设施，再研究一下到底是用自增long id还是uuid
     https://blog.csdn.net/zhouyonggo/article/details/101548715
     https://blog.csdn.net/u013174523/article/details/84816167
     https://www.shuijingwanwq.com/2019/10/16/3568/
-
+看一下NIO，再确认/重构我的上传功能
 
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
 技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了
 
 【晚上】把OAuth2.0授权服务器看一下，了解一下
-今天看一下NIO，再确认/重构我的上传功能
 【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
 shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
 新问题：1.登录会报错

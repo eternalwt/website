@@ -45,7 +45,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
 
         // 去重，排序，判空
         if (!menuList.isEmpty()) {
-            // todo 这段代码可以写都更简洁
+            // todo 这段代码可以写的更简洁
             menuList = menuList.stream()
                     .collect(Collectors.collectingAndThen(Collectors.toCollection(() -> new TreeSet<>(Comparator.comparing(Menu::getId))), ArrayList::new));
             menuList = menuList.stream().sorted(Comparator.comparing(Menu::getSort)).collect(Collectors.toList());
@@ -72,7 +72,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         // 1.插入第一级节点
         if (menuList != null && !menuList.isEmpty()) {
             List<Menu> parentList = menuList.stream().filter(item -> item.getParentId() == null).collect(Collectors.toList());
-            if (parentList != null && !parentList.isEmpty()) {
+            if (!parentList.isEmpty()) {
                 for (Menu menu : parentList) {
                     MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getIcon(), menu.getUrl());
                     nodeList.add(node);
@@ -80,31 +80,20 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             }
         }
 
-//        int i = 0;
-//        while (i < nodeList.size()) {
-//            final int index = i;
-//            List<Menu> list = menuList.stream().filter(item -> item.getParentId() != null && item.getParentId().equals(nodeList.get(index).getId())).collect(Collectors.toList());
-//            // todo filter之后需要2次判断吗？
-//            if (list != null && !list.isEmpty()) {
-//                for (Menu menu : list) {
-//                    MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getUrl());
-//                    nodeList.get(i).getChildren().add(node);
-//                }
-//            }
-//
-//            i++;
-//        }
         traverseList(nodeList, menuList);
 
         return nodeList;
     }
 
     private void traverseList(List<MenuTreeNode> nodeList, List<Menu> menuList) {
+        if (nodeList == null || menuList == null) {
+            return;
+        }
+
         for (int i = 0; i < nodeList.size(); i++) {
             final int index = i;
             List<Menu> list = menuList.stream().filter(item -> item.getParentId() != null && item.getParentId().equals(nodeList.get(index).getId())).collect(Collectors.toList());
-            // todo filter之后需要2次判断吗？
-            if (list != null && !list.isEmpty()) {
+            if (!list.isEmpty()) {
                 for (Menu menu : list) {
                     MenuTreeNode node = new MenuTreeNode(menu.getId(), menu.getMenuName(), menu.getIcon(), menu.getUrl());
                     nodeList.get(i).getChildren().add(node);
@@ -118,7 +107,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     @Override
     public Map<String, List<String>> getRolePermissionListMap() {
         // todo 保证顺序（这个问题遇到过）
-        Map<String, List<String>> rolePermMap = new HashedMap();
+        Map<String, List<String>> rolePermMap = new HashMap<>();
         // todo sql初始化脚本里面加入admin初始化赋权限
         List<Role> roleList =  roleService.list();
         if (roleList != null && !roleList.isEmpty()) {
@@ -134,9 +123,9 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
                 String roleStr = menu.getRole();
                 if (roleStr != null) {
                     String[] roleIdList = roleStr.split(",");
-                    for (int i = 0; i < roleIdList.length; i++) {
-                        if (roleIdList[i] != null && !roleIdList[i].isEmpty()) {
-                            String roleName = this.getRoleName(roleIdList[i], roleList);
+                    for (String s : roleIdList) {
+                        if (s != null && !s.isEmpty()) {
+                            String roleName = this.getRoleName(s, roleList);
                             rolePermMap.get(roleName).add(menu.getMenuName());
                         }
                     }

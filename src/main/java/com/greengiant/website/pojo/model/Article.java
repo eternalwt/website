@@ -15,7 +15,7 @@ public class Article {
 
     private String content;
 
-    private Long columnId;// todo 添加类别或者字典
+    private Long columnId;
 
     private Boolean published;
 

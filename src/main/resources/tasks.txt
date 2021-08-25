@@ -16,7 +16,6 @@
 清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
-2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049。shiro里面的permission也要再好好学习一遍；
 
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 
@@ -26,6 +25,9 @@ uuid是基础设施，再研究一下到底是用自增long id还是uuid
     https://blog.csdn.net/u013174523/article/details/84816167
     https://www.shuijingwanwq.com/2019/10/16/3568/
 看一下NIO，再确认/重构我的上传功能
+
+2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049
+shiro里面的permission也要再好好学习一遍；
 
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
 技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了

@@ -12,9 +12,31 @@
 
 ======================================================================================================================
 
-2022年3月17日之后开始寻觅新的工作
+2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
+
+到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
 晚上只搞分页和NIO(搞透)
+
+搞懂mybatis-plus的TableFieldInfo
+
+MyBatis之分页插件(PageHelper)工作原理【这就是一个很好的面试题】：
+    https://blog.csdn.net/jaryle/article/details/52315565
+    https://www.cnblogs.com/dengpengbo/p/10579631.html
+    https://blog.csdn.net/xiaoxsen/article/details/104019062
+    https://zhuanlan.zhihu.com/p/93911316
+
+用的是mybatisplus的IPage/Page，看一下mybatis分页插件PageHelper
+MyBatis使用PageHelper实现分页查询：
+    https://blog.csdn.net/pan_junbiao/article/details/106789631
+    https://www.cnblogs.com/alice-cj/p/10482722.html
+分页自己完全写也不难，返回的对象参考mybatis-plus的Page类
+MybatisPlus Page类的解析与使用：https://blog.csdn.net/bulinstar/article/details/107368967
+分页插件、性能分析配置
+PaginationInterceptor与两种分页方式：https://spldeolin.com/posts/mybatis-plus-page/
+PaginationInterceptor原理？以及为什么过时了，用什么替换？
+MyBatisPlus学习笔记：https://blog.csdn.net/zyx1260168395/article/details/104154454
+mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
 清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
@@ -1455,7 +1477,6 @@ https://blog.csdn.net/tanqidong1992/article/details/48026491
 https://www.cnblogs.com/to-be-continue/p/8260080.html
 https://www.cnblogs.com/handsomeBoys/p/7602084.html
 https://www.cnblogs.com/grasp/p/11813674.html
-用的是mybatisplus的IPage/Page，看一下mybatis分页插件PageHelper
 下一步搞懂3个问题：
 3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
 mybatis-spring这种包是桥梁
@@ -1731,8 +1752,7 @@ Mybatis-Plus的使用（三）——注解与配置文件：https://blog.csdn.ne
 然后搞AutoGenerator
 mybatis-plus-boot-starter代码分析
 支持 ActiveRecord 模式
-分页插件、性能分析配置
-PaginationInterceptor与两种分页方式：https://spldeolin.com/posts/mybatis-plus-page/
+
 配置文件的各项开关
 @KeySequence注解
 lambdaQuery的用法：https://blog.csdn.net/weixin_38111957/article/details/92415413
@@ -1745,7 +1765,7 @@ mybatis-plus源码及doc：https://gitee.com/baomidou
 MyBatis动态语句if与choose的区别：https://www.cnblogs.com/jagng951014/p/9462582.html
 mybatis-plus：1.model的自动生成；2.参数Wrapper类、LambdaQueryWrapper的用法；
 周二：mybatis-plus功能全部过一遍（看看比以前的代码生成器的优势在哪里），把自动生成代码的功能加上去，把多余的代码干掉
-把批量插入、取样获取、批量删除、in等的逻辑移植过来（先把plus分页写好）
+把批量插入、取样获取、批量删除、in等的逻辑移植过来
 批量插入和批量更新转化成基础设施【是否有一致性的问题？】：
 1.<script>标签的方式；2.provider（看看这个方式是不是更适合跟代码自动生成配合）：
 https://www.jianshu.com/p/a749abbdb08d

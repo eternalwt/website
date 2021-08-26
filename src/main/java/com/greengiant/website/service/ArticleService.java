@@ -7,6 +7,6 @@ import com.greengiant.website.pojo.query.PageQuery;
 
 public interface ArticleService extends IService<Article> {
 
-    IPage<Article> getPageList(PageQuery pageQuery);
+    IPage<Article> getPageList(PageQuery<Article>  pageQuery);
 
 }

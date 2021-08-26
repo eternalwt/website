@@ -25,11 +25,7 @@ public class ArticleController {
     }
 
     @PostMapping(value = "/list")
-    public ResultBean getPageList(@RequestBody PageQuery pageQuery) {
-        if (pageQuery.getCondition() == null) {
-            return ResultUtils.paramError();
-        }
-
+    public ResultBean getPageList(@RequestBody PageQuery<Article> pageQuery) {
         IPage<Article> result = articleService.getPageList(pageQuery);
         return ResultUtils.success(result);
     }

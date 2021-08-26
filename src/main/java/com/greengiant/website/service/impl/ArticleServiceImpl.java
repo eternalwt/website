@@ -19,23 +19,42 @@ import java.util.Map;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 
     @Override
-    public IPage<Article> getPageList(PageQuery pageQuery) {
-        // todo 搞成模板方法
-        // todo getPageList这种方法，适合写在xml里面吗？在家试一下
-        Map<String, Object> conditionMap = pageQuery.getCondition();
-        PageParam pageParam = pageQuery.getPageParam();
+    public IPage<Article> getPageList(PageQuery<Article> pageQuery) {
+        Article article = null;
+        if (pageQuery.getEntity() != null) {
+            article = pageQuery.getEntity();
+        }
 
-        // todo 1.orderby 2.自定义语句wheresql 先写通 between写通【先把这2个写通】 3.把Page类的所有属性和方法都看一下
+        PageParam pageParam = new PageParam();
+        if (pageQuery.getPageParam() != null) {
+            pageParam = pageQuery.getPageParam();
+        }
+
+        // todo getPageList这种方法，适合写在xml里面吗？在家试一下
+        // todo 把Page类的所有属性和方法都看一下
+        // todo 看一下下面this.page函数的实现，单元测试
+        // todo 把this.page返回值的字段都搞清楚
+
         IPage<Article> pg = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
-//        page.setRecords();
-//        page.setTotal();
-        QueryWrapper<Article> wrapper = new QueryWrapper<>();
-        wrapper.allEq(conditionMap);
-        // todo 看一下下面这个函数，确保没问题 单元测试
+        QueryWrapper<Article> wrapper = generateQueryWrapper(article);
         pg = this.page(pg, wrapper);// 底层是baseMapper.selectPage()
-//        IPage<Article> result = this.page(pg, wrapper);// 底层是baseMapper.selectPage()
 
         return pg;
+    }
+
+    private QueryWrapper<Article> generateQueryWrapper(Article article) {// todo 感觉应该传pageQuery把所有的查询条件都封装进来？
+        QueryWrapper<Article> wrapper = new QueryWrapper<>();
+
+        if (article == null) {
+            return wrapper;
+        }
+
+        if (article.getTitle() != null && !"".equals(article.getTitle())) {
+            wrapper.like("title", article.getTitle());
+        }
+        // todo 根据需要添加更多字段
+
+        return wrapper;
     }
 
 }

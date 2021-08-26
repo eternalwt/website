@@ -31,7 +31,7 @@ public class RoleController {
     }
 
     @PostMapping(value="/list")
-    public ResultBean getRoleListByPage(@RequestBody PageParam pageParam) {// todo search
+    public ResultBean getRoleListByPage(@RequestBody PageParam pageParam) {// todo 改成标准参数【先把article那个搞完】
         IPage<Role> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<Role> wrapper = new QueryWrapper<>();
         IPage<Role> result = roleService.page(page, wrapper);

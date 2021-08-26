@@ -4,33 +4,29 @@ import com.greengiant.website.pojo.PageParam;
 
 import java.util.Map;
 
-public class PageQuery {
-    /*
-    * 相比使用entity和ParamBean两个后端参数来做分页，封装成一个PageQuery语义更清晰（不用把whereSql封装到ParamBean中）
-    * 原则：
-    *   1.用entity和vo来处理单表/多表连接的相等条件查询
-    *   2.
-    * */
-    // todo 如果这里用泛型，是不是后端代码比公司的还简洁一些？【比较和我现在用的map的优劣】
-    // todo 思考：entity和vo可以cover相等，那么其他条件呢？例如 日期 > < != 时间范围between等？
-    // todo 再综合考虑下whereSql。把查询的问题整理总结一下
-    // todo 【where里面能否遍历entity的字段？这样就不用写一堆重复代码了】
-    // todo 分页搞成自动添加、拼接（所有mapper共用的常量）
-    // todo 排序、分页如何进一步提高抽象程度？(让代码写的更简洁)【自动生成这段语句，类似whereSql】
-    // todo 同时还要结合mybatis-plus
+public class PageQuery<T> {
 
-//    private T entity;
+    /**
+     * 原则：
+     *   1.QueryWrapper只适合单表的情况，多表关联要自己写语句；
+     *   2.用entity来处理相等/like查询；
+     *   3.前端给后端传值与QueryWrapper的方法相对应，用的时候再补充;
+     *   4.QueryWrapper的allEq是精确查询，因此查询对象里面不用Map，还是用entity，泛型；
+     *   5.使用baseMapper.selectPage()来做分页不用自己做count，一个方法搞定获取记录和数量【验证】
+     */
 
-    private Map<String, Object> condition;
+    private T entity;
 
     private PageParam pageParam;
 
-    public Map<String, Object> getCondition() {
-        return condition;
+    // todo 根据上面的原则3，可以添加更多属性
+
+    public T getEntity() {
+        return entity;
     }
 
-    public void setCondition(Map<String, Object> condition) {
-        this.condition = condition;
+    public void setEntity(T entity) {
+        this.entity = entity;
     }
 
     public PageParam getPageParam() {
@@ -43,15 +39,15 @@ public class PageQuery {
 
     public PageQuery() {}
 
-    public PageQuery(Map<String, Object> condition, PageParam pageParam) {
-        this.condition = condition;
+    public PageQuery(T entity, PageParam pageParam) {
+        this.entity = entity;
         this.pageParam = pageParam;
     }
 
     @Override
     public String toString() {
         return "PageQuery{" +
-                "condition=" + condition +
+                "entity=" + entity +
                 ", pageParam=" + pageParam +
                 '}';
     }

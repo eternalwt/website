@@ -19,7 +19,7 @@ import java.time.Duration;
 //@Configuration
 @Slf4j
 public class RedisConfig {
-    // todo 加一点日志
+
     @Bean
     public RedisTemplate<Object, Object> testRedisTemplate(
             RedisConnectionFactory redisConnectionFactory) throws UnknownHostException {

@@ -6,6 +6,8 @@ public class PageParam {
     int pageSize;
 
     public PageParam() {
+        this.pageNum = 1;
+        this.pageSize = 10;
     }
 
     public PageParam(int pageNum, int pageSize) {

@@ -55,6 +55,21 @@ public class FileController {
         }
     }
 
+    /**
+     *
+     spring boot+webuploader实现大文件分片上传实例：
+     https://cloud.tencent.com/developer/article/1541199
+     https://zhuanlan.zhihu.com/p/29526454
+     https://blog.csdn.net/kfyty725/article/details/104848966
+     https://www.cnblogs.com/songsu/p/12197762.html
+
+     大文件分片上传的要点：
+        1.用md5来检查是否上传过（效率）以及作为临时文件的目录名称；
+        2.合并文件的时候要用NIO的高效方法
+        3.todo 是否可以上传一个开一个线程合并一个？防止大文件最终合并时候的卡顿感
+     */
+
+    // todo 分片
     // todo 如果不把这些写好，就是高估了自己CRUD以外的能力。上传下载进度
     // todo 分片上传
 

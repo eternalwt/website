@@ -17,8 +17,7 @@
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
 晚上只搞分页和NIO(搞透)
-
-搞懂mybatis-plus的TableFieldInfo
+继续搞shiro、mybatis配置相关的，后端已经很解决了，rabbitmq、大数据、es先放一下
 
 MyBatis之分页插件(PageHelper)工作原理【这就是一个很好的面试题】：
     https://blog.csdn.net/jaryle/article/details/52315565
@@ -38,13 +37,12 @@ PaginationInterceptor原理？以及为什么过时了，用什么替换？
 MyBatisPlus学习笔记：https://blog.csdn.net/zyx1260168395/article/details/104154454
 mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
-清两周todo，先从article分页和文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
+清两周todo，先从文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
 
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 
-【见表】先搞file_config（文件配置/类型表）、file_info（文件记录）
 良好的文件表结构设计：
     https://blog.csdn.net/zhouyonggo/article/details/101548715
     https://blog.csdn.net/u013174523/article/details/84816167
@@ -294,6 +292,8 @@ springboot与pdf：
     https://zetcode.com/articles/springbootpdfreport/
     https://kreepcode.com/spring-boot-and-angular-open-pdf-link-browser/
     https://zetcode.com/springboot/servepdf/
+
+webuploader是基础设施
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
 前端：把模板和组件整合这2点单独搞一下

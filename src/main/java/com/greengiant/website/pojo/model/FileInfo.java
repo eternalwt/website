@@ -9,7 +9,8 @@ import java.util.Date;
 @TableName("file_info")
 public class FileInfo {
 
-    // todo md5字段判断完整性， mime_type字段 suffix字段方便文件分类操作
+    // todo md5字段判断完整性以及文件是否已在服务器存在
+    //  mime_type字段 suffix字段方便文件分类操作
     // todo 文件和业务数据怎么建立关联？
 
     @TableId(type= IdType.AUTO)

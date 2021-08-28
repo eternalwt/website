@@ -1,12 +1,17 @@
 package com.greengiant.website.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.greengiant.infrastructure.utils.PasswordUtil;
 import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
+import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
+import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.pojo.query.UserQuery;
 import com.greengiant.website.service.UserRoleService;
 import com.greengiant.website.service.UserService;
@@ -103,4 +108,39 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
         return update;
     }
+
+    @Override
+    public IPage<User> getPageList(PageQuery<User> pageQuery) {
+        User user = null;
+        if (pageQuery.getEntity() != null) {
+            user = pageQuery.getEntity();
+        }
+
+        PageParam pageParam = new PageParam();
+        if (pageQuery.getPageParam() != null) {
+            pageParam = pageQuery.getPageParam();
+        }
+
+        IPage<User> pg = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        QueryWrapper<User> wrapper = generateQueryWrapper(user);
+        pg = this.page(pg, wrapper);// 底层是baseMapper.selectPage()
+
+        return pg;
+    }
+
+    private QueryWrapper<User> generateQueryWrapper(User user) {
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+
+        if (user == null) {
+            return wrapper;
+        }
+
+        if (user.getUserName() != null && !"".equals(user.getUserName())) {
+            wrapper.like("user_name", user.getUserName());
+        }
+        // 根据需要添加更多字段
+
+        return wrapper;
+    }
+
 }

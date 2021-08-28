@@ -2,13 +2,17 @@ package com.greengiant.website.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.greengiant.website.dao.RoleMapper;
 import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
+import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
+import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -73,6 +77,40 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     @Override
     public Role selectByName(String roleName) {
         return roleMapper.selectByName(roleName);
+    }
+
+    @Override
+    public IPage<Role> getPageList(PageQuery<Role> pageQuery) {
+        Role role = null;
+        if (pageQuery.getEntity() != null) {
+            role = pageQuery.getEntity();
+        }
+
+        PageParam pageParam = new PageParam();
+        if (pageQuery.getPageParam() != null) {
+            pageParam = pageQuery.getPageParam();
+        }
+
+        IPage<Role> pg = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+        QueryWrapper<Role> wrapper = generateQueryWrapper(role);
+        pg = this.page(pg, wrapper);// 底层是baseMapper.selectPage()
+
+        return pg;
+    }
+
+    private QueryWrapper<Role> generateQueryWrapper(Role role) {
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+
+        if (role == null) {
+            return wrapper;
+        }
+
+        if (role.getRoleName() != null && !"".equals(role.getRoleName())) {
+            wrapper.like("role_name", role.getRoleName());
+        }
+        // 根据需要添加更多字段
+
+        return wrapper;
     }
 
 }

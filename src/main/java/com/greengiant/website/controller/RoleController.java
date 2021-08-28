@@ -7,6 +7,7 @@ import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Role;
+import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.service.RoleService;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +32,10 @@ public class RoleController {
     }
 
     @PostMapping(value="/list")
-    public ResultBean getRoleListByPage(@RequestBody PageParam pageParam) {// todo 改成标准参数【先把article那个搞完】
-        IPage<Role> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
-        QueryWrapper<Role> wrapper = new QueryWrapper<>();
-        IPage<Role> result = roleService.page(page, wrapper);
+    public ResultBean getPageList(@RequestBody PageQuery<Role> pageQuery) {
+//        IPage<Role> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
+//        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        IPage<Role> result = roleService.getPageList(pageQuery);
 
         return ResultUtils.success(result);
     }

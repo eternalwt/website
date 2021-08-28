@@ -8,6 +8,7 @@ import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.StatusCodeEnum;
 import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.pojo.query.UserQuery;
 import com.greengiant.website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +62,8 @@ public class UserController{
     }
 
     @PostMapping("/list")
-    public ResultBean getUserListByPage(@RequestBody PageParam pageParam) {// todo search
-        IPage<User> page = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        IPage<User> result = userService.page(page, wrapper);
+    public ResultBean getPageList(@RequestBody PageQuery<User> pageQuery) {
+        IPage<User> result = userService.getPageList(pageQuery);
 
         return ResultUtils.success(result);
     }

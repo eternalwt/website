@@ -37,7 +37,6 @@ public class MenuController {
 
     @GetMapping(value = "/getAllPermissionList")
     public ResultBean getAllPermissionList() {
-        // todo 把返回值的异常处理加一下
         return ResultUtils.success(menuService.list());
     }
 

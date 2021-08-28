@@ -8,4 +8,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class FileInfoServiceImpl extends ServiceImpl<FileInfoMapper, FileInfo> implements FileInfoService {
+    @Override
+    public boolean isExists(String md5) {
+        if (md5 == null) {
+            return false;
+        }
+
+        // todo 添加判断逻辑
+        return false;
+    }
 }

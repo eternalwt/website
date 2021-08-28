@@ -35,15 +35,9 @@ public class FileController {
     @Autowired
     private FileInfoService fileInfoService;
 
-    @PostMapping("/checkFile")
-    public Boolean checkFile(@RequestParam(value = "md5File") String md5File) {
-        Boolean exist = false;
-
-        // todo
-		/*if(true) {
-			exist = true;
-		}*/
-        return exist;
+    @PostMapping("/fileExists")
+    public Boolean fileExists(@RequestParam(value = "md5File") String md5File) {
+        return fileInfoService.isExists(md5File);
     }
 
     @PostMapping("/upload")
@@ -55,8 +49,8 @@ public class FileController {
         // todo 1.如果文件过多，就得把文件信息放入其他查询更快的数据存储中
         // todo 2.可以使用云的对象存储
         // 判断是否上传过
-        if (fileInfo.getMd5() != null) {// todo 并且存在。是否抽一个方法供分片和单独上传一起使用？
-//            return ResultUtils.success(fileDownloadUri);
+        if (fileInfoService.isExists(fileInfo.getMd5())) {
+//            return ResultUtils.success(fileDownloadUri);// todo 如果还要判断其他信息，则上面不用isExists方法，而是返回一个对象
         }
 
         try {
@@ -67,8 +61,7 @@ public class FileController {
                     .path("/files/download/")// todo 抽到配置里面去
                     .path(fileName)
                     .toUriString();
-            // todo 新文件名
-            // todo 肯定不能根据原文件名计算md5，太容易重复了
+            // todo 新文件名用md5
             DigestUtils.md5DigestAsHex(fileInfo.getOriginalName().getBytes());
             fileInfoService.save(fileInfo);
             // file.transferTo();// todo 据说这个方法是zero-copy，再看看

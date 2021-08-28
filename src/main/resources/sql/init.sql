@@ -111,39 +111,66 @@ create table `sys_dictionary`(
     parent_id bigint(64) not null,
     level int DEFAULT 0 comment '层级',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='字典表';
+
+drop table if exists file_info;
+create table `file_info`(
+    id bigint(64) auto_increment primary key,
+    config_id bigint(64),
+    original_name varchar(64),
+    filename varchar(64),
+    description varchar(256),
+    relative_path varchar(512),
+    md5 varchar(64),
+    size bigint(64), -- 单位KB
+    creator_id varchar(256) COMMENT '创建者id',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    updator_id varchar(256) COMMENT '更新者id',
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件信息表';
+
+drop table if exists file_config;
+create table `file_config`(
+    id bigint(64) auto_increment primary key,
+    config_name varchar(64),
+    description varchar(256),
+    type varchar(64),
+    creator_id varchar(256) COMMENT '创建者id',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    updator_id varchar(256) COMMENT '更新者id',
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件配置表';
 
 drop table if exists busi_menu;
 create table busi_menu(
-     id bigint(64) auto_increment primary key,
-     menu_name varchar(64) COMMENT '菜单名称',
-     number varchar(64) COMMENT '菜单编号',
-     url varchar(128) COMMENT '菜单路径',
-     icon varchar(256) COMMENT '菜单图标',
-     parent_id bigint(64) COMMENT '父菜单id',
-     sort int COMMENT '排序',
-     in_use tinyint COMMENT '是否启用',
-     open_way tinyint COMMENT '打开方式',
-     role varchar(256) COMMENT '有权限的角色',
-     user varchar(512) COMMENT '有权限的用户',
-     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    menu_name varchar(64) COMMENT '菜单名称',
+    number varchar(64) COMMENT '菜单编号',
+    url varchar(128) COMMENT '菜单路径',
+    icon varchar(256) COMMENT '菜单图标',
+    parent_id bigint(64) COMMENT '父菜单id',
+    sort int COMMENT '排序',
+    in_use tinyint COMMENT '是否启用',
+    open_way tinyint COMMENT '打开方式',
+    role varchar(256) COMMENT '有权限的角色',
+    user varchar(512) COMMENT '有权限的用户',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';
 
 drop table if exists busi_article;
 create table busi_article(
-     id bigint(64) auto_increment primary key,
-     title varchar(128) COMMENT '标题',
-     content text COMMENT '内容',
-     column_id bigint(64) COMMENT '栏目id',
-     published tinyint(1) COMMENT '发布/编辑状态',
-     audited tinyint(1) COMMENT '审核状态',
-     read_count int COMMENT '查看次数',
-     creator_id varchar(256) COMMENT '创建者id',
-     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-     updator_id varchar(256) COMMENT '更新者id',
-     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    id bigint(64) auto_increment primary key,
+    title varchar(128) COMMENT '标题',
+    content text COMMENT '内容',
+    column_id bigint(64) COMMENT '栏目id',
+    published tinyint(1) COMMENT '发布/编辑状态',
+    audited tinyint(1) COMMENT '审核状态',
+    read_count int COMMENT '查看次数',
+    creator_id varchar(256) COMMENT '创建者id',
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    updator_id varchar(256) COMMENT '更新者id',
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 
 -- 栏目表

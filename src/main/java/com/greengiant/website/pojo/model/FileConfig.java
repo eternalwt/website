@@ -12,9 +12,11 @@ public class FileConfig {
     @TableId(type= IdType.AUTO)
     private Long id;
 
-    private String config_name;
+    private String configName;
 
     private String description;
+
+    private String type;// todo 用来存文件存放的业务目录等
 
     private String creatorId;
 
@@ -27,10 +29,11 @@ public class FileConfig {
     public FileConfig() {
     }
 
-    public FileConfig(Long id, String config_name, String description, String creatorId, Date createTime, String updatorId, Date updateTime) {
+    public FileConfig(Long id, String configName, String description, String type, String creatorId, Date createTime, String updatorId, Date updateTime) {
         this.id = id;
-        this.config_name = config_name;
+        this.configName = configName;
         this.description = description;
+        this.type = type;
         this.creatorId = creatorId;
         this.createTime = createTime;
         this.updatorId = updatorId;
@@ -45,12 +48,12 @@ public class FileConfig {
         this.id = id;
     }
 
-    public String getConfig_name() {
-        return config_name;
+    public String getConfigName() {
+        return configName;
     }
 
-    public void setConfig_name(String config_name) {
-        this.config_name = config_name;
+    public void setConfigName(String configName) {
+        this.configName = configName;
     }
 
     public String getDescription() {
@@ -59,6 +62,14 @@ public class FileConfig {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getCreatorId() {
@@ -97,8 +108,9 @@ public class FileConfig {
     public String toString() {
         return "FileConfig{" +
                 "id=" + id +
-                ", config_name='" + config_name + '\'' +
+                ", configName='" + configName + '\'' +
                 ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
                 ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +
                 ", updatorId='" + updatorId + '\'' +

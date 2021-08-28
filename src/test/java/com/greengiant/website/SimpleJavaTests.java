@@ -91,8 +91,7 @@ public class SimpleJavaTests {
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     if (entry.getKey().equals(field.getName())) {
                         // 设置bean的字段
-                        boolean isAccess = field.isAccessible();// todo 把canAccess调通
-//                        boolean isAccess = field.canAccess(bean);
+                        boolean isAccess = field.canAccess(bean);
                         field.setAccessible(true);
                         try {
                             field.set(bean, entry.getValue());

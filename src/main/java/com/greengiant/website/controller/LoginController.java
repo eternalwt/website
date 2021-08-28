@@ -45,7 +45,6 @@ public class LoginController {
     public ResultBean login(@RequestParam String username,
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
-        // todo 判断是否有密码输入次数锁定、账号锁定
         // 从SecurityUtils里边创建一个 subject
         loginService.login(username, password, isRememberMe);
         //根据权限，指定返回数据

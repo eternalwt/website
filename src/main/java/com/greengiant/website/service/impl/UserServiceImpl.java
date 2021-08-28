@@ -8,6 +8,7 @@ import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
 import com.greengiant.website.pojo.query.UserQuery;
+import com.greengiant.website.service.UserRoleService;
 import com.greengiant.website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,20 +25,19 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     @Autowired
     private UserMapper userMapper;
 
-//    @Autowired
-//    UserRoleService userRoleService;
-
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    UserRoleService userRoleService;
 
     // todo 事务放在这里，思考一下我在威盛电子服务划分过多遇到的问题
     // todo 注意：看些这些事务相关的东西能否用上：PlatformTransactionManager、DefaultTransactionDefinition、TransactionStatus
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
+    @Transactional(rollbackFor = Exception.class)// todo 看阿里巴巴对rollback的要求
     public void addUser(UserQuery userQuery) {
         //todo 考虑返回值
-        //todo 考虑是否链式赋值
         User user = new User();
         user.setUserName(userQuery.getUserName());
         String salt = PasswordUtil.getSalt();
@@ -46,16 +46,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         user.setPassword(PasswordUtil.encrypt(userQuery.getPassword(), salt));
         userMapper.insert(user);
 
-        // todo 批量插入需要添加UserRoleService，然后调用saveBatch
+        // 批量插入
         List<Long> roleIdList = userQuery.getRoleIdList();
-//        List<UserRole> roleList = new ArrayList<>();
+        List<UserRole> userRoleList = new ArrayList<>();
         if (roleIdList != null && !roleIdList.isEmpty()) {
-            for (Long roleId : roleIdList) {// todo 用stream来写
+            for (Long roleId : roleIdList) {
                 UserRole userRole = new UserRole();
                 userRole.setRoleId(roleId);
                 userRole.setUserId(user.getId());
                 userRoleMapper.insert(userRole);
             }
+            userRoleService.saveBatch(userRoleList);
         }
     }
 
@@ -71,7 +72,6 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public User getByName(String userName) {
-        //todo 想明白了：前端从业务角度判空，后端只在最下层操作数据库的时候用java8语法判断，然后用全局异常处理返回给前端
         User user = userMapper.selectByName(userName);
 
         return user;

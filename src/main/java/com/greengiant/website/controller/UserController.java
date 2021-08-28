@@ -21,8 +21,6 @@ public class UserController{
     @Autowired
     private UserService userService;
 
-    //todo editUser
-
     @PostMapping(value = "/add")
     public ResultBean addUser(@RequestBody UserQuery userQuery) {
         if (userQuery.getUserName() == null || userQuery.getPassword() == null) {
@@ -37,8 +35,16 @@ public class UserController{
         //2.分别在user和role关联表里面写数据
         userService.addUser(userQuery);
 
-        //todo 看看异常在哪一层怎么处理，manager？事务放在哪一层的问题
         return ResultUtils.success();
+    }
+
+    @PostMapping(value = "/edit")
+    public ResultBean editUser(@RequestBody User user) {
+        if (user.getId() == null) {
+            return ResultUtils.paramError();
+        }
+
+        return ResultUtils.success(userService.updateById(user));
     }
 
     @PostMapping(value = "/password/change")

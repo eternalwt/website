@@ -33,8 +33,6 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         // todo getPageList这种方法，适合写在xml里面吗？在家试一下
         // todo 把Page类的所有属性和方法都看一下
         // todo 看一下下面this.page函数的实现，单元测试
-        // todo 把this.page返回值的字段都搞清楚
-
         IPage<Article> pg = new Page<>(pageParam.getPageNum(), pageParam.getPageSize());
         QueryWrapper<Article> wrapper = generateQueryWrapper(article);
         pg = this.page(pg, wrapper);// 底层是baseMapper.selectPage()

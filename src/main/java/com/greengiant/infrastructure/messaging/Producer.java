@@ -13,10 +13,10 @@ public class Producer {
     // https://blog.csdn.net/cs_hnu_scw/article/details/81040834
 
     @Autowired
-    private AmqpTemplate amqpTemplate;// todo 有哪些方法、各有什么作用？
+    private AmqpTemplate amqpTemplate;
 
     @Autowired
-    private AmqpAdmin admin;// todo 有哪些方法、各有什么作用？
+    private AmqpAdmin admin;
 
 
     public void send(Object message){

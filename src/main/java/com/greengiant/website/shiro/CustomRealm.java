@@ -111,7 +111,7 @@ public class CustomRealm extends AuthorizingRealm {
     public  boolean isPermitted(PrincipalCollection principals, String permission){
         String username = principals.toString();
         QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
-        menuWrapper.eq("menu_name", permission);
+        menuWrapper.eq("menu_name", permission);// todo 这个permission只是指的资源，这样写很奇怪
         Menu menu = menuService.getOne(menuWrapper);
         if (menu == null) {
             return false;
@@ -120,7 +120,6 @@ public class CustomRealm extends AuthorizingRealm {
         List<Role> roleList = null;
         roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
         if (roleList == null) {
-
             // todo 应该是直接用menuService搞定，不需要roleService把？然后把menuService的东西缓存一下
 
             // todo 更新角色的時候也要更新role信息

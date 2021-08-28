@@ -2,8 +2,6 @@ package com.greengiant.website.pojo.query;
 
 import com.greengiant.website.pojo.PageParam;
 
-import java.util.Map;
-
 public class PageQuery<T> {
 
     /**

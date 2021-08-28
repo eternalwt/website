@@ -11,10 +11,6 @@ import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.service.ArticleService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 @Service
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
 

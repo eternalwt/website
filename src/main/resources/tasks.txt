@@ -12,6 +12,13 @@
 
 ======================================================================================================================
 
+【策略与打法】
+    1.起初只能瞄准10-20万的项目；
+    2.管理系统前后端是技术和业务的基本盘；
+    3.赚钱可能会在物联网/大数据以及一些意想不到的机会上。
+
+======================================================================================================================
+
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
@@ -420,6 +427,24 @@ isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一
     从这个里面得知，如果要直接使用WildcardPermission及对应的默认implies、isPermitted方法，需要在CustomRealm里面的AuthorizationInfo里面需要把permission先set；
     5.默认的是怎么比较的？
     6.在对比CustomRealm里面的其他方法和AuthorizingRealm、SimpleAccountRealm里面同名方法的实现；
+经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
+重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：https://www.jianshu.com/p/d9175f23c22a
+用户授权isPermitted过程：https://blog.51cto.com/luchunli/1830643(https://blog.csdn.net/weixin_33724046/article/details/93057613)
+shiro:hasPermission 标签 ：验证当前用户是否拥有指定权限【人家这个里面还对菜单设置了parentId】：https://blog.csdn.net/dxyzhbb/article/details/102500997
+isPermitted看懂后，再看permission的写法：system:role:add：https://blog.csdn.net/tragedyxd/article/details/52958008
+试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
+PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
+https://blog.csdn.net/weixin_38121659/article/details/78715454
+自定义权限解析器和角色解析器(PermissionResolver、RolePermissionResolver)等：
+    https://blog.csdn.net/lw_power/article/details/52562754
+    https://blog.csdn.net/Jack_Yin/article/details/84569443
+【我的代码应该是用得上RolePermissionResolver的】该RolePermissionResolver用于将角色字符串转换成该角色所包含的Permission的集合。
+shiro Authorizer权限校验【（前端没必要单独发一次请求鉴权，把checkPermission做到filter里面去，调用isPermitted方法）。这一点懂了之后，随之而来一个新问题：】：
+	https://www.jianshu.com/p/35b89d5502b8（里面提到了授权流程以及Permission等类）
+	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
+	https://www.cnblogs.com/nuccch/p/6776352.html
+isPermitted重载的有问题，应该是权限而不是角色相关的【可以先debug一下】
 
 看AllPermission、WildcardPermission、WildcardPermissionResolver【如何与前端写通形成一个完美的设计？】
     https://blog.csdn.net/sharetop/article/details/50250651
@@ -457,10 +482,6 @@ spring-jcl 日志源码分析：
 shiro的cookie再复述一遍【搞大数据的这几个月linux、shiro等东西都需要学而时习之】
 CachingRealm 抽象类是Shiro中唯一一个直接实现Realm接口的类。同时它还实现了LogoutAware接口：https://www.jianshu.com/p/df8d7c888401
 （CustomRealm是不是里面的逻辑是不是应该再次封装到RolePermissionResolver里面去？）
-shiro Authorizer权限校验【（前端没必要单独发一次请求鉴权，把checkPermission做到filter里面去，调用isPermitted方法）。这一点懂了之后，随之而来一个新问题：】：
-	https://www.jianshu.com/p/35b89d5502b8（里面提到了授权流程以及Permission等类）
-	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
-	https://www.cnblogs.com/nuccch/p/6776352.html
 Shiro 中的 AuthenticationToken：https://www.jianshu.com/p/9ac577427b44
 
 ehcache涉及到offheap memory、bigmemory等概念
@@ -488,24 +509,7 @@ Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/
 
 看 spring-boot-starter-test
 
-经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
-重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：
-https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：https://blog.51cto.com/luchunli/1830643(https://blog.csdn.net/weixin_33724046/article/details/93057613)
-shiro:hasPermission 标签 ：验证当前用户是否拥有指定权限【人家这个里面还对菜单设置了parentId】：https://blog.csdn.net/dxyzhbb/article/details/102500997
-isPermitted看懂后，再看permission的写法：system:role:add：
-https://blog.csdn.net/tragedyxd/article/details/52958008
-试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-shiro看到：Authorizer、PermissionResolver 及 RolePermissionResolver了。看看我是怎么设置Authrizer的（再搞一次）
-PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
-https://blog.csdn.net/weixin_38121659/article/details/78715454
-自定义权限解析器和角色解析器(PermissionResolver、RolePermissionResolver)等：
-    https://blog.csdn.net/lw_power/article/details/52562754
-    https://blog.csdn.net/Jack_Yin/article/details/84569443
-【我的代码应该是用得上RolePermissionResolver的】该RolePermissionResolver用于将角色字符串转换成该角色所包含的Permission的集合。
-
 和doGetAuthorizationInfo是什么关系？
-isPermitted重载的有问题，应该是权限而不是角色相关的【可以先debug一下】
 Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
     <V> V execute(Callable<V> var1) throws ExecutionException;
     void execute(Runnable var1);

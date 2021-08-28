@@ -48,6 +48,8 @@ public class FileController {
                     .path(fileName)
                     .toUriString();
 
+            // file.transferTo();// todo 看这个方法的性能，跟NIO有没有什么关联
+
             return ResultUtils.success(fileDownloadUri);
         } catch (IOException ex) {
             log.error("handleFileUpload failed...", ex);
@@ -58,8 +60,8 @@ public class FileController {
     /**
      *
      spring boot+webuploader实现大文件分片上传实例：
-     https://cloud.tencent.com/developer/article/1541199
      https://zhuanlan.zhihu.com/p/29526454
+     https://cloud.tencent.com/developer/article/1541199
      https://blog.csdn.net/kfyty725/article/details/104848966
      https://www.cnblogs.com/songsu/p/12197762.html
 

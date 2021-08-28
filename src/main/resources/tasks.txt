@@ -16,8 +16,11 @@
 
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
-晚上只搞分页和NIO(搞透)
+晚上只搞NIO(搞透)
+清两周todo，先从文件做起，先把handleFileUpload写完善就好了。【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 继续搞shiro、mybatis配置相关的，后端已经很解决了，rabbitmq、大数据、es先放一下
+可以提高LSM的优先级了，以及从0开始：500行代码实现 LSM 数据库：https://zhuanlan.zhihu.com/p/384761846
+NIO搞完后再看一遍ThreadLocal，然后继续写程序
 
 MyBatis之分页插件(PageHelper)工作原理【这就是一个很好的面试题】：
     https://blog.csdn.net/jaryle/article/details/52315565
@@ -37,7 +40,6 @@ PaginationInterceptor原理？以及为什么过时了，用什么替换？
 MyBatisPlus学习笔记：https://blog.csdn.net/zyx1260168395/article/details/104154454
 mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
-清两周todo，先从文件做起【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 把article的增删查改加上对应的ES索引操作
 把我的mybatis配置测试、精简
 

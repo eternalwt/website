@@ -16,7 +16,7 @@ public class FileInfo {
     @TableId(type= IdType.AUTO)
     private Long id;
 
-    private Long configId;
+    private Long configId;// todo 可能跟文件的目录分类有关
 
     private String originalName;
 
@@ -28,7 +28,10 @@ public class FileInfo {
     /**
      * todo 不同类别有不同的存放路径
      */
-    private String relative_path;
+    private String relativePath;
+
+    private String md5;
+
     /**
      * 文件大小，单位KB
      */
@@ -45,13 +48,14 @@ public class FileInfo {
     public FileInfo() {
     }
 
-    public FileInfo(Long id, Long configId, String originalName, String fileName, String description, String relative_path, Long size, String creatorId, Date createTime, String updatorId, Date updateTime) {
+    public FileInfo(Long id, Long configId, String originalName, String fileName, String description, String relativePath, String md5, Long size, String creatorId, Date createTime, String updatorId, Date updateTime) {
         this.id = id;
         this.configId = configId;
         this.originalName = originalName;
         this.fileName = fileName;
         this.description = description;
-        this.relative_path = relative_path;
+        this.relativePath = relativePath;
+        this.md5 = md5;
         this.size = size;
         this.creatorId = creatorId;
         this.createTime = createTime;
@@ -99,12 +103,20 @@ public class FileInfo {
         this.description = description;
     }
 
-    public String getRelative_path() {
-        return relative_path;
+    public String getRelativePath() {
+        return relativePath;
     }
 
-    public void setRelative_path(String relative_path) {
-        this.relative_path = relative_path;
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
+    }
+
+    public String getMd5() {
+        return md5;
+    }
+
+    public void setMd5(String md5) {
+        this.md5 = md5;
     }
 
     public Long getSize() {
@@ -155,7 +167,8 @@ public class FileInfo {
                 ", originalName='" + originalName + '\'' +
                 ", fileName='" + fileName + '\'' +
                 ", description='" + description + '\'' +
-                ", relative_path='" + relative_path + '\'' +
+                ", relativePath='" + relativePath + '\'' +
+                ", md5='" + md5 + '\'' +
                 ", size=" + size +
                 ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +

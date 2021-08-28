@@ -25,11 +25,11 @@ public class NIOTests {
 
     // todo Java NIO？看这一篇就够了：https://blog.csdn.net/forezp/article/details/88414741
     // todo zero-copy为什么叫zero-copy？NIO如果从系统调用的层面，是不是反而更好理解？（先简单理解微它借助了系统调用的功能）
-
+    // todo 看看这个ByteBuffer满了是怎么处理的？
     // todo 【NIO与操作系统IO模式的关系？ NIO与zero-copy的关系？哪些API用到epoll，哪些API用到zero-copy？】
     //  https://blog.csdn.net/wuyangyang555/article/details/81240411
     //  https://www.jianshu.com/p/dc1acbc7e130
-
+    // todo Java中提供的nio的方式是通过transferTo来实现：https://blog.csdn.net/u011262847/article/details/78089432
     /**
      * NIO底层原理：
      *  https://www.jianshu.com/p/4543c92b2fbd
@@ -37,6 +37,8 @@ public class NIOTests {
      *  ByteBuffer支持直接内存。使用直接缓冲区可以使得内核缓冲区和用户缓冲区映射到同一块物理内存地址上，实现零拷贝：
      *      https://blog.csdn.net/lixinkuan328/article/details/114156517
      *      https://blog.csdn.net/qq_40837310/article/details/106241945
+     *
+     *  NIO易用性？所有IO的地方都看看NIO是不是可以完成/更好完成?
      */
 
     @Test

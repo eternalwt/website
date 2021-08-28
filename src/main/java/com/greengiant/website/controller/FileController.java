@@ -8,6 +8,7 @@ import com.greengiant.website.service.FileInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -34,21 +35,43 @@ public class FileController {
     @Autowired
     private FileInfoService fileInfoService;
 
+    @PostMapping("/checkFile")
+    public Boolean checkFile(@RequestParam(value = "md5File") String md5File) {
+        Boolean exist = false;
+
+        // todo
+		/*if(true) {
+			exist = true;
+		}*/
+        return exist;
+    }
+
     @PostMapping("/upload")
     public ResultBean handleFileUpload(@RequestParam("file") MultipartFile file,
                                         @RequestBody FileInfo fileInfo) {
         String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         Path path = Paths.get(fileBasePath + fileName);
+
+        // todo 1.如果文件过多，就得把文件信息放入其他查询更快的数据存储中
+        // todo 2.可以使用云的对象存储
+        // 判断是否上传过
+        if (fileInfo.getMd5() != null) {// todo 并且存在。是否抽一个方法供分片和单独上传一起使用？
+//            return ResultUtils.success(fileDownloadUri);
+        }
+
         try {
             Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
 
-            // todo 存入数据库（添加表）
+            // todo 这个函数是不是用的不多？fromCurrentContextPath
             String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                     .path("/files/download/")// todo 抽到配置里面去
                     .path(fileName)
                     .toUriString();
-
-            // file.transferTo();// todo 看这个方法的性能，跟NIO有没有什么关联
+            // todo 新文件名
+            // todo 肯定不能根据原文件名计算md5，太容易重复了
+            DigestUtils.md5DigestAsHex(fileInfo.getOriginalName().getBytes());
+            fileInfoService.save(fileInfo);
+            // file.transferTo();// todo 据说这个方法是zero-copy，再看看
 
             return ResultUtils.success(fileDownloadUri);
         } catch (IOException ex) {
@@ -93,6 +116,8 @@ public class FileController {
         https://www.cnblogs.com/wangzehuaw/p/5610851.html
         https://www.jianshu.com/p/012c8a4dc661
     * */
-    
+
+    // todo 在分片上传中，每个分配最好也计算md5，这样后端判重逻辑简单一些（不用保存哪个分配属于哪个文件的信息）
+
 
 }

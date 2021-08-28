@@ -2334,6 +2334,8 @@ https://www.cnblogs.com/xiaoming0601/p/12166160.html
 SimpleAuthenticationInfo实现了MergableAuthenticationInfo, SaltedAuthenticationInfo
 看一下ByteSource这个接口。心得：分析源码的时候多注意观察接口
 
+Java生成MD5的两种方式【再确认下salt用法】：https://blog.csdn.net/junmoxi/article/details/80841555
+
 写框架的时候，有时候需要开放接口给用户，例如shiro的CacheManager（当然也会自带一个默认的）。要熟悉这种设计思路
 尝试使用rest接口，可以更简洁同时也能暴露更少信息
 

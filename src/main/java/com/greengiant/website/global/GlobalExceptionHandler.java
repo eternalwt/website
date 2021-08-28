@@ -21,6 +21,7 @@ public class GlobalExceptionHandler {
     }
 
     // todo login方法会抛出AuthenticationException，再确认一下
+    // todo 结合Objects.requiresNotNull以及@Transactional的rollback一起确认一下
     // AccountException
     // AuthenticationException
 

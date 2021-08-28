@@ -33,9 +33,7 @@ public class UserController{
             return ResultUtils.fail(StatusCodeEnum.USER_EXISTS.getCode(), StatusCodeEnum.USER_EXISTS.getMsg());
         }
         //2.分别在user和role关联表里面写数据
-        userService.addUser(userQuery);
-
-        return ResultUtils.success();
+        return ResultUtils.success(userService.addUser(userQuery));
     }
 
     @PostMapping(value = "/edit")
@@ -73,8 +71,7 @@ public class UserController{
 
     @PostMapping(value = "/delete")
     public ResultBean delUser(@RequestParam Long userId) {
-        userService.delUser(userId);
-        return ResultUtils.success();
+        return ResultUtils.success(userService.delUser(userId));
     }
 
 }

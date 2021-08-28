@@ -13,6 +13,7 @@ import com.greengiant.website.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,39 +36,53 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     // todo 注意：看些这些事务相关的东西能否用上：PlatformTransactionManager、DefaultTransactionDefinition、TransactionStatus
 
     @Override
-    @Transactional(rollbackFor = Exception.class)// todo 看阿里巴巴对rollback的要求
-    public void addUser(UserQuery userQuery) {
-        //todo 考虑返回值
-        User user = new User();
-        user.setUserName(userQuery.getUserName());
-        String salt = PasswordUtil.getSalt();
-        user.setPasswordSalt(salt);
-        // 密码加盐加密
-        user.setPassword(PasswordUtil.encrypt(userQuery.getPassword(), salt));
-        userMapper.insert(user);
+    @Transactional
+    public boolean addUser(UserQuery userQuery) {
+        try {
+            User user = new User();
+            user.setUserName(userQuery.getUserName());
+            String salt = PasswordUtil.getSalt();
+            user.setPasswordSalt(salt);
+            // 密码加盐加密
+            user.setPassword(PasswordUtil.encrypt(userQuery.getPassword(), salt));
+            userMapper.insert(user);
 
-        // 批量插入
-        List<Long> roleIdList = userQuery.getRoleIdList();
-        List<UserRole> userRoleList = new ArrayList<>();
-        if (roleIdList != null && !roleIdList.isEmpty()) {
-            for (Long roleId : roleIdList) {
-                UserRole userRole = new UserRole();
-                userRole.setRoleId(roleId);
-                userRole.setUserId(user.getId());
-                userRoleMapper.insert(userRole);
+            // 批量插入
+            List<Long> roleIdList = userQuery.getRoleIdList();
+            List<UserRole> userRoleList = new ArrayList<>();
+            if (roleIdList != null && !roleIdList.isEmpty()) {
+                for (Long roleId : roleIdList) {
+                    UserRole userRole = new UserRole();
+                    userRole.setRoleId(roleId);
+                    userRole.setUserId(user.getId());
+                    userRoleMapper.insert(userRole);
+                }
+                userRoleService.saveBatch(userRoleList);
             }
-            userRoleService.saveBatch(userRoleList);
+            return true;
+        } catch (Exception ex) {
+            log.error("addUser failed...", ex);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
         }
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void delUser(Long userId) {// todo 返回值与rollback的关系？确认下，然后尽量改成boolean的返回值
-        this.removeById(userId);
+    @Transactional
+    public boolean delUser(Long userId) {
+        try {
+            this.removeById(userId);
 
-        Map<String, Object> map = new HashMap<>(16);
-        map.put("user_id", userId);
-        userRoleMapper.deleteByMap(map);
+            Map<String, Object> map = new HashMap<>(16);
+            map.put("user_id", userId);
+            userRoleMapper.deleteByMap(map);
+
+            return true;
+        } catch (Exception ex) {
+            log.error("delUser failed...", ex);
+            TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+            return false;
+        }
     }
 
     @Override

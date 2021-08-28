@@ -6,9 +6,9 @@ import com.greengiant.website.pojo.query.UserQuery;
 
 public interface UserService extends IService<User> {
 
-    void addUser(UserQuery userQuery);
+    boolean addUser(UserQuery userQuery);
 
-    void delUser(Long userId);
+    boolean delUser(Long userId);
 
     User getByName(String userName);
 

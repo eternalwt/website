@@ -11,9 +11,35 @@ public class Perm {
     @TableId(type= IdType.AUTO)
     private Long id;
 
-    private String permissionName;
+    /**
+     * 权限的实体，可以是角色、角色实例、用户、机构等等（支持基于角色、基于用户等多种方式鉴权）
+     */
+    private String entity;
 
-    private String description;
+    /**
+     * 权限实体对应的主键（其他真正存放各类实体详情表的表主键）
+     */
+    private Long entityId;
+
+    /**
+     * 资源名称
+     */
+    private String resource;// todo 这个字段怎么用好，提供接口的时候就知道了
+
+    /**
+     * 资源类别，例如1代表菜单，2代表按钮，3代表接口
+     */
+    private String resourceType;
+
+    /**
+     * 资源id，资源实体对应的主键（与entityId类似，代表其他真正存放各类资源详情表的表主键）
+     */
+    private Long resourceId;
+
+    /**
+     * （对资源的）操作，例如增删查改
+     */
+    private String operation;
 
     private Date createTime;
 
@@ -23,10 +49,14 @@ public class Perm {
         super();
     }
 
-    public Perm(Long id, String permissionName, String description, Date createTime, Date updateTime) {
+    public Perm(Long id, String entity, Long entityId, String resource, String resourceType, Long resourceId, String operation, Date createTime, Date updateTime) {
         this.id = id;
-        this.permissionName = permissionName;
-        this.description = description;
+        this.entity = entity;
+        this.entityId = entityId;
+        this.resource = resource;
+        this.resourceType = resourceType;
+        this.resourceId = resourceId;
+        this.operation = operation;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -39,20 +69,52 @@ public class Perm {
         this.id = id;
     }
 
-    public String getPermissionName() {
-        return permissionName;
+    public String getEntity() {
+        return entity;
     }
 
-    public void setPermissionName(String permissionName) {
-        this.permissionName = permissionName == null ? null : permissionName.trim();
+    public void setEntity(String entity) {
+        this.entity = entity;
     }
 
-    public String getDescription() {
-        return description;
+    public Long getEntityId() {
+        return entityId;
     }
 
-    public void setDescription(String description) {
-        this.description = description == null ? null : description.trim();
+    public void setEntityId(Long entityId) {
+        this.entityId = entityId;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public String getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public Long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 
     public Date getCreateTime() {
@@ -73,10 +135,14 @@ public class Perm {
 
     @Override
     public String toString() {
-        return "Permission{" +
+        return "Perm{" +
                 "id=" + id +
-                ", permissionName='" + permissionName + '\'' +
-                ", description='" + description + '\'' +
+                ", entity='" + entity + '\'' +
+                ", entityId=" + entityId +
+                ", resource='" + resource + '\'' +
+                ", resourceType='" + resourceType + '\'' +
+                ", resourceId=" + resourceId +
+                ", operation='" + operation + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

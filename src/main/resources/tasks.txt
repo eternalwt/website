@@ -21,7 +21,13 @@
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
-如何重载checkPermission和isPermitted？
+父资源（资源树的概念）
+把permission表先整好，然后才是角色-资源、用户-资源对应关系的建立。
+搜索“基于资源的权限管理”
+permission改完后，看看公司的代码是怎么对页面按钮配置权限的。这个还涉及到前端组件的封装问题，以及一个区域的显示隐藏，形成整体可用的基础设施。
+授权的接口【跟menu功能相分离了】
+1.改造我的permission表；2.思考增删菜单时权限怎么变动、配置。把这个搞好，再把SSO和OAuth2.0搞定，管理系统后台就突破了，剩下的就是后端基础设施的补充。
+内存、ehcache、redis要能快速切换（再看一遍代码）
 
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
@@ -423,11 +429,11 @@ shiro不适合于网关？（无稽之谈）
 
 搜 权限资源表：
     https://blog.csdn.net/weixin_34235371/article/details/91882455
-    https://www.jianshu.com/p/c5d0616e3845
     https://www.cnblogs.com/wang_yb/p/6139905.html
 
 看看Realm还可以重写哪些重要的接口
 我对Permission的新理解：有了CustomRealm，就不用再自己继承Authorizer、PermissionResolver、RolePermissionResolver了
+一个完整重写Permission、PermissionResolver的例子：https://blog.51cto.com/luchunli/1829659
 1.subject.checkPermission和isPermitted最终都会进入重载的那个isPermitted方法里面去；
 2.如果重载PermissionResolver那一套，需要写什么？例如把wildcard放入数据库？
 isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一下】：

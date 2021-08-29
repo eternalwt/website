@@ -36,11 +36,15 @@ create table auth_role(
 drop table if exists auth_permission;
 create table auth_permission(
     id bigint(64) auto_increment primary key,
-    permission_name varchar(64),
-    description varchar(256),
+    entity varchar(64),
+    entity_id bigint(64),
+    resource varchar(64),
+    resource_type varchar(64),
+    resource_id bigint(64),
+    operation varchar(128),
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源权限表';
 
 drop table if exists auth_user_role;
 create table auth_user_role(

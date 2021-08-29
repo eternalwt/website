@@ -74,7 +74,8 @@ public class FileController {
     }
 
     /**
-     *
+     * 看一下“MultipartFile extends InputStreamSource”是不是零拷贝【公司代码用到的】
+     * 零拷贝 最大2G文件 FileChannel.transferTo：https://www.cnblogs.com/star521/p/9253213.html
      spring boot+webuploader实现大文件分片上传实例：
      https://zhuanlan.zhihu.com/p/29526454
      https://cloud.tencent.com/developer/article/1541199

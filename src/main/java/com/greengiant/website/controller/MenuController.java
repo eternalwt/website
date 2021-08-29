@@ -32,6 +32,7 @@ public class MenuController {
     public ResultBean checkPermission(@RequestParam String permission) {
         // todo 加缓存 跟缓存相关的2个问题：1.能否用注解；2.切换缓存是否有问题
         Subject subject = SecurityUtils.getSubject();
+//        subject.checkPermission();
         return ResultUtils.success(subject.isPermitted(permission));
     }
 

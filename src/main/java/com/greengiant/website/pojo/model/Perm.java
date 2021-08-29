@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import java.util.Date;
 
 @TableName("auth_permission")// 如果没有这个注解BaseMapper里面的方法无法使用
-public class Permission {
+public class Perm {
     @TableId(type= IdType.AUTO)
     private Long id;
 
@@ -19,11 +19,11 @@ public class Permission {
 
     private Date updateTime;
 
-    public Permission() {
+    public Perm() {
         super();
     }
 
-    public Permission(Long id, String permissionName, String description, Date createTime, Date updateTime) {
+    public Perm(Long id, String permissionName, String description, Date createTime, Date updateTime) {
         this.id = id;
         this.permissionName = permissionName;
         this.description = description;

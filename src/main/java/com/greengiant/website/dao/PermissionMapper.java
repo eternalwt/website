@@ -1,7 +1,7 @@
 package com.greengiant.website.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.greengiant.website.pojo.model.Permission;
+import com.greengiant.website.pojo.model.Perm;
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
 
@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.List;
 
 @Mapper
-public interface PermissionMapper extends BaseMapper<Permission> {
+public interface PermissionMapper extends BaseMapper<Perm> {
     @Delete({
         "delete from auth_permission",
         "where id = #{id,jdbcType=BIGINT}"
@@ -38,7 +38,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
-    Permission selectByPrimaryKey(Long id);
+    Perm selectByPrimaryKey(Long id);
 
     @Select({
         "select",
@@ -52,7 +52,7 @@ public interface PermissionMapper extends BaseMapper<Permission> {
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
-    List<Permission> selectAll();
+    List<Perm> selectAll();
 
     @Update({
         "update auth_permission",
@@ -60,5 +60,5 @@ public interface PermissionMapper extends BaseMapper<Permission> {
         "description = #{description,jdbcType=VARCHAR} ",
         "where id = #{id,jdbcType=BIGINT}"
     })
-    int updateByPrimaryKey(Permission record);
+    int updateByPrimaryKey(Perm record);
 }

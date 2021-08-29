@@ -21,6 +21,8 @@
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
+如何重载checkPermission和isPermitted？
+
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
 晚上只搞NIO(搞透)
@@ -419,6 +421,15 @@ myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 shiro不适合于网关？（无稽之谈）
 
+搜 权限资源表：
+    https://blog.csdn.net/weixin_34235371/article/details/91882455
+    https://www.jianshu.com/p/c5d0616e3845
+    https://www.cnblogs.com/wang_yb/p/6139905.html
+
+看看Realm还可以重写哪些重要的接口
+我对Permission的新理解：有了CustomRealm，就不用再自己继承Authorizer、PermissionResolver、RolePermissionResolver了
+1.subject.checkPermission和isPermitted最终都会进入重载的那个isPermitted方法里面去；
+2.如果重载PermissionResolver那一套，需要写什么？例如把wildcard放入数据库？
 isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一下】：
     1.进入ModularRealmAuthorizer的public boolean isPermitted(PrincipalCollection principals, String permission) 方法；
     2.最终进入了CustomRealm里面的isPermitted方法；
@@ -427,9 +438,9 @@ isPermitted方法跟踪【是不是可以把代码和WildcardPermission整合一
     从这个里面得知，如果要直接使用WildcardPermission及对应的默认implies、isPermitted方法，需要在CustomRealm里面的AuthorizationInfo里面需要把permission先set；
     5.默认的是怎么比较的？
     6.在对比CustomRealm里面的其他方法和AuthorizingRealm、SimpleAccountRealm里面同名方法的实现；
+Permission的implies接口以及WildcardPermission、AllPermission、PermissionResolver
 经验证： subject.hasRole("admin");进入了doGetAuthorizationInfo
 重载isPermitted【待验证，isPermitted代码要写就写好，不写就删掉】：https://www.jianshu.com/p/d9175f23c22a
-用户授权isPermitted过程：https://blog.51cto.com/luchunli/1830643(https://blog.csdn.net/weixin_33724046/article/details/93057613)
 shiro:hasPermission 标签 ：验证当前用户是否拥有指定权限【人家这个里面还对菜单设置了parentId】：https://blog.csdn.net/dxyzhbb/article/details/102500997
 isPermitted看懂后，再看permission的写法：system:role:add：https://blog.csdn.net/tragedyxd/article/details/52958008
 试一下这2个：PermissionResolver 用于解析权限字符串得到 Permission 实例；RolePermissionResolver 用于根据角色解析相应的权限集合：
@@ -445,7 +456,7 @@ shiro Authorizer权限校验【（前端没必要单独发一次请求鉴权，�
 	https://www.cnblogs.com/BINGJJFLY/p/8968046.html
 	https://www.cnblogs.com/nuccch/p/6776352.html
 isPermitted重载的有问题，应该是权限而不是角色相关的【可以先debug一下】
-
+搞懂Permission的implies方法。implies方法是permission的一种惯用表述，java的FilePermission类中也有implies方法
 看AllPermission、WildcardPermission、WildcardPermissionResolver【如何与前端写通形成一个完美的设计？】
     https://blog.csdn.net/sharetop/article/details/50250651
     https://www.baeldung.com/apache-shiro-access-control
@@ -453,6 +464,7 @@ PermissionResolver用于解析权限字符串到Permission实例，RolePermissio
     https://blog.csdn.net/yifanSJ/article/details/77344427（根据这篇文章的分析：1.可以自定义PermissionResolver和RolePermissionResolver，然后注入Authrizor）
 Shiro WildCardPermission 扩展实现自定义权限校验：http://www.huzd.info/article/3
 自定义RolePermissionResolver：https://blog.csdn.net/weixin_45492007/article/details/101986790
+Shiro介绍（六）：扩展自己的@RequiresPermission：https://blog.csdn.net/sharetop/article/details/50292531
 
 shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？自行分析这个包的代码
 

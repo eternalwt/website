@@ -21,7 +21,17 @@
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
-1.哪些资源跟权限表联动；
+【1.在我现有的设计下，能否直接使用自带的WildcardPermission那种格式？（应该是可以的，人家的设计应该是很强大的。然后再看怎么把读数据库接上）2.如果不行，得自己定一套规则】
+【把这些补起来我的权限系统基本上有个模样了】【先把菜单后端权限搞起来，然后补前端】
+增加user_permission表
+权限表（permission）才是最关键的【就把按钮、页面区域元素彻底想通，就清楚了】，还有user_permission：https://zhuanlan.zhihu.com/p/97035035
+
+对于permission的理解：
+    1.其实所有的permission都是手动添加上去的，没添加就没有，并且要与代码元素相对应（页面地址、按钮ID）；
+    2.资源应该分好类，并且规范明明，例如分类为按钮、表格、xxx区（可以有更多的类别），按钮命名ADD、UPDATE等；
+    3.所有的资源管理(添加、删除)，应该以页面为入口和父元素（有页面权限不一定有所有元素权限）；
+    4.不同类别的资源在代码实现层面有不同的过滤方式：页面的权限控制是在加载菜单时，菜单内元素的权限控制是在加载页面时获取对应的权限数据(搞一个父页面写上获取权限代码，需要权限的页面继承这个类。html页不需要任何权限标签。前端虽然加了权限代码，但是开发时感知不到权限)；
+
 2.按类别来整理
 角色-资源、用户-资源的API编写，然后是改造isPermitted的实现以及menu表相关的
 搜索“基于资源的权限管理”
@@ -136,6 +146,7 @@ ElasticSearch原理：
 	https://zhuanlan.zhihu.com/p/74234766
 	https://zhuanlan.zhihu.com/p/62892586
 Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
+ElasticSearch实现多租户的3种方式：https://www.javacodegeeks.com/2020/09/elasticsearch-multitenancy-with-routing.html
 ElasticSearch 亿级数据检索深度优化：https://mp.weixin.qq.com/s/w7BdHMynblwUsTGsKiZ3Mw
 ElasticSearch的plugin以及分词器还得再看看：analyzer、search_analyzer
 Elasticsearch6.x和7.x版本常用插件汇总：https://www.cnblogs.com/yobit/p/11376453.html

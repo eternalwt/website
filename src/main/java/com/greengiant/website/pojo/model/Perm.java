@@ -14,7 +14,7 @@ public class Perm {
     /**
      * 权限的实体，可以是角色、角色实例、用户、机构等等（支持基于角色、基于用户等多种方式鉴权）
      */
-    private String entity;
+    private String entity;// todo 这个字段需要吗？
 
     /**
      * 权限实体对应的主键（其他真正存放各类实体详情表的表主键）
@@ -22,24 +22,29 @@ public class Perm {
     private Long entityId;
 
     /**
-     * 资源名称
+     * 资源[名称]（对应wildcarPermission里面的资源）
      */
-    private String resource;// todo 这个字段怎么用好，提供接口的时候就知道了
+    private String resource;
 
     /**
-     * 资源类别，例如1代表菜单，2代表按钮，3代表接口
+     * 资源代码，例如1代表菜单，2代表按钮，3代表接口
      */
-    private String resourceType;
+    private String resourceCode;
+
+    /**
+     * 操作，例如增删查改、打印、下载（对应wildcarPermission里面的操作）
+     */
+    private String operation;
+
+    /**
+     * 实例（对应wildcarPermission里面的实例）
+     */
+    private String resourceInstance;
 
     /**
      * 资源id，资源实体对应的主键（与entityId类似，代表其他真正存放各类资源详情表的表主键）
      */
     private Long resourceId;
-
-    /**
-     * （对资源的）操作，例如增删查改
-     */
-    private String operation;
 
     private Date createTime;
 
@@ -49,17 +54,19 @@ public class Perm {
         super();
     }
 
-    public Perm(Long id, String entity, Long entityId, String resource, String resourceType, Long resourceId, String operation, Date createTime, Date updateTime) {
+    public Perm(Long id, String entity, Long entityId, String resource, String resourceCode, String operation, String resourceInstance, Long resourceId, Date createTime, Date updateTime) {
         this.id = id;
         this.entity = entity;
         this.entityId = entityId;
         this.resource = resource;
-        this.resourceType = resourceType;
-        this.resourceId = resourceId;
+        this.resourceCode = resourceCode;
         this.operation = operation;
+        this.resourceInstance = resourceInstance;
+        this.resourceId = resourceId;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
+
 
     public Long getId() {
         return id;
@@ -93,20 +100,12 @@ public class Perm {
         this.resource = resource;
     }
 
-    public String getResourceType() {
-        return resourceType;
+    public String getResourceCode() {
+        return resourceCode;
     }
 
-    public void setResourceType(String resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public Long getResourceId() {
-        return resourceId;
-    }
-
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
+    public void setResourceCode(String resourceCode) {
+        this.resourceCode = resourceCode;
     }
 
     public String getOperation() {
@@ -115,6 +114,22 @@ public class Perm {
 
     public void setOperation(String operation) {
         this.operation = operation;
+    }
+
+    public String getResourceInstance() {
+        return resourceInstance;
+    }
+
+    public void setResourceInstance(String resourceInstance) {
+        this.resourceInstance = resourceInstance;
+    }
+
+    public Long getResourceId() {
+        return resourceId;
+    }
+
+    public void setResourceId(Long resourceId) {
+        this.resourceId = resourceId;
     }
 
     public Date getCreateTime() {
@@ -140,9 +155,10 @@ public class Perm {
                 ", entity='" + entity + '\'' +
                 ", entityId=" + entityId +
                 ", resource='" + resource + '\'' +
-                ", resourceType='" + resourceType + '\'' +
-                ", resourceId=" + resourceId +
+                ", resourceCode='" + resourceCode + '\'' +
                 ", operation='" + operation + '\'' +
+                ", resourceInstance='" + resourceInstance + '\'' +
+                ", resourceId=" + resourceId +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

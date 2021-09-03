@@ -25,12 +25,18 @@
 【把这些补起来我的权限系统基本上有个模样了】【先把菜单后端权限搞起来，然后补前端】
 增加user_permission表
 权限表（permission）才是最关键的【就把按钮、页面区域元素彻底想通，就清楚了】，还有user_permission：https://zhuanlan.zhihu.com/p/97035035
+看implies的实现
+
+WildcardPermission解读：
+	https://blog.csdn.net/sharetop/article/details/50250651
+	https://blog.csdn.net/weixin_33974433/article/details/91945644
 
 对于permission的理解：
     1.其实所有的permission都是手动添加上去的，没添加就没有，并且要与代码元素相对应（页面地址、按钮ID）；
     2.资源应该分好类，并且规范明明，例如分类为按钮、表格、xxx区（可以有更多的类别），按钮命名ADD、UPDATE等；
     3.所有的资源管理(添加、删除)，应该以页面为入口和父元素（有页面权限不一定有所有元素权限）；
     4.不同类别的资源在代码实现层面有不同的过滤方式：页面的权限控制是在加载菜单时，菜单内元素的权限控制是在加载页面时获取对应的权限数据(搞一个父页面写上获取权限代码，需要权限的页面继承这个类。html页不需要任何权限标签。前端虽然加了权限代码，但是开发时感知不到权限)；
+    5.接4，权限的不同用法：菜单是根据权限过滤，按钮是根据权限判断是否显示
 
 2.按类别来整理
 角色-资源、用户-资源的API编写，然后是改造isPermitted的实现以及menu表相关的
@@ -207,7 +213,6 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
 二维码也是我自己的项目的基础设施【这一两年我都是从基础设施的角度来思考问题，看看这样能做起来不】
 把二维码的代码，移植到我自己的项目中(前端二维码)
 
-
 做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
     https://dzone.com/articles/capture-iot-sensors-data-mqtt-protocol-rabbitmq-as
     https://funprojects.blog/2018/12/07/rabbitmq-for-iot/
@@ -331,6 +336,8 @@ webuploader是基础设施
 
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
 我的model的注释不全
+
+SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
 家里代码swagger以及权限配好
 

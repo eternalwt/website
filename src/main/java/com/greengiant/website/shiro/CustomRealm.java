@@ -96,9 +96,9 @@ public class CustomRealm extends AuthorizingRealm {
             }
             authorizationInfo.setRoles(roleSet);
         }
-//        authorizationInfo.addStringPermission();// todo 把添加权限放这里怎么样？怎么使用？【确认】是不是这里加了filter就自动过滤了？
+//        authorizationInfo.addStringPermission();// todo 把添加权限放这里怎么样？是不是就可以用WildcardPermission了？
 
-        // 更新登录IP和时间
+        // todo 更新登录IP和时间
 
         // 记录登录日志
         log.info(username + "系统登录");

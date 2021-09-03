@@ -65,6 +65,15 @@ create table auth_role_permission(
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限关联表';
 
+drop table if exists auth_user_permission;
+create table auth_user_permission(
+    id bigint(64) auto_increment primary key,
+    user_id bigint(64) not null,
+    permission_id bigint(64) not null,
+    create_time timestamp DEFAULT CURRENT_TIMESTAMP,
+    update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户权限关联表';
+
 drop table if exists sys_department;
 create table `sys_department`(
 	`id` bigint(64) not null  auto_increment primary key comment '部门id',

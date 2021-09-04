@@ -5,7 +5,7 @@ set global time_zone='+8:00';
 use website;
 
 -- todo 字段注释补完善。并且有一些很简陋，没有default之类的
--- todo 再过一遍creator、updator
+-- todo 再过一遍creator、updater
 -- todo Integer display width is deprecated and will be removed in a future release：https://www.cnblogs.com/kukufan/p/12485609.html
 -- todo 表上没有collate，要么2个都有，要么2个都没有（用数据库的)
 
@@ -139,7 +139,7 @@ create table `file_info`(
     size bigint(64), -- 单位KB
     creator_id varchar(256) COMMENT '创建者id',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-    updator_id varchar(256) COMMENT '更新者id',
+    updater_id varchar(256) COMMENT '更新者id',
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件信息表';
 
@@ -151,7 +151,7 @@ create table `file_config`(
     type varchar(64),
     creator_id varchar(256) COMMENT '创建者id',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-    updator_id varchar(256) COMMENT '更新者id',
+    updater_id varchar(256) COMMENT '更新者id',
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文件配置表';
 
@@ -181,7 +181,7 @@ create table busi_article(
     read_count int COMMENT '查看次数',
     creator_id varchar(256) COMMENT '创建者id',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
-    updator_id varchar(256) COMMENT '更新者id',
+    updater_id varchar(256) COMMENT '更新者id',
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='文章表';
 

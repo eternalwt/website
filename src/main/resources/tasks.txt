@@ -418,7 +418,7 @@ mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
 
-当前有些表没有字段注释，没有creator_id和updator_id
+当前有些表没有字段注释，没有creator_id和updater_id
 
 一般继承AuthorizingRealm（授权）即可；其继承了AuthenticatingRealm（即身份验证），而且也间接继承了 CachingRealm（带有缓存实现）。剩下的问题是：继承或者实现其他几个层级的接口、类会有什么区别？
 Shiro里面有AdviceFilter，看看spring里面Advice相关的类，是不是都跟AOP有关？

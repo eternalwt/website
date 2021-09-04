@@ -75,7 +75,7 @@ public class MenuController {
 
     @GetMapping(value = "/selectByUserId")
     public ResultBean selectByUserId(@RequestParam long userId){
-        return ResultUtils.success(menuService.selectByUserId(userId));
+        return ResultUtils.success(menuService.selectByUserId(userId));// todo 这个方法也是一个垃圾方法
     }
 
     @PostMapping(value = "/list")

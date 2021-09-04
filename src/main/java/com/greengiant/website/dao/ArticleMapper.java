@@ -21,13 +21,13 @@ public interface ArticleMapper extends BaseMapper<Article> {
 //        "column_id, published, ",
 //        "audited, read_count, ",
 //        "creator_id, create_time, ",
-//        "updator_id, update_time, ",
+//        "updater_id, update_time, ",
 //        "content)",
 //        "values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, ",
 //        "#{columnId,jdbcType=BIGINT}, #{published,jdbcType=BIT}, ",
 //        "#{audited,jdbcType=BIT}, #{readCount,jdbcType=INTEGER}, ",
 //        "#{creatorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-//        "#{updatorId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, ",
+//        "#{updaterId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, ",
 //        "#{content,jdbcType=LONGVARCHAR})"
 //    })
 //    int insert(Article record);
@@ -35,7 +35,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Select({
         "select",
         "id, title, column_id, published, audited, read_count, creator_id, create_time, ",
-        "updator_id, update_time, content",
+        "updater_id, update_time, content",
         "from article",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -48,7 +48,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
         @Arg(column="read_count", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="creator_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-        @Arg(column="updator_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="updater_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="content", javaType=String.class, jdbcType=JdbcType.LONGVARCHAR)
     })
@@ -57,7 +57,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
     @Select({
         "select",
         "id, title, column_id, published, audited, read_count, creator_id, create_time, ",
-        "updator_id, update_time, content",
+        "updater_id, update_time, content",
         "from article"
     })
     @ConstructorArgs({
@@ -69,7 +69,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
         @Arg(column="read_count", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="creator_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
-        @Arg(column="updator_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
+        @Arg(column="updater_id", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="content", javaType=String.class, jdbcType=JdbcType.LONGVARCHAR)
     })
@@ -84,7 +84,7 @@ public interface ArticleMapper extends BaseMapper<Article> {
           "read_count = #{readCount,jdbcType=INTEGER},",
           "creator_id = #{creatorId,jdbcType=VARCHAR},",
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
-          "updator_id = #{updatorId,jdbcType=VARCHAR},",
+          "updater_id = #{updaterId,jdbcType=VARCHAR},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP},",
           "content = #{content,jdbcType=LONGVARCHAR}",
         "where id = #{id,jdbcType=BIGINT}"

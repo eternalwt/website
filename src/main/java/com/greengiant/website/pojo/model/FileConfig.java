@@ -22,21 +22,21 @@ public class FileConfig {
 
     private Date createTime;
 
-    private String updatorId;
+    private String updaterId;
 
     private Date updateTime;
 
     public FileConfig() {
     }
 
-    public FileConfig(Long id, String configName, String description, String type, String creatorId, Date createTime, String updatorId, Date updateTime) {
+    public FileConfig(Long id, String configName, String description, String type, String creatorId, Date createTime, String updaterId, Date updateTime) {
         this.id = id;
         this.configName = configName;
         this.description = description;
         this.type = type;
         this.creatorId = creatorId;
         this.createTime = createTime;
-        this.updatorId = updatorId;
+        this.updaterId = updaterId;
         this.updateTime = updateTime;
     }
 
@@ -88,12 +88,12 @@ public class FileConfig {
         this.createTime = createTime;
     }
 
-    public String getUpdatorId() {
-        return updatorId;
+    public String getUpdaterId() {
+        return updaterId;
     }
 
-    public void setUpdatorId(String updatorId) {
-        this.updatorId = updatorId;
+    public void setUpdaterId(String updaterId) {
+        this.updaterId = updaterId;
     }
 
     public Date getUpdateTime() {
@@ -113,7 +113,7 @@ public class FileConfig {
                 ", type='" + type + '\'' +
                 ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +
-                ", updatorId='" + updatorId + '\'' +
+                ", updaterId='" + updaterId + '\'' +
                 ", updateTime=" + updateTime +
                 '}';
     }

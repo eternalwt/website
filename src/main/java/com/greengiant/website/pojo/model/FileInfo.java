@@ -41,14 +41,14 @@ public class FileInfo {
 
     private Date createTime;
 
-    private String updatorId;
+    private String updaterId;
 
     private Date updateTime;
 
     public FileInfo() {
     }
 
-    public FileInfo(Long id, Long configId, String originalName, String fileName, String description, String relativePath, String md5, Long size, String creatorId, Date createTime, String updatorId, Date updateTime) {
+    public FileInfo(Long id, Long configId, String originalName, String fileName, String description, String relativePath, String md5, Long size, String creatorId, Date createTime, String updaterId, Date updateTime) {
         this.id = id;
         this.configId = configId;
         this.originalName = originalName;
@@ -59,7 +59,7 @@ public class FileInfo {
         this.size = size;
         this.creatorId = creatorId;
         this.createTime = createTime;
-        this.updatorId = updatorId;
+        this.updaterId = updaterId;
         this.updateTime = updateTime;
     }
 
@@ -143,12 +143,12 @@ public class FileInfo {
         this.createTime = createTime;
     }
 
-    public String getUpdatorId() {
-        return updatorId;
+    public String getUpdaterId() {
+        return updaterId;
     }
 
-    public void setUpdatorId(String updatorId) {
-        this.updatorId = updatorId;
+    public void setUpdaterId(String updaterId) {
+        this.updaterId = updaterId;
     }
 
     public Date getUpdateTime() {
@@ -172,7 +172,7 @@ public class FileInfo {
                 ", size=" + size +
                 ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +
-                ", updatorId='" + updatorId + '\'' +
+                ", updaterId='" + updaterId + '\'' +
                 ", updateTime=" + updateTime +
                 '}';
     }

@@ -27,7 +27,7 @@ public class Article {
 
     private Date createTime;
 
-    private String updatorId;
+    private String updaterId;
 
     private Date updateTime;
 
@@ -35,7 +35,7 @@ public class Article {
         super();
     }
 
-    public Article(Long id, String title, String content, Long columnId, Boolean published, Boolean audited, Integer readCount, String creatorId, Date createTime, String updatorId, Date updateTime) {
+    public Article(Long id, String title, String content, Long columnId, Boolean published, Boolean audited, Integer readCount, String creatorId, Date createTime, String updaterId, Date updateTime) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -45,7 +45,7 @@ public class Article {
         this.readCount = readCount;
         this.creatorId = creatorId;
         this.createTime = createTime;
-        this.updatorId = updatorId;
+        this.updaterId = updaterId;
         this.updateTime = updateTime;
     }
 
@@ -121,12 +121,12 @@ public class Article {
         this.createTime = createTime;
     }
 
-    public String getUpdatorId() {
-        return updatorId;
+    public String getUpdaterId() {
+        return updaterId;
     }
 
-    public void setUpdatorId(String updatorId) {
-        this.updatorId = updatorId == null ? null : updatorId.trim();
+    public void setUpdaterId(String updaterId) {
+        this.updaterId = updaterId == null ? null : updaterId.trim();
     }
 
     public Date getUpdateTime() {
@@ -149,7 +149,7 @@ public class Article {
                 ", readCount=" + readCount +
                 ", creatorId='" + creatorId + '\'' +
                 ", createTime=" + createTime +
-                ", updatorId='" + updatorId + '\'' +
+                ", updaterId='" + updaterId + '\'' +
                 ", updateTime=" + updateTime +
                 '}';
     }

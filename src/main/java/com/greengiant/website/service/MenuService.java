@@ -13,10 +13,8 @@ public interface MenuService extends IService<Menu> {
 
     List<Menu> selectByUserId(long userId);
 
-    int updateRole(String menuName, boolean checked, String roleId);
-
     List<MenuTreeNode> getMenuTree();
 
-    Map<String, List<String>> getRolePermissionListMap();
+//    Map<String, List<String>> getRolePermissionListMap();
 
 }

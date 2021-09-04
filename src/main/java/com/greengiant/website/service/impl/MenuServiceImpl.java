@@ -54,16 +54,6 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
     @Override
-    public int updateRole(String menuName, boolean checked, String roleId) {
-        if (checked) {
-            return menuMapper.updateRoleAdd(menuName, roleId);
-        }
-        else {
-            return menuMapper.updateRoleDel(menuName, roleId);
-        }
-    }
-
-    @Override
     public List<MenuTreeNode> getMenuTree() {
         List<MenuTreeNode> nodeList = new ArrayList<>();
 
@@ -103,37 +93,37 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
     }
 
 
-    @Override
-    public Map<String, List<String>> getRolePermissionListMap() {
-        // todo 保证顺序（这个问题遇到过）
-        Map<String, List<String>> rolePermMap = new HashMap<>();
-        // todo sql初始化脚本里面加入admin初始化赋权限
-        List<Role> roleList =  roleService.list();
-        if (roleList != null && !roleList.isEmpty()) {
-            for (Role role : roleList) {
-                List<String> permList = new ArrayList<>();
-                rolePermMap.put(role.getRoleName(), permList);
-            }
-        }
-
-        List<Menu> menuList = this.list();
-        if (roleList != null && !roleList.isEmpty() && menuList != null && !menuList.isEmpty()) {
-            for (Menu menu : menuList) {
-                String roleStr = menu.getRole();
-                if (roleStr != null) {
-                    String[] roleIdList = roleStr.split(",");
-                    for (String s : roleIdList) {
-                        if (s != null && !s.isEmpty()) {
-                            String roleName = this.getRoleName(s, roleList);
-                            rolePermMap.get(roleName).add(menu.getMenuName());
-                        }
-                    }
-                }
-            }
-        }
-
-        return rolePermMap;
-    }
+//    @Override
+//    public Map<String, List<String>> getRolePermissionListMap() {
+//        // todo 保证顺序（这个问题遇到过）
+//        Map<String, List<String>> rolePermMap = new HashMap<>();
+//        // todo sql初始化脚本里面加入admin初始化赋权限
+//        List<Role> roleList =  roleService.list();
+//        if (roleList != null && !roleList.isEmpty()) {
+//            for (Role role : roleList) {
+//                List<String> permList = new ArrayList<>();
+//                rolePermMap.put(role.getRoleName(), permList);
+//            }
+//        }
+//
+//        List<Menu> menuList = this.list();
+//        if (roleList != null && !roleList.isEmpty() && menuList != null && !menuList.isEmpty()) {
+//            for (Menu menu : menuList) {
+//                String roleStr = menu.getRole();
+//                if (roleStr != null) {
+//                    String[] roleIdList = roleStr.split(",");
+//                    for (String s : roleIdList) {
+//                        if (s != null && !s.isEmpty()) {
+//                            String roleName = this.getRoleName(s, roleList);
+//                            rolePermMap.get(roleName).add(menu.getMenuName());
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//        return rolePermMap;
+//    }
 
 
     private String getRoleName(String roleId, List<Role> roleList) {

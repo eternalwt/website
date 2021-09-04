@@ -25,15 +25,13 @@ public interface MenuMapper extends BaseMapper<Menu> {
 //        "values (#{id,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, ",
 //        "#{number,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, ",
 //        "#{parentId,jdbcType=BIGINT}, #{sort,jdbcType=INTEGER}, #{inUse,jdbcType=TINYINT}, ",
-//        "#{openWay,jdbcType=TINYINT}, #{role,jdbcType=VARCHAR}, #{user,jdbcType=VARCHAR}, ",
-//        "#{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})"
+//        "#{openWay,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})"
 //    })
 //    int insert(Menu record);
 
     @Select({
         "select",
-        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
-        "create_time, update_time",
+        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
         "from Menu",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -47,8 +45,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
         @Arg(column="sort", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="in_use", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="open_way", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
-        @Arg(column="role", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="user", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
@@ -56,8 +52,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     @Select({
         "select",
-        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
-        "create_time, update_time",
+        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
         "from Menu",
         "where role like '%${roleStr}' order by sort"
     })
@@ -71,8 +66,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
         @Arg(column="sort", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="in_use", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="open_way", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
-        @Arg(column="role", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="user", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
@@ -80,8 +73,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
 
     @Select({
         "select",
-        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, role, user, ",
-        "create_time, update_time",
+        "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
         "from Menu"
     })
     @ConstructorArgs({
@@ -94,8 +86,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
         @Arg(column="sort", javaType=Integer.class, jdbcType=JdbcType.INTEGER),
         @Arg(column="in_use", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="open_way", javaType=Byte.class, jdbcType=JdbcType.TINYINT),
-        @Arg(column="role", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="user", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
@@ -111,25 +101,10 @@ public interface MenuMapper extends BaseMapper<Menu> {
           "sort = #{sort,jdbcType=INTEGER},",
           "in_use = #{inUse,jdbcType=TINYINT},",
           "open_way = #{openWay,jdbcType=TINYINT},",
-          "role = #{role,jdbcType=VARCHAR},",
-          "user = #{user,jdbcType=VARCHAR},",
           "create_time = #{createTime,jdbcType=TIMESTAMP},",
           "update_time = #{updateTime,jdbcType=TIMESTAMP}",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int updateByPrimaryKey(Menu record);
-
-    @Update({
-        "update Menu " +
-        "set role = concat(replace(role, concat(',', #{roleId}), ''), concat(',', #{roleId})) " +
-        "where menu_name= #{menuName}"
-    }) // todo 经测试，这2个方法有bug，无法处理 1 这种，从MenuController里面的updatePermission改起
-    int updateRoleAdd(@Param("menuName") String menuName, @Param("roleId") String roleId);
-
-    @Update({
-            "update Menu ",
-            "set role = replace(role, concat(',', #{roleId}), '') where menu_name= #{menuName}"
-    })
-    int updateRoleDel(@Param("menuName") String menuName, @Param("roleId") String roleId);
 
 }

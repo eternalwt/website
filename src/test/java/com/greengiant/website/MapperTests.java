@@ -14,10 +14,6 @@ public class MapperTests {
     @Autowired
     private MenuMapper menuMapper;
 
-    @Test
-    void testUpdateRoleDel() {
-        menuMapper.updateRoleDel("控制台", "1");
-        System.out.println("finished...");
-    }
+
 
 }

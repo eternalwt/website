@@ -166,8 +166,6 @@ create table busi_menu(
     sort int COMMENT '排序',
     in_use tinyint COMMENT '是否启用',
     open_way tinyint COMMENT '打开方式',
-    role varchar(256) COMMENT '有权限的角色',
-    user varchar(512) COMMENT '有权限的用户',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='菜单表';

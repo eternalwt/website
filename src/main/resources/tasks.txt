@@ -21,9 +21,12 @@
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
+思考一个问题：角色权限和用户权限能否用不同的颜色标记
+鲁辉：应该是我分好任务，给他来做
+还可以找袁俊双等人，以及以前的同事
+
 【1.在我现有的设计下，能否直接使用自带的WildcardPermission那种格式？（应该是可以的，人家的设计应该是很强大的。然后再看怎么把读数据库接上）2.如果不行，得自己定一套规则】
 【把这些补起来我的权限系统基本上有个模样了】【先把菜单后端权限搞起来，然后补前端】
-增加user_permission表
 权限表（permission）才是最关键的【就把按钮、页面区域元素彻底想通，就清楚了】，还有user_permission：https://zhuanlan.zhihu.com/p/97035035
 看implies的实现
 
@@ -399,6 +402,7 @@ The Role of Software in Business(站在很高的视角来看待这一问题)：h
 1.加了ComponentScan后，没有加的可能扫描不到，有坑，例如我的@ServerEndpoint；
 2.@ComponentScan包名加.*和不加的区别：https://blog.csdn.net/weixin_43950568/article/details/104196017
 
+shiro对token、session的处理再看，反复看
 
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
 【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】

@@ -3,8 +3,10 @@ package com.greengiant.website.shiro;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.greengiant.website.pojo.model.Menu;
 import com.greengiant.website.pojo.model.Role;
+import com.greengiant.website.pojo.model.RolePermission;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.MenuService;
+import com.greengiant.website.service.RolePermissionService;
 import com.greengiant.website.service.RoleService;
 import com.greengiant.website.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +35,7 @@ public class CustomRealm extends AuthorizingRealm {
     private RoleService roleService;
 
     @Autowired
-    private MenuService menuService;
+    private RolePermissionService rolePermissionService;
 
     private static final String cacheName = "roleCache";
 
@@ -109,19 +111,21 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Override
     public  boolean isPermitted(PrincipalCollection principals, String permission){
-        String username = principals.toString();
-        QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
-        menuWrapper.eq("menu_name", permission);// todo 这个permission只是指的资源，这样写很奇怪
-        Menu menu = menuService.getOne(menuWrapper);
-        if (menu == null) {
+        if (permission == null || !permission.contains(":")) {// todo 后续可以做的更灵活，例如没有3段。并且把算法错误干掉
+            log.error("权限字符串格式错误");
             return false;
         }
+        String[] permStr = permission.split(":");
+        if (permStr.length != 3) {
+            log.error("权限字符串格式错误");
+            return false;
+        }
+
+        String username = principals.toString();
 
         List<Role> roleList = null;
         roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
         if (roleList == null) {
-            // todo 应该是直接用menuService搞定，不需要roleService把？然后把menuService的东西缓存一下
-
             // todo 更新角色的時候也要更新role信息
             roleList = roleService.getRoleListByUserName(username);
             this.getCacheManager().getCache(cacheName).put(username, roleList);
@@ -129,7 +133,19 @@ public class CustomRealm extends AuthorizingRealm {
 
         if (roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {
-                if (menu.getRole() != null && menu.getRole().contains(role.getId().toString())) {
+                // 获取rolePerm列表
+                QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
+                if (!"*".equals(permStr[0])) { // todo 要再次确认wildcard的用法有没有问题。""空字符串代表什么意思？
+                    wrapper.eq("resource", permStr[0]);
+                }
+                if (!"*".equals(permStr[1])) {
+                    wrapper.eq("operation", permStr[1]);
+                }
+                if (!"*".equals(permStr[2])) {
+                    wrapper.eq("resource_instance", permStr[2]);
+                }
+                RolePermission rolePerm = rolePermissionService.getOne(wrapper);
+                if (rolePerm != null) {
                     return true;
                 }
             }

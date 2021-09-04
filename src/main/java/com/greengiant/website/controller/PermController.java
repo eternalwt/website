@@ -43,7 +43,8 @@ public class PermController {
     //  5.能够添加或者去掉某些权限(根据entity和resource删除permission)
     // todo 功能点：
     //  3.各类resource查询列表：到各自的原始表里面查询【检查一下menu有没有获取所有的方法，如果没有则加上】
-    //  6.测试
+    //  6.补充鉴权代码
+    //  7.测试
 
     @PostMapping(value = "/addBatch")
     public ResultBean addBatch(@RequestBody List<Perm> permList) {

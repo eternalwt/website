@@ -75,12 +75,14 @@ public class MenuController {
 
     @GetMapping(value = "/selectByUserId")
     public ResultBean selectByUserId(@RequestParam long userId){
-        return ResultUtils.success(menuService.selectByUserId(userId));// todo 这个方法也是一个垃圾方法
+        return ResultUtils.success(menuService.selectByUserId(userId));// todo 这个方法也是一个垃圾方法，在最新的设计下需要干掉
     }
 
     @PostMapping(value = "/list")
     public ResultBean getMenuList() {
+
         // todo
+
         return null;
     }
 

@@ -23,6 +23,11 @@ public class RolePermission {
         super();
     }
 
+    public RolePermission(Long roleId, Long permissionId) {
+        this.roleId = roleId;
+        this.permissionId = permissionId;
+    }
+
     public RolePermission(Long id, Long roleId, Long permissionId, Date createTime, Date updateTime) {
         this.id = id;
         this.roleId = roleId;

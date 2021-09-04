@@ -1,4 +1,4 @@
-package com.greengiant.website.pojo;
+package com.greengiant.website.enums;
 
 /**
  * @author fei.gao

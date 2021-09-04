@@ -1,7 +1,7 @@
 package com.greengiant.infrastructure.utils;
 
 import com.greengiant.website.pojo.ResultBean;
-import com.greengiant.website.pojo.StatusCodeEnum;
+import com.greengiant.website.enums.StatusCodeEnum;
 
 public class ResultUtils {
 

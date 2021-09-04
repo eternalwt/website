@@ -1,6 +1,8 @@
 package com.greengiant.website.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.greengiant.infrastructure.utils.ResultUtils;
+import com.greengiant.website.enums.EntityTypeEnum;
 import com.greengiant.website.enums.StatusCodeEnum;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Perm;
@@ -37,10 +39,10 @@ public class PermController {
 
     //  1.添加资源；
     //  2.给角色授权
-    // todo 功能点：
-    //  3.各类resource查询列表：到各自的原始表里面查询；
     //  4.能够勾选出哪些是自己角色有权限的(根据entity和resource查询permission)；
     //  5.能够添加或者去掉某些权限(根据entity和resource删除permission)
+    // todo 功能点：
+    //  3.各类resource查询列表：到各自的原始表里面查询【检查一下menu有没有获取所有的方法，如果没有则加上】
     //  6.测试
 
     @PostMapping(value = "/addBatch")
@@ -58,16 +60,22 @@ public class PermController {
             return ResultUtils.fail(StatusCodeEnum.PARAM_ERROR.getCode(), StatusCodeEnum.PARAM_ERROR.getMsg());
         }
 
-        List<RolePermission> rolePermList = new ArrayList<>();
-        for (Long permId : authorizeQuery.getPermIdList()) {
-            rolePermList.add(new RolePermission(authorizeQuery.getRoleId(), permId));
-        }
-
-        return ResultUtils.success(rolePermissionService.saveBatch(rolePermList));
+        return ResultUtils.success(rolePermissionService.addRolePermBatch(authorizeQuery));
     }
 
-//    getRolePermList()
+    @PostMapping(value = "/getPermList")
+    public ResultBean getPermList(@RequestBody Perm perm) {
+        return ResultUtils.success(permService.getPermList(perm));
+    }
 
-//        updateRolePerm
+    @PostMapping(value = "/updateRolePerm")
+    public ResultBean updateRolePerm( AuthorizeQuery authorizeQuery) {
+        // 1.先整体删除老的
+        AuthorizeQuery old = new AuthorizeQuery();
+        old.setRoleId(authorizeQuery.getRoleId());
+        rolePermissionService.delRolePermBatch(old);
+        // 2.再整体添加新的
+        return ResultUtils.success(rolePermissionService.addRolePermBatch(authorizeQuery));
+    }
 
 }

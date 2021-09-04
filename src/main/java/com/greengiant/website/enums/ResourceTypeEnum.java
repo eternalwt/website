@@ -2,8 +2,8 @@ package com.greengiant.website.enums;
 
 public enum ResourceTypeEnum {
 
-    MENU(1, "菜单"),
-    BUTTON(2, "按钮");
+    MENU(1, "MENU"),
+    BUTTON(2, "BUTTON");
 
     private int code;
 
@@ -39,6 +39,5 @@ public enum ResourceTypeEnum {
     public void setName(String name) {
         this.name = name;
     }
-
 
 }

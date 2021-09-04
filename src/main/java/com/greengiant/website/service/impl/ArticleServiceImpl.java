@@ -36,7 +36,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         return pg;
     }
 
-    private QueryWrapper<Article> generateQueryWrapper(Article article) {// todo 感觉应该传pageQuery把所有的查询条件都封装进来？
+    private QueryWrapper<Article> generateQueryWrapper(Article article) {// todo 感觉应该传pageQuery把所有的查询条件都封装进来？新的结论：暂时不需要，有的时候不分页
         QueryWrapper<Article> wrapper = new QueryWrapper<>();
 
         if (article == null) {

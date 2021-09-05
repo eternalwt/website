@@ -1,7 +1,7 @@
 package com.greengiant.website.service;
 
 import com.greengiant.website.WebsiteApplication;
-import com.greengiant.website.controller.PermController;
+import com.greengiant.website.enums.EntityTypeEnum;
 import com.greengiant.website.pojo.model.Perm;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,7 +27,7 @@ public class PermServiceTests {
     public void testGetPermListByCondition() {
         // 获取 role为管理员 的角色的 菜单 权限
         Perm perm = new Perm();
-        perm.setEntity("ROLE");
+        perm.setEntity(EntityTypeEnum.ROLE.getName());
         perm.setResource("MENU");
 
         List<Perm> permList = permService.getPermList(perm);

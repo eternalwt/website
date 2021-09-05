@@ -59,6 +59,7 @@ public class ShiroConfig {
         // todo 运维，调试完后应该加上限制
         // todo swagger路径用2个*配置也不行，再思考一下
         // todo 这里能否拿到数据库管理？
+        // todo 20210905：filterChainDefinitionMap是不是可以不要？
         // 默认过滤器见DefaultFilter
         filterChainDefinitionMap.put("/test/**", "anon");
 

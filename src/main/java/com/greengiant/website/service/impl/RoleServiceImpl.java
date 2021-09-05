@@ -10,9 +10,11 @@ import com.greengiant.website.dao.UserMapper;
 import com.greengiant.website.dao.UserRoleMapper;
 import com.greengiant.website.pojo.PageParam;
 import com.greengiant.website.pojo.model.Role;
+import com.greengiant.website.pojo.model.RolePermission;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.model.UserRole;
 import com.greengiant.website.pojo.query.PageQuery;
+import com.greengiant.website.service.RolePermissionService;
 import com.greengiant.website.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +36,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
 
     @Autowired
     private UserRoleMapper userRoleMapper;
+
+    @Autowired
+    private RolePermissionService rolePermissionService;
 
 
     @Override
@@ -65,8 +70,12 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public boolean delRole(Long roleId) {
         try {
             this.removeById(roleId);
-            // todo 关联删除菜单、授权权限等
-            return true;
+
+            // todo 该role已经被赋予某些user的两种处理策略：1.把user-role删掉（也应该先单独判断提示一下）；2.不允许删除
+            // 删除角色权限关联
+            QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
+            wrapper.eq("role_id", roleId);
+            return rolePermissionService.remove(wrapper);
         } catch (Exception ex) {
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
             log.error("delRole failed...", ex);

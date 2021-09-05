@@ -16,49 +16,78 @@
     1.起初只能瞄准10-20万的项目；
     2.管理系统前后端是技术和业务的基本盘；
     3.赚钱可能会在物联网/大数据以及一些意想不到的机会上。
-
-    4.基础设施是做大做强的基本盘，开始要从一个杀手应用切入。
+    4.基础设施是做大做强的基本盘，开始要从一个杀手应用切入；
+    5.当我引爆几个项目之后，我的工作重点应立即变为：找项目、找能在我的基础设施上开发的人、找超出我的基础设施能力的人、管理、学习。
 
 ======================================================================================================================
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 
-思考一个问题：角色权限和用户权限能否用不同的颜色标记
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
 
+把mybatis-plus升到最高的3.4.3会报错，要么直接解决报错，要么先把spring-boot-starter-parent升到最高版
+
+【在现有后端大改的基础上调通】前端可以配起来了，再继续搞前端。然后找项目
+
+SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
+
+权限之数据权限【阿里巴巴等大公司用的多，在现有Perm已经调通的基础上再学习思考一次】：
+https://www.jianshu.com/p/1b27d2c8a080
+https://www.cnblogs.com/jpfss/p/11045258.html
+https://www.cnblogs.com/jpfss/p/11677430.html
+https://www.jianshu.com/p/31af99a42658
+Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
+再看看公司的代码是怎么对页面按钮配置权限的。这个还涉及到前端组件的封装问题，以及一个区域的显示隐藏，形成整体可用的基础设施。
+
+definitionMap与现在已经写了的权限管理代码之间的关系【验证并优化】：权限Perm只是限制了界面上能看到的元素，二definitionMap是限制页面本身能不能进。
+两者之间要结合起来并找到最优的模式。
+探索：
+    1.先简单分成需要登录和不需要登录的页面；
+    2.怎么细化权限？例如控制到user
+【ShiroConfig：把definitionMap抽成函数】
+// getfilterChainDefinitionMap()也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
+shiro 之 封装filterChainDefinitionMap：https://blog.csdn.net/u012437781/article/details/78505113
+
 后端下一步：SSO、OAuth2.0
-
-【1.在我现有的设计下，能否直接使用自带的WildcardPermission那种格式？（应该是可以的，人家的设计应该是很强大的。然后再看怎么把读数据库接上）2.如果不行，得自己定一套规则】
-【把这些补起来我的权限系统基本上有个模样了】【先把菜单后端权限搞起来，然后补前端】
-权限表（permission）才是最关键的【就把按钮、页面区域元素彻底想通，就清楚了】，还有user_permission：https://zhuanlan.zhihu.com/p/97035035
-看implies的实现
-
-WildcardPermission解读：
-	https://blog.csdn.net/sharetop/article/details/50250651
-	https://blog.csdn.net/weixin_33974433/article/details/91945644
-
-对于permission的理解：
-    1.其实所有的permission都是手动添加上去的，没添加就没有，并且要与代码元素相对应（页面地址、按钮ID）；
-    2.资源应该分好类，并且规范明明，例如分类为按钮、表格、xxx区（可以有更多的类别），按钮命名ADD、UPDATE等；
-    3.所有的资源管理(添加、删除)，应该以页面为入口和父元素（有页面权限不一定有所有元素权限）；
-    4.不同类别的资源在代码实现层面有不同的过滤方式：页面的权限控制是在加载菜单时，菜单内元素的权限控制是在加载页面时获取对应的权限数据(搞一个父页面写上获取权限代码，需要权限的页面继承这个类。html页不需要任何权限标签。前端虽然加了权限代码，但是开发时感知不到权限)；
-    5.接4，权限的不同用法：菜单是根据权限过滤，按钮是根据权限判断是否显示
-    6.各类资源表里面的资源名称统一用name命名，如果需要code，则加一个
-    7.“用户-权限”在前端的使用方法：在用户权限配置页面，来自角色的全部灰化显示，只读，其他的选项可以勾选，并且增删时也不对灰化的数据做表读写。
-    8.注意与资源的联动一定要控制好
-
-2.按类别来整理
-用户-权限的API编写
-搜索“基于资源的权限管理”
-角色权限关联表 和 用户权限关联表 要配合好，前者有了，后者就不要再保存了
-permission接口搞完后，看看公司的代码是怎么对页面按钮配置权限的。这个还涉及到前端组件的封装问题，以及一个区域的显示隐藏，形成整体可用的基础设施。
-授权的接口【跟menu功能相分离了】
-2.思考增删菜单时权限怎么变动、配置。把这个搞好，再把SSO和OAuth2.0搞定，管理系统后台就突破了，剩下的就是后端基础设施的补充。
-内存、ehcache、redis要能快速切换（再看一遍代码）
 SpringCloud系列——SSO 单点登录：https://www.cnblogs.com/huanzi-qch/p/10249227.html
+OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
+JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
+
+Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：
+https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
+shiro SSO：
+https://bbs.huaweicloud.com/blogs/154161
+https://www.cnblogs.com/shenyixin/p/11757309.html
+https://blog.csdn.net/ccmedu/article/details/83311624
+https://www.jianshu.com/p/6e99451408ce
+https://www.cnblogs.com/atai/p/11200033.html
+https://my.oschina.net/u/1782542/blog/1925940【这个方法并没有完全用上shiro的能力，思考会有哪些问题，然后再思考怎么用shiro】
+https://blog.csdn.net/fromatozhappy/article/details/100121260
+单点登录的第一个问题：如何多个网站都能发送token？可以使用JWT，并且放入local或者sessionStorage
+Shiro + OAuth2（Oltu）：
+https://blog.csdn.net/sJzao/article/details/87721836
+https://github.com/monkeyk/oauth2-shiro
+https://www.cnblogs.com/yuluoxingkong/p/8268094.html
+https://www.cnblogs.com/wxy540843763/p/7675946.html
+scribejava/scribejava：一个简单的 Java 实现的 OAuth/OAuth2 库：https://github.com/scribejava/scribejava
+oltu-oauth2-example：https://github.com/ameizi/oltu-oauth2-example
+现在用的比较多的单点登录技术是什么？https://www.zhihu.com/question/342103776/answer/806983636
+面试必问的4种单点登录的实现方式，你知道几个？
+https://zhuanlan.zhihu.com/p/84441372
+https://zhuanlan.zhihu.com/p/94622931
+https://zhuanlan.zhihu.com/p/51040315
+https://zhuanlan.zhihu.com/p/93128956
+https://zhuanlan.zhihu.com/p/122482859
+CAS的细节？CAS与OAuth2（Oltu）?
+CAS SSO With Spring Security：
+https://www.baeldung.com/spring-security-cas-sso#:~:text=%20%20%201%20Overview%0AIn%20this%20tutorial%2C%20we%27ll,It%27ll%20have%20Web%2C%20Security%2C...%204%20Conclusion%20More%20
+shiro-cas：https://shiro.apache.org/cas.html
+CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
+【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
 
 到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
+内存、ehcache、redis要能快速切换（再看一遍代码）
 
 晚上只搞NIO(搞透)
 清两周todo（十一降到100个以下），先从文件做起，先把handleFileUpload写完善就好了。【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
@@ -96,16 +125,10 @@ uuid是基础设施，再研究一下到底是用自增long id还是uuid
     https://www.shuijingwanwq.com/2019/10/16/3568/
 看一下NIO，再确认/重构我的上传功能
 
-2.【重要】学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049
-shiro里面的permission也要再好好学习一遍；
-
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
 技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了
 
 【晚上】把OAuth2.0授权服务器看一下，了解一下
-【把definitionMap和 doAuthrization 获取角色的，这2个地方抽成函数】
-shiro isPermitted 再写一版，用这个关键字把搜出来的内容都处理掉
-新问题：1.登录会报错
 【最大的问题已经变成】如何挣到更多的钱
 
 【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
@@ -184,7 +207,6 @@ springboot elasticsearch整合实践（RestHighLevelClient）：https://blog.csd
 SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhuanlan.zhihu.com/p/143786937
 Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
-
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486
@@ -355,7 +377,10 @@ springboot与pdf：
     https://zetcode.com/articles/springbootpdfreport/
     https://kreepcode.com/spring-boot-and-angular-open-pdf-link-browser/
     https://zetcode.com/springboot/servepdf/
+Spring Boot 2 + Angular 11 + Preview PDF File：https://frontbackend.com/spring-boot/spring-boot-2-angular-11-preview-pdf-file
+把D3.js、three.js搞懂，把pdf预览、word/excel导出及预览搞熟，这些才是赚钱的核心
 
+SSO、UAuth2.0服务是基础设施
 webuploader是基础设施
 
 2021把后端技术巩固代码库完善，前端勉强能用；2022把找项目解决；2023把前端解决
@@ -364,12 +389,7 @@ webuploader是基础设施
 家里代码，如果机器配置不够或者中间件在windows下没有，可以用江西3台大数据服务器【现在遇到的也就是redis版本比较低】
 我的model的注释不全
 
-SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
-
 家里代码swagger以及权限配好
-
-SSO服务是基础设施
-OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
 
 对比我的代码返回值有没有泛型：ResultBean<T>。公司代码的Result.error等没有具体化，导致产生了一堆告警
 【要能显示部门、部门主要负责人/职位、虚拟组织，就可以了】我的代码里面还差个机构信息，以及用户和机构/部门的关联【这一块得思考一下，然后到人人都是产品经理里面搜一下】。有管理层的时候，表怎么设计？
@@ -379,11 +399,13 @@ OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
 
 【家里机器不再用java8，以后只下载java 17，从11开始特性用起】
 
-Spring Boot 2 + Angular 11 + Preview PDF File：https://frontbackend.com/spring-boot/spring-boot-2-angular-11-preview-pdf-file
-把D3.js、three.js搞懂，把pdf预览、word/excel导出及预览搞熟，这些才是赚钱的核心
-傅里叶分析一定要看
-The Role of Software in Business(站在很高的视角来看待这一问题)：https://www.internetvibes.net/2021/05/03/the-role-of-software-in-business/
-【物联网要看2天，这是吃饭的家伙】
+runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
+RunAs理解：
+1.授权人要能授权和收回；
+2.被授权人登陆后选择用自己还是授权人权限(账号)，但一次只能用一个
+看runas代码
+把runas写出来：https://www.xlongwei.com/detail/17080116
+
 掂量一下：以我现在的实力和能力搞关系能搞到什么程度，具体步骤是什么
 在家可以对各个部分单独推进：1.前端；2.cassandra、mongodb等nosql数据库（包括海量数据查询）；3.流式计算；4.图数据库、机器学习算法及引擎。
 
@@ -427,12 +449,6 @@ The Role of Software in Business(站在很高的视角来看待这一问题)：h
 shiro对token、session的处理再看，反复看
 
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
-【晚上先把资料准备好】【家里干文档的顺序不对，应该先干前两年的那2个】
-MIT 6.824：
-    https://www.zhihu.com/question/29597104
-    网站：https://pdos.csail.mit.edu/6.824/schedule.html
-    视频：
-    作业完成：
 
 Shiro与spring session
 Spring web
@@ -440,8 +456,6 @@ Spring batch提供了什么抽象？
 Spring XD是大数据相关的
 
 mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
-
-引用的log（lombok、@slf4j）对象标红了，是因为java 14的影响吗？
 
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
 
@@ -474,11 +488,6 @@ GlobalConfigUtils传入：
 myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 
 shiro不适合于网关？（无稽之谈）
-
-搜 权限资源表：
-    https://blog.csdn.net/weixin_34235371/article/details/91882455
-    https://www.cnblogs.com/wang_yb/p/6139905.html
-父资源（资源树的概念）
 
 看看Realm还可以重写哪些重要的接口
 我对Permission的新理解：有了CustomRealm，就不用再自己继承Authorizer、PermissionResolver、RolePermissionResolver了
@@ -522,10 +531,6 @@ Shiro WildCardPermission 扩展实现自定义权限校验：http://www.huzd.inf
 Shiro介绍（六）：扩展自己的@RequiresPermission：https://blog.csdn.net/sharetop/article/details/50292531
 
 shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？自行分析这个包的代码
-
-把前端的checkPermission多调用一次后端方法干掉，这个可以filter里面实现
-首先：如果把权限精确到CRUD，前端如何设计？如何保持一致性？（网页各元素与“资源”的对应关系）
-是否把网址和资源解耦？
 
 1.【继续看桥接】slf4j中有典型适配器模式，不看一看？https://hello.blog.csdn.net/article/details/110676556
 2.再看mybatis是怎么打日志的，它自己实现了一套，用的接口呢？
@@ -576,7 +581,6 @@ Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/
 
 看 spring-boot-starter-test
 
-和doGetAuthorizationInfo是什么关系？
 Subject需要分析的方法(DelegatingSubject，Subject接口的实现类DelegatingSubject是怎么加载的？)：
     <V> V execute(Callable<V> var1) throws ExecutionException;
     void execute(Runnable var1);
@@ -585,12 +589,11 @@ Subject需要分析的方法(DelegatingSubject，Subject接口的实现类Delega
         https://www.cnblogs.com/telwanggs/p/7608242.html
         浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
     Runnable associateWith(Runnable var1);
+Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
 DelegatingSubject的代码值得读一遍:
     https://blog.csdn.net/qq_21046665/article/details/79735922
 【看代码】2.用户退出登录时，Shiro用户必须执行logout()，必须要注销Session信息，避免影响下一次用户认证和授权。
 “细说shiro”系列：https://www.cnblogs.com/nuccch/p/6775855.html
-Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
-加一个user_permission表即可实现用户级授权
 
 基础组件完善的今天，如何通过业务组件提效？https://developer.51cto.com/art/202102/647354.htm
 
@@ -717,14 +720,12 @@ ehcache2没有在xml里面配置的cache会报空指针
 用redis管理shiro session【配通了第一种方法，把第二种方法也看一下】：https://www.jianshu.com/p/4643715d1563
 我Matcher里面的EhcacheU相关的几个方法怎么写成可以快速切换缓存的？
 CacheManager之间的转换
+CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
+RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
-1.干todo，继续发现问题。认证、授权等环节如果还有缺少cache的地方，再单独手动配置应该也不麻烦
 2.现在我的自定义shiro类都搞成@Component了（为了方便引入CacheManager），但是有些配置是在类的方法里面，有些在ShiroConfig里面，怎么统一起来，是否需要统一起来
 3.把jwt、单点登录等搞完，就彻底搞定了。
 5.把代码里面数据库相关的依赖整一下
-
-CacheManager的8种实现(有点过时)：https://www.cnblogs.com/okong/p/springboot-thirty-six.html
-RedisCacheManager：https://www.jianshu.com/p/ad168cc3603e
 
 我看别人引了shiro-spring-boot-web-starter就解决了shiro的依赖，看看里面有些什么东西
 
@@ -943,7 +944,6 @@ shiro 自定义过滤器，拦截过期session的请求，并且以ajax形式返
 Shiro中的Session管理，如何把Session放入redis？
 Shiro SessionManager会话管理器设计概念：https://www.cnblogs.com/BINGJJFLY/p/9139348.html
 使用JWT后为什么要关闭Session？
-JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
 把session的解析过程搞清楚。自己实现一个权限系统的话，是不是就是session难一点？【其实自己写session也是通过filter或者servlet来获取】其他部分呢？再熟悉之后再回过头来看。
 ShiroFilter为什么要用FactoryBean的方式加载？
 看AbstractShiroFilter，关键是搞懂filter的作用机制。以这里为入口分析源码看看shiro是如何发挥总用的
@@ -1009,12 +1009,6 @@ shiro-aspectj这个包是干啥的？
 因为shiro的认证信息是存放在session中的；其次，当前端操作在某个实例上修改了权限时，需要通知后端服务的多个实例重新获取最新的权限数据。
 那么有哪些方案可以实现通知到后端服务的多个实例呢？https://www.cnblogs.com/nuccch/p/8044226.html
 
-权限之数据权限【字段的配置具体怎么做？】：
-https://www.jianshu.com/p/1b27d2c8a080
-https://www.cnblogs.com/jpfss/p/11045258.html
-https://www.cnblogs.com/jpfss/p/11677430.html
-https://www.jianshu.com/p/31af99a42658
-
 学习RabbitTemplate的思路应该是和学习RedisTemplate一样的，除了学习它还要学习Springboot自带的消息队列框架
 
 规范：在SecurityManager中定义缓存管理器，方便SessionDAO等多个地方使用
@@ -1044,7 +1038,6 @@ shiro动态授权：https://my.oschina.net/jiansin/blog/3024398
 多种注入方式，正是保证了代码灵活性把？例如ShiroConfig某些对象依赖的对象既可以注入也可以在@Bean方法里面set进去
 既然securityManager指定了CustomRealm，realm里面有doGetAuthorizationInfo，那么SecurityManager里面再指定authrizer会重复吗，他们之间的关系是什么？
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
-// getfilterChainDefinitionMap()也可以用bean的方式，见：https://www.jianshu.com/p/0b1131be7ace
 securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关联？
 
 一直在用的 Spring，你知道它的加载原理吗？https://zhuanlan.zhihu.com/p/166354956
@@ -1053,49 +1046,14 @@ securityManager可以setAuthenticator、setAuthorizer，这3者之间realm的关
 
 jwt与token+redis，哪种方案更好用？【先自己思考】：https://www.zhihu.com/question/274566992/answer/1696761067
 
-Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：
-https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
-
 Apache Shiro 用户指南：
 https://segmentfault.com/a/1190000010791103
 https://github.com/waylau/apache-shiro-1.2.x-reference
-
-shiro SSO：
-https://bbs.huaweicloud.com/blogs/154161
-https://www.cnblogs.com/shenyixin/p/11757309.html
-https://blog.csdn.net/ccmedu/article/details/83311624
-https://www.jianshu.com/p/6e99451408ce
-https://www.cnblogs.com/atai/p/11200033.html
-https://my.oschina.net/u/1782542/blog/1925940【这个方法并没有完全用上shiro的能力，思考会有哪些问题，然后再思考怎么用shiro】
-https://blog.csdn.net/fromatozhappy/article/details/100121260
-单点登录的第一个问题：如何多个网站都能发送token？可以使用JWT，并且放入local或者sessionStorage
-
-Shiro + OAuth2（Oltu）：
-https://blog.csdn.net/sJzao/article/details/87721836
-https://github.com/monkeyk/oauth2-shiro
-https://www.cnblogs.com/yuluoxingkong/p/8268094.html
-https://www.cnblogs.com/wxy540843763/p/7675946.html
-scribejava/scribejava：一个简单的 Java 实现的 OAuth/OAuth2 库：https://github.com/scribejava/scribejava
-oltu-oauth2-example：https://github.com/ameizi/oltu-oauth2-example
-现在用的比较多的单点登录技术是什么？https://www.zhihu.com/question/342103776/answer/806983636
-面试必问的4种单点登录的实现方式，你知道几个？
-https://zhuanlan.zhihu.com/p/84441372
-https://zhuanlan.zhihu.com/p/94622931
-https://zhuanlan.zhihu.com/p/51040315
-https://zhuanlan.zhihu.com/p/93128956
-https://zhuanlan.zhihu.com/p/122482859
-CAS的细节？CAS与OAuth2（Oltu）?
-CAS SSO With Spring Security：
-https://www.baeldung.com/spring-security-cas-sso#:~:text=%20%20%201%20Overview%0AIn%20this%20tutorial%2C%20we%27ll,It%27ll%20have%20Web%2C%20Security%2C...%204%20Conclusion%20More%20
-shiro-cas：https://shiro.apache.org/cas.html
-CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
-【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
 
 shiro的流程：
 https://blog.csdn.net/mine_song/article/details/61616259
 https://blog.csdn.net/YANGYU1079075086/article/details/78969983?utm_source=blogxgwz0
 
-把mybatis-plus升到最高的3.4.3会报错，要么直接解决报错，要么先把spring-boot-starter-parent升到最高版
 
 =========================================================================================
 
@@ -1880,7 +1838,6 @@ Springboot集成Shiro：里面有权限缓存、RememberMe等多个功能：http
 我的shiro之旅：https://blog.csdn.net/lhacker/article/details/19341735
 对着shiro源码再搞一轮。看源码搞清楚：
 1.为啥集成spring很方便；
-2.如果能为shiro贡献sso的代码，将会很好
 
 shiro使用LDAP认证：
 https://www.cnblogs.com/chn58/p/6991776.html
@@ -2061,16 +2018,26 @@ shiro官方文档再看一遍，开涛的书视情况而定是否需要继续看
 
 如果用户、权限单独做一个服务，应该怎么做和给多个项目使用？
 
-该清这个文档里面的内容了【花一个周末清理】
-
-runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
-RunAs理解：
-1.授权人要能授权和收回；
-2.被授权人登陆后选择用自己还是授权人权限(账号)，但一次只能用一个
-看runas代码
-把runas写出来：https://www.xlongwei.com/detail/17080116
-
-// todo 删除角色也要把权限删掉（有用户则不允许删除），要等角色和权限的关联理顺后再做
+搜 权限资源表：
+    https://blog.csdn.net/weixin_34235371/article/details/91882455
+    https://www.cnblogs.com/wang_yb/p/6139905.html
+学习别人的permission表：https://blog.csdn.net/JesseCary/article/details/54023049
+权限表（permission）才是最关键的：https://zhuanlan.zhihu.com/p/97035035
+WildcardPermission解读：
+	https://blog.csdn.net/sharetop/article/details/50250651
+	https://blog.csdn.net/weixin_33974433/article/details/91945644
+看默认的implies的实现
+对于permission的理解：
+    1.其实所有的permission都是手动添加上去的，没添加就没有，并且要与代码元素相对应（页面地址、按钮ID）；
+    2.资源应该分好类，并且规范明明，例如分类为按钮、表格、xxx区（可以有更多的类别），按钮命名ADD、UPDATE等；
+    3.所有的资源管理(添加、删除)，应该以页面为入口和父元素（有页面权限不一定有所有元素权限）；
+    4.不同类别的资源在代码实现层面有不同的过滤方式：页面的权限控制是在加载菜单时，菜单内元素的权限控制是在加载页面时获取对应的权限数据(搞一个父页面写上获取权限代码，需要权限的页面继承这个类。html页不需要任何权限标签。前端虽然加了权限代码，但是开发时感知不到权限)；
+    5.接4，权限的不同用法：菜单是根据权限过滤，按钮是根据权限判断是否显示
+    6.各类资源表里面的资源名称统一用name命名，如果需要code，则加一个
+    7.“用户-权限”在前端的使用方法：在用户权限配置页面，来自角色的全部灰化显示，只读，其他的选项可以勾选，并且增删时也不对灰化的数据做表读写。
+    8.注意与资源的联动一定要控制好
+用户-权限的API编写【可以用到再写】
+父资源（资源树的概念）
 
 ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5
@@ -2361,12 +2328,6 @@ MQTT Client Load Balancing With RabbitMQ and Spring Cloud：https://dzone.com/ar
 密码加密、授予身份、单点登陆、DelegatingFilterProxy
 .DelegatingFilterProxy是怎么初始化的？
 
-shiro的下面两大功能：
-Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
-<V> V execute(Callable<V> callable) throws ExecutionException;
-void execute(Runnable runnable);
-<V> Callable<V> associateWith(Callable<V> callable);
-Runnable associateWith(Runnable runnable);
 Testing：提供测试支持；
 
 spring-framework-reference/pdf(5.1.2.RELEASE)：https://docs.spring.io/spring/docs/5.1.2.RELEASE/spring-framework-reference/pdf/

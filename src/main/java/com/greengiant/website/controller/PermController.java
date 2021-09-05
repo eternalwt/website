@@ -31,19 +31,22 @@ public class PermController {
     @GetMapping(value = "/check")
     public ResultBean check(@RequestParam("perm") String perm) {
         Subject subject = SecurityUtils.getSubject();
-        subject.checkPermission("admin::aaa");// todo 先写通一个
+        if (subject.getPrincipal() == null) {
+            return ResultUtils.success(false);
+        }
+        subject.checkPermission(perm);// todo 这个函数没有返回值，那么成功失败各是什么？
 
         // todo
-        return ResultUtils.success("登出成功！");
+        return ResultUtils.success(true);
     }
 
-    //  1.添加资源；
+    //  1.添加权限点；
     //  2.给角色授权
+    //  3.各类resource查询列表：到各自的原始表里面查询【检查一下menu有没有获取所有的方法，如果没有则加上】
     //  4.能够勾选出哪些是自己角色有权限的(根据entity和resource查询permission)；
     //  5.能够添加或者去掉某些权限(根据entity和resource删除permission)
-    // todo 功能点：
-    //  3.各类resource查询列表：到各自的原始表里面查询【检查一下menu有没有获取所有的方法，如果没有则加上】
     //  6.补充鉴权代码
+    // todo 功能点：
     //  7.测试
 
     @PostMapping(value = "/addBatch")
@@ -78,5 +81,7 @@ public class PermController {
         // 2.再整体添加新的
         return ResultUtils.success(rolePermissionService.addRolePermBatch(authorizeQuery));
     }
+
+
 
 }

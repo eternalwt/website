@@ -64,7 +64,7 @@ public class ShiroConfig {
 
         filterChainDefinitionMap.put("/websocket/**", "anon");
         filterChainDefinitionMap.put("/menu/**", "anon");
-        filterChainDefinitionMap.put("/permission/**", "anon");
+        filterChainDefinitionMap.put("/perm/**", "anon");
         filterChainDefinitionMap.put("/article/**", "anon");
 
         filterChainDefinitionMap.put("/swagger**", "anon");

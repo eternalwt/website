@@ -36,18 +36,13 @@ public class MenuController {
         return ResultUtils.success(subject.isPermitted(permission));
     }
 
-    @GetMapping(value = "/getAllPermissionList")
-    public ResultBean getAllPermissionList() {
-        return ResultUtils.success(menuService.list());
-    }
-
-    @GetMapping(value = "/getPermissionListByUserId")
-    public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
-        QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
-        menuWrapper.like("role", roleId);
-
-        return ResultUtils.success(menuService.list(menuWrapper));
-    }
+//    @GetMapping(value = "/getPermissionListByUserId")
+//    public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {
+//        QueryWrapper<Menu> menuWrapper = new QueryWrapper<>();
+//        menuWrapper.like("role", roleId);
+//
+//        return ResultUtils.success(menuService.list(menuWrapper));
+//    }
 
 //    @GetMapping(value = "/getRolePermissionListMap")
 //    public ResultBean getRolePermissionListMap() {
@@ -80,10 +75,12 @@ public class MenuController {
 
     @PostMapping(value = "/list")
     public ResultBean getMenuList() {
+        return ResultUtils.success(menuService.list());
+    }
 
-        // todo
-
-        return null;
+    @GetMapping(value = "/getMenuTree")
+    public ResultBean getMenuTree() {
+        return ResultUtils.success(menuService.getMenuTree());
     }
 
     @PostMapping(value = "/edit")
@@ -96,11 +93,6 @@ public class MenuController {
     public ResultBean delMenu() {
         // todo
         return null;
-    }
-
-    @GetMapping(value = "/getMenuTree")
-    public ResultBean getMenuTree() {
-        return ResultUtils.success(menuService.getMenuTree());
     }
 
 }

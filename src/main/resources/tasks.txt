@@ -17,6 +17,8 @@
     2.管理系统前后端是技术和业务的基本盘；
     3.赚钱可能会在物联网/大数据以及一些意想不到的机会上。
 
+    4.基础设施是做大做强的基本盘，开始要从一个杀手应用切入。
+
 ======================================================================================================================
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
@@ -24,6 +26,8 @@
 思考一个问题：角色权限和用户权限能否用不同的颜色标记
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
+
+后端下一步：SSO、OAuth2.0
 
 【1.在我现有的设计下，能否直接使用自带的WildcardPermission那种格式？（应该是可以的，人家的设计应该是很强大的。然后再看怎么把读数据库接上）2.如果不行，得自己定一套规则】
 【把这些补起来我的权限系统基本上有个模样了】【先把菜单后端权限搞起来，然后补前端】
@@ -41,9 +45,11 @@ WildcardPermission解读：
     4.不同类别的资源在代码实现层面有不同的过滤方式：页面的权限控制是在加载菜单时，菜单内元素的权限控制是在加载页面时获取对应的权限数据(搞一个父页面写上获取权限代码，需要权限的页面继承这个类。html页不需要任何权限标签。前端虽然加了权限代码，但是开发时感知不到权限)；
     5.接4，权限的不同用法：菜单是根据权限过滤，按钮是根据权限判断是否显示
     6.各类资源表里面的资源名称统一用name命名，如果需要code，则加一个
+    7.“用户-权限”在前端的使用方法：在用户权限配置页面，来自角色的全部灰化显示，只读，其他的选项可以勾选，并且增删时也不对灰化的数据做表读写。
+    8.注意与资源的联动一定要控制好
 
 2.按类别来整理
-角色-资源、用户-资源的API编写，然后是改造isPermitted的实现以及menu表相关的
+用户-权限的API编写
 搜索“基于资源的权限管理”
 角色权限关联表 和 用户权限关联表 要配合好，前者有了，后者就不要再保存了
 permission接口搞完后，看看公司的代码是怎么对页面按钮配置权限的。这个还涉及到前端组件的封装问题，以及一个区域的显示隐藏，形成整体可用的基础设施。
@@ -301,6 +307,20 @@ RedisExpiredListener：
 
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 【规则引擎和scheduler是否搞成基础设施需要再调研】
+
+物联网协议及开发是基础设置
+echart是基础设施
+云是基础设施
+手机APP及小程序是基础设施
+树莓派是基础设施
+支付是基础设施
+
+通知系统设计【基础设施】：
+http://www.woshipm.com/pd/32652.html
+https://www.jianshu.com/p/a89b61b6944d
+http://www.xueui.cn/tutorials/web-course/design-of-web-end-message-center.html
+https://www.zhihu.com/question/25459379
+https://zhuanlan.zhihu.com/p/22456973
 
 eureka和gateway是基础设施：
     我们的eureka里面只配了一个@EnableWebSecurity，WebSecurityConfig extends WebSecurityConfigurerAdapter
@@ -1605,16 +1625,6 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 测试AuthServiceTest：为啥有shiro相关的报错；
 
 把启动时INFO日志里面注册的bean都看一遍
-
-通用文件上传设计【文件上传根据这个文档搞出来】：https://blog.csdn.net/minaki_/article/details/85163343
-分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
-
-通知系统设计：
-http://www.woshipm.com/pd/32652.html
-https://www.jianshu.com/p/a89b61b6944d
-http://www.xueui.cn/tutorials/web-course/design-of-web-end-message-center.html
-https://www.zhihu.com/question/25459379
-https://zhuanlan.zhihu.com/p/22456973
 
 // todo 为啥没加@TableName("auth_user_role")的时候抛异常了没有回滚？再复现一把
 

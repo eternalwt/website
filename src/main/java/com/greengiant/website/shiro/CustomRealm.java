@@ -1,14 +1,8 @@
 package com.greengiant.website.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.greengiant.website.pojo.model.Menu;
-import com.greengiant.website.pojo.model.Role;
-import com.greengiant.website.pojo.model.RolePermission;
-import com.greengiant.website.pojo.model.User;
-import com.greengiant.website.service.MenuService;
-import com.greengiant.website.service.RolePermissionService;
-import com.greengiant.website.service.RoleService;
-import com.greengiant.website.service.UserService;
+import com.greengiant.website.pojo.model.*;
+import com.greengiant.website.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -36,6 +30,9 @@ public class CustomRealm extends AuthorizingRealm {
 
     @Autowired
     private RolePermissionService rolePermissionService;
+
+    @Autowired
+    private PermService permService;
 
     private static final String cacheName = "roleCache";
 
@@ -122,7 +119,6 @@ public class CustomRealm extends AuthorizingRealm {
         }
 
         String username = principals.toString();
-
         List<Role> roleList = null;
         roleList = (List<Role>)this.getCacheManager().getCache(cacheName).get(username);
         if (roleList == null) {
@@ -131,19 +127,18 @@ public class CustomRealm extends AuthorizingRealm {
             this.getCacheManager().getCache(cacheName).put(username, roleList);
         }
 
-        if (roleList != null && !roleList.isEmpty()) {
+        QueryWrapper<Perm> permWrapper = new QueryWrapper<>();
+        permWrapper.eq("resource", permStr[0]).or().eq("resource_instance", "*");
+        permWrapper.like("operation", permStr[1]).or().eq("resource_instance", "*");
+        permWrapper.eq("resource_instance", permStr[2]).or().eq("resource_instance", "*");
+        Perm perm = permService.getOne(permWrapper);// todo 保证用上面的规则查询结果只有一条，包括用到*的情况
+
+        if (perm != null && roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {
                 // 获取rolePerm列表
                 QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
-                if (!"*".equals(permStr[0])) { // todo 要再次确认wildcard的用法有没有问题。""空字符串代表什么意思？
-                    wrapper.eq("resource", permStr[0]);
-                }
-                if (!"*".equals(permStr[1])) {
-                    wrapper.eq("operation", permStr[1]);
-                }
-                if (!"*".equals(permStr[2])) {
-                    wrapper.eq("resource_instance", permStr[2]);
-                }
+                wrapper.eq("role_id", role.getId());
+                wrapper.eq("permission_id", perm.getId());
                 RolePermission rolePerm = rolePermissionService.getOne(wrapper);
                 if (rolePerm != null) {
                     return true;

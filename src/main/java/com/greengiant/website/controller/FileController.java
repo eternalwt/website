@@ -86,6 +86,9 @@ public class FileController {
         1.用md5来检查是否上传过（效率）以及作为临时文件的目录名称；
         2.合并文件的时候要用NIO的高效方法
         3.todo 是否可以上传一个开一个线程合并一个？防止大文件最终合并时候的卡顿感
+
+     通用文件上传设计【文件上传根据这个文档搞出来】：https://blog.csdn.net/minaki_/article/details/85163343
+     分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
      */
 
     // todo 分片

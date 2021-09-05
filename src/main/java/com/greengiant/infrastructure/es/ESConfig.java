@@ -3,10 +3,11 @@ package com.greengiant.infrastructure.es;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
 
-//@Configuration
+@Configuration
 public class ESConfig {
 
     @Value("${spring.elasticsearch.rest.uris}")

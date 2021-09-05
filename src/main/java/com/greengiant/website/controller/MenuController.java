@@ -1,19 +1,12 @@
 package com.greengiant.website.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Menu;
-import com.greengiant.website.pojo.model.Role;
 import com.greengiant.website.service.MenuService;
 import com.greengiant.website.service.RoleService;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/menu")
@@ -22,19 +15,10 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    // todo 有了menu表，permission表怎么处理？关系始终没理顺
-    // todo 文件里面的很多方法是需要加缓存的，配合CustomRealm里面的缓存读取
-
     @Autowired
     private RoleService roleService;
 
-    @GetMapping(value = "/isPermitted")
-    public ResultBean checkPermission(@RequestParam String permission) {
-        // todo 加缓存 跟缓存相关的2个问题：1.能否用注解；2.切换缓存是否有问题
-        Subject subject = SecurityUtils.getSubject();
-//        subject.checkPermission();
-        return ResultUtils.success(subject.isPermitted(permission));
-    }
+
 
 //    @GetMapping(value = "/getPermissionListByUserId")
 //    public ResultBean getPermissionListByUserId(@RequestParam("roleId") Long roleId) {

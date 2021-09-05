@@ -1,8 +1,14 @@
 package com.greengiant.website.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.greengiant.website.pojo.model.*;
-import com.greengiant.website.service.*;
+import com.greengiant.website.pojo.model.Perm;
+import com.greengiant.website.pojo.model.Role;
+import com.greengiant.website.pojo.model.RolePermission;
+import com.greengiant.website.pojo.model.User;
+import com.greengiant.website.service.PermService;
+import com.greengiant.website.service.RolePermissionService;
+import com.greengiant.website.service.RoleService;
+import com.greengiant.website.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -128,9 +134,14 @@ public class CustomRealm extends AuthorizingRealm {
         }
 
         QueryWrapper<Perm> permWrapper = new QueryWrapper<>();
-        permWrapper.eq("resource", permStr[0]).or().eq("resource_instance", "*");
-        permWrapper.like("operation", permStr[1]).or().eq("resource_instance", "*");
-        permWrapper.eq("resource_instance", permStr[2]).or().eq("resource_instance", "*");
+        permWrapper.apply("(resource={0} or resource={1})", permStr[0], "*");
+//        permWrapper.eq("resource", permStr[0]);
+//        permWrapper.like("operation", permStr[1]);
+//        permWrapper.eq("resource_instance", permStr[2]);
+
+//        permWrapper.eq("resource", permStr[0]).or().eq("resource", "*");
+        permWrapper.and(wp -> wp.like("operation", permStr[1]).or().eq("operation", "*"));
+        permWrapper.and(wp -> wp.eq("resource_instance", permStr[2]).or().eq("resource_instance", "*"));
         Perm perm = permService.getOne(permWrapper);// todo 保证用上面的规则查询结果只有一条，包括用到*的情况
 
         if (perm != null && roleList != null && !roleList.isEmpty()) {

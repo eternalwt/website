@@ -91,6 +91,8 @@ public class FileController {
      分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
      */
 
+    // todo 文件里面的很多方法是需要加缓存的，配合CustomRealm里面的缓存读取
+
     // todo 分片
     // todo 如果不把这些写好，就是高估了自己CRUD以外的能力。上传下载进度
     // todo 分片上传

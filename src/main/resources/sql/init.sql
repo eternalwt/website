@@ -19,7 +19,7 @@ create table auth_user(
     phone varchar(32),
     email varchar(128),
     qq varchar(32),
-    status tinyint(1) DEFAULT 0 COMMENT '状态：0正常，1锁定/冻结',
+    locked tinyint(1) DEFAULT 0 COMMENT '状态：0正常，1锁定/冻结',
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='用户（账号）表';

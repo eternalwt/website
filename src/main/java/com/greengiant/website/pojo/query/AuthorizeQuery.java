@@ -1,7 +1,5 @@
 package com.greengiant.website.pojo.query;
 
-import com.greengiant.website.pojo.model.Perm;
-
 import java.util.List;
 
 public class AuthorizeQuery {// todo 这个类是否需要改名？

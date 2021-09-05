@@ -1,12 +1,9 @@
 package com.greengiant.website.controller;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.greengiant.infrastructure.utils.ResultUtils;
-import com.greengiant.website.enums.EntityTypeEnum;
 import com.greengiant.website.enums.StatusCodeEnum;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.Perm;
-import com.greengiant.website.pojo.model.RolePermission;
 import com.greengiant.website.pojo.query.AuthorizeQuery;
 import com.greengiant.website.service.PermService;
 import com.greengiant.website.service.RolePermissionService;
@@ -15,7 +12,6 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,26 +24,12 @@ public class PermController {
     @Autowired
     private RolePermissionService rolePermissionService;
 
-    @GetMapping(value = "/check")
-    public ResultBean check(@RequestParam("perm") String perm) {
+    @GetMapping(value = "/isPermitted")
+    public ResultBean checkPermission(@RequestParam String permission) {
+        // todo 加缓存 跟缓存相关的2个问题：1.能否用注解；2.切换缓存是否有问题
         Subject subject = SecurityUtils.getSubject();
-        if (subject.getPrincipal() == null) {
-            return ResultUtils.success(false);
-        }
-        subject.checkPermission(perm);// todo 这个函数没有返回值，那么成功失败各是什么？
-
-        // todo
-        return ResultUtils.success(true);
+        return ResultUtils.success(subject.isPermitted(permission));
     }
-
-    //  1.添加权限点；
-    //  2.给角色授权
-    //  3.各类resource查询列表：到各自的原始表里面查询【检查一下menu有没有获取所有的方法，如果没有则加上】
-    //  4.能够勾选出哪些是自己角色有权限的(根据entity和resource查询permission)；
-    //  5.能够添加或者去掉某些权限(根据entity和resource删除permission)
-    //  6.补充鉴权代码
-    // todo 功能点：
-    //  7.测试
 
     @PostMapping(value = "/addBatch")
     public ResultBean addBatch(@RequestBody List<Perm> permList) {

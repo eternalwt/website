@@ -2,8 +2,8 @@ package com.greengiant.website.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.greengiant.infrastructure.utils.ResultUtils;
-import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.enums.StatusCodeEnum;
+import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.pojo.query.PageQuery;
 import com.greengiant.website.pojo.query.UserQuery;

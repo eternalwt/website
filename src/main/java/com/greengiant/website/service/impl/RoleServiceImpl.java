@@ -113,4 +113,17 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         return wrapper;
     }
 
+    private String getRoleName(String roleId, List<Role> roleList) {
+        String roleName = "";
+        if (roleId != null) {
+            for (Role role : roleList) {
+                if (roleId.equals(role.getId().toString())) {
+                    return role.getRoleName();
+                }
+            }
+        }
+
+        return roleName;
+    }
+
 }

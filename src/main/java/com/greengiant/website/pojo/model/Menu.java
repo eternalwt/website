@@ -27,10 +27,6 @@ public class Menu {
 
     private Byte openWay;
 
-    private String role;
-
-    private String user;
-
     private Date createTime;
 
     private Date updateTime;
@@ -39,7 +35,7 @@ public class Menu {
         super();
     }
 
-    public Menu(Long id, String menuName, String number, String url, String icon, Long parentId, Integer sort, Byte inUse, Byte openWay, String role, String user, Date createTime, Date updateTime) {
+    public Menu(Long id, String menuName, String number, String url, String icon, Long parentId, Integer sort, Byte inUse, Byte openWay, Date createTime, Date updateTime) {
         this.id = id;
         this.menuName = menuName;
         this.number = number;
@@ -49,8 +45,6 @@ public class Menu {
         this.sort = sort;
         this.inUse = inUse;
         this.openWay = openWay;
-        this.role = role;
-        this.user = user;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -127,22 +121,6 @@ public class Menu {
         this.openWay = openWay;
     }
 
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role == null ? null : role.trim();
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user == null ? null : user.trim();
-    }
-
     public Date getCreateTime() {
         return createTime;
     }
@@ -171,8 +149,6 @@ public class Menu {
                 ", sort=" + sort +
                 ", inUse=" + inUse +
                 ", openWay=" + openWay +
-                ", role='" + role + '\'' +
-                ", user='" + user + '\'' +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

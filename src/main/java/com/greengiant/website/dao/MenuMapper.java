@@ -16,19 +16,6 @@ public interface MenuMapper extends BaseMapper<Menu> {
     })
     int deleteByPrimaryKey(Long id);
 
-//    @Insert({
-//        "insert into Menu (id, menu_name, ",
-//        "number, url, icon, ",
-//        "parent_id, sort, in_use, ",
-//        "open_way, role, user, ",
-//        "create_time, update_time)",
-//        "values (#{id,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, ",
-//        "#{number,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, ",
-//        "#{parentId,jdbcType=BIGINT}, #{sort,jdbcType=INTEGER}, #{inUse,jdbcType=TINYINT}, ",
-//        "#{openWay,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})"
-//    })
-//    int insert(Menu record);
-
     @Select({
         "select",
         "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",

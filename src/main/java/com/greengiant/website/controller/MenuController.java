@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/menu")
 public class MenuController {
 
+    // todo menu是资源，需要在资源的增删查改的地方联动Perm类
+
     @Autowired
     private MenuService menuService;
 

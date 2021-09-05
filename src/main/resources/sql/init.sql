@@ -42,7 +42,7 @@ create table auth_permission(
     resource_code varchar(64),
     operation varchar(128),
     resource_instance varchar(64),
-    resource_id bigint(64),
+    resource_instance_id bigint(64),
     create_time timestamp DEFAULT CURRENT_TIMESTAMP,
     update_time timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='资源权限表';

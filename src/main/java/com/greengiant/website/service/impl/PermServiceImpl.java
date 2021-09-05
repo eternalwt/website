@@ -14,8 +14,8 @@ import java.util.List;
 @Service
 public class PermServiceImpl extends ServiceImpl<PermissionMapper, Perm> implements PermService {
 
-    @Autowired
-    private RolePermissionService rolePermissionService;
+//    @Autowired
+//    private RolePermissionService rolePermissionService;
 
     @Override
     public List<Perm> getPermList(Perm perm) {

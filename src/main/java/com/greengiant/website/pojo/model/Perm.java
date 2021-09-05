@@ -29,7 +29,7 @@ public class Perm {
     /**
      * 资源代码，例如1代表菜单，2代表按钮，3代表接口
      */
-    private String resourceCode;
+    private String resourceCode;// todo 这里是否与下面几项统一搞成resourceId？【从写代码流畅性方面来考虑】
 
     /**
      * 操作，例如增删查改、打印、下载（对应wildcarPermission里面的操作）
@@ -37,14 +37,14 @@ public class Perm {
     private String operation;
 
     /**
-     * 实例（对应wildcarPermission里面的实例）
+     * 实例（对应wildcarPermission里面的实例，例如每一个菜单用一个实例标识）
      */
-    private String resourceInstance;
+    private String resourceInstance;// todo 这一项和下面一项最终用那个？或者都用【从代码流畅性来考虑】
 
     /**
-     * 资源id，资源实体对应的主键（与entityId类似，代表其他真正存放各类资源详情表的表主键）
+     * 资源实例id，资源实例对应的主键（与entityId类似，代表其他真正存放各类资源详情表的表主键）
      */
-    private Long resourceId;
+    private Long resourceInstanceId;
 
     private Date createTime;
 
@@ -54,7 +54,7 @@ public class Perm {
         super();
     }
 
-    public Perm(Long id, String entity, Long entityId, String resource, String resourceCode, String operation, String resourceInstance, Long resourceId, Date createTime, Date updateTime) {
+    public Perm(Long id, String entity, Long entityId, String resource, String resourceCode, String operation, String resourceInstance, Long resourceInstanceId, Date createTime, Date updateTime) {
         this.id = id;
         this.entity = entity;
         this.entityId = entityId;
@@ -62,7 +62,7 @@ public class Perm {
         this.resourceCode = resourceCode;
         this.operation = operation;
         this.resourceInstance = resourceInstance;
-        this.resourceId = resourceId;
+        this.resourceInstanceId = resourceInstanceId;
         this.createTime = createTime;
         this.updateTime = updateTime;
     }
@@ -124,12 +124,12 @@ public class Perm {
         this.resourceInstance = resourceInstance;
     }
 
-    public Long getResourceId() {
-        return resourceId;
+    public Long getResourceInstanceId() {
+        return resourceInstanceId;
     }
 
-    public void setResourceId(Long resourceId) {
-        this.resourceId = resourceId;
+    public void setResourceInstanceId(Long resourceInstanceId) {
+        this.resourceInstanceId = resourceInstanceId;
     }
 
     public Date getCreateTime() {
@@ -158,7 +158,7 @@ public class Perm {
                 ", resourceCode='" + resourceCode + '\'' +
                 ", operation='" + operation + '\'' +
                 ", resourceInstance='" + resourceInstance + '\'' +
-                ", resourceId=" + resourceId +
+                ", resourceInstanceId=" + resourceInstanceId +
                 ", createTime=" + createTime +
                 ", updateTime=" + updateTime +
                 '}';

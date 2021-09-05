@@ -135,14 +135,9 @@ public class CustomRealm extends AuthorizingRealm {
 
         QueryWrapper<Perm> permWrapper = new QueryWrapper<>();
         permWrapper.apply("(resource={0} or resource={1})", permStr[0], "*");
-//        permWrapper.eq("resource", permStr[0]);
-//        permWrapper.like("operation", permStr[1]);
-//        permWrapper.eq("resource_instance", permStr[2]);
-
-//        permWrapper.eq("resource", permStr[0]).or().eq("resource", "*");
         permWrapper.and(wp -> wp.like("operation", permStr[1]).or().eq("operation", "*"));
         permWrapper.and(wp -> wp.eq("resource_instance", permStr[2]).or().eq("resource_instance", "*"));
-        Perm perm = permService.getOne(permWrapper);// todo 保证用上面的规则查询结果只有一条，包括用到*的情况
+        Perm perm = permService.getOne(permWrapper);
 
         if (perm != null && roleList != null && !roleList.isEmpty()) {
             for (Role role : roleList) {

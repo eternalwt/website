@@ -128,6 +128,8 @@ NIO是基础设施(和epoll一起学习，潜龙勿用)
 前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
 【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
 
+有了Subject，还需要CurrentUser吗？
+
 【公司里面的FileStream NIO要看】
 【公司里面的Scheduler的流程要看一遍】
 QUARTZ流程

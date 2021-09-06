@@ -26,9 +26,8 @@
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
 
-把mybatis-plus升到最高的3.4.3会报错，要么直接解决报错，要么先把spring-boot-starter-parent升到最高版
-
 【在现有后端大改的基础上调通】前端可以配起来了，再继续搞前端。然后找项目
+到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
 SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
@@ -86,7 +85,6 @@ shiro-cas：https://shiro.apache.org/cas.html
 CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
 【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
 
-到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 内存、ehcache、redis要能快速切换（再看一遍代码）
 
 晚上只搞NIO(搞透)
@@ -111,6 +109,7 @@ MybatisPlus Page类的解析与使用：https://blog.csdn.net/bulinstar/article/
 分页插件、性能分析配置
 PaginationInterceptor与两种分页方式：https://spldeolin.com/posts/mybatis-plus-page/
 PaginationInterceptor原理？以及为什么过时了，用什么替换？
+新版本的叫PaginationInnerInterceptor：https://blog.csdn.net/u011870022/article/details/110730112
 MyBatisPlus学习笔记：https://blog.csdn.net/zyx1260168395/article/details/104154454
 mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
@@ -2037,7 +2036,7 @@ WildcardPermission解读：
     7.“用户-权限”在前端的使用方法：在用户权限配置页面，来自角色的全部灰化显示，只读，其他的选项可以勾选，并且增删时也不对灰化的数据做表读写。
     8.注意与资源的联动一定要控制好
 用户-权限的API编写【可以用到再写】
-父资源（资源树的概念）
+父资源（资源树的概念）【例如页面上的按钮和页面是否需要用parent_id关联一下？】
 
 ImportBeanDefinitionRegistrar：
 https://www.jianshu.com/p/caef887b78b5

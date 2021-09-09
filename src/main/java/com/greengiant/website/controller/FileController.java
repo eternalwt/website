@@ -91,6 +91,8 @@ public class FileController {
      分布式文件上传服务架构设计：https://blog.csdn.net/moxiaomomo/article/details/78588082
      */
 
+    // todo 聊聊MultipartFile的transferTo方法：https://blog.csdn.net/lezeqe/article/details/108937647
+
     // todo 文件里面的很多方法是需要加缓存的，配合CustomRealm里面的缓存读取
 
     // todo 分片
@@ -107,7 +109,7 @@ public class FileController {
     //  从这个文章也看出，我的单元测试技能是不够的。把这个做了就能提升一截
     /**
     *
-        断点续传的原理（自己先想想怎么写）：https://blog.csdn.net/lu1024188315/article/details/51803471#comments
+        断点续传的原理：https://blog.csdn.net/lu1024188315/article/details/51803471#comments
         断点续传原理【自己先思考一下】：
         https://blog.csdn.net/weixin_38055381/article/details/82753480
         https://www.cnblogs.com/luozhixiang/p/9306240.html

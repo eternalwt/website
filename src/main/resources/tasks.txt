@@ -22,7 +22,7 @@
 ======================================================================================================================
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
-
+Bootstrap 5.1：https://v5.bootcss.com/
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
 
@@ -31,7 +31,7 @@
 
 SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
-权限之数据权限【阿里巴巴等大公司用的多，在现有Perm已经调通的基础上再学习思考一次】：
+权限之数据权限【阿里巴巴等大公司用的多，在现有Perm已经调通的基础上再学习思考一次。我感觉可以纳入现有的资源体系】：
 https://www.jianshu.com/p/1b27d2c8a080
 https://www.cnblogs.com/jpfss/p/11045258.html
 https://www.cnblogs.com/jpfss/p/11677430.html
@@ -228,6 +228,18 @@ OAuth2.0认证和授权机制讲解：https://zhuanlan.zhihu.com/p/20913727
 shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点，做一下】：https://www.cnblogs.com/yuluoxingkong/p/8268094.html
 
 工作流是基础设施，但是需要轻量级的解决方案
+【如果没有合适的工作流，那应该就是自己的核心竞争力】
+阿里开源工作流框架 compileflow 上手使用：https://zhuanlan.zhihu.com/p/390045081
+加入自己开发工作流，需要跟角色、用户怎么做集成？https://zhuanlan.zhihu.com/p/35025711
+工作流采用flowable的方案【更轻量，要从郑州系统的问题来思考一下如何用好】：
+	https://flowable.com/open-source/docs/
+	https://www.jianshu.com/p/4253f6eac920
+一文读懂工作流：https://zhuanlan.zhihu.com/p/113387814
+老板要我开发一个简单的工作流引擎：https://zhuanlan.zhihu.com/p/357056590
+如何理解/实现工作流？https://zhuanlan.zhihu.com/p/19963012
+工作流设计剖析：https://zhuanlan.zhihu.com/p/31256242
+自主研发或外购工作流引擎的十点建议：https://zhuanlan.zhihu.com/p/53954545
+工作流，高度抽象化的软件系统：https://zhuanlan.zhihu.com/p/35025711
 
 【把分布式锁搞成基础设施：(目标)好使用、好理解】对于“审核到一半，数据被删除”这种问题，可以考虑用分布式锁。问题是：在什么场景下比基于数据库、redis、zookeeper的分布式锁更简洁易用？怎么做好封装？怎么让代码更清晰？【对于这个问题，只能说我先把分布式锁的场景找到了】
 分布式锁的知识：

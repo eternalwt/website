@@ -21,13 +21,17 @@
 
 ======================================================================================================================
 
+【新思维】年前可以重点搞前端了，附带基础知识和后端。后端可以等年后边接项目边搞，现在的知识够用了。
+
+【到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个】【搞清楚yml与xml配置各用于什么场景】
+【看一小时bootstrap 5】
+
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 Bootstrap 5.1：https://v5.bootcss.com/
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
 
 【在现有后端大改的基础上调通】前端可以配起来了，再继续搞前端。然后找项目
-到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个
 
 SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
@@ -36,6 +40,8 @@ https://www.jianshu.com/p/1b27d2c8a080
 https://www.cnblogs.com/jpfss/p/11045258.html
 https://www.cnblogs.com/jpfss/p/11677430.html
 https://www.jianshu.com/p/31af99a42658
+数据权限的东西，能否在前端配置并通过类似whereSql的方式传进去？
+
 Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
 再看看公司的代码是怎么对页面按钮配置权限的。这个还涉及到前端组件的封装问题，以及一个区域的显示隐藏，形成整体可用的基础设施。
 
@@ -90,7 +96,8 @@ CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p
 晚上只搞NIO(搞透)
 清两周todo（十一降到100个以下），先从文件做起，先把handleFileUpload写完善就好了。【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 继续搞shiro、mybatis配置相关的，后端已经很解决了，rabbitmq、大数据、es先放一下
-NIO搞完后再看一遍ThreadLocal，然后继续写程序
+NIO搞完后再看一遍ThreadLocal，然后继续写程序。SecurityUtils与ThreadLocal？
+浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
 可以提高LSM的优先级了，以及从0开始：500行代码实现 LSM 数据库：https://zhuanlan.zhihu.com/p/384761846
 然后直接搞数据库项目，scheme如果暂时不搞了也无所谓
 
@@ -152,12 +159,14 @@ NIO是基础设施(和epoll一起学习，潜龙勿用)
 
 有了Subject，还需要CurrentUser吗？
 
+Spring Framework 6 将采用 Java 17，是时候将你的应用升级了：https://zhuanlan.zhihu.com/p/408344149
+
 【公司里面的FileStream NIO要看】
 【公司里面的Scheduler的流程要看一遍】
 QUARTZ流程
 sw_sched_job与syncJob的流程搞清楚
 几种trigger及区别搞清楚
-misfiredtrigger
+misfiredTrigger
 Quartz recovery 及misfired机制的源码分析：https://blog.csdn.net/pml18710973036/article/details/72271428
 quartz-misfire 错失、补偿执行：https://www.cnblogs.com/skyLogin/p/6927629.html
 限信息表（qrtz_locks）：CALENDAR_ACCESS JOB_ACCESS MISFIRE_ACCESS STATE_ACCESS TRIGGER_ACCESS
@@ -190,6 +199,9 @@ Elasticsearch搜索过程详解：https://segmentfault.com/a/1190000019577908
 ElasticSearch实现多租户的3种方式：https://www.javacodegeeks.com/2020/09/elasticsearch-multitenancy-with-routing.html
 ElasticSearch 亿级数据检索深度优化：https://mp.weixin.qq.com/s/w7BdHMynblwUsTGsKiZ3Mw
 ElasticSearch的plugin以及分词器还得再看看：analyzer、search_analyzer
+和redis的zset类似，ES的倒排表是使用skipList跳表数据结构：https://www.zhihu.com/question/483756084/answer/2101934767
+为什么ElasticSearch比MySQL更适合全文索引/多条件查询【MySQL 最多使用一个条件涉及的索引来过滤，然后剩余的条件只能在遍历行过程中进行内存过滤】【跳表合并策略、Bitset 合并策略节阅读一下】：https://zhuanlan.zhihu.com/p/351759661
+Bitset的牛逼大数据用法：https://blog.csdn.net/wensuting001/article/details/105001729
 Elasticsearch6.x和7.x版本常用插件汇总：https://www.cnblogs.com/yobit/p/11376453.html
 Elasticsearch 配置用户名和密码：
     https://blog.csdn.net/weixin_43315211/article/details/99677072
@@ -449,7 +461,6 @@ RunAs理解：
     Shiro ThreadContext简单介绍：
     https://blog.csdn.net/Entodie/article/details/100526765
     https://www.iteye.com/blog/suichangkele-2276897
-    SecurityUtils与ThreadLocal？
     一人或者多人登陆的问题
     并发登录人数控制自己做很简单，先看看别人的：https://www.cnblogs.com/lyh421/p/7099541.html
     【自己写 MultiRequestBody】
@@ -465,8 +476,6 @@ Shiro与spring session
 Spring web
 Spring batch提供了什么抽象？
 Spring XD是大数据相关的
-
-mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 
 看MultiRequestBodyResolver完全看懂（并看更多参数resolver代码）
 
@@ -490,13 +499,13 @@ GlobalConfigUtils传入：
         return iLoggerFactory.getLogger(name);
     }
 最终搞懂，为什么传的是GlobalConfigUtils
-反射不仅用于框架，在日志模块里面也发挥了重要作用
 
 调试任务：1.把mysql-connector-java注掉，找到报错地方的DataSource代码；2.自己思考（Druid）注册DataSource原理
 
 看mybatis源码，然后是日志框架源码，然后是guava源码
 阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
 myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
+mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 
 shiro不适合于网关？（无稽之谈）
 
@@ -544,6 +553,14 @@ Shiro介绍（六）：扩展自己的@RequiresPermission：https://blog.csdn.ne
 shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的功能？自行分析这个包的代码
 
 1.【继续看桥接】slf4j中有典型适配器模式，不看一看？https://hello.blog.csdn.net/article/details/110676556
+反射不仅用于框架，在日志模块里面也发挥了重要作用
+Setting the Log Level in Spring Boot when Testing：https://www.baeldung.com/spring-boot-testing-log-level
+我对logback级别的理解：
+	1.先按logger级别来，logger中没有的包按root级别来；
+	2.logger和root里面级别(level)表明了要打印的日志级别(往上兼容)，appender中的级别代表本介质接受的日志级别(不往上兼容)；
+	3.这样看来，最佳实践应该是
+		(1)root直接配置到INFO级，加上所有appender，自己的代码先不加logger，logger用于对于某些重点代码放开到trace级进行调试；
+		(2)root配到WARN级，加个logger打印自己代码的日志，级别放到INFO。
 2.再看mybatis是怎么打日志的，它自己实现了一套，用的接口呢？
 	https://zhuanlan.zhihu.com/p/88103007
 	https://www.cnblogs.com/yinjw/p/11757433.html
@@ -561,6 +578,12 @@ logger(二)logback简介及其实现原理：https://www.cnblogs.com/pjfmeng/p/1
 spring-jcl 日志源码分析：
 	https://blog.csdn.net/small_to_large/article/details/86668346
 	https://www.jianshu.com/p/e254c4783a5d
+为什么阿里巴巴禁止工程师直接使用日志系统(Log4j、Logback)中的 API：https://mp.weixin.qq.com/s/0MieZdWO9V6lIOaxXUC55g
+logging:
+  level:
+    org:
+      springframeword: INFO
+      com.sw.act.mapper: DEBUG
 
 shiro的cookie再复述一遍【搞大数据的这几个月linux、shiro等东西都需要学而时习之】
 CachingRealm 抽象类是Shiro中唯一一个直接实现Realm接口的类。同时它还实现了LogoutAware接口：https://www.jianshu.com/p/df8d7c888401
@@ -598,7 +621,6 @@ Subject需要分析的方法(DelegatingSubject，Subject接口的实现类Delega
     <V> Callable<V> associateWith(Callable<V> var1);
         https://blog.csdn.net/xuanfeng623/article/details/40892469/
         https://www.cnblogs.com/telwanggs/p/7608242.html
-        浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
     Runnable associateWith(Runnable var1);
 Concurrency：shiro支持多线程应用的并发验证，即如在一个线程中开启另一个线程，能把权限自动传播过去；
 DelegatingSubject的代码值得读一遍:
@@ -854,6 +876,12 @@ mybatis-spring-boot-starter：
     http://www.mybatis.cn/archives/861.html
 mybatis二级缓存的实现（看Configuration类）：https://blog.csdn.net/qq_36118179/article/details/114004183
 还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
+mybatis-plus主键策略：https://blog.csdn.net/qq_45451805/article/details/103016056
+mybatis plus配置及使用【综述】：https://blog.csdn.net/qq_34351177/article/details/104942583
+MybatisPlus-Active Record模式：https://zhuanlan.zhihu.com/p/161164265
+MyBatis-Plus 代码生成器超详细讲解：https://www.jianshu.com/p/9d8ab1bb84bb
+MyBatis-Plus 高级功能 —— 自定义通用方法：https://blog.csdn.net/weixin_38111957/article/details/101213436
+MyBatisPlus高级功能 ——SQL性能分析打印插件：https://zhuanlan.zhihu.com/p/348798941
 
 Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
 springboot在Utils工具类中读取配置文件：https://my.oschina.net/lijinzhao/blog/3030144

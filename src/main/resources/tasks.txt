@@ -56,6 +56,9 @@ SecurityUtils与ThreadLocal？
 【新思维】年前可以重点搞前端了，附带基础知识和后端。后端可以等年后边接项目边搞，现在的知识够用了。
 
 【看一小时bootstrap 5】
+angular 多页面应用
+DevUI Admin 2.0 重磅发布【华为的开源前端解决方案】：https://zhuanlan.zhihu.com/p/400436608
+Angular DOM 更新机制：https://zhuanlan.zhihu.com/p/36338142
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 Bootstrap 5.1：https://v5.bootcss.com/
@@ -218,7 +221,6 @@ ElasticSearch 亿级数据检索深度优化：https://mp.weixin.qq.com/s/w7BdHM
 ElasticSearch的plugin以及分词器还得再看看：analyzer、search_analyzer
 和redis的zset类似，ES的倒排表是使用skipList跳表数据结构：https://www.zhihu.com/question/483756084/answer/2101934767
 为什么ElasticSearch比MySQL更适合全文索引/多条件查询【MySQL 最多使用一个条件涉及的索引来过滤，然后剩余的条件只能在遍历行过程中进行内存过滤】【跳表合并策略、Bitset 合并策略节阅读一下】：https://zhuanlan.zhihu.com/p/351759661
-Bitset的牛逼大数据用法：https://blog.csdn.net/wensuting001/article/details/105001729
 Elasticsearch6.x和7.x版本常用插件汇总：https://www.cnblogs.com/yobit/p/11376453.html
 Elasticsearch 配置用户名和密码：
     https://blog.csdn.net/weixin_43315211/article/details/99677072
@@ -236,6 +238,7 @@ SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhu
 Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
 基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
+Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486
@@ -383,6 +386,13 @@ redisTemplate模式：得到数据对象的操作对象，然后用操作对象�
 redis 冒号分隔符含义_细品redis分布式锁：
 	https://blog.csdn.net/weixin_30346025/article/details/113315654
 	https://blog.csdn.net/wuyujin1997/article/details/106267676
+RedisTemplate - 常用集合之bound...Ops系列：https://blog.csdn.net/qq_40885085/article/details/104933362
+Redis GEO 功能使用场景：https://zhuanlan.zhihu.com/p/265633512
+场景解决方案：附近的人（GeoHash的应用）：https://segmentfault.com/a/1190000018440806
+georaduis是不是也用到geohash？
+GeoHash核心原理解析：
+	https://www.cnblogs.com/LBSer/p/3310455.html
+	https://zhuanlan.zhihu.com/p/35940647
 
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 【规则引擎和scheduler是否搞成基础设施需要再调研】

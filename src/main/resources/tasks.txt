@@ -19,19 +19,48 @@
     4.基础设施是做大做强的基本盘，开始要从一个杀手应用切入；
     5.当我引爆几个项目之后，我的工作重点应立即变为：找项目、找能在我的基础设施上开发的人、找超出我的基础设施能力的人、管理、学习。
 
+【并行】构思项目
+
+学习知识始终都只是一方面，更重要的是公司和自己的目标
+一旦想特别有体系的学习，就再次陷入误区了。最近工作和自己的项目都很痛苦，继续贯彻目标意识【每次迷茫的时候都思考一下，定调，不要做不可持续的事和把自己置于很大压力的境地】
+【改代码和读源码一定不要搅在一起，读源码要作为一项单独耗费很大精力的活动。这一点尤其重要】
+
+====================================================================================================
+
+任务计划表【赚钱就是这些琐碎的事，静下心来】：
+    1.ehcache、redis做到能快速切换（再看一遍代码，这个应该不难了）
+    2.消息通知（见下面的“通知系统设计”文章）
+    3.rabbitmq配成手动ack（不要参考黄学山代码，提高效率）
+    4.两种全文检索写通，并能够无缝切换（mysql全文检索、elasticsearch把article的增删查改加上对应的ES索引操作）
+    【ES】把多条件查询、文本模糊匹配（分词）等继续写通。测一下关掉后数据还在不在（应该是在的）
+   5.【到了把我的mybatis配置测试、精简】【搞清楚yml与xml配置各用于什么场景】
+    6.文件的后端：(1)分片上传，断点续传；(2)其他函数：列表之类的；(3)把原有的下载之类的代码合过来，写好（真正可用）
+
+前端
+    1.跑起来
+    2.把现有的功能重新跟后端对一遍，解决相关的问题
+    3.其他
+
+中秋、国庆目标：
+    1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284；
+    2.瑞鹿云遗留的问题。
+    【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
+
 ======================================================================================================================
+
+SecurityUtils与ThreadLocal？
+浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
+可以提高LSM的优先级了，以及从0开始：500行代码实现 LSM 数据库：https://zhuanlan.zhihu.com/p/384761846
+然后直接搞数据库项目，scheme如果暂时不搞了也无所谓
 
 【新思维】年前可以重点搞前端了，附带基础知识和后端。后端可以等年后边接项目边搞，现在的知识够用了。
 
-【到了把我的mybatis配置测试、精简、读代码的时候了，下一步就搞这个】【搞清楚yml与xml配置各用于什么场景】
 【看一小时bootstrap 5】
 
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
 Bootstrap 5.1：https://v5.bootcss.com/
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
-
-【在现有后端大改的基础上调通】前端可以配起来了，再继续搞前端。然后找项目
 
 SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
@@ -40,6 +69,7 @@ https://www.jianshu.com/p/1b27d2c8a080
 https://www.cnblogs.com/jpfss/p/11045258.html
 https://www.cnblogs.com/jpfss/p/11677430.html
 https://www.jianshu.com/p/31af99a42658
+数据权限的实现方式之一【自己想的】：每一条业务数据关联组织id，这样就能实现不同分公司、不同级别的人看的数据范围不一样了
 数据权限的东西，能否在前端配置并通过类似whereSql的方式传进去？
 
 Shiro实现授权，在应用中用户可以访问的任何东西都称为资源【我是把每一个后端API地址作为了一项资源】：https://blog.csdn.net/shitianhang123/article/details/84942117
@@ -91,15 +121,9 @@ shiro-cas：https://shiro.apache.org/cas.html
 CAS的单点登录和OAuth2的最大区别：https://www.cnblogs.com/flying607/p/7652537.html
 【终极】OAuth2的单点登录【思考清楚怎么整合】：https://www.cnblogs.com/cjsblog/p/10548022.html
 
-内存、ehcache、redis要能快速切换（再看一遍代码）
-
 晚上只搞NIO(搞透)
 清两周todo（十一降到100个以下），先从文件做起，先把handleFileUpload写完善就好了。【把公司里面文件相关的搞透】，然后是把controller里面的都清掉
 继续搞shiro、mybatis配置相关的，后端已经很解决了，rabbitmq、大数据、es先放一下
-NIO搞完后再看一遍ThreadLocal，然后继续写程序。SecurityUtils与ThreadLocal？
-浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
-可以提高LSM的优先级了，以及从0开始：500行代码实现 LSM 数据库：https://zhuanlan.zhihu.com/p/384761846
-然后直接搞数据库项目，scheme如果暂时不搞了也无所谓
 
 MyBatis之分页插件(PageHelper)工作原理【这就是一个很好的面试题】：
     https://blog.csdn.net/jaryle/article/details/52315565
@@ -120,24 +144,18 @@ PaginationInterceptor原理？以及为什么过时了，用什么替换？
 MyBatisPlus学习笔记：https://blog.csdn.net/zyx1260168395/article/details/104154454
 mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
-把article的增删查改加上对应的ES索引操作
-把我的mybatis配置测试、精简
-
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 
 良好的文件表结构设计：
     https://blog.csdn.net/zhouyonggo/article/details/101548715
     https://blog.csdn.net/u013174523/article/details/84816167
     https://www.shuijingwanwq.com/2019/10/16/3568/
-看一下NIO，再确认/重构我的上传功能
 
 【沉住气，信念】把这个文档里面的大部分问题搞定，再花一两年把我记在有道要动手的问题搞一下，编码效率一定会有个大幅提升。
 技术也是加速回报的，信念。现在我的技术在武汉已经比较高端了
 
 【晚上】把OAuth2.0授权服务器看一下，了解一下
 【最大的问题已经变成】如何挣到更多的钱
-
-【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 【如果对自己的技术有信心】1.搞技术也能赚钱，找更有钱的工作；2.也是创业，达成团队目标
 
 级别的那个问题：部门最高级别以及对应的职务级别之间可以松耦合。
@@ -162,7 +180,7 @@ NIO是基础设施(和epoll一起学习，潜龙勿用)
 Spring Framework 6 将采用 Java 17，是时候将你的应用升级了：https://zhuanlan.zhihu.com/p/408344149
 
 【公司里面的FileStream NIO要看】
-【公司里面的Scheduler的流程要看一遍】
+【看一下quartz Scheduler的集成】
 QUARTZ流程
 sw_sched_job与syncJob的流程搞清楚
 几种trigger及区别搞清楚
@@ -189,7 +207,6 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 
 我的model上为啥没有注解？
 
-【ES】把多条件查询、文本模糊匹配（分词）等继续写通。测一下关掉后数据还在不在（应该是在的）
 ElasticSearch原理：
 	https://zhuanlan.zhihu.com/p/336889554
 	https://zhuanlan.zhihu.com/p/94915597
@@ -218,6 +235,7 @@ springboot elasticsearch整合实践（RestHighLevelClient）：https://blog.csd
 SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhuanlan.zhihu.com/p/143786937
 Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
+基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486
@@ -351,6 +369,20 @@ RedisExpiredListener：
     https://www.cnblogs.com/owenma/p/10419896.html
     https://blog.csdn.net/cainiao1412/article/details/98881997
     https://blog.csdn.net/oeSeven/article/details/106359816
+Redis 的 8 大应用场景：https://zhuanlan.zhihu.com/p/328168537
+redis点赞：
+	https://zhuanlan.zhihu.com/p/146578513
+	https://blog.csdn.net/zhangpower1993/article/details/89070763
+	https://www.cnblogs.com/ifme/p/12302240.html
+	https://www.cnblogs.com/kisshappyboy/p/11693687.html
+lpush和rpush的区别_关于redis之lpush、rpush、lset、lrem：https://www.gxlcms.com/redis-462677.html
+RedisTemplate中5种常见的OpsFor和泛型的应用：https://zhuanlan.zhihu.com/p/364864852
+OpsFor和BoundXXXOps区别只是不同场景的易用性把？
+redis命令行模式：(对象对应的)操作 数据对象 数据
+redisTemplate模式：得到数据对象的操作对象，然后用操作对象的方法来操作数据对象。
+redis 冒号分隔符含义_细品redis分布式锁：
+	https://blog.csdn.net/weixin_30346025/article/details/113315654
+	https://blog.csdn.net/wuyujin1997/article/details/106267676
 
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
 【规则引擎和scheduler是否搞成基础设施需要再调研】
@@ -555,12 +587,25 @@ shiro-spring中，除了shiro-core的核心功能外，有什么spring相关的�
 1.【继续看桥接】slf4j中有典型适配器模式，不看一看？https://hello.blog.csdn.net/article/details/110676556
 反射不仅用于框架，在日志模块里面也发挥了重要作用
 Setting the Log Level in Spring Boot when Testing：https://www.baeldung.com/spring-boot-testing-log-level
+1.默认的filter是哪种？我的website默认没有配置filter
+2.logback对于STDOUT：(1)首先自己不要用System.out记录关键信息，也不要让其他人用；(2)对于已经用了System.out的项目，例如江西的预约，不要把STDOUT的日志重定向到/dev/null；(3)对于比较规范的代码和库，System.out应该用的比较少，重定向到/dev/null或者文件都可以，视情况而定。并且在某些情况下可以通过不使用nohup启动观察控制台定位问题。
+对比一下STDOUT和INFO打出来的东西有没有重复的，是怎么重复的，例如springboot
+logback：
+1.再次确认appender中的level；
+2.warn的是不是要加一个appender？一般的库里面会不会用到？
+3.appender不指定级别，会打印root/logger里面指定的级别以上的所有级别吗？（还是说有默认级别？）如果有多个appender，有的指定了级别，有的没指定，并且没有覆盖所有级别，会怎么样？
+这个文章说默认的级别是debug：https://www.jianshu.com/p/bff1b854a348
+如果logger没有被分配级别，name它将从有被分配级别的最近的父类那里继承级别，root logger默认级别是DEBUG：http://www.51gjie.com/javaweb/1109.html
 我对logback级别的理解：
 	1.先按logger级别来，logger中没有的包按root级别来；
 	2.logger和root里面级别(level)表明了要打印的日志级别(往上兼容)，appender中的级别代表本介质接受的日志级别(不往上兼容)；
 	3.这样看来，最佳实践应该是
 		(1)root直接配置到INFO级，加上所有appender，自己的代码先不加logger，logger用于对于某些重点代码放开到trace级进行调试；
 		(2)root配到WARN级，加个logger打印自己代码的日志，级别放到INFO。
+动态调整Logback的日志级别：https://www.cnblogs.com/luozhuzhu/p/15095895.html
+LevelFilter、ThresholdFilter【这个需要再看看】
+TurboFilter了解一下
+对RollingPolicy和TriggeringPolicy的理解：每一类RollingPolicy对应TriggerPolicy，像SizeAndTimeBasedRollingPolicy是内置了根据时间和文件大小滚动的TriggeringPolicy
 2.再看mybatis是怎么打日志的，它自己实现了一套，用的接口呢？
 	https://zhuanlan.zhihu.com/p/88103007
 	https://www.cnblogs.com/yinjw/p/11757433.html
@@ -610,6 +655,8 @@ defaultCache:默认的缓存配置信息，cache:为指定名称的对象进行�
 Springboot Ehcache 2.x vs Ehcache 3.x的不同配置：https://myshittycode.com/2017/04/11/spring-ehcache-xml-less-spring-configuration-for-ehcache-2-x-vs-ehcache-3-x/
 
 为了加MultiRequestBodyResolver，引入了fastjson和commons-io两个包，想办法删掉。一定要在大量使用，并且不能绕开的时候再引入包。
+
+shiro源码可以再看了，相信现在看，就没那么痛苦了
 
 =================================================================================================
 

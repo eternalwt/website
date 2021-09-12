@@ -13,6 +13,23 @@ public class ESConfig {
     @Value("${spring.elasticsearch.rest.uris}")
     private String ADDR;
 
+//    @Value("${spring.rabbitmq.username}")
+//    private String username;
+//
+//    @Value("${spring.rabbitmq.password}")
+//    private String password;
+//
+//    @Value("${spring.rabbitmq.port}")
+//    private int port;
+//
+//    @Value("${spring.rabbitmq.host}")
+//    private String host;
+
+    @Value("${spring.rabbitmq.virtual-host:#{null}}")
+    private String virtualHost;
+
+    // todo 公司代码喜欢用ConnectionFactory，这样有什么好处？
+
     @Bean
     public RestHighLevelClient client() {
         ClientConfiguration clientConfiguration = ClientConfiguration.builder()

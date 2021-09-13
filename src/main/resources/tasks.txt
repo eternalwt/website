@@ -10,7 +10,7 @@
 
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
-======================================================================================================================
+=====================================================================================================
 
 【策略与打法】
     1.起初只能瞄准10-20万的项目；
@@ -239,6 +239,7 @@ Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://gith
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
 基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
+30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486

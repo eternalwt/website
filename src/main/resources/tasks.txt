@@ -42,7 +42,7 @@
     3.其他
 
 中秋、国庆目标：
-    1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284；
+    1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284
     2.瑞鹿云遗留的问题。
     【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
 
@@ -891,57 +891,6 @@ spring-boot-starter-data-redis：https://blog.csdn.net/yeyinglingfeng/article/de
 分析DataSourceTransactionManager的代码，有了它@Transactional注解才能发挥作用
 @Transactional实现原理（DataSourceTransactionManager）【看别人的分析过程】：https://www.cnblogs.com/wlwl/p/10092494.html
 
-多数据源：
-https://laptrinhx.com/springboot-implements-multiple-data-source-configuration-927917669/（同时启用双数据源：主数据源用mybatis、次数据源用jdbcTemplate）
-https://springframework.guru/how-to-configure-multiple-data-sources-in-a-spring-boot-application/
-【使用Spring Boot时，默认情况下，配置DataSource非常容易。Spring Boot会自动为我们配置好一个DataSource】了解默认的注入代码
-【mybatis如何同时启用多数据源？】【自己先思考，然后看如下文档】：
-https://programmer.group/spring-boot-mybatis-multiple-data-sources.html
-https://programmer.group/spring-boot-mybatis-create-multi-data-source-connection.html
-https://www.fatalerrors.org/a/springboot-db-series-mybatis-multi-data-source-configuration-and-use.html
-https://laptrinhx.com/springboot-integrates-mybatis-to-configure-multiple-data-sources-to-operate-mysql-database-3110290717/
-What is spring-boot-starter-parent in Spring-Boot pom.xml file? http://www.java2novice.com/spring-boot/spring-boot-starter-parent/
-JdbcTemplate 和 mybatis 的对比（可以再看一次了）：
-https://www.cnblogs.com/scmath/p/11297006.html
-https://blog.csdn.net/weixin_30662539/article/details/101573061
-阅读mybatis-plus-boot-starter代码
-深入SpringBoot注解原理及使用【一个现实的问题，我的mybatis-plus、Kafka注解是怎么发挥作用的】：https://www.cnblogs.com/jing99/p/11504113.html
-Mybatis中的一级缓存、二级缓存【读代码】：
-    https://tech.meituan.com/2018/01/19/mybatis-cache.html
-    https://blog.csdn.net/luanlouis/article/details/41280959
-    https://blog.csdn.net/weixin_37139197/article/details/82908377
-    https://segmentfault.com/a/1190000024469451?utm_source=sf-related
-具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的，如果一个都未找到，日志功能就会被禁用：https://www.cnblogs.com/aoshicangqiong/p/7651569.html
-看看mybatis的SqlSession的生命周期，这个涉及到一级缓存
-mysql-connector-java的版本是怎么指定8.0.22的？
-Mybatis源码解析——Executor：
-    https://www.pianshen.com/article/79411165391/
-    https://artisan.blog.csdn.net/article/details/106560762
-    https://www.jianshu.com/p/53cc886067b1
-我写的Mapper也是可以兼容用上的，确认一下
-mybatis看mapper里面具体缓存写法/用法
-MyBatis 通用 Mapper 实现原理：
-	https://blog.csdn.net/isea533/article/details/78493852
-	https://www.jb51.net/article/149170.htm
-mysql-connector-java 为什么scope是runtime：
-	https://blog.csdn.net/jupiter_888/article/details/103853023
-	https://www.jianshu.com/p/50015526460a
-Mybatis-Redis二级缓存分布式实现：https://blog.csdn.net/luo15242208310/article/details/88634095
-Mybatis二级缓存的槽点和亮点：https://blog.csdn.net/weixin_43832689/article/details/106968135
-看mapper里面缓存写法【搞完后再把pom还原，mybatis-spring-boot-starter注掉。官方也有mysql starter把，这个starter与spingboot官方的mysql starter对比呢？】
-mybatis-redis：redis做二级缓存
-mybatis-spring-boot-starter：
-    http://www.mybatis.cn/archives/861.html
-mybatis二级缓存的实现（看Configuration类）：https://blog.csdn.net/qq_36118179/article/details/114004183
-还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
-mybatis-plus主键策略：https://blog.csdn.net/qq_45451805/article/details/103016056
-mybatis plus配置及使用【综述】：https://blog.csdn.net/qq_34351177/article/details/104942583
-MybatisPlus-Active Record模式：https://zhuanlan.zhihu.com/p/161164265
-MyBatis-Plus 代码生成器超详细讲解：https://www.jianshu.com/p/9d8ab1bb84bb
-MyBatis-Plus 高级功能 —— 自定义通用方法：https://blog.csdn.net/weixin_38111957/article/details/101213436
-MyBatisPlus高级功能 ——SQL性能分析打印插件：https://zhuanlan.zhihu.com/p/348798941
-
-Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
 springboot在Utils工具类中读取配置文件：https://my.oschina.net/lijinzhao/blog/3030144
 SpringBoot中获取spring.profiles.active的值【学习别人的方法】：
 https://www.cnblogs.com/linzhanfly/p/9056722.html
@@ -1337,9 +1286,16 @@ Add Login to Your Spring Boot App in 10 Mins：https://dzone.com/articles/add-lo
  彻底理解FactoryBean接口
  完美解析Spring Bean的生命周期
  Spring的Environment接口有什么作用？
+
  为什么产生循环依赖问题
  循环依赖在Spring中是如何解决的
-
+【Spring 是如何解决循环依赖的？】本文将结合实际问题，由问题引出源码，并在解释时会尽量以图表的形式让你一步一步彻底理解Spring Bean的IOC、DI、生命周期、作用域等：https://www.zhihu.com/question/438247718/answer/2108427341
+高频面试题：Spring 如何解决循环依赖？https://zhuanlan.zhihu.com/p/84267654
+Spring循环依赖的三种方式：https://blog.csdn.net/u010644448/article/details/59108799
+图解 Spring 循环依赖，写得太好了！https://blog.csdn.net/youanyyou/article/details/105963338
+Spring 为什么要使用三级缓存来解决循环依赖：https://blog.csdn.net/qq_35457078/article/details/112409302
+Spring三级缓存解决循环依赖：https://www.cnblogs.com/longy2012/articles/12834762.html
+@lazy注解处理循环注入问题：https://www.cnblogs.com/yangxiaohui227/p/10523025.html
 
 Apache Shiro Java反序列化漏洞分析：
 https://www.cnblogs.com/loong-hon/p/10619616.html
@@ -1397,7 +1353,6 @@ SchedulingConfigurer 的原理还没搞清楚，看源码
 
 @TestComponent注解：https://www.jianshu.com/p/72b19e24a602
 @Bean 和 @Component的区别：https://www.cnblogs.com/just-for-beyond/p/12783889.html
-Spring三级缓存解决循环依赖：https://www.cnblogs.com/longy2012/articles/12834762.html
 
 Spring Web Flow：
 https://www.cnblogs.com/chenjl001/articles/12833382.html
@@ -1590,27 +1545,6 @@ https://blog.csdn.net/qq_43193797/article/details/85011683
 
 来看一下如何使用spring整合mybatis【感觉可以猜一下了】：https://blog.csdn.net/weixin_36977069/article/details/82801419
 https://blog.csdn.net/smonkeyking/article/details/82661814
-
-Mybatis十八连环问：https://zhuanlan.zhihu.com/p/108895550
-【是不是我用的是mybatis-plus，应该直接配置mybatis-plus的配置文件】
-mybatis和mybatis-plus的配置要玩的非常熟：
-https://mp.baomidou.com/config/#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE
-https://mybatis.org/mybatis-3/zh/configuration.html
-有没有一种可能，是两部分都要配置？（但是又没测通）：https://www.cnblogs.com/bangpenggao/articles/11328923.html
-Mybatis使用的设计模式：
-https://blog.csdn.net/u014401141/article/details/86920900【1.比较装饰模式与继承；2.再思考一下filter的责任链模式；3.其他的再看】
-https://blog.csdn.net/emprere/article/details/100190638
-https://blog.csdn.net/youanyyou/article/details/89368772
-@Mapper注解都没整明白
-Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
-https://blog.csdn.net/tanqidong1992/article/details/48026491
-https://www.cnblogs.com/to-be-continue/p/8260080.html
-https://www.cnblogs.com/handsomeBoys/p/7602084.html
-https://www.cnblogs.com/grasp/p/11813674.html
-下一步搞懂3个问题：
-3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
-mybatis-spring这种包是桥梁
-为啥不需要写MybatisConfig这种类？
 
 ================================================================================================
 
@@ -1854,8 +1788,84 @@ WebViewer：
 
 ======================================================================================================
 
-预防性保护项目，我们需要的是一个大数据的数据库，还是一个flink这样的流式系统？是否需要时序数据库InfluxDB？
-flink计算能配hbase这样的数据库吗？示例场景？流式计算存储和hbase这样的存储怎么配合，是不是只用一种就可以了
+【配置双数据源的原理彻底看懂】Mybatis plus 配置多数据源（AOP，同时可以吧AOP多了解一点。并总结AOP的一些场景。并看下例子里面threadLocal的使用）
+datasource.dynamic是啥？
+Spring boot整合dynamic-datasource实现多数据源的读写分离（@DS注解的使用）：https://blog.csdn.net/weixin_44605704/article/details/97746557
+多数据源：
+https://laptrinhx.com/springboot-implements-multiple-data-source-configuration-927917669/（同时启用双数据源：主数据源用mybatis、次数据源用jdbcTemplate）
+https://springframework.guru/how-to-configure-multiple-data-sources-in-a-spring-boot-application/
+【使用Spring Boot时，默认情况下，配置DataSource非常容易。Spring Boot会自动为我们配置好一个DataSource】了解默认的注入代码
+【mybatis如何同时启用多数据源？】【自己先思考，然后看如下文档】：
+https://programmer.group/spring-boot-mybatis-multiple-data-sources.html
+https://programmer.group/spring-boot-mybatis-create-multi-data-source-connection.html
+https://www.fatalerrors.org/a/springboot-db-series-mybatis-multi-data-source-configuration-and-use.html
+https://laptrinhx.com/springboot-integrates-mybatis-to-configure-multiple-data-sources-to-operate-mysql-database-3110290717/
+What is spring-boot-starter-parent in Spring-Boot pom.xml file? http://www.java2novice.com/spring-boot/spring-boot-starter-parent/
+JdbcTemplate 和 mybatis 的对比（可以再看一次了）：
+https://www.cnblogs.com/scmath/p/11297006.html
+https://blog.csdn.net/weixin_30662539/article/details/101573061
+阅读mybatis-plus-boot-starter代码
+深入SpringBoot注解原理及使用【一个现实的问题，我的mybatis-plus、Kafka注解是怎么发挥作用的】：https://www.cnblogs.com/jing99/p/11504113.html
+Mybatis中的一级缓存、二级缓存【读代码】：
+    https://tech.meituan.com/2018/01/19/mybatis-cache.html
+    https://blog.csdn.net/luanlouis/article/details/41280959
+    https://blog.csdn.net/weixin_37139197/article/details/82908377
+    https://segmentfault.com/a/1190000024469451?utm_source=sf-related
+具体选择哪个日志实现工具由MyBatis的内置日志工厂确定。它会使用最先找到的，如果一个都未找到，日志功能就会被禁用：https://www.cnblogs.com/aoshicangqiong/p/7651569.html
+看看mybatis的SqlSession的生命周期，这个涉及到一级缓存
+mysql-connector-java的版本是怎么指定8.0.22的？
+Mybatis源码解析——Executor：
+    https://www.pianshen.com/article/79411165391/
+    https://artisan.blog.csdn.net/article/details/106560762
+    https://www.jianshu.com/p/53cc886067b1
+我写的Mapper也是可以兼容用上的，确认一下
+mybatis看mapper里面具体缓存写法/用法
+MyBatis 通用 Mapper 实现原理：
+	https://blog.csdn.net/isea533/article/details/78493852
+	https://www.jb51.net/article/149170.htm
+mysql-connector-java 为什么scope是runtime：
+	https://blog.csdn.net/jupiter_888/article/details/103853023
+	https://www.jianshu.com/p/50015526460a
+Mybatis-Redis二级缓存分布式实现：https://blog.csdn.net/luo15242208310/article/details/88634095
+Mybatis二级缓存的槽点和亮点：https://blog.csdn.net/weixin_43832689/article/details/106968135
+看mapper里面缓存写法【搞完后再把pom还原，mybatis-spring-boot-starter注掉。官方也有mysql starter把，这个starter与spingboot官方的mysql starter对比呢？】
+mybatis-redis：redis做二级缓存
+mybatis-spring-boot-starter：
+    http://www.mybatis.cn/archives/861.html
+mybatis二级缓存的实现（看Configuration类）：https://blog.csdn.net/qq_36118179/article/details/114004183
+还是得从mybatis、mybatis-plus、slf4j原理彻底弄清楚，不能急躁和跳跃
+mybatis-plus主键策略：https://blog.csdn.net/qq_45451805/article/details/103016056
+mybatis plus配置及使用【综述】：https://blog.csdn.net/qq_34351177/article/details/104942583
+MybatisPlus-Active Record模式：https://zhuanlan.zhihu.com/p/161164265
+MyBatis-Plus 代码生成器超详细讲解：https://www.jianshu.com/p/9d8ab1bb84bb
+MyBatis-Plus 高级功能 —— 自定义通用方法：https://blog.csdn.net/weixin_38111957/article/details/101213436
+MyBatisPlus高级功能 ——SQL性能分析打印插件：https://zhuanlan.zhihu.com/p/348798941
+mybatis-plus配置双数据源的几个文章，涵盖配置、MybatisSqlSessionFactoryBean、设置MapperLocation解决Invalid bound statement问题等：
+	https://www.cnblogs.com/CryOnMyShoulder/p/12218876.html
+	https://blog.csdn.net/u012075383/article/details/79304178
+	https://blog.csdn.net/pyd950812/article/details/102516132
+	https://blog.csdn.net/TreeShu321/article/details/104547973/
+
+Mybatis十八连环问：https://zhuanlan.zhihu.com/p/108895550
+【是不是我用的是mybatis-plus，应该直接配置mybatis-plus的配置文件】
+mybatis和mybatis-plus的配置要玩的非常熟：
+https://mp.baomidou.com/config/#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE
+https://mybatis.org/mybatis-3/zh/configuration.html
+有没有一种可能，是两部分都要配置？（但是又没测通）：https://www.cnblogs.com/bangpenggao/articles/11328923.html
+Mybatis使用的设计模式：
+https://blog.csdn.net/u014401141/article/details/86920900【1.比较装饰模式与继承；2.再思考一下filter的责任链模式；3.其他的再看】
+https://blog.csdn.net/emprere/article/details/100190638
+https://blog.csdn.net/youanyyou/article/details/89368772
+@Mapper注解都没整明白
+Mapper(DAO层)接口如何实例化【先思考，从哪个方向去分析代码，提升解决问题的能力，这一点非常关键】：
+https://blog.csdn.net/tanqidong1992/article/details/48026491
+https://www.cnblogs.com/to-be-continue/p/8260080.html
+https://www.cnblogs.com/handsomeBoys/p/7602084.html
+https://www.cnblogs.com/grasp/p/11813674.html
+下一步搞懂3个问题：
+3.Mybatis与Spring集成时都做了什么？https://www.cnblogs.com/xwy6/p/11279518.html
+mybatis-spring这种包是桥梁
+为啥不需要写MybatisConfig这种类？
 
 mybatis plus强大的条件构造器queryWrapper、updateWrapper：https://blog.csdn.net/m0_37034294/article/details/82917234
 4.mybatis-plus（搭建成功、源码学习）：https://mp.baomidou.com/guide/quick-start.html#%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E7%A8%8B
@@ -2571,7 +2581,6 @@ springboot新特性
 Spring系列——@lazy注解：
 https://blog.csdn.net/m0_37941483/article/details/90679524
 https://www.jb51.net/article/170250.htm
-@lazy注解处理循环注入问题：https://www.cnblogs.com/yangxiaohui227/p/10523025.html
 @Dependson注解与@ConditionalOnBean注解的区别：https://www.cnblogs.com/hjw-zq/p/10455879.html
 
 不同注解的扫描顺序？是否先扫@configuration？

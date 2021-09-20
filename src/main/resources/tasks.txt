@@ -27,13 +27,15 @@
 
 ====================================================================================================
 
+休息一段时间，一直到十一
+
 任务计划表【赚钱就是这些琐碎的事，静下心来】：
     1.ehcache、redis做到能快速切换（再看一遍代码，这个应该不难了）
     2.消息通知（见下面的“通知系统设计”文章）
-    3.rabbitmq配成手动ack（不要参考黄学山代码，提高效率）
+    3.rabbitmq支持手动ack（不要参考黄学山代码，提高效率）
     4.两种全文检索写通，并能够无缝切换（mysql全文检索、elasticsearch把article的增删查改加上对应的ES索引操作）
     【ES】把多条件查询、文本模糊匹配（分词）等继续写通。测一下关掉后数据还在不在（应该是在的）
-   5.【到了把我的mybatis配置测试、精简】【搞清楚yml与xml配置各用于什么场景】
+    5.【到了把我的mybatis配置测试、精简】【搞清楚yml与xml配置各用于什么场景】
     6.文件的后端：(1)分片上传，断点续传；(2)其他函数：列表之类的；(3)把原有的下载之类的代码合过来，写好（真正可用）
 
 前端
@@ -45,6 +47,22 @@
     1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284
     2.瑞鹿云遗留的问题。
     【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
+    Spring Framework 6 和 Spring Boot 3 已经计划在 2022 年第四季度实现总体可用性的高端基线，将采用 Java 17 和 Jakarta EE 9 及更高级的版本
+
+什么是真正的技术：
+    1.90%的人解决不了的问题是技术；
+    2.别人需要更大量时间和成本而自己可以减少的是技术【工程方面的也是技术】；
+    3.
+我现在面临的问题不是干不了，而是压力大，收入也不是特别理想。
+
+这几天真正的事情应该是评估一下自己的前端能力，梳理前端事项
+正确的守正出奇的解决问题的方式应该是：
+    0.积累核心能力（已经完成的差不多）；
+    1.寻找需求（发现需求和创造需求是奇）；
+    2.在已有的能力上尽力完成需求，在这个过程中需要花时间和精力填补和寻找还没有具备的能力；
+    3.在2的基础上想办法赚到钱；
+    4.优化流程和工程实践，进行迭代。
+再评估一下我学习PL的价值，把问题想细想透，并通过这个问题思考打工和创业
 
 ======================================================================================================================
 
@@ -92,6 +110,7 @@ SpringCloud系列——SSO 单点登录：https://www.cnblogs.com/huanzi-qch/p/1
 OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
 JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
 
+token能否结合shiro的filter（自定义）？http://blog.csdn.net/lhacker/article/details/9698217
 Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：
 https://hellokoding.com/hello-single-sign-on-sso-with-json-web-token-jwt-spring-boot/
 shiro SSO：
@@ -240,6 +259,7 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
+干掉SQL中的like，我用es后运营小姐姐们都说好快：https://mp.weixin.qq.com/s/x--WMk-SFOOaJSC-_rDYTA
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486
@@ -877,6 +897,8 @@ https://www.zhihu.com/question/28516433/answer/490921378
     (2)@Service注解压根就不加，直接在@Configuration里面配，然后再@Autowired【理论上来说，@Component、@Service可以都不加，都在@Configuration里面配，
     只加@Controller，看看@Controller详解】https://dzone.com/articles/spring-framework-restcontroller-vs-controller
 
+mybatis更多验证：(1)根据启动流程，阅读加载配置文件的代码；(2)搞清楚connector、datasource、druid等几类东西的关系
+
 【把config目录下的内容梳理一遍，好多用不上的】
 注意：spring-boot-autoconfigure.jar
 感觉Shiro没用上AutoConfiguration（是不是配置比较麻烦所以用手动？）
@@ -965,6 +987,13 @@ SpringBoot中使用Shiro和JWT做认证和鉴权：https://www.jianshu.com/p/0b1
 Shiro步步为营--如何优雅地与JWT集成【这种方法配置会不会导致Subject用不了？】：https://blog.csdn.net/pengjunlee/article/details/95600843
 
 网络应用中session和token本质是一样的吗，有什么区别？【再思考一遍】：https://www.zhihu.com/question/51759560/answer/1774829688
+
+Levels of permission granularity：https://shiro.apache.org/java-authorization-guide.html#levels-of-permission-granularity
+把这个东西结合我以前的职称系统仔细想通：https://shiro.apache.org/permissions.html
+newbie: dynamic roles with shiro：http://shiro-user.582556.n2.nabble.com/newbie-dynamic-roles-with-shiro-td4675561.html
+根据shiro第六章，添加4个表。看看开涛第6章是如何组织service的。service还分接口和实现，作用是什么？
+通过邮箱找密码的逻辑是啥？
+AuthorizingRealm：http://jinnianshilongnian.iteye.com/blog/2022468
 
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a

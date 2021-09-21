@@ -11,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface MenuMapper extends BaseMapper<Menu> {
     @Delete({
-        "delete from Menu",
+        "delete from busi_menu",
         "where id = #{id,jdbcType=BIGINT}"
     })
     int deleteByPrimaryKey(Long id);
@@ -19,7 +19,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
     @Select({
         "select",
         "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
-        "from Menu",
+        "from busi_menu",
         "where id = #{id,jdbcType=BIGINT}"
     })
     @ConstructorArgs({
@@ -40,7 +40,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
     @Select({
         "select",
         "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
-        "from Menu",
+        "from busi_menu",
         "where role like '%${roleStr}' order by sort"
     })
     @ConstructorArgs({
@@ -61,7 +61,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
     @Select({
         "select",
         "id, menu_name, number, url, icon, parent_id, sort, in_use, open_way, create_time, update_time",
-        "from Menu"
+        "from busi_menu"
     })
     @ConstructorArgs({
         @Arg(column="id", javaType=Long.class, jdbcType=JdbcType.BIGINT, id=true),
@@ -79,7 +79,7 @@ public interface MenuMapper extends BaseMapper<Menu> {
     List<Menu> selectAll();
 
     @Update({
-        "update Menu",
+        "update busi_menu",
         "set menu_name = #{menuName,jdbcType=VARCHAR},",
           "number = #{number,jdbcType=VARCHAR},",
           "url = #{url,jdbcType=VARCHAR},",

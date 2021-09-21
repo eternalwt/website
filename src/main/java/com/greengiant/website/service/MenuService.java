@@ -10,4 +10,5 @@ public interface MenuService extends IService<Menu> {
 
     List<MenuTreeNode> getMenuTree();
 
+    List<Menu> getMenuListByRole(String roleId);
 }

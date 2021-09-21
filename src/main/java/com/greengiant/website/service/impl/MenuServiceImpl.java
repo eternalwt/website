@@ -57,4 +57,12 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
         }
     }
 
+    @Override
+    public List<Menu> getMenuListByRole(String roleId) {// todo resource是否有必要单独搞一个controller？
+        // todo 根据资源类别过滤
+        // 1.获取权限，然后根据权限过滤，要么就直接用一个语句搞定。先写通再看
+
+        return null;
+    }
+
 }

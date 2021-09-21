@@ -38,11 +38,17 @@ public class PermServiceImpl extends ServiceImpl<PermissionMapper, Perm> impleme
         if (perm.getResource() != null && !"".equals(perm.getResource())) {
             wrapper.like("resource", perm.getResource());
         }
+        if (perm.getResourceCode() != null && !"".equals(perm.getResourceCode())) {
+            wrapper.like("resource_code", perm.getResourceCode());
+        }
         if (perm.getOperation() != null && !"".equals(perm.getOperation())) {
             wrapper.like("operation", perm.getOperation());
         }
         if (perm.getResourceInstance() != null && !"".equals(perm.getResourceInstance())) {
             wrapper.like("resource_instance", perm.getResourceInstance());
+        }
+        if (perm.getResourceInstanceId() != null && !"".equals(perm.getResourceInstanceId())) {
+            wrapper.like("resource_instance_id", perm.getResourceInstanceId());
         }
 
         return wrapper;

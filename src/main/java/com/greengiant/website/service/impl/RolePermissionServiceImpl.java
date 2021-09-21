@@ -24,6 +24,11 @@ public class RolePermissionServiceImpl extends ServiceImpl<RolePermissionMapper,
         return this.saveBatch(rolePermList);
     }
 
+    public RolePermission getPermListByRoleId() {// todo 是否直接返回permission?
+        // todo
+        return null;
+    }
+
     @Override
     public boolean delRolePermBatch(AuthorizeQuery authorizeQuery) {
         QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();

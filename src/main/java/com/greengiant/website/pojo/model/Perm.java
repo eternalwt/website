@@ -27,7 +27,7 @@ public class Perm {
     private String resource;
 
     /**
-     * 资源代码，例如1代表菜单，2代表按钮，3代表接口
+     * 资源代码（资源类别），例如1代表菜单，2代表按钮，3代表接口
      */
     private String resourceCode;// todo 这里是否与下面几项统一搞成resourceId？【从写代码流畅性方面来考虑】
 
@@ -37,9 +37,9 @@ public class Perm {
     private String operation;
 
     /**
-     * 实例（对应wildcarPermission里面的实例，例如每一个菜单用一个实例标识）
+     * 资源实例（对应wildcarPermission里面的实例，例如每一个菜单用一个实例标识）
      */
-    private String resourceInstance;// todo 这一项和下面一项最终用那个？或者都用【从代码流畅性来考虑】
+    private String resourceInstance;// todo 这一项和下面一项最终用那个？或者都用【从代码流畅性来考虑】先用resourceInstanceId
 
     /**
      * 资源实例id，资源实例对应的主键（与entityId类似，代表其他真正存放各类资源详情表的表主键）

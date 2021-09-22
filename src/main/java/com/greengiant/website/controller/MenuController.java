@@ -71,8 +71,8 @@ public class MenuController {
         List<UserRole> userRoleList = userRoleService.list(userRoleWrapper);
         if (userRoleList != null && !userRoleList.isEmpty()) {
             QueryWrapper wrapper = new QueryWrapper<>();
-            wrapper.eq("entity_id", userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList()));
-            wrapper.eq("resource_instance_id", ResourceTypeEnum.MENU.getCode());
+            wrapper.in("entity_id", userRoleList.stream().map(UserRole::getRoleId).collect(Collectors.toList()));
+            wrapper.eq("resource_code", ResourceTypeEnum.MENU.getCode());
             List<Perm> permList = permService.list(wrapper);
             if (permList != null && !permList.isEmpty()) {
                 // 2.根据菜单resourceInstanceId到menu表中取出菜单数据【补数据，然后确认授权哪里是OK的】

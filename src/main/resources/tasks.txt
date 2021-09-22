@@ -70,6 +70,7 @@
     1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284
     2.瑞鹿云遗留的问题。
     【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
+    如何评价 2021 年 9 月发布的 Java 17？https://www.zhihu.com/question/481067247/answer/2132579074
     Spring Framework 6 和 Spring Boot 3 已经计划在 2022 年第四季度实现总体可用性的高端基线，将采用 Java 17 和 Jakarta EE 9 及更高级的版本
 
 ======================================================================================================================
@@ -484,7 +485,8 @@ webuploader是基础设施
 我的model的注释不全
 
 家里代码swagger以及权限配好
-
+在产品经理网站再看搜索的设计，结合myql全文检索做站内搜索
+angular部署：用nginx和tomcat部署各用于什么场景？
 当遇到需要读3个表才能取出数据时，就要考虑字段冗余了
 
 对比我的代码返回值有没有泛型：ResultBean<T>。公司代码的Result.error等没有具体化，导致产生了一堆告警
@@ -1079,6 +1081,7 @@ https://www.cnblogs.com/zhanying999666/p/8392592.html
 
 【应该把重点放在redis配置以及看懂shiro加载shiroConfig的过程】
 shiro-redis插件包还有必要看吗？
+mybatis-spring：http://mybatis.org/spring/
 
 可以看shiro的启动加载了：shiro-spring
 1.要搞清除包里面的bean是怎么被自动扫描的；

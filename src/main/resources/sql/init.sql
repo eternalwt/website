@@ -208,4 +208,7 @@ insert into busi_menu(menu_name, url, sort, in_use, `role`) values('第三方组
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');
 
-insert into 
+insert into (entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '控制台', 1, '*', 1);
+insert into (entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加用户', 1, '*', 2);
+
+

@@ -14,7 +14,7 @@ public class Perm {
     /**
      * 权限的实体，可以是角色、角色实例、用户、机构等等（支持基于角色、基于用户等多种方式鉴权）
      */
-    private String entity;
+    private String entity;// todo 这里为啥不和下面类似搞个entityCode
 
     /**
      * 权限实体对应的主键（其他真正存放各类实体详情表的表主键）

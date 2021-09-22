@@ -207,3 +207,5 @@ insert into busi_menu(menu_name, url, sort, in_use, `role`) values('material组�
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 12, 1, '1');
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');
+
+insert into 

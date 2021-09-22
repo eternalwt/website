@@ -208,7 +208,18 @@ insert into busi_menu(menu_name, url, sort, in_use, `role`) values('第三方组
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
 insert into busi_menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');
 
-insert into (entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '控制台', 1, '*', 1);
-insert into (entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加用户', 1, '*', 2);
-
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '控制台', 1, '*', 1);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加用户', 1, '*', 2);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '用户列表', 1, '*', 3);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加角色', 1, '*', 4);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '角色列表', 1, '*', 5);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '发表文章', 1, '*', 6);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '文章列表', 1, '*', 7);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加菜单', 1, '*', 8);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '权限配置', 1, '*', 9);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '仪表盘', 1, '*', 10);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, 'material组件', 1, '*', 11);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '第三方组件', 1, '*', 12);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '消息中心', 1, '*', 13);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '联系信息', 1, '*', 14);
 

@@ -27,7 +27,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
         "select",
-        "id, user_name, password, password_salt, avatar, phone, email, qq, locked, create_time, update_time",
+        "id, user_name, password, password_salt, avatar, phone, email, qq, status, create_time, update_time",
         "from auth_user",
         "where id = #{id,jdbcType=BIGINT}"
     })
@@ -39,7 +39,7 @@ public interface UserMapper extends BaseMapper<User> {
         @Arg(column="phone", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="qq", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="locked", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
+        @Arg(column="status", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
@@ -47,7 +47,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
             "select",
-            "id, user_name, password, password_salt, avatar, phone, email, qq, locked, create_time, update_time",
+            "id, user_name, password, password_salt, avatar, phone, email, qq, status, create_time, update_time",
             "from auth_user",
             "where user_name = #{username}"
     })
@@ -60,7 +60,7 @@ public interface UserMapper extends BaseMapper<User> {
             @Arg(column="phone", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
             @Arg(column="qq", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-            @Arg(column="locked", javaType=Integer.class, jdbcType=JdbcType.TINYINT),
+            @Arg(column="status", javaType=Integer.class, jdbcType=JdbcType.TINYINT),
             @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
             @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })
@@ -68,7 +68,7 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select({
         "select",
-        "id, user_name, password, password_salt, avatar, phone, email, qq, locked, create_time, update_time",
+        "id, user_name, password, password_salt, avatar, phone, email, qq, status, create_time, update_time",
         "from auth_user"
     })
     @ConstructorArgs({
@@ -80,7 +80,7 @@ public interface UserMapper extends BaseMapper<User> {
         @Arg(column="phone", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="email", javaType=String.class, jdbcType=JdbcType.VARCHAR),
         @Arg(column="qq", javaType=String.class, jdbcType=JdbcType.VARCHAR),
-        @Arg(column="locked", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
+        @Arg(column="status", javaType=Boolean.class, jdbcType=JdbcType.TINYINT),
         @Arg(column="create_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP),
         @Arg(column="update_time", javaType=Date.class, jdbcType=JdbcType.TIMESTAMP)
     })

@@ -37,7 +37,7 @@ public class MenuController {
         return ResultUtils.success(menuService.save(menu));
     }
 
-    @PostMapping(value = "/list")
+    @GetMapping(value = "/list")
     public ResultBean getMenuList() {
         return ResultUtils.success(menuService.list());
     }
@@ -49,7 +49,7 @@ public class MenuController {
         // 1.根据perm表里面的entityId和resourceCode查询出所有菜单perm，取resourceInstanceId
         QueryWrapper permWrapper = new QueryWrapper<>();
         permWrapper.eq("entity_id", roleId);
-        permWrapper.eq("resource_instance_id", ResourceTypeEnum.MENU.getCode());
+        permWrapper.eq("resource_code", ResourceTypeEnum.MENU.getCode());
         List<Perm> permList = permService.list(permWrapper);
         if (permList != null && !permList.isEmpty()) {
             // todo 2.根据菜单resourceInstanceId到menu表中取出菜单数据【补数据，然后确认授权哪里是OK的】

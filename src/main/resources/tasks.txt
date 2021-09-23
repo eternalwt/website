@@ -71,6 +71,7 @@
     2.瑞鹿云遗留的问题。
     【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
     如何评价 2021 年 9 月发布的 Java 17？https://www.zhihu.com/question/481067247/answer/2132579074
+    【家里机器不再用java8，以后只下载java 17，从11开始特性用起】
     Spring Framework 6 和 Spring Boot 3 已经计划在 2022 年第四季度实现总体可用性的高端基线，将采用 Java 17 和 Jakarta EE 9 及更高级的版本
 
 ======================================================================================================================
@@ -237,6 +238,8 @@ Quartz集群原理以及配置应用的方法详解：https://zhuanlan.zhihu.com
 Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.com/p/687a7b7e5954
 
 我的model上为啥没有注解？
+SpringBoot整合Mybatis分为“使用配置文件方式”和“无配置文件注解版”两种方法：https://www.cnblogs.com/xuehuashanghe/p/9593639.html
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
 ElasticSearch原理：
 	https://zhuanlan.zhihu.com/p/336889554
@@ -495,7 +498,7 @@ angular部署：用nginx和tomcat部署各用于什么场景？
 
 京东猎户座发布开源，配置化一键生成cms系统【看看会对我的项目造成什么冲击。或许是我多虑了，思考有没有冲击的可能】：https://tianyalei.blog.csdn.net/article/details/115752780
 
-【家里机器不再用java8，以后只下载java 17，从11开始特性用起】
+Spring Batch Tutorial: Reading Information From an Excel File：https://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-reading-information-from-an-excel-file/
 
 runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
 RunAs理解：

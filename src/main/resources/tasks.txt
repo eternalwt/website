@@ -47,6 +47,8 @@
     4.优化流程和工程实践，进行迭代。
 再评估一下我学习PL的价值，把问题想细想透，并通过这个问题思考打工和创业
 
+学到知识、给别人提供价值（无论是哪种产品形态和层面的）：这才是最关键的
+
 ====================================================================================================
 
 休息一段时间，一直到十一
@@ -66,34 +68,31 @@
     3.其他
 这几天真正的事情应该是评估一下自己的前端能力，梳理前端事项
 
-中秋、国庆目标：
+【中秋、国庆目标】
     1.用 JavaScript 写一个超小型编译器：https://zhuanlan.zhihu.com/p/21830284
     2.瑞鹿云遗留的问题。
     【十一升Java 17，java 17只需要花3天到一周，主要精力还是在解释器上】
     如何评价 2021 年 9 月发布的 Java 17？https://www.zhihu.com/question/481067247/answer/2132579074
     【家里机器不再用java8，以后只下载java 17，从11开始特性用起】
+    Spring Framework 6 将采用 Java 17，是时候将你的应用升级了：https://zhuanlan.zhihu.com/p/408344149
     Spring Framework 6 和 Spring Boot 3 已经计划在 2022 年第四季度实现总体可用性的高端基线，将采用 Java 17 和 Jakarta EE 9 及更高级的版本
 
 ======================================================================================================================
 
+有了Subject【为什么设计这个抽象，如果没有这个抽象会有哪些不方便？这个也是库提供的功能，如果自己写鉴权就没有这么方便使用的】，还需要CurrentUser吗？应该不需要吧。Spring Security里面的对等物是什么？
 SecurityUtils与ThreadLocal？
 浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
 可以提高LSM的优先级了，以及从0开始：500行代码实现 LSM 数据库：https://zhuanlan.zhihu.com/p/384761846
 然后直接搞数据库项目，scheme如果暂时不搞了也无所谓
+Shiro为什么要使用InheritableThreadLocalMap存放Subject？https://www.oschina.net/question/2275855_2273276
+SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
 【新思维】年前可以重点搞前端了，附带基础知识和后端。后端可以等年后边接项目边搞，现在的知识够用了。
 
-【看一小时bootstrap 5】
-angular 多页面应用
-DevUI Admin 2.0 重磅发布【华为的开源前端解决方案】：https://zhuanlan.zhihu.com/p/400436608
-Angular DOM 更新机制：https://zhuanlan.zhihu.com/p/36338142
-
 2022年3月17日之后开始寻觅新的工作，不要问公司，我能有更好的发展
-Bootstrap 5.1：https://v5.bootcss.com/
+
 鲁辉：应该是我分好任务，给他来做
 还可以找袁俊双等人，以及以前的同事
-
-SpringBoot+Shiro实现登陆拦截功能：https://blog.csdn.net/u011972171/article/details/80004601
 
 权限之数据权限【阿里巴巴等大公司用的多，在现有Perm已经调通的基础上再学习思考一次。我感觉可以纳入现有的资源体系】：
 https://www.jianshu.com/p/1b27d2c8a080
@@ -206,10 +205,6 @@ NIO是基础设施(和epoll一起学习，潜龙勿用)
 看看还有哪些基础设施缺失【你必须得有自己的一套逻辑】
 前端：1.前端单独的基础设施；2.对应后端基础设施补充内容；
 【名字叫foundation】加个服务，搞定时任务、规则引擎、工作流这些基础设施
-
-有了Subject，还需要CurrentUser吗？
-
-Spring Framework 6 将采用 Java 17，是时候将你的应用升级了：https://zhuanlan.zhihu.com/p/408344149
 
 【公司里面的FileStream NIO要看】
 【看一下quartz Scheduler的集成】

@@ -47,7 +47,7 @@
     4.优化流程和工程实践，进行迭代。
 再评估一下我学习PL的价值，把问题想细想透，并通过这个问题思考打工和创业
 
-学到知识、给别人提供价值（无论是哪种产品形态和层面的）：这才是最关键的
+学到知识、给别人提供价值（无论是哪种产品形态和层面的）：这才是最关键的。我不需要很复杂的商业模式，只需要开发出高质量有价值的软件，得把1/2的时间花费在技术上，包括开发、代码review、测试、搭建框架及基础设施。
 
 ====================================================================================================
 
@@ -267,6 +267,24 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
 干掉SQL中的like，我用es后运营小姐姐们都说好快：https://mp.weixin.qq.com/s/x--WMk-SFOOaJSC-_rDYTA
+ES应用场景：https://www.zhihu.com/question/295509005/answer/498732349
+Elasticsearch中数据是如何存储的：https://www.cnblogs.com/surasun/articles/10752021.html
+聊聊 Elasticsearch 的倒排索引：
+	https://zhuanlan.zhihu.com/p/76485252	https://www.cnblogs.com/cjsblog/p/10327673.html
+ElasticsearchTemplate 常用API使用：	https://blog.csdn.net/qq_35188937/article/details/108178072
+	search、getById、exists
+es与mysql概念对比：https://blog.csdn.net/mj86534210/article/details/79910909
+elasticsearchTemplate.updateCover
+ElasticsearchIndex类：
+ElasticSearchRepository类：https://tianyalei.blog.csdn.net/article/details/76149547
+ElasticSearch面试题：
+    https://www.wenyuanblog.com/blogs/elasticsearch-interview-questions.html
+	https://zhuanlan.zhihu.com/p/102500311
+	https://www.cnblogs.com/weifeng1463/p/14479373.html
+	https://www.cnblogs.com/heqiyoujing/p/11146178.html
+ElasticSearch 分词：https://blog.csdn.net/mj86534210/article/details/80898328
+Elasticsearch 升级 7.x 版本后，我感觉掉坑里了：https://www.jianshu.com/p/6b6ae4b2d7ef
+elasticsearch的配置，包括日志配置等
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486

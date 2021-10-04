@@ -189,24 +189,23 @@ create table busi_article(
 
 -- 初始化数据
 insert into auth_role(`role_name`) values("admin");
-insert into auth_user(user_name, password, password_salt)
-    values('admin','7262db0dd9c3865016dac3227a3fbfb4', '83061e526dff50fff56d4ff587d7f581');
+insert into auth_user(user_name, password, password_salt) values('admin','7262db0dd9c3865016dac3227a3fbfb4', '83061e526dff50fff56d4ff587d7f581');
 insert into auth_user_role("user_id", "role_id") values(1,1);
 
-insert into busi_menu(menu_name, url, sort, in_use, role) values('控制台', '/home/main', 1, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加用户', '/home/adduser', 2, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('用户列表', '/home/userlist', 3, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加角色', '/home/addrole', 4, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('角色列表', '/home/rolelist', 5, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('发表文章', '/home/addarticle', 6, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('文章列表', '/home/articlelist', 7, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('添加菜单', '/home/addmenu', 8, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('权限配置', '/home/permassign', 9, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('仪表盘', '/home/dashboard', 10, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('material组件', '/home/components', 11, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 12, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('消息中心', '/home/message', 13, 1, '1');
-insert into busi_menu(menu_name, url, sort, in_use, `role`) values('联系信息', '/home/contact', 14, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, role) values('控制台', '/home/main', 'bi bi-alarm', 1, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('添加用户', '/home/adduser', 'bi bi-person', 2, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('用户列表', '/home/userlist', 'bi bi-people', 3, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('添加角色', '/home/addrole', 'bi bi-person-circle', 4, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('角色列表', '/home/rolelist', 'bi bi-people-fill', 5, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('发表文章', '/home/addarticle', 'bi bi-file-earmark', 6, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('文章列表', '/home/articlelist', 'bi bi-file-earmark-bar-graph', 7, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('添加菜单', '/home/addmenu', 'bi bi-menu-button-wide', 8, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('权限配置', '/home/permassign', 'bi bi-tools', 9, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('仪表盘', '/home/dashboard', 'bi bi-display', 10, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('material组件', '/home/components', 'bi bi-grid', 11, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('第三方组件', '/home/3rdparty', 'bi bi-grid-1x2', 12, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('消息中心', '/home/message', 'bi bi-bell', 13, 1, '1');
+insert into busi_menu(menu_name, url, icon, sort, in_use, `role`) values('联系信息', '/home/contact', 'bi bi-info-circle', 14, 1, '1');
 
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '控制台', 1, '*', 1);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加用户', 1, '*', 2);
@@ -218,7 +217,7 @@ insert into auth_permission(entity, entity_id, resource, resource_code, operatio
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '添加菜单', 1, '*', 8);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '权限配置', 1, '*', 9);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '仪表盘', 1, '*', 10);
-insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, 'material组件', 1, '*', 11);
+insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '第三方主题元素', 1, '*', 11);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '第三方组件', 1, '*', 12);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '消息中心', 1, '*', 13);
 insert into auth_permission(entity, entity_id, resource, resource_code, operation, resource_instance_id) values('ROLE', 1, '联系信息', 1, '*', 14);

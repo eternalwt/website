@@ -13,14 +13,14 @@ import java.io.IOException;
 @Component
 public class Consumer {
 
-    // todo 思考怎么提供接口和包，让其他微服务直接使用？（如果不确定，再看看公司代码）
+    // todo 思考怎么提供接口和包，让其他微服务直接使用？（如果不确定，再看看公司代码）【要达到和公司一样的效果，能从一个方法直接响应，并且要比公司的简单，不用在配置文件里面配置】
 
     private static Logger LOGGER = LogManager.getLogger(Consumer.class);
 
     @RabbitListener(queues = "cord")// todo 监听多个队列。公司的代码好像
     //@RabbitListener(queues = "cord", containerFactory="myFactory")
     public void processMessage(String msg) {
-        System.out.format("Receiving Message: -----[%s]----- \n.", msg);
+        LOGGER.info("Receiving Message: -----[%s]----- ", msg);
     }
 
     /**

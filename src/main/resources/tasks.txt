@@ -349,6 +349,10 @@ RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.ht
 MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
 Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
 
+RabbitMQ的并发参数（concurrency和prefetch）：
+    https://blog.csdn.net/qq_29595463/article/details/107857172
+    https://www.cnblogs.com/itplay/p/11164951.html
+RabbitMQ高可用介绍【HAproxy 来做 RabbitMQ 负载均衡和高可用，用 Keepalived 来保证 HAproxy 的高可用】：https://zhuanlan.zhihu.com/p/238192931
 Spring Cloud中RabbitMQ配置属性表：https://blog.csdn.net/en_joker/article/details/80103519
 RabbitMQ 服务的SimpleMessageListenerContainer和DirectMessageListenerContainer：
 	https://cn-blogs.cn/archives/9341.html

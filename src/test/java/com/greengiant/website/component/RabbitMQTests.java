@@ -22,25 +22,25 @@ public class RabbitMQTests {
     @Autowired
     private Producer producer;
 
-    //Direct
+    // Direct
     @Test
     public void sendDirectMsg() {
         producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
     }
 
-    //Topic
+    // Topic
     @Test
-    public void sendtopicMsg() {
+    public void sendTopicMsg() {
         producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world");
     }
 
-    //Fanout
+    // Fanout
     @Test
     public void sendFanoutMsg() {
         producer.sendExchangeMsg("fanout-exchange", "abcdefg", String.valueOf(System.currentTimeMillis()));
     }
 
-    //Headers
+    // Headers
     @Test
     public void sendHeadersMsg() {
         Map<String, Object> map = new HashMap<>();

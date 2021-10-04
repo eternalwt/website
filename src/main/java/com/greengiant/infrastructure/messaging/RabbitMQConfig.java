@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 
+import javax.annotation.PostConstruct;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,12 @@ import java.util.Map;
 @Configuration
 @Order(100)
 public class RabbitMQConfig {
+
+    // todo
+//    @PostConstruct
+
+
+    // ------------------------------------------------------------------------
 
     private static final String topicExchangeName = "topic-exchange";
     private static final String fanoutExchange = "fanout-exchange";

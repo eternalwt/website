@@ -93,8 +93,9 @@ public class RabbitMQConfig {
     @Bean
     Binding headersBinding(Queue queue, HeadersExchange headersExchange) {
         Map<String, Object> map = new HashMap<>();
-        map.put("First","A");
-        map.put("Fourth","D");
+//        map.put("First","A");
+//        map.put("Fourth","D");
+
         //whereAny表示部分匹配，whereAll表示全部匹配
 //        return BindingBuilder.bind(queue).to(headersExchange).whereAll(map).match();
         return BindingBuilder.bind(queue).to(headersExchange).whereAny(map).match();

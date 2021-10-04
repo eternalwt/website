@@ -42,9 +42,9 @@ spring:
 
   rabbitmq:
     host: localhost
-    port: 5672
     username: guest
     password: guest
+    port: 5672
 #    virtual-host: /
 #    publisher-confirm-type: none
 #    publisher-confirms: true   #开启发送确认
@@ -59,6 +59,7 @@ spring:
         #max-concurrency: 1 #指定最大的消费者数量
         retry:
           enabled: true # 是否支持重试
+#      acknowledge-mode: manual
 
   elasticsearch:
     rest:

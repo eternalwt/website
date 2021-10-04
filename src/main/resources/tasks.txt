@@ -349,6 +349,7 @@ RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.ht
 MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
 Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
 
+Spring Cloud中RabbitMQ配置属性表：https://blog.csdn.net/en_joker/article/details/80103519
 RabbitMQ 服务的SimpleMessageListenerContainer和DirectMessageListenerContainer：
 	https://cn-blogs.cn/archives/9341.html
 	https://blog.csdn.net/yingziisme/article/details/86418580

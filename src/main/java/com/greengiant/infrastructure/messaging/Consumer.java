@@ -1,6 +1,5 @@
 package com.greengiant.infrastructure.messaging;
 
-import com.greengiant.website.shiro.CustomCachedSessionDAO;
 import com.rabbitmq.client.Channel;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,6 +12,8 @@ import java.io.IOException;
 
 @Component
 public class Consumer {
+
+    // todo 思考怎么提供接口和包，让其他微服务直接使用？（如果不确定，再看看公司代码）
 
     private static Logger LOGGER = LogManager.getLogger(Consumer.class);
 

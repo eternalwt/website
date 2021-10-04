@@ -16,9 +16,8 @@ import java.util.Map;
 @Order(100)
 public class RabbitMQConfig {
 
-    // todo
+    // todo 项目中正确的打开方式应该是：1.在PostConstruct里面统一初始化交换机、队列、绑定关系；2.设计合理的配置项定义交换机、队列、绑定关系
 //    @PostConstruct
-
 
     // ------------------------------------------------------------------------
 

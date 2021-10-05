@@ -12,6 +12,8 @@
 
 =====================================================================================================
 
+【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
+
 【策略与打法】
     1.起初只能瞄准10-20万的项目；
     2.管理系统前后端是技术和业务的基本盘；
@@ -36,6 +38,16 @@
     1.90%的人解决不了的问题是技术；
     2.别人需要更大量时间和成本而自己可以减少的是技术【工程方面的也是技术】；
     3.
+产生利润的几个方向【深耕】：
+    1.管理系统；
+    2.传感器与大数据；
+    3.机器学习与人工智能；
+    4.PL理论
+利润的来源：
+    0.主动发现需求；
+    1.技术及人才；
+    2.软件工程；
+    3.更高层面的管理。
 我现在面临的问题不是干不了，而是压力大，收入也不是特别理想。
 赚到钱后再读书学习是不是效率更高？
 
@@ -51,7 +63,8 @@
 
 ====================================================================================================
 
-休息一段时间，一直到十一
+1.把rabbitmq的东西写好；
+2.把elasticSearch的模糊查询写完、测通；把geoip database的问题解决
 
 任务计划表【赚钱就是这些琐碎的事，静下心来】：
     1.ehcache、redis做到能快速切换（再看一遍代码，这个应该不难了）
@@ -236,7 +249,12 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 SpringBoot整合Mybatis分为“使用配置文件方式”和“无配置文件注解版”两种方法：https://www.cnblogs.com/xuehuashanghe/p/9593639.html
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
-ElasticSearch原理：
+Postman 操作 elasticsearch：https://www.cnblogs.com/ckfuture/p/14963678.html
+windows环境基于zip包安装Elasticsearch-6.8.10：https://blog.csdn.net/qq_19783793/article/details/106913818
+Windows上安装ElasticSearch7的IK分词器：https://www.cnblogs.com/java-spring/p/11766450.html
+ES的机器学习功能可以进入了
+看看我安装的高版本的elasticsearch有些什么特性【感觉每个大数据工具最核心的功能就那么几项，抓住最关键的】
+ElasticcSearch原理：
 	https://zhuanlan.zhihu.com/p/336889554
 	https://zhuanlan.zhihu.com/p/94915597
 	https://zhuanlan.zhihu.com/p/74234766
@@ -264,6 +282,8 @@ SpringBoot调用ElasticSearch的RestHighLevelClient的功能详解：https://zhu
 Cerebro，这个是一款Elasticsearch监控工具，下载地址：https://github.com/lmenezes/cerebro/releases
 Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/101193838
 基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
+windows下ik分词器的安装：https://www.jianshu.com/p/bb89ad7a7f7d
+elasticsearch-analysis-ik（有些小版本没有，影不影响？）：https://github.com/medcl/elasticsearch-analysis-ik/tags
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
 干掉SQL中的like，我用es后运营小姐姐们都说好快：https://mp.weixin.qq.com/s/x--WMk-SFOOaJSC-_rDYTA
@@ -285,6 +305,7 @@ ElasticSearch面试题：
 ElasticSearch 分词：https://blog.csdn.net/mj86534210/article/details/80898328
 Elasticsearch 升级 7.x 版本后，我感觉掉坑里了：https://www.jianshu.com/p/6b6ae4b2d7ef
 elasticsearch的配置，包括日志配置等
+windows下安装ElasticSearch的Head插件：https://www.cnblogs.com/hts-technology/p/8477258.html
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486

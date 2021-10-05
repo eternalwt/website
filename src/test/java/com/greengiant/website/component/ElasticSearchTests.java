@@ -102,7 +102,7 @@ public class ElasticSearchTests {
 
     @Test
     public void testGetById1() throws IOException {
-        // todo 1.搞清楚incldes、excludes；2.多条件、模糊查询；3.如何反序列化成方便使用的对象？
+        // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
         GetRequest getRequest = new GetRequest("cat");
         getRequest.id("1");
 //        String[] includes = new String[]{"*", "birthday"};

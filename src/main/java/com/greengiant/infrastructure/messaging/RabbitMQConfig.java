@@ -1,6 +1,10 @@
 package com.greengiant.infrastructure.messaging;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -99,12 +103,33 @@ public class RabbitMQConfig {
     @Bean
     Binding headersBinding(Queue queue, HeadersExchange headersExchange) {
         Map<String, Object> map = new HashMap<>();
-//        map.put("First","A");
-//        map.put("Fourth","D");
+        map.put("First","A");
+        map.put("Fourth","D");
 
         //whereAny表示部分匹配，whereAll表示全部匹配
 //        return BindingBuilder.bind(queue).to(headersExchange).whereAll(map).match();
         return BindingBuilder.bind(queue).to(headersExchange).whereAny(map).match();
     }
+
+//    /**
+//     * 定义消息转换实例 ，转化成 JSON传输
+//     *
+//     * @return Jackson2JsonMessageConverter
+//     */
+//    @Bean
+//    public MessageConverter integrationEventMessageConverter() {
+//        return new Jackson2JsonMessageConverter();
+//    }
+//
+//    /**
+//     * 配置启用rabbitmq事务
+//     *
+//     * @param connectionFactory connectionFactory
+//     * @return RabbitTransactionManager
+//     */
+//    @Bean
+//    public RabbitTransactionManager rabbitTransactionManager(CachingConnectionFactory connectionFactory) {
+//        return new RabbitTransactionManager(connectionFactory);
+//    }
 
 }

@@ -6,6 +6,15 @@ public class Student {
     private Integer age;
     private Boolean sex;
 
+    public Student() {
+    }
+
+    public Student(String name, Integer age, Boolean sex) {
+        this.name = name;
+        this.age = age;
+        this.sex = sex;
+    }
+
     public String getName() {
         return name;
     }

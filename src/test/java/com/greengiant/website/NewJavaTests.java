@@ -1,7 +1,8 @@
 package com.greengiant.website;
 
 import com.greengiant.website.model.Student;
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -9,8 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
 
 public class NewJavaTests {
 
@@ -23,7 +22,7 @@ public class NewJavaTests {
         System.out.println(list);
     }
 
-    @Test(expected = UnsupportedOperationException.class)
+    @Test// todo 在junit5里面怎么写？(expected = UnsupportedOperationException.class)
     public void whenModifyCopyOfList_thenThrowsException() {
         List<Integer> someIntList = new ArrayList<>();
         someIntList.add(1);
@@ -89,7 +88,7 @@ public class NewJavaTests {
             default -> me;
         };
 
-        assertEquals(16, result);
+        Assertions.assertEquals(16, result);
     }
 
 //    @Test

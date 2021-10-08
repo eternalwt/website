@@ -2383,6 +2383,9 @@ public String loginjudge(HttpServletRequest request)
 
 Mybatis-config.xml 详细配置：https://blog.csdn.net/weixin_41910059/article/details/82659238
 
+spring-boot-starter-parent升到2.5.5版本后，对应的junit版本是5.7.2（有spring-test 5.3.10、spring-boot-starter-test 2.5.5、spring-boot-test 2.5.5等几个test包）；公司里面的spring-boot-starter-parent 2.1.3以及我用的2.3.8.RELEASE是junit4
+Spring Boot 2.2.0 版本开始引入 JUnit 5 作为单元测试默认库，在 Spring Boot 2.2.0 版本之前，spring-boot-starter-test 包含了 JUnit 4 的依赖，Spring Boot 2.2.0 版本之后替换成了 Junit Jupiter：https://blog.csdn.net/jcmj123456/article/details/108438173
+看看springboot以前搭配junit5使用是怎么整合的
 BlockJUnit4ClassRunner源码分析：https://blog.csdn.net/hello_worldee/article/details/76110828
 SpringJUnit4ClassRunner
 看懂springboot的启动流程，再对比下面的说明：

@@ -2,7 +2,7 @@ package com.greengiant.website.lib;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;

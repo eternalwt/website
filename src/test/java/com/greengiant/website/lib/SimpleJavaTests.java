@@ -3,7 +3,7 @@ package com.greengiant.website.lib;
 import com.google.common.collect.Lists;
 import com.greengiant.infrastructure.utils.ZipUtil;
 import com.greengiant.website.model.Student;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.lang.reflect.Field;

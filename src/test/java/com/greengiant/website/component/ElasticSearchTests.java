@@ -11,10 +11,7 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.CreateIndexRequest;
-import org.elasticsearch.client.indices.CreateIndexResponse;
-import org.elasticsearch.client.indices.GetIndexRequest;
-import org.elasticsearch.cluster.metadata.AliasMetaData;
+import org.elasticsearch.client.indices.*;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -22,20 +19,21 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 //import org.zxp.esclientrhl.index.ElasticsearchIndex;
 //import org.zxp.esclientrhl.repository.ElasticsearchTemplate;
 
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class ElasticSearchTests {
 
@@ -68,17 +66,17 @@ public class ElasticSearchTests {
      */
     @Test
     public void testGetAllIndices() {
-        try {
-            GetAliasesRequest request = new GetAliasesRequest();
-            GetAliasesResponse getAliasesResponse =  restHighLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
-            Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
-            Set<String> indices = map.keySet();
-            for (String key : indices) {
-                System.out.println(key);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            GetAliasesRequest request = new GetAliasesRequest();
+//            GetAliasesResponse getAliasesResponse =  restHighLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
+//            Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
+//            Set<String> indices = map.keySet();
+//            for (String key : indices) {
+//                System.out.println(key);
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test
@@ -114,6 +112,30 @@ public class ElasticSearchTests {
 
         System.out.println(response.getSource().keySet().toString());
         System.out.println(response.getSource().values().toString());
+    }
+
+    @Test
+    public void testAnalyzeRequest() {
+//        AnalyzeRequest analyzeRequest = new AnalyzeRequest();
+//
+//        analyzeRequest.text("我爱中国","我喜欢中国"); // 设置需要分词的中文字
+//        analyzeRequest.analyzer("ik_smart");       // 设置使用什么分词器  也可以使用 ik_max_word 它是细粒度分词
+//
+//        try {
+//            AnalyzeResponse analyzeResponse = restHighLevelClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT);
+//            List<AnalyzeResponse.AnalyzeToken> tokens = analyzeResponse.getTokens(); // 获取所有分词的内容
+//            // 使用Java 8 语法获取分词内容
+//            tokens.forEach(token -> {
+//                // 过滤内容，如果文字小于2位也过滤掉
+//                if (!"<NUM>".equals(token.getType()) || token.getTerm().length() > 2) {
+//                    String term = token.getTerm(); // 分词内容
+////                    System.out.prinlnt(term)
+//                }
+//            });
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test

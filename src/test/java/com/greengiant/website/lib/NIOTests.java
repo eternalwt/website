@@ -1,6 +1,6 @@
 package com.greengiant.website.lib;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

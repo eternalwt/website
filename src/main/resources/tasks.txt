@@ -10,6 +10,10 @@
 
 不能急躁，还是要读读别人的门户代码，然后再做自己的产品
 
+你只要能掌握一个项目需求、开发、部署的所有关键点，就可以搞一个项目起来【所以我列举门户网站关键点的实践很有必要，如果把政府门户网站的列举完，这一类问题就全部打通了】【让媳妇关注关键点】我对细节的了解最终就是为了这个，要不然我为什么不去指挥别人？（这样才能保证10年的发展与运行）
+开发人员是创建软件最宝贵的资源，但他们的时间往往被管理层低估和滥用。管理者的作用应该是让开发人员能够工作，而不是拿走开发人员的时间。【没有10到15年开发经验，不要让做管理】
+创业的目的是从“有限游戏”到“无限游戏”
+
 =====================================================================================================
 
 【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
@@ -2383,9 +2387,9 @@ public String loginjudge(HttpServletRequest request)
 
 Mybatis-config.xml 详细配置：https://blog.csdn.net/weixin_41910059/article/details/82659238
 
-spring-boot-starter-parent升到2.5.5版本后，对应的junit版本是5.7.2（有spring-test 5.3.10、spring-boot-starter-test 2.5.5、spring-boot-test 2.5.5等几个test包）；公司里面的spring-boot-starter-parent 2.1.3以及我用的2.3.8.RELEASE是junit4
+spring-boot-starter-parent升到2.5.5版本后，对应的junit版本是5.7.2（有spring-test 5.3.10、spring-boot-starter-test 2.5.5、spring-boot-test 2.5.5等几个test包）；公司里面的spring-boot-starter-parent 2.1.3以及我用的2.3.8.RELEASE是junit4。应该是里面的junit-vintage-engine兼容了老的junit（现在的版本则完全排除了老的）：https://www.cnblogs.com/haixiang/p/13812363.html
 Spring Boot 2.2.0 版本开始引入 JUnit 5 作为单元测试默认库，在 Spring Boot 2.2.0 版本之前，spring-boot-starter-test 包含了 JUnit 4 的依赖，Spring Boot 2.2.0 版本之后替换成了 Junit Jupiter：https://blog.csdn.net/jcmj123456/article/details/108438173
-看看springboot以前搭配junit5使用是怎么整合的
+springboot以前搭配junit5使用是怎么整合的？以前的spring-boot-starter-test默认使用junit4，需要手动添加junit5依赖：http://www.choupangxia.com/2019/11/13/springboot-junit5-demo/
 BlockJUnit4ClassRunner源码分析：https://blog.csdn.net/hello_worldee/article/details/76110828
 SpringJUnit4ClassRunner
 看懂springboot的启动流程，再对比下面的说明：

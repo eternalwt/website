@@ -33,7 +33,7 @@ import java.util.Map;
 import java.util.Set;
 
 // todo 排序
-// todo BulkResponse
+// todo 写通BulkResponse，比较GetResponse、searchRequest、BulkResponse
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -83,7 +83,7 @@ public class ElasticSearchTests {
 
     @Test
     public void testInsertDoc() {
-        // todo IndexRequest的更多初始化方式，例如：new IndexRequest(index,type).opType("create").id(map.remove("id").toString()).source(map);
+        // todo IndexRequest的更多初始化方式：https://blog.csdn.net/hellow0rd/article/details/108192964
         IndexRequest indexRequest = new IndexRequest("cat");
         indexRequest.id("1"); //文档id
         String jsonString = "{" +
@@ -118,7 +118,7 @@ public class ElasticSearchTests {
         indexRequest2.id("12"); //文档id
         String jsonString2 = "{" +
                 "\"user\":\"gao2\"," +
-                "\"postDate\":\"2021-16-16\"," +
+                "\"postDate\":\"2021-10-16\"," +
                 "\"message\":\"巴西的监管文件包括该设备的一些图片，以及一个演示 Apple Watch 如何在其中安装的图形。\"" +
                 "}";
         indexRequest2.source(jsonString2, XContentType.JSON);
@@ -127,7 +127,7 @@ public class ElasticSearchTests {
         indexRequest3.id("13"); //文档id
         String jsonString3 = "{" +
                 "\"user\":\"gao3\"," +
-                "\"postDate\":\"2021-16-16\"," +
+                "\"postDate\":\"2021-10-16\"," +
                 "\"message\":\"目前还不完全清楚该设备的具体诊断目的，但它显然是一个供苹果技术人员内部使用的产品。\"" +
                 "}";
         indexRequest3.source(jsonString3, XContentType.JSON);
@@ -136,7 +136,7 @@ public class ElasticSearchTests {
         indexRequest4.id("14"); //文档id
         String jsonString4 = "{" +
                 "\"user\":\"gao4\"," +
-                "\"postDate\":\"2021-16-16\"," +
+                "\"postDate\":\"2021-10-16\"," +
                 "\"message\":\"诊断底座能以每秒约 200 兆比特的速度与Apple Watch通信。这还不到 USB 2.0 最高速度的一半，也远不如 Wi-Fi 快。\"" +
                 "}";
         indexRequest4.source(jsonString4, XContentType.JSON);
@@ -145,12 +145,12 @@ public class ElasticSearchTests {
         indexRequest5.id("15"); //文档id
         String jsonString5 = "{" +
                 "\"user\":\"gao5\"," +
-                "\"postDate\":\"2021-16-16\"," +
+                "\"postDate\":\"2021-10-16\"," +
                 "\"message\":\"Apple Watch Series 7 型号配备了一个新模块，可以实现 60.5GHz 无线数据传输。这个模块在苹果网站上没有宣传，很可能只供苹果内部使用，与此同时这一型号缺少一个隐藏的诊断端口，该端口位于之前所有Apple Watch型号的底部表带槽中。苹果在维修Apple Watch时使用该端口进行诊断，比如通过有线连接用特殊工具恢复watchOS。\"" +
                 "}";
         indexRequest5.source(jsonString5, XContentType.JSON);
 
-        request.add(indexRequest1);
+        request.add(indexRequest1);// todo 为啥这个没有插入进去？
         request.add(indexRequest2);
         request.add(indexRequest3);
         request.add(indexRequest4);
@@ -158,9 +158,10 @@ public class ElasticSearchTests {
         restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
     }
 
-        @Test
-    public void testGetById1() throws IOException {
-        // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
+    // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
+
+    @Test
+    public void testGetById() throws IOException {
         GetRequest getRequest = new GetRequest("cat");
         getRequest.id("1");
         String[] includes = new String[]{"*"};// 包含的列（所有列）
@@ -174,32 +175,67 @@ public class ElasticSearchTests {
     }
 
     // todo 把插入的6条数据都读出来
+    // todo MatchQueryBuilder RangeQueryBuilder SearchSourceBuilder【看懂类体系】
+    // todo 多条件查询(QueryBuilders.multiMatchQuery?)、模糊查询、ik分词查询（现在还不行） 模糊查询+分词查询
+    // todo 分页查询
 
     @Test
-    public void testGetById2() throws IOException {
+    public void testSearch1() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
         //searchRequest.types("type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        String[] ids = new String[]{"d136fc82-f458-4ba2-96a8-e83c4f621571", "6051bcaf-d587-44cd-86ba-b4c5c39da08f"};
-        searchSourceBuilder.query(QueryBuilders.termsQuery("_id", ids));
-        //設定源欄位過慮,第一個引數結果集包括哪些欄位，第二個參數列示結果集不包括哪些欄位
-//        searchSourceBuilder.fetchSource(new String[]{"name","studymodel","price","timestamp"},new String[]{});
-        //向搜尋請求物件中設定搜尋源
+//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.query(QueryBuilders.termsQuery("message", "巴西"));
+        // 字段过滤：参数代表包含和不包含的字段
+        searchSourceBuilder.fetchSource(new String[]{"*"}, new String[]{});
+
+
         searchRequest.source(searchSourceBuilder);
-        //執行搜尋,向ES發起http請求
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        //搜尋結果
+        // 结果
         SearchHits hits = searchResponse.getHits();
-        //匹配到的總記錄數
+        // 匹配到的记录总数
         long totalHits = hits.getTotalHits().value;
         System.out.println(totalHits);
         SearchHit[] searchHits = hits.getHits();
         for (SearchHit hit : searchHits) {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            String id = (String) sourceAsMap.get("id");
+            String id = (String) sourceAsMap.get("user");
             System.out.println(id);
         }
+    }
+
+    @Test
+    public void testSearch2() throws IOException {
+        SearchRequest searchRequest = new SearchRequest("cat");
+        //searchRequest.types("type");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.query(QueryBuilders.fuzzyQuery("message", "Seryes"));
+        // 字段过滤：参数代表包含和不包含的字段
+        searchSourceBuilder.fetchSource(new String[]{"*"}, new String[]{});
+
+
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        // 结果
+        SearchHits hits = searchResponse.getHits();
+        // 匹配到的记录总数
+        long totalHits = hits.getTotalHits().value;
+        System.out.println(totalHits);
+        SearchHit[] searchHits = hits.getHits();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            String id = (String) sourceAsMap.get("user");
+            System.out.println(id);
+        }
+    }
+
+    @Test
+    public void testIKQuery() throws IOException {
+
     }
 
     @Test
@@ -224,33 +260,6 @@ public class ElasticSearchTests {
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-    }
-
-    @Test
-    public void termQuery() throws IOException {
-        SearchRequest searchRequest = new SearchRequest("index");
-        //searchRequest.types("type");
-
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-        searchSourceBuilder.query(QueryBuilders.termQuery("rowkey", "eb3cddde-f745-4360-bd7c-c271e2087a31"));
-        //設定源欄位過慮,第一個引數結果集包括哪些欄位，第二個參數列示結果集不包括哪些欄位
-//        searchSourceBuilder.fetchSource(new String[]{"name","studymodel","price","timestamp"},new String[]{});
-        //向搜尋請求物件中設定搜尋源
-        searchRequest.source(searchSourceBuilder);
-        //執行搜尋,向ES發起http請求
-        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        //搜尋結果
-        SearchHits hits = searchResponse.getHits();
-        //匹配到的總記錄數
-        long totalHits = hits.getTotalHits().value;
-        System.out.println(totalHits);
-        SearchHit[] searchHits = hits.getHits();
-        for (SearchHit hit : searchHits) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            String id = (String) sourceAsMap.get("id");
-            System.out.println(id);
-        }
     }
 
     @Test

@@ -205,8 +205,12 @@ mybatis-plus 分页插件：https://mp.baomidou.com/guide/page.html
 
 uuid是基础设施，再研究一下到底是用自增long id还是uuid
 以前社保系统东软就没有用工作流？
-appId鉴权是基础设施，实现一下
+appId鉴权是基础设施
+appid,appkey如何设计：https://blog.csdn.net/u014756827/article/details/72953961
+云服务AppId或AppKey和AppSecret生成策略：https://www.cnblogs.com/owenma/p/11419341.html
+开放api接口平台：appid、appkey、appsecret：https://blog.csdn.net/inthat/article/details/103140515
 下载及打印是基础设施
+地图及gis是前端基础设施
 
 良好的文件表结构设计：
     https://blog.csdn.net/zhouyonggo/article/details/101548715
@@ -267,9 +271,10 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 SpringBoot整合Mybatis分为“使用配置文件方式”和“无配置文件注解版”两种方法：https://www.cnblogs.com/xuehuashanghe/p/9593639.html
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
-Postman 操作 elasticsearch：https://www.cnblogs.com/ckfuture/p/14963678.html
+elasticsearch查看所有索引：https://blog.csdn.net/LONG_Yi_1994/article/details/118380276
 windows环境基于zip包安装Elasticsearch-6.8.10：https://blog.csdn.net/qq_19783793/article/details/106913818
 Windows上安装ElasticSearch7的IK分词器：https://www.cnblogs.com/java-spring/p/11766450.html
+elasticsearch（五）java 使用批量操作bulk及注意事项：https://blog.csdn.net/qq_2300688967/article/details/83861360
 ES的机器学习功能可以进入了
 看看我安装的高版本的elasticsearch有些什么特性【感觉每个大数据工具最核心的功能就那么几项，抓住最关键的】
 ElasticcSearch原理：
@@ -324,6 +329,9 @@ ElasticSearch 分词：https://blog.csdn.net/mj86534210/article/details/80898328
 Elasticsearch 升级 7.x 版本后，我感觉掉坑里了：https://www.jianshu.com/p/6b6ae4b2d7ef
 elasticsearch的配置，包括日志配置等
 windows下安装ElasticSearch的Head插件：https://www.cnblogs.com/hts-technology/p/8477258.html
+elasticsearch的modules概念：
+	https://www.ycbbs.vip/?p=2174
+	https://www.cnblogs.com/gc65/p/10685988.html
 
 Spring Authorization Server：
     https://blog.csdn.net/qq_16063307/article/details/113972486

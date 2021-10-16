@@ -2,6 +2,7 @@ package com.greengiant.website.component;
 
 import com.greengiant.website.WebsiteApplication;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
+import org.elasticsearch.action.bulk.BulkRequest;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -12,6 +13,7 @@ import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.*;
+import org.elasticsearch.cluster.metadata.AliasMetadata;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -30,8 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-//import org.zxp.esclientrhl.index.ElasticsearchIndex;
-//import org.zxp.esclientrhl.repository.ElasticsearchTemplate;
+// todo 排序
+// todo BulkResponse
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -66,23 +68,24 @@ public class ElasticSearchTests {
      */
     @Test
     public void testGetAllIndices() {
-//        try {
-//            GetAliasesRequest request = new GetAliasesRequest();
-//            GetAliasesResponse getAliasesResponse =  restHighLevelClient.indices().getAlias(request,RequestOptions.DEFAULT);
-//            Map<String, Set<AliasMetaData>> map = getAliasesResponse.getAliases();
-//            Set<String> indices = map.keySet();
-//            for (String key : indices) {
-//                System.out.println(key);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+            GetAliasesRequest request = new GetAliasesRequest();
+            GetAliasesResponse getAliasesResponse =  restHighLevelClient.indices().getAlias(request, RequestOptions.DEFAULT);
+            Map<String, Set<AliasMetadata>> map = getAliasesResponse.getAliases();
+            Set<String> indices = map.keySet();
+            for (String key : indices) {
+                System.out.println(key);
+            }
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     @Test
     public void testInsertDoc() {
+        // todo IndexRequest的更多初始化方式，例如：new IndexRequest(index,type).opType("create").id(map.remove("id").toString()).source(map);
         IndexRequest indexRequest = new IndexRequest("cat");
-        indexRequest.id("2"); //文档id
+        indexRequest.id("1"); //文档id
         String jsonString = "{" +
                 "\"user\":\"gao\"," +
                 "\"postDate\":\"2013-01-31\"," +
@@ -99,12 +102,68 @@ public class ElasticSearchTests {
     }
 
     @Test
+    public void testBulkInsertDoc() throws IOException {
+        BulkRequest request = new BulkRequest();
+
+        IndexRequest indexRequest1 = new IndexRequest("cat");
+        indexRequest1.id("11"); //文档id
+        String jsonString1 = "{" +
+                "\"user\":\"gao1\"," +
+                "\"postDate\":\"2021-16-16\"," +
+                "\"message\":\"该底座通过 60.5GHz 无线频率与设备进行通信。该设备在 9 月份的美国联邦通信委员会文件中首次被发现，尽管其具体用途不明\"" +
+                "}";
+        indexRequest1.source(jsonString1, XContentType.JSON);
+
+        IndexRequest indexRequest2 = new IndexRequest("cat");
+        indexRequest2.id("12"); //文档id
+        String jsonString2 = "{" +
+                "\"user\":\"gao2\"," +
+                "\"postDate\":\"2021-16-16\"," +
+                "\"message\":\"巴西的监管文件包括该设备的一些图片，以及一个演示 Apple Watch 如何在其中安装的图形。\"" +
+                "}";
+        indexRequest2.source(jsonString2, XContentType.JSON);
+
+        IndexRequest indexRequest3 = new IndexRequest("cat");
+        indexRequest3.id("13"); //文档id
+        String jsonString3 = "{" +
+                "\"user\":\"gao3\"," +
+                "\"postDate\":\"2021-16-16\"," +
+                "\"message\":\"目前还不完全清楚该设备的具体诊断目的，但它显然是一个供苹果技术人员内部使用的产品。\"" +
+                "}";
+        indexRequest3.source(jsonString3, XContentType.JSON);
+
+        IndexRequest indexRequest4 = new IndexRequest("cat");
+        indexRequest4.id("14"); //文档id
+        String jsonString4 = "{" +
+                "\"user\":\"gao4\"," +
+                "\"postDate\":\"2021-16-16\"," +
+                "\"message\":\"诊断底座能以每秒约 200 兆比特的速度与Apple Watch通信。这还不到 USB 2.0 最高速度的一半，也远不如 Wi-Fi 快。\"" +
+                "}";
+        indexRequest4.source(jsonString4, XContentType.JSON);
+
+        IndexRequest indexRequest5 = new IndexRequest("cat");
+        indexRequest5.id("15"); //文档id
+        String jsonString5 = "{" +
+                "\"user\":\"gao5\"," +
+                "\"postDate\":\"2021-16-16\"," +
+                "\"message\":\"Apple Watch Series 7 型号配备了一个新模块，可以实现 60.5GHz 无线数据传输。这个模块在苹果网站上没有宣传，很可能只供苹果内部使用，与此同时这一型号缺少一个隐藏的诊断端口，该端口位于之前所有Apple Watch型号的底部表带槽中。苹果在维修Apple Watch时使用该端口进行诊断，比如通过有线连接用特殊工具恢复watchOS。\"" +
+                "}";
+        indexRequest5.source(jsonString5, XContentType.JSON);
+
+        request.add(indexRequest1);
+        request.add(indexRequest2);
+        request.add(indexRequest3);
+        request.add(indexRequest4);
+        request.add(indexRequest5);
+        restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
+    }
+
+        @Test
     public void testGetById1() throws IOException {
         // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
         GetRequest getRequest = new GetRequest("cat");
         getRequest.id("1");
-//        String[] includes = new String[]{"*", "birthday"};
-        String[] includes = new String[]{"*"};// 包含的列
+        String[] includes = new String[]{"*"};// 包含的列（所有列）
         String[] excludes = Strings.EMPTY_ARRAY;// 不包含的列
         FetchSourceContext fetchSourceContext = new FetchSourceContext(true, includes, excludes);
         getRequest.fetchSourceContext(fetchSourceContext);
@@ -114,29 +173,7 @@ public class ElasticSearchTests {
         System.out.println(response.getSource().values().toString());
     }
 
-    @Test
-    public void testAnalyzeRequest() {
-//        AnalyzeRequest analyzeRequest = new AnalyzeRequest();
-//
-//        analyzeRequest.text("我爱中国","我喜欢中国"); // 设置需要分词的中文字
-//        analyzeRequest.analyzer("ik_smart");       // 设置使用什么分词器  也可以使用 ik_max_word 它是细粒度分词
-//
-//        try {
-//            AnalyzeResponse analyzeResponse = restHighLevelClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT);
-//            List<AnalyzeResponse.AnalyzeToken> tokens = analyzeResponse.getTokens(); // 获取所有分词的内容
-//            // 使用Java 8 语法获取分词内容
-//            tokens.forEach(token -> {
-//                // 过滤内容，如果文字小于2位也过滤掉
-//                if (!"<NUM>".equals(token.getType()) || token.getTerm().length() > 2) {
-//                    String term = token.getTerm(); // 分词内容
-////                    System.out.prinlnt(term)
-//                }
-//            });
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-    }
+    // todo 把插入的6条数据都读出来
 
     @Test
     public void testGetById2() throws IOException {
@@ -163,6 +200,30 @@ public class ElasticSearchTests {
             String id = (String) sourceAsMap.get("id");
             System.out.println(id);
         }
+    }
+
+    @Test
+    public void testAnalyzeRequest() {
+//        AnalyzeRequest analyzeRequest = new AnalyzeRequest();
+//
+//        analyzeRequest.text("我爱中国","我喜欢中国"); // 设置需要分词的中文字
+//        analyzeRequest.analyzer("ik_smart");       // 设置使用什么分词器  也可以使用 ik_max_word 它是细粒度分词
+//
+//        try {
+//            AnalyzeResponse analyzeResponse = restHighLevelClient.indices().analyze(analyzeRequest, RequestOptions.DEFAULT);
+//            List<AnalyzeResponse.AnalyzeToken> tokens = analyzeResponse.getTokens(); // 获取所有分词的内容
+//            // 使用Java 8 语法获取分词内容
+//            tokens.forEach(token -> {
+//                // 过滤内容，如果文字小于2位也过滤掉
+//                if (!"<NUM>".equals(token.getType()) || token.getTerm().length() > 2) {
+//                    String term = token.getTerm(); // 分词内容
+////                    System.out.prinlnt(term)
+//                }
+//            });
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Test

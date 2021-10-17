@@ -22,6 +22,7 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
+import org.elasticsearch.search.sort.SortOrder;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 // todo 写通BulkResponse，比较GetResponse、searchRequest、BulkResponse
-// todo 排序（排序应该5分钟就能搞定）
+// todo Elasticsearch分页查询、排序、多条件查询（java API）：https://blog.csdn.net/robert789654/article/details/103710322
 // todo QueryBuilders.matchAllQuery：https://blog.csdn.net/geloin/article/details/8926735
 
 @ExtendWith(SpringExtension.class)
@@ -190,11 +191,12 @@ public class ElasticSearchTests {
         //searchRequest.types("type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+//        ES中对字符串排序需要对字段索引两次，一次索引分词（用于搜索），一次索引不分词（用于排序）：https://www.cnblogs.com/javasl/p/12660297.html
+//        searchSourceBuilder.sort("user", SortOrder.DESC);
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        searchSourceBuilder.query(QueryBuilders.termsQuery("message", "巴西"));
+        searchSourceBuilder.query(QueryBuilders.termsQuery("message", "巴西"));// todo ik分词调通
         // 字段过滤：参数代表包含和不包含的字段
         searchSourceBuilder.fetchSource(new String[]{"*"}, new String[]{});
-
 
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -236,6 +238,38 @@ public class ElasticSearchTests {
     }
 
     @Test
+    public void testMultiCondSearch() {
+        // todo
+    }
+
+    @Test
+    public void testSearchByPage() throws IOException {
+        SearchRequest searchRequest = new SearchRequest("cat");
+        //searchRequest.types("ads_peer_info_community_type");
+
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+        int page = 3;
+        int size = 2;
+        int from = (page - 1) * size;
+        searchSourceBuilder.from(from);
+        searchSourceBuilder.size(size);
+
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+        // 结果
+        SearchHits hits = searchResponse.getHits();
+        long totalHits = hits.getTotalHits().value;
+        System.out.println(totalHits);
+        SearchHit[] searchHits = hits.getHits();
+        for (SearchHit hit : searchHits) {
+            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+            String name= (String) sourceAsMap.get("user");
+            System.out.println(name);
+        }
+    }
+
+    @Test
     public void testSearchMatchQuery1() throws IOException {
         // todo matchPhraseQuery
 //        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
@@ -271,48 +305,8 @@ public class ElasticSearchTests {
 //        }
     }
 
-    @Test
-    public void searchByPage() throws IOException {
-        SearchRequest searchRequest = new SearchRequest("cat");
-        //searchRequest.types("ads_peer_info_community_type");
-
-        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        int page = 1;
-        int size = 2;
-        int from = (page - 1) * size;
-        searchSourceBuilder.from(from);
-        searchSourceBuilder.size(size);
-
-        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-        searchRequest.source(searchSourceBuilder);
-        SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-        // 结果
-        SearchHits hits = searchResponse.getHits();
-        long totalHits = hits.getTotalHits().value;
-        System.out.println(totalHits);
-        SearchHit[] searchHits = hits.getHits();
-        for (SearchHit hit : searchHits) {
-            Map<String, Object> sourceAsMap = hit.getSourceAsMap();
-            String name= (String) sourceAsMap.get("user");
-            System.out.println(name);
-        }
-    }
-
     // 复合条件查询、多id查询：https://iter01.com/566332.html
     // fuzzyQuery、matchQuery(分词)：http://jvm123.com/2020/08/spring-zhong-shi.html
-
-
-    // todo 模糊查询
-
-    @Test
-    public void testPageQuery() {
-        // todo
-    }
-
-    @Test
-    public void testConditionalQuery() {
-        // todo
-    }
 
     // todo 看官网，搞清楚版本对应关系，后续升级心里有底
     // todo 把多条件查询、判断index是否存在等继续写通。把EsClientRHL文档里面提到的功能看看哪些值得写和调试一下

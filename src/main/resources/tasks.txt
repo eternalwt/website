@@ -330,6 +330,7 @@ Elasticsearch GEO基本概念：https://www.tizi365.com/archives/670.html
 ElasticSearch+ElasticGeo+Geoserver发布ES地理数据：https://www.cnblogs.com/bigbigtree/p/6204090.html
 创建带HTTP Basic Auth认证的restHighLevelClient：https://blog.csdn.net/qq_38241225/article/details/114834170
 indexType: "type" # 索引type，有可能是type或者doc
+ES中对字符串排序需要对字段索引两次，一次索引分词（用于搜索），一次索引不分词（用于排序）：https://www.cnblogs.com/javasl/p/12660297.html
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
 干掉SQL中的like，我用es后运营小姐姐们都说好快：https://mp.weixin.qq.com/s/x--WMk-SFOOaJSC-_rDYTA

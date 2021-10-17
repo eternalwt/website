@@ -281,6 +281,7 @@ Quartz框架（五）— 有状态的job和无状态job：https://www.jianshu.co
 SpringBoot整合Mybatis分为“使用配置文件方式”和“无配置文件注解版”两种方法：https://www.cnblogs.com/xuehuashanghe/p/9593639.html
 SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://www.cnblogs.com/javazhiyin/p/11398374.html
 
+elasticSearch的备份问题
 elasticsearch查看所有索引：https://blog.csdn.net/LONG_Yi_1994/article/details/118380276
 windows环境基于zip包安装Elasticsearch-6.8.10：https://blog.csdn.net/qq_19783793/article/details/106913818
 Windows上安装ElasticSearch7的IK分词器：https://www.cnblogs.com/java-spring/p/11766450.html
@@ -288,8 +289,11 @@ elasticsearch（五）java 使用批量操作bulk及注意事项：https://blog.
 最简单详细的Elasticsearch-postman操作数据：https://blog.csdn.net/qq_42875667/article/details/87450632
 Elasticsearch Multi Get、 Bulk API详解、原理与示例：https://cloud.tencent.com/developer/article/1443641
 QueryBuilders有6个matchXXXQuery之类的方法：https://blog.csdn.net/zxaimai/article/details/106825591
-官网上Search Type的解释：https://www.elastic.co/guide/en/elasticsearch/reference/7.0/search-request-search-type.html
+Elasticsearch为什么在6 7 版本后不再支持type了：https://www.cnblogs.com/king0207/p/13425283.html
+Elasticsearch7.X为什么移除类型(type)：https://www.cnblogs.com/wangzhen3798/p/10765202.html
 用preference方法去指定优先去某个分片上去查询（默认的是随机先去某个分片）：https://blog.csdn.net/qq_2300688967/article/details/83902943
+Elasticsearch 4种搜索类型(SearchType)详解：https://blog.csdn.net/wangmaohong0717/article/details/53433146
+官网上Search Type的解释：https://www.elastic.co/guide/en/elasticsearch/reference/7.0/search-request-search-type.html
 ES的机器学习功能可以进入了
 Elasticsearch数据刷新策略RefreshPolicy简述：https://blog.csdn.net/hanchao5272/article/details/89151166
 详解ElasticSearch中的路由(_routing)机制：http://niyanchun.com/routing-in-es.html

@@ -188,7 +188,6 @@ public class ElasticSearchTests {
     @Test
     public void testSearchTermQuery1() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
-        //searchRequest.types("type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 //        ES中对字符串排序需要对字段索引两次，一次索引分词（用于搜索），一次索引不分词（用于排序）：https://www.cnblogs.com/javasl/p/12660297.html
@@ -245,7 +244,6 @@ public class ElasticSearchTests {
     @Test
     public void testSearchByPage() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
-        //searchRequest.types("ads_peer_info_community_type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         int page = 3;

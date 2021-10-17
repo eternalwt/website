@@ -84,7 +84,10 @@ Springboot整合JasperReport报表以及报表打印功能：
     https://blog.csdn.net/weixin_42603009/article/details/90581075
 1.把rabbitmq的东西写好；
 @RabbitListener参数：https://blog.csdn.net/hcyxsh/article/details/118028892
-cas、OAuth 2.0
+rabbitListenerContainerFactory
+RabbitListener 消费基本使用姿势介绍【注解的方式手动ack，下一步是把方法中的其他参数搞清楚】：https://www.cnblogs.com/yihuihui/p/12600797.html
+@RabbitListener 可以标注在类上面，需配合 @RabbitHandler 注解一起使用：https://www.jianshu.com/p/911d987b5f11
+CAS、OAuth 2.0
 定时任务和批处理新开一个服务
 找到规则引擎的应用场景，并创造价值
 
@@ -284,6 +287,7 @@ Windows上安装ElasticSearch7的IK分词器：https://www.cnblogs.com/java-spri
 elasticsearch（五）java 使用批量操作bulk及注意事项：https://blog.csdn.net/qq_2300688967/article/details/83861360
 最简单详细的Elasticsearch-postman操作数据：https://blog.csdn.net/qq_42875667/article/details/87450632
 Elasticsearch Multi Get、 Bulk API详解、原理与示例：https://cloud.tencent.com/developer/article/1443641
+QueryBuilders有6个matchXXXQuery之类的方法：https://blog.csdn.net/zxaimai/article/details/106825591
 官网上Search Type的解释：https://www.elastic.co/guide/en/elasticsearch/reference/7.0/search-request-search-type.html
 用preference方法去指定优先去某个分片上去查询（默认的是随机先去某个分片）：https://blog.csdn.net/qq_2300688967/article/details/83902943
 ES的机器学习功能可以进入了
@@ -321,6 +325,11 @@ Elasticsearch&JDK版本要求：https://blog.csdn.net/chentyit/article/details/1
 基于 ElasticSearch 实现站内全文搜索：https://mp.weixin.qq.com/s/ldusMOz7smIKAhx-mEeObQ
 windows下ik分词器的安装：https://www.jianshu.com/p/bb89ad7a7f7d
 elasticsearch-analysis-ik（有些小版本没有，影不影响？）：https://github.com/medcl/elasticsearch-analysis-ik/tags
+【最好跟redis的geo功能对比加深印象一下】Elasticsearch supports two types of geo data: geo_point fields which support lat/lon pairs, and geo_shape fields, which support points, lines, circles, polygons, multi-polygons, etc.：https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-queries.html
+Elasticsearch GEO基本概念：https://www.tizi365.com/archives/670.html
+ElasticSearch+ElasticGeo+Geoserver发布ES地理数据：https://www.cnblogs.com/bigbigtree/p/6204090.html
+创建带HTTP Basic Auth认证的restHighLevelClient：https://blog.csdn.net/qq_38241225/article/details/114834170
+indexType: "type" # 索引type，有可能是type或者doc
 Elasticsearch－基础介绍及索引原理分析：https://www.cnblogs.com/dreamroute/p/8484457.html
 30 个 ElasticSearch 调优知识点，都给你整理好了：https://mp.weixin.qq.com/s/YN8x6SSgiNOVuAhi-e-hMw
 干掉SQL中的like，我用es后运营小姐姐们都说好快：https://mp.weixin.qq.com/s/x--WMk-SFOOaJSC-_rDYTA

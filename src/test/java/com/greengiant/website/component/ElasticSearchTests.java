@@ -3,6 +3,7 @@ package com.greengiant.website.component;
 import com.greengiant.website.WebsiteApplication;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.get.GetRequest;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.index.IndexRequest;
@@ -28,12 +29,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-// todo 排序
 // todo 写通BulkResponse，比较GetResponse、searchRequest、BulkResponse
+// todo 排序（排序应该5分钟就能搞定）
+// todo QueryBuilders.matchAllQuery：https://blog.csdn.net/geloin/article/details/8926735
 
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
@@ -155,7 +158,10 @@ public class ElasticSearchTests {
         request.add(indexRequest3);
         request.add(indexRequest4);
         request.add(indexRequest5);
-        restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
+        BulkResponse response = restHighLevelClient.bulk(request, RequestOptions.DEFAULT);
+        if (response != null && response.getItems() != null) {
+            System.out.println(response.getItems().length);
+        }
     }
 
     // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
@@ -174,18 +180,17 @@ public class ElasticSearchTests {
         System.out.println(response.getSource().values().toString());
     }
 
-    // todo 把插入的6条数据都读出来
     // todo MatchQueryBuilder RangeQueryBuilder SearchSourceBuilder【看懂类体系】
     // todo 多条件查询(QueryBuilders.multiMatchQuery?)、模糊查询、ik分词查询（现在还不行） 模糊查询+分词查询
     // todo 分页查询
 
     @Test
-    public void testSearch1() throws IOException {
+    public void testSearchTermQuery1() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
         //searchRequest.types("type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.query(QueryBuilders.termsQuery("message", "巴西"));
         // 字段过滤：参数代表包含和不包含的字段
         searchSourceBuilder.fetchSource(new String[]{"*"}, new String[]{});
@@ -207,17 +212,14 @@ public class ElasticSearchTests {
     }
 
     @Test
-    public void testSearch2() throws IOException {
+    public void testSearchTermQuery2() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
         //searchRequest.types("type");
 
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.query(QueryBuilders.fuzzyQuery("message", "Seryes"));
         // 字段过滤：参数代表包含和不包含的字段
         searchSourceBuilder.fetchSource(new String[]{"*"}, new String[]{});
-
-
         searchRequest.source(searchSourceBuilder);
         SearchResponse searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
         // 结果
@@ -231,6 +233,13 @@ public class ElasticSearchTests {
             String id = (String) sourceAsMap.get("user");
             System.out.println(id);
         }
+    }
+
+    @Test
+    public void testSearchMatchQuery1() throws IOException {
+        // todo matchPhraseQuery
+//        searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+
     }
 
     @Test

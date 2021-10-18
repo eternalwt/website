@@ -70,7 +70,8 @@
 
 ====================================================================================================
 
-2.把elasticSearch的模糊查询写完、测通；把geoip database相关的报错问题解决
+对es集群的吞吐量，要心中有数【压力测试】
+2.把elasticSearch的模糊查询选项写完；
 elasticsearch查询QueryBuilders详解（es7.80）【先把这个搞完，然后继续rabbitMQ】：
     https://blog.csdn.net/tyw15/article/details/111930660
     https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high-query-builders.html
@@ -424,6 +425,9 @@ RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.ht
 MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
 Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
 
+rabbitmq队列的exclusive,durability,auto-delete属性以及消息可靠传输设计：https://www.cnblogs.com/zhjh256/p/6438656.html
+RabbitMQ消息持久化处理：https://blog.csdn.net/qq_32786139/article/details/88813945
+也就是说auto delete的队列必须是有过消费者并且所有消费者都解除订阅了，才会auto delete【那这时消息也发布进去了？】：https://blog.csdn.net/Json_Steve/article/details/91444430
 RabbitMQ的并发参数（concurrency和prefetch）：
     https://blog.csdn.net/qq_29595463/article/details/107857172
     https://www.cnblogs.com/itplay/p/11164951.html

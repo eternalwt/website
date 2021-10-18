@@ -12,7 +12,7 @@ import java.util.Map;
 public class Producer {
 
     @Autowired
-    private AmqpTemplate amqpTemplate;
+    private AmqpTemplate amqpTemplate;// AmqpTemplate是一个接口，通过调试这里最终注入的是RabbitTemplate：https://stackoverflow.com/questions/45875167/which-one-to-use-rabbittemplate-or-amqptemplate
 
     @Autowired
     private AmqpAdmin admin;

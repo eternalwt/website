@@ -1,7 +1,10 @@
 package com.greengiant.infrastructure.messaging;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
+import org.springframework.amqp.rabbit.connection.ConnectionFactory;
+import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.transaction.RabbitTransactionManager;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
@@ -35,11 +38,41 @@ public class RabbitMQConfig {
     }
 
     /**
+     * 因为这个listener container 是自己创建的，会抑制spring boot自动配置
+     ，所以这些配置就不生效了。spring.rabbitmq.listener.*
+     *
+     * @param connectionFactory
+     * @return
+     */
+    @Bean
+    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+//        factory.setMessageConverter(jsonConverter());
+//        factory.setErrorHandler(errorHandler());
+        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        return factory;
+    }
+
+    @Bean
+    public RabbitListenerContainerFactory directRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+        factory.setConnectionFactory(connectionFactory);
+//        factory.setMessageConverter(jsonConverter());
+//        factory.setErrorHandler(errorHandler());
+        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        return factory;
+    }
+
+    /**
      * 声明队列
      * @return
      */
     @Bean
     public Queue helloQueue() {
+        // todo 我测手动ack没成功是不是因为这里的配置不对？再看durable和autoDelete参数
+        //  1.在producer函数里发送多条消息测试；
+        //  2.修改这里的参数测试
         return new Queue("cord", false, true, true);
 //        Queue queue = new Queue("hello");
 //        return queue;

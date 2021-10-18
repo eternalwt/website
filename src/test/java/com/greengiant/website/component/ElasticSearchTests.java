@@ -165,8 +165,6 @@ public class ElasticSearchTests {
         }
     }
 
-    // todo 1.多条件、模糊查询；3.如何反序列化成方便使用的对象？
-
     @Test
     public void testGetById() throws IOException {
         GetRequest getRequest = new GetRequest("cat");
@@ -213,7 +211,7 @@ public class ElasticSearchTests {
     }
 
     @Test
-    public void testSearchTermQuery2() throws IOException {
+    public void testSearchFuzzyQuery1() throws IOException {
         SearchRequest searchRequest = new SearchRequest("cat");
         //searchRequest.types("type");
 
@@ -237,9 +235,17 @@ public class ElasticSearchTests {
     }
 
     @Test
-    public void testMultiCondSearch() {
-        // todo
+    public void testSearchRangeQuery1() throws IOException {
+        // todo https://blog.csdn.net/qin_weilong/article/details/95512250
+
     }
+
+    @Test
+    public void testMultiCondSearch() {
+        // todo 多条件查询
+    }
+
+    // todo QueryBuilders.matchQuery
 
     @Test
     public void testSearchByPage() throws IOException {

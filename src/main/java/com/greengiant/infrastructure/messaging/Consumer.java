@@ -1,10 +1,13 @@
 package com.greengiant.infrastructure.messaging;
 
 import com.rabbitmq.client.Channel;
+import io.lettuce.core.dynamic.annotation.Value;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
+import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +16,9 @@ import java.io.IOException;
 @Component
 public class Consumer {
 
+//    @Value("${spring.rabbitmq.listener.direct.acknowledge-mode}")
+//    private AcknowledgeMode ackMode;
+
     // todo 1.如何监听多个queue？（例如公司里面那种代码）
     // todo 思考怎么提供接口和包，让其他微服务直接使用？（如果不确定，再看看公司代码）【要达到和公司一样的效果，能从一个方法直接响应，并且要比公司的简单，不用在配置文件里面配置】
     // todo 监听多个队列。公司的代码好像
@@ -20,6 +26,9 @@ public class Consumer {
     // todo listener direct simple 配置作用始终没搞清楚（为啥只配置了这两类？是跟交换机类型关联的吗？）
     // todo 3.怎么灵活绑定、怎么搞多个topic、queue的应用？主要考虑几方面：exchange、queue、消息类型
     // todo rabbitTemplate.setConfirmCallback：https://blog.csdn.net/qq_38439885/article/details/88982373
+    // todo 消费失败的情形没考虑？
+    // todo spring-rabbit消费过程解析及AcknowledgeMode选择【多图】：https://blog.csdn.net/weixin_38380858/article/details/84963944
+    // todo 内部类RabbitTemplateConfiguration：https://blog.csdn.net/hry2015/article/details/79597281
 
     // todo channel.basicConsume ConfirmListener
 
@@ -37,6 +46,8 @@ public class Consumer {
         System.out.println(channel == null);
 //        channel.basicAck(deliveryTag, false);// todo 队列被删除了，是哪里配置的问题？
         // todo 从哪里获取是不是手动ack，看看类。实在找不到看公司代码
+        // todo AcknowledgeMode类
+        // todo 搜一下RabbitProperties这个类
         LOGGER.info("Receiving Message: -----[%s]----- ", msg);
     }
 

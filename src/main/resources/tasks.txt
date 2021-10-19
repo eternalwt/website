@@ -425,6 +425,11 @@ RabbitMQ MQTT协议和AMQP协议：https://www.cnblogs.com/bclshuai/p/8607517.ht
 MQTTBOX、Mosquitto MQTT publisher（rabbitmq-plugins enable rabbitmq_mqtt）
 Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-criteria-for-selecting-a-mqtt-broker-1
 
+从rabbitMQ的配置再次总结一些中间件的配置：
+    1.如果application.yml中有标准配置（每个中间件的，编辑的时候有代码提示），那么优先读取标准配置；
+    2.Config(@Configuration注解)文件，例如RabbitMQConfig.java，可以补充、覆盖默认配置；
+【问题】1.为什么有yml里面的提醒？2.怎么找到有哪些配置？
+
 rabbitmq队列的exclusive,durability,auto-delete属性以及消息可靠传输设计：https://www.cnblogs.com/zhjh256/p/6438656.html
 RabbitMQ消息持久化处理：https://blog.csdn.net/qq_32786139/article/details/88813945
 也就是说auto delete的队列必须是有过消费者并且所有消费者都解除订阅了，才会auto delete【那这时消息也发布进去了？】：https://blog.csdn.net/Json_Steve/article/details/91444430

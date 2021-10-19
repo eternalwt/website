@@ -15,9 +15,6 @@ import java.util.Map;
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class RabbitMQTests {
 
-    // todo 把Channel那些测一下
-    // todo 1.我用的时候怎么用？2.如何监听多个queue？（例如公司里面那种代码）3.怎么灵活绑定、怎么搞多个topic、queue的应用？
-    // todo
     // RabbitMQ中的RPC实现：https://www.cnblogs.com/dairongsheng/p/9280037.html
     @Autowired
     private Producer producer;
@@ -25,6 +22,10 @@ public class RabbitMQTests {
     // Direct
     @Test
     public void sendDirectMsg() {
+        producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
+        producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
+        producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
+        producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
         producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
     }
 

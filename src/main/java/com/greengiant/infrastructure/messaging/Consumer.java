@@ -13,17 +13,30 @@ import java.io.IOException;
 @Component
 public class Consumer {
 
+    // todo 1.如何监听多个queue？（例如公司里面那种代码）
     // todo 思考怎么提供接口和包，让其他微服务直接使用？（如果不确定，再看看公司代码）【要达到和公司一样的效果，能从一个方法直接响应，并且要比公司的简单，不用在配置文件里面配置】
     // todo 监听多个队列。公司的代码好像
     // todo 监听多种数据类型的消息【这个和上面一个问题才是最关键的】
-    // todo listener direct simple 配置作用始终没搞清楚
+    // todo listener direct simple 配置作用始终没搞清楚（为啥只配置了这两类？是跟交换机类型关联的吗？）
+    // todo 3.怎么灵活绑定、怎么搞多个topic、queue的应用？主要考虑几方面：exchange、queue、消息类型
+    // todo rabbitTemplate.setConfirmCallback：https://blog.csdn.net/qq_38439885/article/details/88982373
+
+    // todo channel.basicConsume ConfirmListener
 
     private static Logger LOGGER = LogManager.getLogger(Consumer.class);
 
-    //@RabbitListener(queues = "cord", containerFactory="myFactory")
-    @RabbitListener(queues = "cord", ackMode = "MANUAL")
-    public void processMessage(String msg, Channel channel) {// todo 1.为啥这个函数可以任意加参数，例如Channel？2.手动ack起作用应该分2个层面把：(1)消息要是手动ack模式，(2)ack的动作；
+    /**
+     * 1.直接配置@RabbitListener(queues = "cord", ackMode = "MANUAL")可以达到手动ack的作用
+     */
+
+    //@RabbitListener(queues = "cord", containerFactory="myFactory")// todo rabbitListenerContainerFactory
+    @RabbitListener(queues = "cord")
+    // todo msg前面加@Payload注解的作用是什么？ https://blog.csdn.net/m0_37556444/article/details/82627723
+    public void processMessage(String msg,  @Header(AmqpHeaders.DELIVERY_TAG) long deliveryTag, Channel channel) throws IOException {// todo 1.为啥这个函数可以任意加参数，例如Channel？2.手动ack起作用应该分2个层面把：(1)消息要是手动ack模式，(2)ack的动作；
+        // todo 把Channel的方法看一下、测一下
         System.out.println(channel == null);
+//        channel.basicAck(deliveryTag, false);// todo 队列被删除了，是哪里配置的问题？
+        // todo 从哪里获取是不是手动ack，看看类。实在找不到看公司代码
         LOGGER.info("Receiving Message: -----[%s]----- ", msg);
     }
 

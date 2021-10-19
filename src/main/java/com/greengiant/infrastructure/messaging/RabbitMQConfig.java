@@ -1,6 +1,7 @@
 package com.greengiant.infrastructure.messaging;
 
 import org.springframework.amqp.core.*;
+import org.springframework.amqp.rabbit.config.DirectRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -44,25 +45,25 @@ public class RabbitMQConfig {
      * @param connectionFactory
      * @return
      */
-    @Bean
-    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-//        factory.setMessageConverter(jsonConverter());
-//        factory.setErrorHandler(errorHandler());
-        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        return factory;
-    }
+//    @Bean
+////    public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+////        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+////        factory.setConnectionFactory(connectionFactory);
+//////        factory.setMessageConverter(jsonConverter());
+//////        factory.setErrorHandler(errorHandler());
+////        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+////        return factory;
+////    }
 
-    @Bean
-    public RabbitListenerContainerFactory directRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory);
-//        factory.setMessageConverter(jsonConverter());
-//        factory.setErrorHandler(errorHandler());
-        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        return factory;
-    }
+//    @Bean
+//    public DirectRabbitListenerContainerFactory directRabbitListenerContainerFactory(ConnectionFactory connectionFactory) {
+//        DirectRabbitListenerContainerFactory factory = new DirectRabbitListenerContainerFactory();
+//        factory.setConnectionFactory(connectionFactory);
+////        factory.setMessageConverter(jsonConverter());
+////        factory.setErrorHandler(errorHandler());
+//        factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+//        return factory;
+//    }
 
     /**
      * 声明队列
@@ -73,7 +74,9 @@ public class RabbitMQConfig {
         // todo 我测手动ack没成功是不是因为这里的配置不对？再看durable和autoDelete参数
         //  1.在producer函数里发送多条消息测试；
         //  2.修改这里的参数测试
-        return new Queue("cord", false, true, true);
+        //  3.搞清楚后再整一轮代码
+//        return new Queue("cord", false, true, true);
+        return new Queue("cord", true, true, false);
 //        Queue queue = new Queue("hello");
 //        return queue;
     }

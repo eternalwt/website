@@ -18,24 +18,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * RabbitMQ配置类
  */
 @Configuration
 @Order(100)
 public class RabbitMQConfig {
-
-    // todo 项目中正确的打开方式应该是：1.在PostConstruct里面统一初始化交换机、队列、绑定关系；2.设计合理的配置项定义交换机、队列、绑定关系【如果绑定关系不好设计，可以先在代码里面写，先满足功能】
-//    @PostConstruct
-
-    // ------------------------------------------------------------------------
 
     private static final String topicExchangeName = "topic-exchange";
     private static final String fanoutExchange = "fanout-exchange";
     private static final String headersExchange = "headers-exchange";
 
     @Bean
+//    @DependsOn({"producer"})
     public void init() {
         // todo 用返回void的bean的方式初始化交换机、队列、绑定关系
+        // todo 综合处理好配置、消息类型、交换机类型及绑定关系、listener，做到容易配置和使用
     }
 
     /**
@@ -71,14 +68,10 @@ public class RabbitMQConfig {
      */
     @Bean
     public Queue helloQueue() {
-        // todo 我测手动ack没成功是不是因为这里的配置不对？再看durable和autoDelete参数
-        //  1.在producer函数里发送多条消息测试；
-        //  2.修改这里的参数测试
-        //  3.搞清楚后再整一轮代码
-//        return new Queue("cord", false, true, true);
-        return new Queue("cord", true, true, false);
-//        Queue queue = new Queue("hello");
-//        return queue;
+//        return new Queue("cord", true, true, false);
+        Queue queue = new Queue("hello");
+//        Queue que = new Queue("cord");// todo 后来加的
+        return queue;
     }
 
     /**

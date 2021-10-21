@@ -15,13 +15,12 @@ import java.util.Map;
 @SpringBootTest(classes = {WebsiteApplication.class}, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class RabbitMQTests {
 
-    // RabbitMQ中的RPC实现：https://www.cnblogs.com/dairongsheng/p/9280037.html
     @Autowired
     private Producer producer;
 
     // Direct
     @Test
-    public void sendDirectMsg() {
+    public void sendDirectMsg() {// todo 我的DirectExchange的设置有问题，导致消费完了队列就不在了
         producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
         producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
         producer.sendDirectMsg("cord", String.valueOf(System.currentTimeMillis()));
@@ -32,7 +31,11 @@ public class RabbitMQTests {
     // Topic
     @Test
     public void sendTopicMsg() {
-        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world");
+        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world1");
+        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world2");
+        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world3");
+        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world4");
+        producer.sendExchangeMsg("topic-exchange","org.cord.test", "hello world5");
     }
 
     // Fanout

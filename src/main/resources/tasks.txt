@@ -118,6 +118,8 @@ CAS、OAuth 2.0
 
 ======================================================================================================================
 
+【在我的表里面加上岗位、职务等】
+
 有了Subject【为什么设计这个抽象，如果没有这个抽象会有哪些不方便？这个也是库提供的功能，如果自己写鉴权就没有这么方便使用的】，还需要CurrentUser吗？应该不需要吧。Spring Security里面的对等物是什么？
 SecurityUtils与ThreadLocal？
 浅析Java中通过ThreadLocal实现线程绑定来传递参数：https://blog.csdn.net/Geeker_Yan/article/details/78778050
@@ -430,6 +432,7 @@ Top 10 Criteria for Selecting a MQTT Broker：https://dzone.com/articles/top-10-
     2.Config(@Configuration注解)文件，例如RabbitMQConfig.java，可以补充、覆盖默认配置；
 【问题】1.为什么有yml里面的提醒？2.怎么找到有哪些配置？
 
+rabbitmq配置里面listener的simple和direct的解释：https://www.cnblogs.com/pjjlt/p/10741963.html
 rabbitmq队列的exclusive,durability,auto-delete属性以及消息可靠传输设计：https://www.cnblogs.com/zhjh256/p/6438656.html
 RabbitMQ消息持久化处理：https://blog.csdn.net/qq_32786139/article/details/88813945
 也就是说auto delete的队列必须是有过消费者并且所有消费者都解除订阅了，才会auto delete【那这时消息也发布进去了？】：https://blog.csdn.net/Json_Steve/article/details/91444430
@@ -484,6 +487,14 @@ rabbitmq中的consumerTag和deliveryTag分别是干啥的，有什么用？https
 RabbitMQ中channel.basicAck的第二参数代表是否为多消息
 rabbitMQ basicQos和basicAck作用和关系：https://blog.csdn.net/irabbit0708/article/details/88693435
 vhost的配置
+DirectExchange的durable、AutoDelete的设置：
+    https://blog.csdn.net/qq_38846242/article/details/84071355
+    https://blog.csdn.net/hry2015/article/details/79165734
+@Exchange：当autoDelete属性设置到该注解的时候，含义即是，当所有绑定队列都不在使用时，是否自动删除交换器：https://www.cnblogs.com/biehongli/p/11788635.html
+rabbitMQ里面有一个Master locator(x-queue-master-locator)的概念，后来好像叫Leader Locator：https://blog.csdn.net/fsgsggd/article/details/81349553
+rabbitTemplate.setConfirmCallback：https://blog.csdn.net/qq_38439885/article/details/88982373
+消息发送确认对应的2个回调：https://www.cnblogs.com/nizuimeiabc1/p/9397326.html
+RabbitMQ中的RPC实现：https://www.cnblogs.com/dairongsheng/p/9280037.html
 1.fanout测试【用家里的代码测把，积累一些代码】；
 channel.exchangeDeclare、channel.basicPublish：https://www.jianshu.com/p/15871e3dbb27
 深入剖析 RabbitMQ —— Spring 框架下实现 AMQP 高级消息队列协议：https://www.cnblogs.com/leslies2/p/11238859.html

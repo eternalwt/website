@@ -29,6 +29,7 @@ public class TestController {
         return null;
     }
 
+
     @RequestMapping("/captchaCode")// todo 弄好后放入loginController
     public void getCode(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
@@ -47,9 +48,6 @@ public class TestController {
 //        wb.write(response.getOutputStream());
 //    }
 
-    @PostMapping(value = "/list")
-    public ResultBean getPageList(@RequestBody PageQuery pageQuery) {
-        return null;
-    }
+
 
 }

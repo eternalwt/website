@@ -29,6 +29,7 @@ public class Consumer {
     // todo spring-rabbit消费过程解析及AcknowledgeMode选择【多图】：https://blog.csdn.net/weixin_38380858/article/details/84963944
     // todo 内部类RabbitTemplateConfiguration：https://blog.csdn.net/hry2015/article/details/79597281
     // todo cache-mode，缓存连接模式，默认值为CHANNEL(单个connection连接，连接之后关闭，自动销毁)：https://www.cnblogs.com/nizuimeiabc1/p/9608763.html
+    // todo HttpServletResponse之类的也是可变参数吗？
 
     // todo channel.basicConsume ConfirmListener
 

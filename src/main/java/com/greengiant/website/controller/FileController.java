@@ -95,9 +95,8 @@ public class FileController {
 
     // todo 文件里面的很多方法是需要加缓存的，配合CustomRealm里面的缓存读取
 
-    // todo 分片
+    // todo 分片（考虑并发）
     // todo 如果不把这些写好，就是高估了自己CRUD以外的能力。上传下载进度
-    // todo 分片上传
 
     // todo SpringBoot实现文件的上传和下载：https://www.jianshu.com/p/be1af489551c
     // todo SpringBoot 文件上传(带进度条)与下载：https://www.cnblogs.com/ruhuanxingyun/p/10868243.html

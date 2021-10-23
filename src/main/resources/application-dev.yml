@@ -18,10 +18,10 @@ spring:
 
   servlet:
     multipart:
-      # 上传文件总的最大值
-      max-request-size: 1000MB
       # 单个文件的最大值
       max-file-size: 100MB
+      # 上传文件总的最大值
+      max-request-size: 1000MB
 
   resources:
     static-locations: classpath:/META-INF/resources/, classpath:/resources/, classpath:/static/, classpath:/public/, classpath:/templates/

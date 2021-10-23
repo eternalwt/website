@@ -15,14 +15,20 @@ public class FileUtil {
 
     // todo 1.我更倾向于使用ResponseEntity而不是HttpServletResponse：1抽象层次更高封装的更好；2.返回值类型更统一【只需要确认一下怎么支持带进度的下载】
     // todo 结合http面试题再看一下这方面 30 张图解 HTTP 常见的面试题：https://zhuanlan.zhihu.com/p/112010468
-    // todo postman和JUnit测试文件上传下载
+    // todo postman和JUnit测试文件上传下载【base64String】
     // todo 这个util类应该把http相关的内容分离，放入FileController中去
     //  也可以做成fileService或者storageService
 
-    /*1.这个方法是完全可以抽出来复用的，在我自己的代码里面复用一下；
-    2.再次比较ResponseEntity【最好看一下这个类的源码】
-    4.如果直接使用this.http.Post(url, param);会出现http failure for parsing ... 错误，数据转换错误，要使用PostExport，PostExport规定了responseType: 'blob'
-    把sw-http-client.service.ts搞过去*/
+    // todo 对文件下载进度的理解：1.只要知道文件大小，从前端、后端、webSocket都很好实现
+
+    /**
+     * 1.这个方法是完全可以抽出来复用的，在我自己的代码里面复用一下；
+     * 2.再次比较ResponseEntity【最好看一下这个类的源码】
+     * 3.如果直接使用this.http.Post(url, param);会出现http failure for parsing ... 错误，数据转换错误，要使用PostExport，PostExport规定了responseType: 'blob'
+     * 把sw-http-client.service.ts搞过去
+     *
+     * MIME 类型中，application/xml 与 text/xml 的区别：https://blog.csdn.net/kikajack/article/details/79233017
+    */
 
 
     //TODO 文件下载还有2个重要问题：1.大文件下载（文件太大(例如视频)这种方式能否支持？能否支持进度显示？）2.怎么被其他模块调用

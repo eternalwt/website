@@ -426,6 +426,7 @@ https://note.youdao.com/ynoteshare1/index.html?id=13814eb462473fa3fd8dfbd8394405
     （2）CAPTCHA（功能很强大）：
         https://gitee.com/hansin/captcha
         https://www.jb51.net/article/208059.htm
+这个手写的验证码效果还不错：https://www.cnblogs.com/qiantao/p/12670517.html
 
 做一个MQTT+RabbitMQ的demo出来【可以先用单元测试来做，或者用树莓派做MQTT】
     https://dzone.com/articles/capture-iot-sensors-data-mqtt-protocol-rabbitmq-as

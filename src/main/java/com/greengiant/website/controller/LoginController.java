@@ -1,5 +1,6 @@
 package com.greengiant.website.controller;
 
+import com.greengiant.infrastructure.utils.CaptchaUtil;
 import com.greengiant.infrastructure.utils.ResultUtils;
 import com.greengiant.website.pojo.ResultBean;
 import com.greengiant.website.pojo.model.User;
@@ -10,6 +11,10 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/auth")
@@ -63,6 +68,12 @@ public class LoginController {
         subject.logout();
 
         return ResultUtils.success("登出成功！");
+    }
+
+    @RequestMapping("/captchaCode")// todo 再搞一遍
+    public void getCode(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        CaptchaUtil.getCode(req, resp);
     }
 
 

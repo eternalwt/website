@@ -34,7 +34,7 @@ public class FileController {
     // todo 这个util类应该把http相关的内容分离，放入FileController中去
     //  也可以做成fileService或者storageService
     // todo 关于上传下载进度、多文件上传这2个点，至少要前端、后端分别看一次
-    // todo 先把我的ng2-file-upload搞熟，再看webUploader之类的【文件上传、下载果然没有想的那么简单】
+    // todo 先把我的ng2-file-upload搞熟，再看webUploader之类的【文件上传、下载果然没有想的那么简单】【ngx-bootstrap有文件上传吗？】
     // todo CommonsMultipartResolver：https://blog.csdn.net/qq_37671722/article/details/90671879
     // todo 对文件下载进度的理解：1.只要知道文件大小，从前端、后端、webSocket都很好实现
 

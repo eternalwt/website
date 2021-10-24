@@ -90,7 +90,6 @@ RabbitListener 消费基本使用姿势介绍【注解的方式手动ack，下�
 @RabbitListener 可以标注在类上面，需配合 @RabbitHandler 注解一起使用：https://www.jianshu.com/p/911d987b5f11
 CAS、OAuth 2.0
 定时任务和批处理新开一个服务
-找到规则引擎的应用场景，并创造价值
 
 任务计划表【赚钱就是这些琐碎的事，静下心来】：
     1.ehcache、redis做到能快速切换（再看一遍代码，这个应该不难了）
@@ -116,7 +115,14 @@ CAS、OAuth 2.0
     Spring Framework 6 将采用 Java 17，是时候将你的应用升级了：https://zhuanlan.zhihu.com/p/408344149
     Spring Framework 6 和 Spring Boot 3 已经计划在 2022 年第四季度实现总体可用性的高端基线，将采用 Java 17 和 Jakarta EE 9 及更高级的版本
 
-自己之所以以前觉得跟不上节奏，除了本身知识储备较少、技术发展快等原因外，还有个原因是自己的选项能力有欠缺。现在通过前端选项的锻炼以及确认一些原则，例如整合、跟踪一个长期发展的开源项目，以后跟不上节奏的感觉可以缓解。
+自己之所以以前觉得跟不上节奏，除了本身知识储备较少、技术发展快等原因外，还有个原因是自己的选型能力有欠缺。现在通过前端选项的锻炼以及确认一些原则，例如整合、跟踪一个长期发展的开源项目，以后跟不上节奏的感觉可以缓解。
+
+三部曲：
+    1.研究技术；
+    2.研究历史、人性、送礼：https://www.zhihu.com/question/64351318/answer/2167355273
+    3.研究管理
+
+把老陶的大数据框架看看，可以尝试接项目了。实在不行可以找媳妇的朋友接一些边角料。
 
 ======================================================================================================================
 
@@ -553,7 +559,6 @@ GeoHash核心原理解析：
 	https://zhuanlan.zhihu.com/p/35940647
 
 把shiro放到infrastructure包下面去。再思考一下我的单体式代码管理【这是一个新问题】
-【规则引擎和scheduler是否搞成基础设施需要再调研】
 
 物联网协议及开发是基础设置
 echart是基础设施
@@ -561,6 +566,23 @@ echart是基础设施
 手机APP及小程序是基础设施
 树莓派是基础设施
 支付是基础设施
+
+【规则引擎和scheduler是否搞成基础设施需要再调研】
+再看规则引擎场景：
+	https://zhuanlan.zhihu.com/p/326419830
+	https://zhuanlan.zhihu.com/p/140916822
+	https://zhuanlan.zhihu.com/p/371831214
+	https://zhuanlan.zhihu.com/p/267785532
+	https://zhuanlan.zhihu.com/p/51296996
+	https://zhuanlan.zhihu.com/p/68450719
+	https://zhuanlan.zhihu.com/p/91158525
+手写实现一套流程编排&规则引擎：https://zhuanlan.zhihu.com/p/194252128
+关于物联网规则引擎技术，你想要知道的都在这儿：https://zhuanlan.zhihu.com/p/325762510
+IOT 规则引擎介绍与实现：https://zhuanlan.zhihu.com/p/47966718
+网易考拉规则引擎平台架构设计与实践：https://zhuanlan.zhihu.com/p/54232163
+基于Flink和规则引擎的实时风控解决方案：https://zhuanlan.zhihu.com/p/84226947
+美团酒旅实时数据规则引擎应用实践：https://zhuanlan.zhihu.com/p/35888209
+规则引擎（rule engine)应用场景比较多的，例如HR薪资模块，税费计算，销售价格计算，等等。例如价格条件引擎需根据销售的术语来设计其规则语法，如：满300减20等等。我还想到一个例如早上迟到多久算迟到或者旷工，迟到的时间段里面，扣钱的类型、几次不扣钱等。
 
 通知系统设计【基础设施】：
 http://www.woshipm.com/pd/32652.html

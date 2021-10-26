@@ -39,6 +39,17 @@ public class FileController {
     // todo 对文件下载进度的理解：1.只要知道文件大小，从前端、后端、webSocket都很好实现
 
     /**
+     * 你所知道 &不知道的「文件上传」：http://www.woshipm.com/it/1620995.html
+     * 如何在Web端设计上传图片（1）：上传单张图片：http://www.woshipm.com/pd/3731335.html
+     * 如何在Web端设计上传图片（2）：上传多张图片：http://www.woshipm.com/pd/3731709.html
+     * 附件上传方案设计：https://www.lnmosuo.com/it/1662.html
+     * 实例分析：关于上传照片交互逻辑的思考：http://www.woshipm.com/ucd/546878.html
+     * 关于上传图片功能的案例与思考：http://www.woshipm.com/pd/438817.html
+     * 文件断点续传功能的原理：http://www.woshipm.com/pd/891969.html
+     * 超全面B端设计规范总结（含文件上传）：http://www.woshipm.com/pd/5175891.html
+     */
+
+    /**
      * 1.这个方法是完全可以抽出来复用的，在我自己的代码里面复用一下；
      * 2.再次比较ResponseEntity【最好看一下这个类的源码】
      * 3.如果直接使用this.http.Post(url, param);会出现http failure for parsing ... 错误，数据转换错误，要使用PostExport，PostExport规定了responseType: 'blob'
@@ -75,7 +86,7 @@ public class FileController {
     @PostMapping("/upload")
     public ResultBean handleFileUpload(@RequestParam("file") MultipartFile file,
                                         @RequestBody FileInfo fileInfo) {
-        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));// todo 再看一遍RequestEntity，对比MultipartFile
+        String fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));// todo 再看一遍RequestEntity、MultipartRequestEntity，对比MultipartFile
         Path path = Paths.get(fileBasePath + fileName);
         // todo 0.支持多文件上传【要把前后端一起写好，肯定还需要反复尝试的，不要怕麻烦和进展慢，彻底搞清楚】
         // todo 1.如果文件过多，就得把文件信息放入其他查询更快的数据存储中

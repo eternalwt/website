@@ -1,8 +1,8 @@
 package com.greengiant.infrastructure.messaging;
 
 import org.springframework.amqp.core.AmqpAdmin;
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Message;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,19 +11,21 @@ import java.util.Map;
 @Component
 public class Producer {
 
+    // AmqpTemplate是一个接口，通过调试这里最终注入的是RabbitTemplate：https://stackoverflow.com/questions/45875167/which-one-to-use-rabbittemplate-or-amqptemplate
+    // 【但是RabbitmqTemplate的方法更多一些，包括setConfirmCallback、setReturnCallback】：https://www.cnblogs.com/timseng/p/11688019.html
     @Autowired
-    private AmqpTemplate amqpTemplate;// AmqpTemplate是一个接口，通过调试这里最终注入的是RabbitTemplate：https://stackoverflow.com/questions/45875167/which-one-to-use-rabbittemplate-or-amqptemplate
+    private RabbitTemplate rabbitTemplate;
 
     @Autowired
     private AmqpAdmin admin;
 
 
     public void send(Object message){
-        amqpTemplate.convertAndSend("HEADER_NAME", null, message);
+        rabbitTemplate.convertAndSend("HEADER_NAME", null, message);
     }
 
     public void send(Message message){
-        amqpTemplate.convertAndSend("HEADER_NAME", null, message);
+        rabbitTemplate.convertAndSend("HEADER_NAME", null, message);
     }
 
     /**
@@ -31,7 +33,7 @@ public class Producer {
      * @param msg 消息体
      */
     public void sendDirectMsg(String routingKey, String msg) {
-        amqpTemplate.convertAndSend(routingKey, msg);
+        rabbitTemplate.convertAndSend(routingKey, msg);
     }
 
     /**
@@ -40,7 +42,7 @@ public class Producer {
      * @param exchange 交换机
      */
     public void sendExchangeMsg(String exchange, String routingKey, String msg) {
-        amqpTemplate.convertAndSend(exchange, routingKey, msg);
+        rabbitTemplate.convertAndSend(exchange, routingKey, msg);
     }
 
     /**
@@ -49,7 +51,7 @@ public class Producer {
      * @param msg 消息体
      */
     public void sendHeadersMsg(String exchange, String msg, Map<String, Object> map) {
-        amqpTemplate.convertAndSend(exchange, null, msg, message -> {
+        rabbitTemplate.convertAndSend(exchange, null, msg, message -> {
             message.getMessageProperties().getHeaders().putAll(map);
             return message;
         });

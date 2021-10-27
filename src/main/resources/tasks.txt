@@ -169,6 +169,7 @@ shiro 之 封装filterChainDefinitionMap：https://blog.csdn.net/u012437781/arti
 SpringCloud系列——SSO 单点登录：https://www.cnblogs.com/huanzi-qch/p/10249227.html
 OAuth2实现单点登录SSO：https://www.cnblogs.com/cjsblog/p/10548022.html
 JWT再看一轮（这次要结合SSO）。使用JWT后，要保证仍然使用尽可能多的shiro的认证、授权、session管理功能，我的初步想法是至少要集成session相关的，先思考一下
+JWT身份验证：如何实现注销？https://blog.csdn.net/qq_31897023/article/details/89441874
 
 token能否结合shiro的filter（自定义）？http://blog.csdn.net/lhacker/article/details/9698217
 Single Sign On (SSO) Example with JSON Web Token (JWT) and Spring Boot：

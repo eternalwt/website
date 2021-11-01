@@ -37,6 +37,7 @@ public class FileController {
     // todo 先把我的ng2-file-upload搞熟，再看webUploader之类的【文件上传、下载果然没有想的那么简单】【ngx-bootstrap有文件上传吗？】
     // todo CommonsMultipartResolver：https://blog.csdn.net/qq_37671722/article/details/90671879
     // todo 对文件下载进度的理解：1.只要知道文件大小，从前端、后端、webSocket都很好实现
+    // todo 公司的文件服务是否可以用ProgressListener提供更好的进度：https://www.cnblogs.com/ruhuanxingyun/p/10868243.html
 
     /**
      * 你所知道 &不知道的「文件上传」：http://www.woshipm.com/it/1620995.html

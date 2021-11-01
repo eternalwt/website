@@ -190,6 +190,8 @@ public class ElasticSearchTests {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 //        ES中对字符串排序需要对字段索引两次，一次索引分词（用于搜索），一次索引不分词（用于排序）：https://www.cnblogs.com/javasl/p/12660297.html
 //        searchSourceBuilder.sort("user", SortOrder.DESC);
+//        QueryBuilders.boolQuery()
+//        AggregationBuilders.
         searchSourceBuilder.query(QueryBuilders.matchAllQuery());
         searchSourceBuilder.query(QueryBuilders.termsQuery("message", "巴西"));// todo ik分词调通
         // 字段过滤：参数代表包含和不包含的字段

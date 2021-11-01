@@ -14,6 +14,8 @@
 开发人员是创建软件最宝贵的资源，但他们的时间往往被管理层低估和滥用。管理者的作用应该是让开发人员能够工作，而不是拿走开发人员的时间。【没有10到15年开发经验，不要让做管理】
 创业的目的是从“有限游戏”到“无限游戏”
 
+【拥有一套持续发展的代码库，一定可以。就和matlab一样】
+
 =====================================================================================================
 
 【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
@@ -72,6 +74,9 @@
 
 对es集群的吞吐量，要心中有数【压力测试】
 2.把elasticSearch的模糊查询选项写完；
+对es编程类的理解：第一层级的类包括AggregationBuilders、QueryBuilders等，从QueryBuilders中又可以得到XXXQueryBuilder。
+ES里面聚合的概念TermsAggregationBuilder：https://www.cnblogs.com/heyouxin/p/13865293.html
+AggregationBuilders.terms 相当于sql中的group by：https://blog.csdn.net/gavinkelland/article/details/89515254
 elasticsearch查询QueryBuilders详解（es7.80）【先把这个搞完，然后继续rabbitMQ】：
     https://blog.csdn.net/tyw15/article/details/111930660
     https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high-query-builders.html

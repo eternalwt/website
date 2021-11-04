@@ -1,5 +1,6 @@
 package com.greengiant.website.component;
 
+import com.alibaba.fastjson.JSON;
 import com.greengiant.website.WebsiteApplication;
 import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -18,8 +19,13 @@ import org.elasticsearch.cluster.metadata.AliasMetadata;
 import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.index.query.TermsQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.SearchHits;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.Aggregations;
+import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
+import org.elasticsearch.search.aggregations.metrics.AvgAggregationBuilder;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.search.sort.SortOrder;
@@ -272,6 +278,54 @@ public class ElasticSearchTests {
             Map<String, Object> sourceAsMap = hit.getSourceAsMap();
             String name= (String) sourceAsMap.get("user");
             System.out.println(name);
+        }
+    }
+
+    // todo 分组、聚合、嵌套相关查询
+
+    @Test
+    public void testAvgAggregation() throws IOException {// todo 加个表，塞数据，然后把这个测通
+        //创建一个查询请求，并指定索引名称
+        SearchRequest searchRequest = new SearchRequest("cat");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        //平均值聚合查询: 求员工平均工资
+        AvgAggregationBuilder avgAggregationBuilder = AggregationBuilders.avg("avg_salary").field("salary");
+        searchSourceBuilder.aggregation(avgAggregationBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse response;
+        try {
+            //发起请求，获取响应结果
+            response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            //获取聚合的结果
+            Aggregations aggregations = response.getAggregations();
+            System.out.println(JSON.toJSONString(aggregations));
+            System.out.println(JSON.toJSONString(aggregations.getAsMap().get("avg_salary")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //关闭restHighLevelClient
+//        restHighLevelClient.close();
+    }
+
+    @Test
+    public void testAggregation() {// todo Text fields are not optimised for operations that require per-document field data like aggregations and sorting, so these operations are disabled by default. Please use a keyword field instead. Alternatively, set fielddata=true on [user] in order to load field data by uninverting the inverted index. Note that this can use significant memory.]]; nested: ElasticsearchException[Elasticsearch exception [type=illegal_argument_exception, reason=Text fields are not optimised for operations that require per-document field data like aggregations and sorting, so these operations are disabled by default. Please use a keyword field instead. Alternatively, set fielddata=true on [user] in order to load field data by uninverting the inverted index. Note that this can use significant memory.]];
+        //创建一个查询请求，并指定索引名称
+        SearchRequest searchRequest = new SearchRequest("cat");
+        SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
+        TermsAggregationBuilder termsAggregationBuilder = AggregationBuilders.terms("player_count").field("user");
+        searchSourceBuilder.aggregation(termsAggregationBuilder);
+        searchRequest.source(searchSourceBuilder);
+        SearchResponse response;
+        try {
+            //发起请求，获取响应结果
+            response = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+            //获取聚合的结果
+            Aggregations aggregations = response.getAggregations();
+            System.out.println(JSON.toJSONString(aggregations));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

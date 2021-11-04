@@ -20,6 +20,13 @@
 
 【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
 
+我自己的代码，redirect都还没做好。看看shiro logout的代码
+shiro与appId？shiro与CSRF？（Spring Security内置支持CSRF保护，Shiro没有开箱即用，基于Shiro的项目buji-pac4j实现了CSRF保护）：https://www.cnblogs.com/harrychinese/p/shiro_basics.html
+Shiro的登录拦截及单点登录实现：https://www.cnblogs.com/winter0730/p/14789128.html
+再次确认使用shiro的必要性，尤其是涉及到jwt token、appId、OAuth 2.0、单点登录时，作用大不大？能否很优雅集成？
+Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_36698956/article/details/88894258
+快速搭建基于Spring Boot + Spring Security 环境【其实可以每一个功能对比一下shiro】：https://www.cnblogs.com/wushaopei/p/11681389.html
+
 【策略与打法】
     1.起初只能瞄准10-20万的项目；
     2.管理系统前后端是技术和业务的基本盘；
@@ -74,9 +81,6 @@
 
 对es集群的吞吐量，要心中有数【压力测试】
 2.把elasticSearch的模糊查询选项写完；
-对es编程类的理解：第一层级的类包括AggregationBuilders、QueryBuilders等，从QueryBuilders中又可以得到XXXQueryBuilder。
-ES里面聚合的概念TermsAggregationBuilder：https://www.cnblogs.com/heyouxin/p/13865293.html
-AggregationBuilders.terms 相当于sql中的group by：https://blog.csdn.net/gavinkelland/article/details/89515254
 elasticsearch查询QueryBuilders详解（es7.80）【先把这个搞完，然后继续rabbitMQ】：
     https://blog.csdn.net/tyw15/article/details/111930660
     https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-high-query-builders.html
@@ -308,6 +312,9 @@ elasticsearch（五）java 使用批量操作bulk及注意事项：https://blog.
 最简单详细的Elasticsearch-postman操作数据：https://blog.csdn.net/qq_42875667/article/details/87450632
 Elasticsearch Multi Get、 Bulk API详解、原理与示例：https://cloud.tencent.com/developer/article/1443641
 QueryBuilders有6个matchXXXQuery之类的方法：https://blog.csdn.net/zxaimai/article/details/106825591
+对es编程类的理解：第一层级的类包括AggregationBuilders、QueryBuilders等，从QueryBuilders中又可以得到XXXQueryBuilder。
+ElasticSearch全文搜索引擎之Aggregation聚合查询(基于RestHighLevelClient)：https://blog.csdn.net/Weixiaohuai/article/details/109007738
+RestHighLevelClient进阶-聚合操作：https://www.cnblogs.com/heyouxin/p/13865293.html
 Elasticsearch为什么在6 7 版本后不再支持type了：https://www.cnblogs.com/king0207/p/13425283.html
 Elasticsearch7.X为什么移除类型(type)：https://www.cnblogs.com/wangzhen3798/p/10765202.html
 用preference方法去指定优先去某个分片上去查询（默认的是随机先去某个分片）：https://blog.csdn.net/qq_2300688967/article/details/83902943

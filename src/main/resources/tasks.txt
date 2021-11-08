@@ -26,6 +26,7 @@ Shiro的登录拦截及单点登录实现：https://www.cnblogs.com/winter0730/p
 再次确认使用shiro的必要性，尤其是涉及到jwt token、appId、OAuth 2.0、单点登录时，作用大不大？能否很优雅集成？
 Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_36698956/article/details/88894258
 快速搭建基于Spring Boot + Spring Security 环境【其实可以每一个功能对比一下shiro】：https://www.cnblogs.com/wushaopei/p/11681389.html
+使用token后logout会不会有问题？如何重载？如果最终不使用shiro，可能还是和支持这些第三方的能力不足有关
 
 【策略与打法】
     1.起初只能瞄准10-20万的项目；
@@ -99,6 +100,7 @@ RabbitListener 消费基本使用姿势介绍【注解的方式手动ack，下�
 @RabbitListener 可以标注在类上面，需配合 @RabbitHandler 注解一起使用：https://www.jianshu.com/p/911d987b5f11
 CAS、OAuth 2.0
 定时任务和批处理新开一个服务
+mybatis-plus团队新作：mybatis-mate 轻松搞定数据权限：https://zhuanlan.zhihu.com/p/430254492
 
 文件上传：mime-type与后缀之前的关系有没有必要在我的代码里面保存？
 
@@ -425,6 +427,9 @@ shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点�
 分布式锁的知识：
 	https://www.zhihu.com/search?type=content&q=%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%20%E4%BC%98%E5%8A%A3
 	https://www.cnblogs.com/MrSaver/p/11567997.html
+
+微信、支付宝支付是基础设施
+集成钉钉会成为一项基础设施，先看看钉钉有什么能力
 
 Grafana和Prometheus是基础设施
 质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？

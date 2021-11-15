@@ -20,6 +20,9 @@
 
 【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
 
+公司里面的岗位表sw_sys_position与用户id、组织id做了关联，应该是直接为某个用户设置了岗位信息。在我自己的项目中，可以设置一个存放岗位/职务信息的主表，然后再与部门、用户做关联。
+t.org_id从CurrentUser获取，看看我的代码有没有这个问题
+
 我自己的代码，redirect都还没做好。看看shiro logout的代码
 shiro与appId？shiro与CSRF？（Spring Security内置支持CSRF保护，Shiro没有开箱即用，基于Shiro的项目buji-pac4j实现了CSRF保护）：https://www.cnblogs.com/harrychinese/p/shiro_basics.html
 Shiro的登录拦截及单点登录实现：https://www.cnblogs.com/winter0730/p/14789128.html

@@ -83,6 +83,8 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 ====================================================================================================
 
+把@Transactional的单元测试加上（公司里面就出问题了，不要想简单了）
+
 对es集群的吞吐量，要心中有数【压力测试】
 2.把elasticSearch的模糊查询选项写完；
 elasticsearch查询QueryBuilders详解（es7.80）【先把这个搞完，然后继续rabbitMQ】：

@@ -83,6 +83,21 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 ====================================================================================================
 
+【OAuth 2.0关注的3个层面以及疑问】
+1.整体流程：access_token是client用的把？https://www.geeksforgeeks.org/workflow-of-oauth-2-0/
+2.获得令牌的四种授权方式，其中最关键的是授权码的方式（跟微信小程序的授权码的概念比较），确认qq就是授权码：
+	https://www.ruanyifeng.com/blog/2019/04/oauth-grant-types.html
+	https://www.cnblogs.com/flashsun/p/7424071.html
+3.OAuth 2.0用于单点登录：
+	https://blog.csdn.net/kefengwang/article/details/81213025
+	https://www.cnblogs.com/cjsblog/p/10548022.html【非常重要的一句话（可见OAuth2.0的强大）：在OAuth2在有授权服务器、资源服务器、客户端这样几个角色，当我们用它来实现SSO的时候是不需要资源服务器这个角色的，有授权服务器和客户端就够了】
+OAuth2是用来允许用户授权第三方应用访问他在另一个服务器上的资源的一种协议，它不是用来做单点登录的，但我们可以利用它来实现单点登录。在本例实现SSO的过程中，受保护的资源就是用户的信息（包括，用户的基本信息，以及用户所具有的权限），而我们想要访问这这一资源就需要用户登录并授权，OAuth2服务端负责令牌的发放等操作。
+1.对比OAuth 2.0与CAS；
+2.找一个用QQ三方登录的例子，看清楚细节：
+	https://www.cnblogs.com/sheng-jie/p/6564520.html
+	https://www.cnblogs.com/mthoutai/p/7008250.html
+	https://www.cnblogs.com/VanFan/p/11427451.html
+
 把@Transactional的单元测试加上（公司里面就出问题了，不要想简单了）
 
 对es集群的吞吐量，要心中有数【压力测试】

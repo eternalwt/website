@@ -92,11 +92,24 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 	https://blog.csdn.net/kefengwang/article/details/81213025
 	https://www.cnblogs.com/cjsblog/p/10548022.html【非常重要的一句话（可见OAuth2.0的强大）：在OAuth2在有授权服务器、资源服务器、客户端这样几个角色，当我们用它来实现SSO的时候是不需要资源服务器这个角色的，有授权服务器和客户端就够了】
 OAuth2是用来允许用户授权第三方应用访问他在另一个服务器上的资源的一种协议，它不是用来做单点登录的，但我们可以利用它来实现单点登录。在本例实现SSO的过程中，受保护的资源就是用户的信息（包括，用户的基本信息，以及用户所具有的权限），而我们想要访问这这一资源就需要用户登录并授权，OAuth2服务端负责令牌的发放等操作。
-1.对比OAuth 2.0与CAS；
+OAuth能否统一和简化我们以前在人人网那一堆第三方的东西？
 2.找一个用QQ三方登录的例子，看清楚细节：
 	https://www.cnblogs.com/sheng-jie/p/6564520.html
 	https://www.cnblogs.com/mthoutai/p/7008250.html
 	https://www.cnblogs.com/VanFan/p/11427451.html
+OAuth2.0授权与单点登录的实现【对比了OAuth 2.0与CAS】：https://blog.csdn.net/qq_33454884/article/details/88125544
+OAuth和CAS的对比已经有个大致的了解了，可以看CAS和SSO了：
+    https://www.cnblogs.com/btgyoyo/p/10722010.html
+    https://zhuanlan.zhihu.com/p/25007591
+    https://blog.csdn.net/u013406199/article/details/80258608
+    https://xw.qq.com/cmsid/20210812A02INY00
+    https://wenku.baidu.com/view/23663349f7ec4afe04a1dfad.html
+    https://www.baeldung.com/spring-security-cas-sso
+CAS Protocol 2.0 Specification：https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol-V2-Specification.html
+SSO及CAS浅谈（里面提到3种SSO技术，提到可能存在的跨域问题。CAS 2.0有跨域问题吗？）：https://blog.csdn.net/u013406199/article/details/80258608
+CAS Ticket票据:TGT、ST、PGT、PT、PGTIOU：https://blog.csdn.net/jiangbb8686/article/details/106917648
+对比CAS与kerberos
+对于CAS来说，多个系统的权限怎么处理？CAS本身在数据库层面怎么处理？
 
 把@Transactional的单元测试加上（公司里面就出问题了，不要想简单了）
 

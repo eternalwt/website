@@ -83,6 +83,51 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 ====================================================================================================
 
+我的Shiro重定向都还没做好，优先做这些【框架也便于完成重定向把，继续积累框架的作用】
+
+看shiro的时序图
+Shiro是Java领域非常知名的认证（Authentication）与授权（Authorization）框架，用以替代JavaEE中的JAAS功能。
+Shiro可以利用HttpSession或者Redis存储用户的登陆凭证，以及角色或者身份信息。然后利用过滤器（Filter），对每个Http请求过滤，检查请求对应的HttpSession或者Redis中的认证与授权信息。
+传统的HttpSession依靠浏览器的Cookie存放SessionId，所以要求客户端必须是浏览器。
+shiro与集群。jwt和集群都是必要的扩展【要能自己把这两方面单独扩展一下】
+
+使用jwt无状态化。1.禁用session；2.重写filter（继承AccessControlFilter。当然Spring Session还是要看）
+Shiro禁用Session，使用SSM+JWT+Shiro进行无状态RESTful API：https://my.oschina.net/u/4598896/blog/4898525
+理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
+shiro-filter执行流程：https://www.cnblogs.com/q95265/p/6928081.html
+Shiro系列教程 AccessControlFilter源码分析：https://blog.51cto.com/u_11868971/2998335
+SpringBoot+Shiro学习之自定义拦截器管理在线用户（踢出用户）：https://www.jianshu.com/p/9bfa22b0e905
+shiro学习22-shiro提供的filter-AccessControlFilter：https://www.iteye.com/blog/suichangkele-2277089
+
+分布式 Session 之 Spring Session 架构与设计：https://zhuanlan.zhihu.com/p/85543763
+SpringBoot+Shiro+SpringSession的简单集成：
+    https://blog.csdn.net/yuanye348623610/article/details/52054071
+    https://www.cnblogs.com/jtlgb/p/9577617.html
+SpringBoot整合shiro、自定义sessionManager：https://blog.csdn.net/qq_34996727/article/details/81133729
+Guide to Spring Session：
+	https://www.baeldung.com/spring-session
+	https://www.javadevjournal.com/spring/spring-session/
+	https://codeboje.de/spring-session-tutorial/
+
+36篇Shiro系列文章：https://www.iteye.com/category/352932
+
+filter再看
+登录再看
+jwt、session再看
+shiro 退出过滤器 logout ---退出清除HTTPSession数据：
+    http://t.zoukankan.com/vieta-p-11140164.html
+    https://blog.csdn.net/qq_34292044/article/details/79131199
+理解clearRunAsIdentitiesInternal等方法
+
+Shiro整合CAS：
+	http://shiro.apache.org/cas.html
+	https://www.jianshu.com/p/bab8976962be
+	https://blog.csdn.net/qq_40409260/article/details/115550075
+	https://www.cnblogs.com/funyoung/p/9242220.html
+	https://www.cnblogs.com/thinkingandworkinghard/p/12596443.html
+	https://zhuanlan.zhihu.com/p/147628089
+现在用的比较多的单点登录技术是什么？ https://www.zhihu.com/question/342103776/answer/2239029522
+
 【OAuth 2.0关注的3个层面以及疑问】
 1.整体流程：access_token是client用的把？https://www.geeksforgeeks.org/workflow-of-oauth-2-0/
 2.获得令牌的四种授权方式，其中最关键的是授权码的方式（跟微信小程序的授权码的概念比较），确认qq就是授权码：
@@ -107,8 +152,13 @@ OAuth和CAS的对比已经有个大致的了解了，可以看CAS和SSO了：
     https://www.baeldung.com/spring-security-cas-sso
 CAS Protocol 2.0 Specification：https://apereo.github.io/cas/6.0.x/protocol/CAS-Protocol-V2-Specification.html
 SSO及CAS浅谈（里面提到3种SSO技术，提到可能存在的跨域问题。CAS 2.0有跨域问题吗？）：https://blog.csdn.net/u013406199/article/details/80258608
+研究一下子域名、一级域名/二级域名的跨越问题
 CAS Ticket票据:TGT、ST、PGT、PT、PGTIOU：https://blog.csdn.net/jiangbb8686/article/details/106917648
-对比CAS与kerberos
+对比CAS与kerberos：好像是有类似关联：“CAS（Central Authentication Service）是基于Kerberos票据方式实现SSO单点登录的框架”。（可见kerberos得再看一遍了，并比较两者的票据）
+开源认证组件Kerberos和CAS简介：
+    https://blog.csdn.net/justlpf/article/details/106637070
+    https://www.cnblogs.com/wangle1001986/p/11319569.html
+    https://www.cnblogs.com/swordfall/p/12009716.html
 对于CAS来说，多个系统的权限怎么处理？CAS本身在数据库层面怎么处理？
 
 把@Transactional的单元测试加上（公司里面就出问题了，不要想简单了）
@@ -753,8 +803,6 @@ RunAs理解：
 1.加了ComponentScan后，没有加的可能扫描不到，有坑，例如我的@ServerEndpoint；
 2.@ComponentScan包名加.*和不加的区别：https://blog.csdn.net/weixin_43950568/article/details/104196017
 
-shiro对token、session的处理再看，反复看
-
 【工作、task.txt(几个项目的源码分析、分布式那个课程把知识拉开)、scheme三管齐下。分布式的优先级最低】
 
 Shiro与spring session
@@ -943,7 +991,6 @@ EhCacheManager的整合原理再看一下
 
 jwt、Subject、Session、SessionManager、Realm、缓存
 Subject有获取Session的接口
-shiro里面的Session是否需要与Tomcat的Session互转？
 shiro源码分析（二）Subject和Session：https://blog.csdn.net/hxpjava1/article/details/77917106
 shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
 Shiro源码分析之两种Session的方式：https://blog.csdn.net/xh199110/article/details/47029533
@@ -2423,7 +2470,7 @@ https://blog.csdn.net/sunsgne_ac/article/details/79289770
 https://blog.csdn.net/qq_35113996/article/details/84256271
 踢出用户：
 https://www.xuebuyuan.com/2116235.html
-禁用：
+禁用用户：
 https://www.jianshu.com/p/44ee5b1c1e77
 
 shiro的权限控制应用，集成spring项目，密码错误次数过多短时间锁定：http://www.mamicode.com/info-detail-1449798.html

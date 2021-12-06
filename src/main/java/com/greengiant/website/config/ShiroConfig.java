@@ -121,7 +121,9 @@ public class ShiroConfig {
 
         // 注入缓存管理器
         securityManager.setCacheManager(shiroCacheManager);
+        // 注入记住密码管理器
         securityManager.setRememberMeManager(rememberMeManager);
+        // 注入session管理器
         securityManager.setSessionManager(sessionManager);
 
         return securityManager;

@@ -91,13 +91,14 @@ Shiro可以利用HttpSession或者Redis存储用户的登陆凭证，以及角�
 传统的HttpSession依靠浏览器的Cookie存放SessionId，所以要求客户端必须是浏览器。
 shiro与集群。jwt和集群都是必要的扩展【要能自己把这两方面单独扩展一下】
 
-使用jwt无状态化。1.禁用session；2.重写filter（继承AccessControlFilter。当然Spring Session还是要看）
+使用jwt无状态化。1.禁用session；2.重写filter（继承AccessControlFilter。当然Spring Session还是要看）；3.是不是每次进入都login一次？4.如何处理过期及token刷新？
 Shiro禁用Session，使用SSM+JWT+Shiro进行无状态RESTful API：https://my.oschina.net/u/4598896/blog/4898525
 理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
 shiro-filter执行流程：https://www.cnblogs.com/q95265/p/6928081.html
 Shiro系列教程 AccessControlFilter源码分析：https://blog.51cto.com/u_11868971/2998335
 SpringBoot+Shiro学习之自定义拦截器管理在线用户（踢出用户）：https://www.jianshu.com/p/9bfa22b0e905
 shiro学习22-shiro提供的filter-AccessControlFilter：https://www.iteye.com/blog/suichangkele-2277089
+看AccessControlFilter源码
 
 分布式 Session 之 Spring Session 架构与设计：https://zhuanlan.zhihu.com/p/85543763
 SpringBoot+Shiro+SpringSession的简单集成：

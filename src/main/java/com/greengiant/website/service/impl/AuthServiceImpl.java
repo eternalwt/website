@@ -17,7 +17,7 @@ public class AuthServiceImpl implements AuthService {
         // 在认证提交前准备 token（令牌）【搜集认证信息】
         UsernamePasswordToken token = new UsernamePasswordToken(username, password, isRememberMe);
         // 执行认证登陆
-        subject.login(token);
+        subject.login(token);// todo 在这个地方统一一下，就可以用jwtToken了
     }
 
 }

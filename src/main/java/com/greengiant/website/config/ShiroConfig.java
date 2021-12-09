@@ -39,7 +39,7 @@ public class ShiroConfig {
         // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
         //todo 和后端action对应起来。success的url是什么时候用的？
 //        shiroFilterFactoryBean.setLoginUrl("/notLogin.html"); // 点击没有权限的菜单项是可以触发的，再测一下。对应到login页面
-        shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
+        shiroFilterFactoryBean.setLoginUrl("/notLogin.html");// todo 通过filter的学习把这里搞清楚
         //todo 测试，应该是登录成功后跳转的页面吧
         // todo 有用吗？
         shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
@@ -196,7 +196,8 @@ public class ShiroConfig {
         sessionManager.setSessionValidationInterval(1000 * 60 * 15);
         // 删除失效session
         sessionManager.setDeleteInvalidSessions(true);
-        sessionManager.setSessionDAO(customCachedSessionDAO);// 可以不要，CustomCachedSessionDAO实现了CacheManagerAware接口
+        sessionManager.setSessionDAO(customCachedSessionDAO);// todo【这句话和下面一句话冲突】 可以不要，CustomCachedSessionDAO实现了CacheManagerAware接口
+        // todo 默认是MemorySessionDAO 只要自己结合redis实现了SessionDAO，就具有了服务扩展能力，就可以不用管Spring Session（能否在SessionDAO里面使用Spring Session？）
 
         return sessionManager;
     }

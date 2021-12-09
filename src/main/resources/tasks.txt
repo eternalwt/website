@@ -85,13 +85,65 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 我的Shiro重定向都还没做好，优先做这些【框架也便于完成重定向把，继续积累框架的作用】
 
+【通过filter的学习把这里搞清楚】shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
+能否在SessionDAO里面使用Spring Session？【先看Spring Session】
+
+【源码分析，重要代码（比我们的CurrentUser不知道高到哪里去了）】
+public static Subject getSubject() {
+    Subject subject = ThreadContext.getSubject();
+    if (subject == null) {
+        subject = (new Builder()).buildSubject();
+        ThreadContext.bind(subject);
+    }
+
+    return subject;
+}
+
+Shiro refresh token【并发的问题】（其实我觉得解决并发的问题可用让新老令牌同时存在一段时间比如一分钟）：
+	https://cloud.tencent.com/developer/article/1486323
+	https://www.sundayfine.com/jwt-refresh-token/
+	https://www.jianshu.com/p/36703818b4d2
+	https://blog.csdn.net/zhouping118/article/details/89355282
+	https://blog.csdn.net/weixin_44852935/article/details/108066849
+	https://gitee.com/chen-jf/springboot-jwt-refreshtoken/（看别人代码，找差距）
+	http://nicethemes.cn/news/txtlist_i42231v.html
+
+1.我可以把JwtToken转成Shiro支持的token，整个流程就通了；
+2.学习token刷新策略：
+前后端分离中的无痛刷新token机制：https://www.jianshu.com/p/58f05bf13b7d
+token刷新的几种策略：https://www.jianshu.com/p/0d6348ab348e
+对于token的认证，如何保证token的及时刷新？ https://www.zhihu.com/question/309815576/answer/579255324
+应用JWT进行用户认证及Token的刷新：https://www.cnblogs.com/wyt007/p/11459547.html
+JWT Token刷新方案：https://blog.csdn.net/m0_37809141/article/details/86572697
+签发的用户认证token超时刷新策略：https://blog.csdn.net/sinat_25235033/article/details/80324006
+Token 刷新并发处理解决方案：https://zhuanlan.zhihu.com/p/330034685
+关于Token 自动续期的解决方案：https://zhuanlan.zhihu.com/p/163053370
+token超时刷新策略(附源码）：https://juejin.cn/post/6844904160018563086
+实现无感刷新token，我是这样做的：https://juejin.cn/post/6983582201690456071
+token超时刷新策略(附源码）：https://juejin.cn/post/6844904160018563086
+JWT 到底应该怎么用才对？【再看一遍，想清楚】：https://zhuanlan.zhihu.com/p/115474554
+深入理解令牌认证机制（token）：https://zhuanlan.zhihu.com/p/60358096
+
+再次比较jwt和session。如果jwt是无状态的，那他们的区别还有点大
+【Shiro中使用HttpSession和jwt，两种方式分别是怎么解析用户信息进而使用正确的角色、权限的？】【搞清楚流程】
+
+shiro源码(三)-认证过滤器原理：https://www.cnblogs.com/qlqwjy/p/15456027.html
+
+思考shiro引入gateway的改造方案
+
 看shiro的时序图
 Shiro是Java领域非常知名的认证（Authentication）与授权（Authorization）框架，用以替代JavaEE中的JAAS功能。
 Shiro可以利用HttpSession或者Redis存储用户的登陆凭证，以及角色或者身份信息。然后利用过滤器（Filter），对每个Http请求过滤，检查请求对应的HttpSession或者Redis中的认证与授权信息。
 传统的HttpSession依靠浏览器的Cookie存放SessionId，所以要求客户端必须是浏览器。
 shiro与集群。jwt和集群都是必要的扩展【要能自己把这两方面单独扩展一下】
 
-使用jwt无状态化。1.禁用session；2.重写filter（继承AccessControlFilter。当然Spring Session还是要看）；3.是不是每次进入都login一次？4.如何处理过期及token刷新？
+使用jwt无状态化：
+    1.禁用session；
+    2.重写filter（继承AccessControlFilter。当然Spring Session还是要看）；
+    3.是不是每次进入都login一次？
+    4.如何处理过期及token刷新？
+    5.jwt作何做rememberMe功能？
+    6.梳理下哪些会受影响。例如subject.isAuthenticated()会不会受影响？
 Shiro禁用Session，使用SSM+JWT+Shiro进行无状态RESTful API：https://my.oschina.net/u/4598896/blog/4898525
 理解这9大内置过滤器，才算是精通Shiro：https://zhuanlan.zhihu.com/p/140454269
 shiro-filter执行流程：https://www.cnblogs.com/q95265/p/6928081.html
@@ -109,6 +161,11 @@ Guide to Spring Session：
 	https://www.baeldung.com/spring-session
 	https://www.javadevjournal.com/spring/spring-session/
 	https://codeboje.de/spring-session-tutorial/
+Shiro session和Spring session一样吗？【我的初步理解是对等的】：https://www.cnblogs.com/onlymate/p/8391274.html
+Spring Session supports multiple sessions in the same browser and sending sessions in a header：
+Spring Seesion除了能接管HttpSession外，还能接管WebSocket、WebFlux’s WebSession甚至JDBC Session等，更通用：https://www.javadevjournal.com/spring/spring-session/
+java刷新缓存flush_Spring Session 的两种刷新模式 RedisFlushMode：https://blog.csdn.net/weixin_30430517/article/details/114621468
+分布式session会话Sticky Sessions：https://blog.csdn.net/tomcat_baby/article/details/52787679
 
 36篇Shiro系列文章：https://www.iteye.com/category/352932
 
@@ -989,11 +1046,14 @@ EhCacheManager的整合原理再看一下
         http://shiro.apache.org/static/1.2.4/apidocs/org/apache/shiro/cache/class-use/CacheManagerAware.html
 
 【第一个问题：如何自定义SessionManager，把session放入缓存管理？从DefaultWebSecurityManager作为突破口（先看怎么继承实现，然后看SessionManager文章。从这个过程中提升能力）】
-
+SessionManager源码分析
 jwt、Subject、Session、SessionManager、Realm、缓存
 Subject有获取Session的接口
 shiro源码分析（二）Subject和Session：https://blog.csdn.net/hxpjava1/article/details/77917106
 shiro源码分析（二）Subject和Session：https://yq.aliyun.com/articles/38553
+复写shiro的SessionDAO来实现将session保存到redis集群中：
+    https://blog.csdn.net/u011870280/article/details/60960520
+    https://blog.csdn.net/weixin_38405253/article/details/105671919
 Shiro源码分析之两种Session的方式：https://blog.csdn.net/xh199110/article/details/47029533
 Subject.login()登录成功后用户的认证信息实际上是保存在HttpSession中的。如果此时Web应用程序部署了多实例，必须要进行Session同步【重要的应该不是有没有用jwt把，而是各种情况都要能Session同步】
 Session共享、Spring Session与jwt【Session是下一个难点】DefaultWebSecurityManager值得好好研究
@@ -1006,6 +1066,9 @@ https://blog.csdn.net/dgh112233/article/details/100019711
 现在我加的EnterpriseCacheSessionDAO还是没有找到一个好的验证方式。怎么验证默认用的是什么sessionDao（MemorySessionDAO？），怎么注入的？
 CachingSessionDAO、EnterpriseCacheSessionDAO
 目标：要能看到ehcache里面的session
+创建session监听类，实现SessionListener接口：https://blog.csdn.net/qq_34021712/article/details/80418112
+
+【shiro中体现的一个架构思路】类中大量使用接口成员变量，配以get/set方法形成扩展点
 
 【重要，怎么分析这个问题】看一下我的CacheManager是不是配多了，测一下（把测试方式总结写到test里面）Shiro-Subject 分析【值得精读的代码】：https://blog.csdn.net/u012881904/article/details/53726407/
 更改用户名怎么样更新subject中的principal（与更改密码不是同一个问题）：https://blog.csdn.net/qq_33029793/article/details/93477572
@@ -1917,6 +1980,8 @@ https://blog.csdn.net/AlbertFly/article/details/52193813
 再看Retry的cache能否整合使用CacheManager
 
 测试AuthServiceTest：为啥有shiro相关的报错；
+
+返回Serializable的方法（SessionDAO）：Serializable create(Session var1);
 
 把启动时INFO日志里面注册的bean都看一遍
 

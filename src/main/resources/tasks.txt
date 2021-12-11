@@ -579,6 +579,8 @@ shiro中OAuth2 集成【本地肯定是可以做实验的，只是麻烦一点�
 微信、支付宝支付是基础设施
 集成钉钉会成为一项基础设施，先看看钉钉有什么能力
 
+数据权限通用设计方案：https://zhuanlan.zhihu.com/p/31339794
+
 Grafana和Prometheus是基础设施
 质量和效率相关的基础设施：sonarcube和jenkins弄好。jenkins与powershell？
 sonarcube【sonarcube和jenkins有可比性吗？】：
@@ -2296,6 +2298,13 @@ shiro框架中，各个模块的重要性是不同的，授权模块就没那么
 后台管理系统之权限管理：https://www.jianshu.com/p/be6025875f12
 
 1.前端mock：意义大吗？假数据很好造
+
+我在公司做的ca-server是需要验证token的。对于敏感应用不让子服务API被直接访问（主要是可操作性）：
+    0.服务器不开放子服务的端口
+    1.坚决让前端不能直接连子服务，只能连网关，避免暴露子服务端口；
+    2.子服务通过IpFilter只让网关连它：https://www.cnblogs.com/funnyzpc/p/8993331.html
+    3.子服务也和gateway一样鉴权（太麻烦）；
+    4.子服务的某些API再鉴权一次（麻烦、代码不统一）
 
 HttpServletRequest和ServletRequest，先比较一下方法的差别，然后再深入类型转换【猜测，是不是从tomcat传过来的就是HttpServletRequest，所以转换不会有问题？在知乎上看一下】
 

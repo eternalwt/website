@@ -56,7 +56,7 @@ public class ShiroConfig {
         // todo swagger路径用2个*配置也不行，再思考一下
         // todo 这里能否拿到数据库管理？
         // todo 20210905：filterChainDefinitionMap是不是可以不要？
-        // 默认过滤器见DefaultFilter
+        // 默认过滤器见DefaultFilter todo 20211211 才发现这里对应的是接口权限（再看看Filter代码）。接口权限很难做好，先做需要鉴权和不需要鉴权，界面控制权限粒度
         filterChainDefinitionMap.put("/test/**", "anon");
 
         filterChainDefinitionMap.put("/websocket/**", "anon");

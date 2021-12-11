@@ -1334,6 +1334,17 @@ AuthorizingRealm：http://jinnianshilongnian.iteye.com/blog/2022468
 
 【对比如下知识点】Shiro 中的 SessionManager【是不是用jwt时重写getSessionId方法把token转成sessionId就和不用jwt的版本一致/兼容了？】：
              https://www.jianshu.com/p/9cb19bc2057a
+
+HttpMethodPermissionFilter、RolesAuthorizationFilter、UserFilter
+
+Types of User Authentication Techniques【这个里面提到了8大认证方式】：https://iq.opengenus.org/user-authentication-techniques-types/
+Basic Auth Form Auth and JWT 比较：https://blog.csdn.net/wuddongbest/article/details/105078453
+difference between "basic auth" and "form-based auth"：https://kb.globalscape.com/KnowledgebaseArticle10691.aspx
+HTTP 验证 Tomcat中进行基本验证 (Basic Authentication) 和摘要验证 (Digest Authentication)：https://blog.csdn.net/renminzdb/article/details/42422141
+用户认证(Authentication)进化之路：由Basic Auth到Oauth2再到jwt：https://blog.csdn.net/zcxey2911/article/details/106049864
+springCloud微服务系列——OAuth2+Basic验证：https://blog.csdn.net/guduyishuai/article/details/82216725
+springboot成神之——basic auth和JWT验证结合：https://blog.csdn.net/weixin_30851409/article/details/94763072
+
 先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
 【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】
 看jwt的时候再看filter及作用。BasicHttpAuthenticationFilter干了些啥？(搞清楚有token、没有token的两条路径)
@@ -1517,6 +1528,11 @@ https://blog.51cto.com/14150615/2356958
 https://www.cnblogs.com/zzpblogs/p/8520818.html
 https://www.jianshu.com/p/0891b2279c65
 https://www.cnblogs.com/zoli/p/11236799.html
+
+整合Shiro完成接口权限验证：
+    https://blog.csdn.net/lp840312696/article/details/104553492
+    https://www.cnblogs.com/xsshu/p/13336760.html
+    https://blog.csdn.net/qq_36125138/article/details/83046844
 
 晚上两件事：
 2.把crawler4j引入项目，找第一批10个招标网站

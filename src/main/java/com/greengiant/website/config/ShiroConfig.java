@@ -36,18 +36,14 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         // 必须设置 SecurityManager
         shiroFilterFactoryBean.setSecurityManager(securityManager);
-        // setLoginUrl 如果不设置值，默认会自动寻找Web工程根目录下的"/login.jsp"页面 或 "/login" 映射【看一下代码】
-        //todo 和后端action对应起来。success的url是什么时候用的？
-//        shiroFilterFactoryBean.setLoginUrl("/notLogin.html"); // 点击没有权限的菜单项是可以触发的，再测一下。对应到login页面
-        shiroFilterFactoryBean.setLoginUrl("/notLogin.html");// todo 通过filter的学习把这里搞清楚
-        //todo 测试，应该是登录成功后跳转的页面吧
-        // todo 有用吗？
-        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");
-        // 设置无权限时跳转的 url;
-        // todo 下面的用法是不是错了，是不是应该结合后端方法（例如notLogin）来处理？
+        shiroFilterFactoryBean.setLoginUrl("/notLogin");// todo 通过filter和这种方式都能够设置。看一下代码：https://blog.csdn.net/u012475575/article/details/82022745
         //  自定义logoutfilter来跳转到登录页：https://www.cnblogs.com/ningheshutong/p/8134008.html
-        shiroFilterFactoryBean.setUnauthorizedUrl("http://localhost:4200/login");
-        // 设置拦截器
+        //todo 和后端action对应起来。success的url是什么时候用的？
+        shiroFilterFactoryBean.setSuccessUrl("loginSuccess");// todo 要测试一下。登录成功默认跳转页面，不配置则跳转至”/”，可以不配置，直接通过代码进行处理。
+        // 设置（已登录）无权限时跳转的 url
+        // todo 下面的用法是不是错了，是不是应该结合后端方法（例如notLogin）来处理？
+        shiroFilterFactoryBean.setUnauthorizedUrl("/notRole");// todo 给权限不足的提示，并测试
+        // 设置拦截器 TODO 上面的url设置和filter的关系？
         shiroFilterFactoryBean.setFilterChainDefinitionMap(this.getfilterChainDefinitionMap());
         log.info("Shiro拦截器工厂类注入成功");
 

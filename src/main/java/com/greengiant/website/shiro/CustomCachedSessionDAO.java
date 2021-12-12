@@ -1,7 +1,6 @@
 package com.greengiant.website.shiro;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.UnknownSessionException;
 import org.apache.shiro.session.mgt.eis.CachingSessionDAO;
@@ -12,10 +11,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Slf4j
 @Component
 public class CustomCachedSessionDAO extends CachingSessionDAO {
-
-    private static Logger LOGGER = LogManager.getLogger(CustomCachedSessionDAO.class);
 
     /**
      * key前缀
@@ -27,8 +25,8 @@ public class CustomCachedSessionDAO extends CachingSessionDAO {
     @Override
     protected Serializable doCreate(Session session) {
         Serializable sessionId = this.generateSessionId(session);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("shiro custom session create. sessionId={}", sessionId);
+        if (log.isDebugEnabled()) {
+            log.debug("shiro custom session create. sessionId={}", sessionId);
         }
         this.assignSessionId(session, sessionId);
 
@@ -38,24 +36,24 @@ public class CustomCachedSessionDAO extends CachingSessionDAO {
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("shiro custom session read. sessionId={}", sessionId);
+        if (log.isDebugEnabled()) {
+            log.debug("shiro custom session read. sessionId={}", sessionId);
         }
         return (Session)this.getCacheManager().getCache(cacheName).get(generateKey(sessionId));
     }
 
     @Override
     public void doUpdate(Session session) throws UnknownSessionException {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("shiro custom session update. sessionId={}", session.getId());
+        if (log.isDebugEnabled()) {
+            log.debug("shiro custom session update. sessionId={}", session.getId());
         }
         this.getCacheManager().getCache(cacheName).put(session.getId(), session);
     }
 
     @Override
     public void doDelete(Session session) {
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("shiro custom session delete. sessionId={}", session.getId());
+        if (log.isDebugEnabled()) {
+            log.debug("shiro custom session delete. sessionId={}", session.getId());
         }
         this.getCacheManager().getCache(cacheName).remove(generateKey(session.getId()));
     }

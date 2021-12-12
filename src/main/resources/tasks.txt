@@ -88,6 +88,9 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 【通过filter的学习把这里搞清楚】shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
 能否在SessionDAO里面使用Spring Session？【先看Spring Session】
 
+如何查看shiro新特性？现在已经1.8了。查看新特性后升级
+springboot升级2.6.1为啥报错？
+
 【源码分析，重要代码（比我们的CurrentUser不知道高到哪里去了）】
 public static Subject getSubject() {
     Subject subject = ThreadContext.getSubject();
@@ -1344,6 +1347,9 @@ HTTP 验证 Tomcat中进行基本验证 (Basic Authentication) 和摘要验证 (
 用户认证(Authentication)进化之路：由Basic Auth到Oauth2再到jwt：https://blog.csdn.net/zcxey2911/article/details/106049864
 springCloud微服务系列——OAuth2+Basic验证：https://blog.csdn.net/guduyishuai/article/details/82216725
 springboot成神之——basic auth和JWT验证结合：https://blog.csdn.net/weixin_30851409/article/details/94763072
+摘要认证是对基本认证的改进，即是用摘要代替账户密码，从而防止明文传输中账户密码的泄露:
+    https://www.cnblogs.com/lanxiaoke/p/6357501.html
+    https://blog.csdn.net/t1269747417/article/details/86038128
 
 先搞清楚ShiroFilterFactoryBean和Filter的关联，为理解jwt配置做准备
 【我没有用到FilterRegistrationBean，我用了ShiroFilterFactoryBean，再了解一下这两者】

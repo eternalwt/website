@@ -13,11 +13,11 @@
 	<artifactId>website</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<name>website</name>
-	<description>My Spring Boot website</description>
+	<description>My Demo website</description>
 
 	<properties>
 		<java.version>14</java.version>
-		<shiro.version>1.7.0</shiro.version>
+		<shiro.version>1.8.0</shiro.version>
 		<swagger.version>3.0.0</swagger.version>
 	</properties>
 

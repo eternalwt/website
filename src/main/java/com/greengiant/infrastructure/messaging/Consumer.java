@@ -2,8 +2,7 @@ package com.greengiant.infrastructure.messaging;
 
 import com.rabbitmq.client.Channel;
 import io.lettuce.core.dynamic.annotation.Value;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.support.AmqpHeaders;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
 public class Consumer {
 
@@ -33,8 +33,6 @@ public class Consumer {
 
     // todo channel.basicConsume ConfirmListener
 
-    private static Logger LOGGER = LogManager.getLogger(Consumer.class);// todo 我为啥一直用的是LogManager？
-
     /**
      * 1.直接配置@RabbitListener(queues = "cord", ackMode = "MANUAL")可以达到手动ack的作用
      */
@@ -50,7 +48,7 @@ public class Consumer {
         // todo 从哪里获取是不是手动ack，看看类。实在找不到看公司代码
         // todo AcknowledgeMode类
         // todo 搜一下RabbitProperties这个类
-        LOGGER.info("Receiving Message: -----[%s]----- ", msg);
+        log.info("Receiving Message: -----[%s]----- ", msg);
     }
 
     /**

@@ -87,6 +87,16 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 我的Shiro重定向都还没做好，优先做这些【框架也便于完成重定向把，继续积累框架的作用】
 
+LogoutFilter、SslFilter。怎么能达到张开涛这种阅读代码的能力？
+OncePerRequestFilter原理？
+AdviceFilter AOP功能的使用？
+会话验证调度器这一章节需要看一下，SessionValidationScheduler。缓存过期的细节
+通过自定义自己的拦截器可以扩展一些功能，诸如动态 url-角色/权限访问控制的实现、根据 Subject 身份信息获取用户信息绑定到 Request（即设置通用数据）、验证码验证、在线用户信息的保存等等。
+使用Shiro共享Session模拟单点登录：https://blog.csdn.net/lihaoxiang123/article/details/88744910
+SpringBoot 整合Shiro实现动态权限加载更新+Session共享+单点登录：https://blog.csdn.net/weixin_33712987/article/details/93180737
+shiro集成redis实现分布式session和单点登录：https://blog.csdn.net/luckyxl029/article/details/80625461
+shiro中接入单点登录功能：https://www.cnblogs.com/atai/p/11200033.html
+
 【通过filter的学习把这里搞清楚】shiroFilterFactoryBean.setLoginUrl("/notLogin.html");
 能否在SessionDAO里面使用Spring Session？【先看Spring Session】
 

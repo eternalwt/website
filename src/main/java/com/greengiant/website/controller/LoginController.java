@@ -7,6 +7,7 @@ import com.greengiant.website.pojo.model.User;
 import com.greengiant.website.service.AuthService;
 import com.greengiant.website.service.UserService;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -51,11 +52,19 @@ public class LoginController {
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // 从SecurityUtils里边创建一个 subject
-        loginService.login(username, password, isRememberMe);
+        loginService.login(username, password, isRememberMe);//todo 加一个返回值，下面那个方法不用再调了
         //根据权限，指定返回数据
-        User user = userService.getByName(username);
+//        User user = userService.getByName(username);
+//        return ResultUtils.success(user);
+        return ResultUtils.success("login success");
+    }
 
-        return ResultUtils.success(user);
+    @PostMapping(value = "/runAs")// todo 如何保证不通过网址fake？
+    public ResultBean runAs(String userName) {//todo 是否使用userId
+//        PrincipalCollection pc
+//        SecurityUtils.getSubject().runAs();
+        // todo
+        return null;
     }
 
     /**
@@ -64,6 +73,7 @@ public class LoginController {
      */
     @GetMapping(value = "/logout")
     public ResultBean logout() {
+
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
 

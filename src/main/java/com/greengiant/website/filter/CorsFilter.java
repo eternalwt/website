@@ -9,8 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter(filterName = "CorsFilter ")
-@Configuration
+//@WebFilter(filterName = "CorsFilter")
+//@Configuration todo 不要使用这个类，tomcat的filter太底层了，并且和spring、shiro的不在同一个抽象层次
 public class CorsFilter implements Filter {
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {

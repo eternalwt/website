@@ -85,6 +85,19 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 ====================================================================================================
 
+测试runAs
+Shiro切换身份之runAs【直接看代码。并分析在jwt模式下有没有影响】：https://www.xlongwei.com/detail/17080116
+Shiro教程【21】授予身份及切换身份：http://www.song-z.com/subject/detail/apache-shiro/21
+【学习】DelegatingSubject、runAsIdentities
+理解clearRunAsIdentitiesInternal等方法
+runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
+RunAs理解：
+    1.授权人要能授权和收回；
+    2.被授权人登陆后选择用自己还是授权人权限(账号)，但一次只能用一个
+看runas代码
+把runas写出来：https://www.xlongwei.com/detail/17080116
+runas一个不优雅的实现方式：将被代理者的用户名、密码放在数据库中，一旦发现有runas关系，可以读取到自动登录一次。
+
 我的Shiro重定向都还没做好，优先做这些【框架也便于完成重定向把，继续积累框架的作用】
 
 LogoutFilter、SslFilter。怎么能达到张开涛这种阅读代码的能力？
@@ -102,6 +115,8 @@ shiro中接入单点登录功能：https://www.cnblogs.com/atai/p/11200033.html
 
 如何查看shiro新特性？现在已经1.8了。查看新特性后升级
 springboot升级2.6.1为啥报错？
+
+W3Cschool的跟我学shiro：https://www.w3cschool.cn/shiro/co4m1if2.html
 
 【源码分析，重要代码（比我们的CurrentUser不知道高到哪里去了）】
 public static Subject getSubject() {
@@ -167,6 +182,9 @@ SpringBoot+Shiro学习之自定义拦截器管理在线用户（踢出用户）�
 shiro学习22-shiro提供的filter-AccessControlFilter：https://www.iteye.com/blog/suichangkele-2277089
 看AccessControlFilter源码
 
+多账号统一登陆（微信、QQ），账号模块的系统设计：https://mp.weixin.qq.com/s/4_khlYnh3JweUFgV1hXveQ
+一张图看懂微服务架构路线：https://mp.weixin.qq.com/s/kwdqeM2fw7RTvk-k82X3tw
+
 分布式 Session 之 Spring Session 架构与设计：https://zhuanlan.zhihu.com/p/85543763
 SpringBoot+Shiro+SpringSession的简单集成：
     https://blog.csdn.net/yuanye348623610/article/details/52054071
@@ -190,7 +208,6 @@ jwt、session再看
 shiro 退出过滤器 logout ---退出清除HTTPSession数据：
     http://t.zoukankan.com/vieta-p-11140164.html
     https://blog.csdn.net/qq_34292044/article/details/79131199
-理解clearRunAsIdentitiesInternal等方法
 
 Shiro整合CAS：
 	http://shiro.apache.org/cas.html
@@ -832,13 +849,6 @@ angular部署：用nginx和tomcat部署各用于什么场景？
 
 Spring Batch Tutorial: Reading Information From an Excel File：https://www.petrikainulainen.net/programming/spring-framework/spring-batch-tutorial-reading-information-from-an-excel-file/
 
-runas写通（看一下代码实现）【涉及到什么样的数据库存储？】
-RunAs理解：
-1.授权人要能授权和收回；
-2.被授权人登陆后选择用自己还是授权人权限(账号)，但一次只能用一个
-看runas代码
-把runas写出来：https://www.xlongwei.com/detail/17080116
-
 掂量一下：以我现在的实力和能力搞关系能搞到什么程度，具体步骤是什么
 在家可以对各个部分单独推进：1.前端；2.cassandra、mongodb等nosql数据库（包括海量数据查询）；3.流式计算；4.图数据库、机器学习算法及引擎。
 
@@ -914,6 +924,7 @@ GlobalConfigUtils传入：
 阅读mybatis日志模块代码（mybatis代码不多，暴力法也能全部看下来，值得一看）：org.mybatis:mybatis，org.apache.ibatis.logging。看LogFactory，private static Constructor<? extends Log> logConstructor; 【实际上只需要两步：1.确认日志怎么打的；2.看LogFactory怎么生成Log对象】
 myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
+Mybatis常见注解有哪些？这篇总结全面了：https://zhuanlan.zhihu.com/p/338681115
 
 shiro不适合于网关？（无稽之谈）
 
@@ -1440,9 +1451,6 @@ mybatis-spring：http://mybatis.org/spring/
 2.找到入口类去分析
 3.只有搞清楚这个，才能更加理解ShiroConfig里面的类是怎么替换的，RedisConfig也就触类旁通了
 
-把run as看了：
-runas一个不优雅的实现方式：将被代理者的用户名、密码放在数据库中，一旦发现有runas关系，可以读取到自动登录一次。
-思考、看runAs原理
 这行代码如何定制？@RequiresPermissions(value={"log:manage:*"})
 八个类逐一看源码：https://www.cnblogs.com/nuccch/p/6776352.html
 shiro-aspectj这个包是干啥的？

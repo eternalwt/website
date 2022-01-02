@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NullPointerException.class)
     public ResultBean handleNullPointerException(NullPointerException ex) {
-        log.error(ex.getMessage(),ex);
+        log.error("Global handleNullPointerException:", ex);
         return ResultUtils.fail(StatusCodeEnum.EXCEPTION.getCode(), StatusCodeEnum.EXCEPTION.getMsg());
     }
 
@@ -27,25 +27,25 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UnknownAccountException.class)
     public ResultBean handleUnknownAccountException(UnknownAccountException ex) {
-        log.error(ex.getMessage(),ex);
+        log.error("Global handleUnknownAccountException:", ex);
         return ResultUtils.fail(StatusCodeEnum.PASSWORD_INCORRECT.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ResultBean handleIncorrectCredentialsException(IncorrectCredentialsException ex) {
-        log.error(ex.getMessage(),ex);
+        log.error("Global handleIncorrectCredentialsException:", ex);
         return ResultUtils.fail(StatusCodeEnum.PASSWORD_INCORRECT.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler(ExcessiveAttemptsException.class)
     public ResultBean handleExcessiveAttemptsException(ExcessiveAttemptsException ex) {
-        log.error(ex.getMessage(),ex);
+        log.error("Global handleExcessiveAttemptsException:", ex);
         return ResultUtils.fail(StatusCodeEnum.TOO_MANY_INCORRECT_PASSWORD.getCode(), ex.getMessage());
     }
 
     @ExceptionHandler(Exception.class)
     public ResultBean handleException(Exception ex) {
-        log.error(ex.getMessage(),ex);
+        log.error("Global handleException:", ex);
         return ResultUtils.fail(StatusCodeEnum.EXCEPTION.getCode(), StatusCodeEnum.EXCEPTION.getMsg());
     }
 

@@ -16,22 +16,6 @@ public interface ArticleMapper extends BaseMapper<Article> {
     })
     int deleteByPrimaryKey(Long id);
 
-//    @Insert({
-//        "insert into article (id, title, ",
-//        "column_id, published, ",
-//        "audited, read_count, ",
-//        "creator_id, create_time, ",
-//        "updater_id, update_time, ",
-//        "content)",
-//        "values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, ",
-//        "#{columnId,jdbcType=BIGINT}, #{published,jdbcType=BIT}, ",
-//        "#{audited,jdbcType=BIT}, #{readCount,jdbcType=INTEGER}, ",
-//        "#{creatorId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, ",
-//        "#{updaterId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, ",
-//        "#{content,jdbcType=LONGVARCHAR})"
-//    })
-//    int insert(Article record);
-
     @Select({
         "select",
         "id, title, column_id, published, audited, read_count, creator_id, create_time, ",

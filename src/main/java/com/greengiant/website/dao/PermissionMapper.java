@@ -16,15 +16,6 @@ public interface PermissionMapper extends BaseMapper<Perm> {
     })
     int deleteByPrimaryKey(Long id);
 
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
-//    @Insert({
-//        "insert into auth_permission (id, permission_name, ",
-//        "description)",
-//        "values (#{id,jdbcType=BIGINT}, #{permissionName,jdbcType=VARCHAR}, ",
-//        "#{description,jdbcType=VARCHAR})"
-//    })
-//    int insert(Permission record);
-
     @Select({
         "select",
         "id, permission_name, description, create_time, update_time",

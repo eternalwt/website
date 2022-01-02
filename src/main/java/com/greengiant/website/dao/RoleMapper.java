@@ -16,15 +16,6 @@ public interface RoleMapper extends BaseMapper<Role> {
     })
     int deleteByPrimaryKey(Long id);
 
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
-//    @Insert({
-//        "insert into auth_role (id, role_name, ",
-//        "description)",
-//        "values (#{id,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, ",
-//        "#{description,jdbcType=VARCHAR})"
-//    })
-//    int insert(Role record);
-
     @Select({
         "select",
         "id, role_name, description, create_time, update_time",

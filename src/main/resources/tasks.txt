@@ -85,7 +85,10 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 ====================================================================================================
 
-测试runAs
+1.runAs是否需要一个授权的过程；应该是需要，并且要能收回
+2.能否同时登陆？应该是可以；
+3.
+测试runAs方法
 Shiro切换身份之runAs【直接看代码。并分析在jwt模式下有没有影响】：https://www.xlongwei.com/detail/17080116
 Shiro教程【21】授予身份及切换身份：http://www.song-z.com/subject/detail/apache-shiro/21
 【学习】DelegatingSubject、runAsIdentities
@@ -925,6 +928,8 @@ GlobalConfigUtils传入：
 myBatis中的插件机制：https://www.jianshu.com/p/bcea7adb3135
 mybatis的一级缓存SqlSession默认开启？在我的电脑上测一下
 Mybatis常见注解有哪些？这篇总结全面了：https://zhuanlan.zhihu.com/p/338681115
+@ConstructorArgs与@Arg注解：http://www.tianshouzhi.com/api/tutorials/mybatis/393
+MyBatis中ObjectFactory简介：https://www.jianshu.com/p/4578322a27d8
 
 shiro不适合于网关？（无稽之谈）
 

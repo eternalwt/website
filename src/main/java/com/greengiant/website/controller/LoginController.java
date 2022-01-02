@@ -52,10 +52,8 @@ public class LoginController {
                             @RequestParam String password,
                             @RequestParam(required = false, defaultValue = "false") boolean isRememberMe) {
         // 从SecurityUtils里边创建一个 subject
-        loginService.login(username, password, isRememberMe);//todo 加一个返回值，下面那个方法不用再调了
-        //根据权限，指定返回数据
-//        User user = userService.getByName(username);
-//        return ResultUtils.success(user);
+        loginService.login(username, password, isRememberMe);
+        System.out.println("isRunAs:" + SecurityUtils.getSubject().isRunAs());
         return ResultUtils.success("login success");
     }
 

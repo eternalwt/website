@@ -87,7 +87,7 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 
 1.runAs是否需要一个授权的过程；应该是需要，并且要能收回
 2.能否同时登陆？应该是可以；
-3.
+3.在界面上由A用户切换到B用户后，刷新、记日志、清理token
 测试runAs方法
 Shiro切换身份之runAs【直接看代码。并分析在jwt模式下有没有影响】：https://www.xlongwei.com/detail/17080116
 Shiro教程【21】授予身份及切换身份：http://www.song-z.com/subject/detail/apache-shiro/21
@@ -100,6 +100,12 @@ RunAs理解：
 看runas代码
 把runas写出来：https://www.xlongwei.com/detail/17080116
 runas一个不优雅的实现方式：将被代理者的用户名、密码放在数据库中，一旦发现有runas关系，可以读取到自动登录一次。
+
+【流水号是基础设施】
+    面试官竟然问我订单ID是怎么生成的？难道不是MySQL自增主键？ https://zhuanlan.zhihu.com/p/455695292
+    分布式ID（数据库多主模式、号段模式、雪花算法）：https://zhuanlan.zhihu.com/p/370207654
+    数据库 ID 生成方案：号段模式：https://cloud.tencent.com/developer/article/1545881
+    美团分布式ID生成服务——支持号段模式与雪花主键两种模式：https://www.jianshu.com/p/cbdf39577cdd?utm_campaign=maleskine
 
 我的Shiro重定向都还没做好，优先做这些【框架也便于完成重定向把，继续积累框架的作用】
 
@@ -131,6 +137,12 @@ public static Subject getSubject() {
 
     return subject;
 }
+
+Dead Letter Exchanges的配置：https://blog.csdn.net/sinat_36553913/article/details/93350313
+RabbitMQ 消费端限流、TTL、死信队列（消息过期）：https://www.cnblogs.com/haixiang/p/10905189.html
+MessageDeliveryMode有PERSISTENT和NON_PERSISTENT
+延迟发送和过期时间是两件不同的事：https://blog.csdn.net/fu_huo_1993/article/details/88350188
+有两种方法设置消息的 TTL 。第一种是通过队列属性设置，第二种是对消息本身单独设置：https://blog.csdn.net/weixin_34416649/article/details/92501280
 
 Shiro refresh token【并发的问题】（其实我觉得解决并发的问题可用让新老令牌同时存在一段时间比如一分钟）：
 	https://cloud.tencent.com/developer/article/1486323

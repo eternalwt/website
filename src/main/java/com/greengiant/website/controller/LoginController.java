@@ -57,8 +57,17 @@ public class LoginController {
         return ResultUtils.success("login success");
     }
 
-    @PostMapping(value = "/runAs")// todo 如何保证不通过网址fake？
-    public ResultBean runAs(String userName) {//todo 是否使用userId
+    // todo 加一个auth_user_grant表
+    @PostMapping(value = "/grantRunAs")// todo 如何保证不通过网址fake？
+    public ResultBean grantRunAs(String userName) {//todo 是否使用userId
+//        PrincipalCollection pc
+//        SecurityUtils.getSubject().runAs();
+        // todo
+        return null;
+    }
+
+    @PostMapping(value = "/revokeRunAs")
+    public ResultBean revokeRunAs(String userName) {
 //        PrincipalCollection pc
 //        SecurityUtils.getSubject().runAs();
         // todo

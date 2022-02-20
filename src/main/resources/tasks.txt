@@ -19,6 +19,7 @@
 =====================================================================================================
 
 【2022年】打磨技术，磨炼耐心。不要焦虑工作上的事，尽最大可能让身体保持最佳状态
+website项目已升级到java 17，继续
 
 公司里面的岗位表sw_sys_position与用户id、组织id做了关联，应该是直接为某个用户设置了岗位信息。在我自己的项目中，可以设置一个存放岗位/职务信息的主表，然后再与部门、用户做关联。
 t.org_id从CurrentUser获取，看看我的代码有没有这个问题
@@ -84,6 +85,8 @@ Springboot 整合Shiro认证 集成第三方QQ登录：https://blog.csdn.net/qq_
 40岁开始搞的意思是说：要在积累了一定知识和经验的基础上，接触一些前沿的研究。
 
 ====================================================================================================
+
+秒杀下单接口限流【实现这个限流接口】：https://www.cnblogs.com/yangjiaoshou/p/15128730.html
 
 1.runAs是否需要一个授权的过程；应该是需要，并且要能收回
 2.能否同时登陆？应该是可以；
@@ -199,6 +202,13 @@ shiro学习22-shiro提供的filter-AccessControlFilter：https://www.iteye.com/b
 
 多账号统一登陆（微信、QQ），账号模块的系统设计：https://mp.weixin.qq.com/s/4_khlYnh3JweUFgV1hXveQ
 一张图看懂微服务架构路线：https://mp.weixin.qq.com/s/kwdqeM2fw7RTvk-k82X3tw
+
+重放攻击【token有重放攻击的问题吗？】：
+	https://baike.baidu.com/item/%E9%87%8D%E6%94%BE%E6%94%BB%E5%87%BB/2229240
+	https://www.jianshu.com/p/a810a6b14841
+登录重放攻击预防【我的shiro也有这个问题把。和秒杀里面获取网址有相似之处】：
+	https://www.cnblogs.com/lhp2012/p/10773438.html
+	https://blog.csdn.net/weixin_29602351/article/details/112567265
 
 分布式 Session 之 Spring Session 架构与设计：https://zhuanlan.zhihu.com/p/85543763
 SpringBoot+Shiro+SpringSession的简单集成：
